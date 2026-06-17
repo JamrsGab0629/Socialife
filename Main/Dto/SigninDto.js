@@ -1,12 +1,12 @@
 class SigninDto {
 
-    constructor(Name,Username,Password,ConfirmPass){
-        if (typeof Name !== "string"){
+    constructor(name,username,password,confirmPass){
+        if (typeof name !== "string"){
             throw new Error("Must be letters");
         }
-        this.Username = Username;
-        this.Password = Password;
-        this.ConfirmPass = ConfirmPass;
+        this.username = username;
+        this.password = password;
+        this.confirmPass = confirmPass;
 
 
     }

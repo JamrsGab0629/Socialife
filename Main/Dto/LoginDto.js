@@ -1,7 +1,7 @@
 class LoginDto{
-    constructor(Username,Password){
-        this.Username = Username;
-        this.Password = Password;
+    constructor(username,password){
+        this.username = username;
+        this.password = password;
     }
 }
 module.exports = LoginDto;
