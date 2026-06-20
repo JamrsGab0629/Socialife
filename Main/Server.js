@@ -42,4 +42,4 @@ const server = http.createServer(async (req, res) => {
     res.end(JSON.stringify({ error: "Endpoint not found" }));
 });
 
-server.listen(3000, () => console.log("🚀 Vanilla server responding on port 3000"));
+server.listen(3000, () => console.log(" Vanilla server responding on port 3000"));
