@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const db = require('../Db/db'); 
-const SigninDto = require('../dtos/SigninDto');
-const LoginDto = require('../dtos/LoginDto');
+const SigninDto = require('../Dto/SigninDto');
+const LoginDto = require('../Dto/LoginDto');
 
 class AccountService {
     
