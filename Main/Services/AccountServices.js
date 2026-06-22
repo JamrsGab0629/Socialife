@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const db = require('../db/db'); 
+const db = require('../Db/db'); 
 const SigninDto = require('../dtos/SigninDto');
 const LoginDto = require('../dtos/LoginDto');
 
@@ -14,7 +14,7 @@ class AccountService {
         );
 
         const [existingUsers] = await db.execute(
-            'SELECT id FROM users WHERE username = ? LIMIT 1',
+            'SELECT id FROM accounts WHERE username = ? LIMIT 1',
             [dto.username]
         );
 
@@ -26,7 +26,7 @@ class AccountService {
         const hashedPassword = await bcrypt.hash(dto.password, saltRounds);
 
         const [result] = await db.execute(
-            'INSERT INTO users (name, username, password) VALUES (?, ?, ?)',
+            'INSERT INTO accounts (name, username, password) VALUES (?, ?, ?)',
             [dto.name, dto.username, hashedPassword]
         );
         
@@ -41,7 +41,7 @@ class AccountService {
         const dto = new LoginDto(credentials.username, credentials.password);
 
         const [accounts] = await db.execute(
-            'SELECT id, name, username, password FROM users WHERE username = ? LIMIT 1',
+            'SELECT id, name, username, password FROM accounts WHERE username = ? LIMIT 1',
             [dto.username]
         );
 
