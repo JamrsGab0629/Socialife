@@ -1,7 +1,7 @@
 class LoginDto{
     constructor(body){
-        this.username = username;
-        this.password = password;
+        this.username = body.username;
+        this.password = body.password;
     }
 
     isValid() {

@@ -1,9 +1,9 @@
 class SigninDto {
     constructor(body){
-        this.name = name;
-        this.username = username;
-        this.password = password;
-        this.confirmPass = confirmPass;
+        this.name = body.name;
+        this.username = body.username;
+        this.password = body.password;
+        this.confirmPass = body.confirmPass;
     }
 
     isValid() {
