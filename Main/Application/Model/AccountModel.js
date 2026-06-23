@@ -3,12 +3,12 @@ const bcrypt = require('bcrypt')
 
 class AccountModel {
     async findByUsername(username) {
-        const [existingUsers] = await db.execute( //
+        const [existingUsers] = await db.execute(
             'SELECT id FROM users WHERE username = ? LIMIT 1',
             [username]
         );
 
-        return existingUsers.length > 0 ? existingUsers : [];
+        return existingUsers.length > 0 ? existingUsers : [[]];
     }
 
     async insertAccount(name, username, hashedPassword) {
@@ -17,7 +17,7 @@ class AccountModel {
             [name, username, hashedPassword]
         );
 
-        return result.insertId;
+        return result;
     }
 }
 

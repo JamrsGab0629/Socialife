@@ -30,13 +30,13 @@ describe('AccountModel', () => {
 
             const result = await AccountModel.findByUsername('missingusername');
 
-            expect(result).toEqual([]);
+            expect(result).toEqual([[]]);
         });
     });
 
     describe('InsertAccount', () => {
         test('should return insertid on successfull insertion', async () => {
-            const mockResults = {insertId: 42}
+            const mockResults = [{insertId: 42}];
             db.execute.mockResolvedValue([mockResults]);
 
             const insertId = await AccountModel.insertAccount('Jhon Doe', 'johndoe', 'hashed_pwd');
@@ -45,7 +45,8 @@ describe('AccountModel', () => {
                 'INSERT INTO users (name, username, password) VALUES (?, ?, ?)',
                 ['Jhon Doe', 'johndoe', 'hashed_pwd']
             );
-            expect(insertId).toBe(42);
+
+            expect(insertId).toEqual(mockResults);
         });
     });
 })

@@ -19,4 +19,3 @@ Close(){
 }
 
 module.exports = Scanner;
-

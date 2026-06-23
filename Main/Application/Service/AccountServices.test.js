@@ -23,7 +23,7 @@ describe('AccountService', () => {
 
             AccountModel.findByUsername.mockResolvedValue([[]]);
             bcrypt.hash.mockResolvedValue('hashed_pwd');
-            AccountModel.insertAccount.mockResolvedValue(101);
+            AccountModel.insertAccount.mockResolvedValue({insertId: 101});
 
             const result = await service.createAccount(dto);
 
@@ -31,9 +31,9 @@ describe('AccountService', () => {
                 success: true,
                 message: "Account created successfully",
                 accountId: 101
-            })
+            });
 
-            expect(AccountModel.insertAccount).toHaveBeenCalledWith('John', 'john_dih', 'hashed_pwd')
+            expect(AccountModel.insertAccount).toHaveBeenCalledWith('John', 'john_dih', 'hashed_pwd');
         });
 
         test('should throw error if username is taken', async () => {
@@ -42,7 +42,7 @@ describe('AccountService', () => {
             AccountModel.findByUsername.mockResolvedValue([{id: 1, username: 'john_dih'}]);
 
             await expect(service.createAccount(dto)).rejects.toThrow("This username is already taken");
-        })
+        });
     });
 
     describe('Verify Credentials', () => {
