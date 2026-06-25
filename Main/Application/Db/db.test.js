@@ -13,6 +13,7 @@ describe("DB", () => {
                 [username]
             );
 
+            expect(result).toBeDefined();
             expect(result).toEqual([{id: 1}]);
         });
 
@@ -24,6 +25,7 @@ describe("DB", () => {
                 [username]
             );
 
+            expect(result).toBeDefined();
             expect(result).toEqual([]);
         });
     });
