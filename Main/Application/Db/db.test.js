@@ -2,14 +2,14 @@ const db = require("./db");
 
 describe("DB", () => {
     afterAll(async () => {
-        await db.execute("DELETE FROM `social_media`.`account` WHERE username LIKE 'test%'");
+        await db.execute("DELETE FROM `social_media`.`accounts` WHERE username LIKE 'test%'");
     })
     describe("Select", () => {
         it("should return a spacific data if user exist", async () => {
             const username = "gabriel2026";
 
             const [result] = await db.execute(
-                "SELECT id FROM `social_media`. `account` user WHERE username = ? LIMIT 1",
+                "SELECT id FROM `social_media`. `accounts` user WHERE username = ? LIMIT 1",
                 [username]
             );
 
@@ -20,7 +20,7 @@ describe("DB", () => {
             const username = "xep1234";
 
             const [result] = await db.execute(
-                "SELECT id FROM `social_media`. `account` user WHERE username = ? LIMIT 1",
+                "SELECT id FROM `social_media`. `accounts` user WHERE username = ? LIMIT 1",
                 [username]
             );
 
@@ -35,7 +35,8 @@ describe("DB", () => {
             const password = "test_pwd_hashed";
 
             const [result] = await db.execute(
-                "INSERT INTO 'social_media' . 'account' (name, username, password)  VALUES ( ? , ? , ? )",
+                //  CORRECT: Uses backticks `
+"INSERT INTO `social_media`.`accounts` (name, username, password)  VALUES ( ? , ? , ? )",
                 [name, username, password]
             );
 
@@ -50,7 +51,7 @@ describe("DB", () => {
 
             try {
                 const [result] = await db.execute(
-                    "INSERT INTO `social_media` . `account` (name, username, password)  VALUES ( ? , ? , ? )",
+                    "INSERT INTO `social_media` . `accounts` (name, username, password)  VALUES ( ? , ? , ? )",
                     [name, username, password]
                 );
             } catch (error){
@@ -59,7 +60,7 @@ describe("DB", () => {
 
             try{
                 const [result] = await db.execute(
-                    "INSERT INTO `social_media` . `account` (name, username, password)  VALUES ( ? , ? , ? )",
+                    "INSERT INTO `social_media` . `accounts` (name, username, password)  VALUES ( ? , ? , ? )",
                     [name, username, password]
                 );
             } catch (error){
