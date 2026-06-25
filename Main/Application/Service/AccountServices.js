@@ -4,9 +4,9 @@ const accountModel = require("../Model/AccountModel");
 
 class AccountService {
     async createAccount(dto) {
-        const [account] = await accountModel.findByUsername(dto.username);
+        const account = await accountModel.findByUsername(dto.username);
 
-        if (account.length !== 0){
+        if (account){
             throw new Error("This username is already taken");
         }
 
@@ -23,9 +23,9 @@ class AccountService {
     }
 
     async verifyCredentials(dto) {
-        const [account] = await accountModel.findByUsername(dto.username);
+        const account = await accountModel.findByUsername(dto.username);
 
-        if (account.length === 0) {
+        if (!account) {
             throw new Error("Invalid username or password");
         }
 

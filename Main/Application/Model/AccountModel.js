@@ -8,7 +8,7 @@ class AccountModel {
             [username]
         );
 
-        return existingUsers.length > 0 ? existingUsers : [[]];
+        return existingUsers.length > 0 ? existingUsers[0] : null;
     }
 
     async insertAccount(name, username, hashedPassword) {
@@ -17,7 +17,7 @@ class AccountModel {
             [name, username, hashedPassword]
         );
 
-        return result;
+        return result[0];
     }
 }
 

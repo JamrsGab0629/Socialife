@@ -22,7 +22,7 @@ describe('AccountModel', () => {
                 ['testuser']
             );
 
-            expect(result).toEqual(mockRows);
+            expect(result).toEqual(mockRows[0]);
         });
 
         test('should return empty array if user does not exist', async () => {
@@ -30,7 +30,7 @@ describe('AccountModel', () => {
 
             const result = await AccountModel.findByUsername('missingusername');
 
-            expect(result).toEqual([[]]);
+            expect(result).toBeNull();
         });
     });
 
@@ -46,7 +46,7 @@ describe('AccountModel', () => {
                 ['Jhon Doe', 'johndoe', 'hashed_pwd']
             );
 
-            expect(insertId).toEqual(mockResults);
+            expect(insertId).toEqual(mockResults[0]);
         });
     });
 })

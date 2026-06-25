@@ -21,7 +21,7 @@ describe('AccountService', () => {
         test('should succesfully create an account if username is available', async () => {
             const dto = {name: "John", username: "john_dih", password: "password"};
 
-            AccountModel.findByUsername.mockResolvedValue([[]]);
+            AccountModel.findByUsername.mockResolvedValue(null);
             bcrypt.hash.mockResolvedValue('hashed_pwd');
             AccountModel.insertAccount.mockResolvedValue({insertId: 101});
 
@@ -39,7 +39,7 @@ describe('AccountService', () => {
         test('should throw error if username is taken', async () => {
             const dto = {name: "John", username: "john_dih", password: "password"};
 
-            AccountModel.findByUsername.mockResolvedValue([{id: 1, username: 'john_dih'}]);
+            AccountModel.findByUsername.mockResolvedValue({id: 1, username: 'john_dih'});
 
             await expect(service.createAccount(dto)).rejects.toThrow("This username is already taken");
         });
@@ -49,7 +49,7 @@ describe('AccountService', () => {
         test("Should succesfully log in", async () =>  {
             const dto = {username: "john_dih", password: "password"};
 
-            AccountModel.findByUsername.mockResolvedValue([{id: 1, name: 'John', username: 'john_dih'}]);
+            AccountModel.findByUsername.mockResolvedValue({id: 1, name: 'John', username: 'john_dih'});
             bcrypt.compare.mockResolvedValue(true);
 
             const result = await service.verifyCredentials(dto);
@@ -68,7 +68,7 @@ describe('AccountService', () => {
         test("Should call throw Invalid username or passord if user is not found", async () => {
             const dto = {username: "john_dih", password: "password"};
 
-            AccountModel.findByUsername.mockResolvedValue([[]]);
+            AccountModel.findByUsername.mockResolvedValue(null);
 
             await expect(service.verifyCredentials(dto)).rejects.toThrow("Invalid username or password");
         });
@@ -76,7 +76,7 @@ describe('AccountService', () => {
         test ("Should call throe invalid username or password if password is incorrect", async () => {
             const dto = {username: "john_dih", password: "password"};
 
-            AccountModel.findByUsername([{id: 1, name: "John", username: "john_dih"}]);
+            AccountModel.findByUsername({id: 1, name: "John", username: "john_dih"});
 
             bcrypt.compare.mockResolvedValue(false);
 
