@@ -37,7 +37,7 @@ describe("DB", () => {
             const password = "test_pwd_hashed";
 
             const [result] = await db.execute(
-                //  CORRECT: Uses backticks `
+               // dito may error kanina
 "INSERT INTO `social_media`.`accounts` (name, username, password)  VALUES ( ? , ? , ? )",
                 [name, username, password]
             );
