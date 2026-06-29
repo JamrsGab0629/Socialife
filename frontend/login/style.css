@@ -1,0 +1,104 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.login-card{
+    width:530px;
+    height:680px;
+    background:#87c8f4;
+    border:1px solid #333;
+    border-radius:18px;
+    box-shadow:0 4px 10px rgba(0,0,0,.3);
+    padding:40px 70px;
+}
+
+.logo{
+    text-align:center;
+    font-size:52px;
+    margin:40px 0 100px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-size:22px;
+}
+
+input{
+    width:100%;
+    height:48px;
+    border:1px solid #444;
+    border-radius:25px;
+    padding:0 20px;
+    font-size:18px;
+    outline:none;
+}
+
+.password-box{
+    position:relative;
+}
+
+.password-box input{
+    padding-right:50px;
+}
+
+.password-box i{
+    position:absolute;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:24px;
+    cursor:pointer;
+    color:#222;
+}
+
+.forgot{
+    text-align:right;
+    margin-top:8px;
+}
+
+.forgot a{
+    text-decoration:none;
+    color:#111;
+    font-size:18px;
+}
+
+.signup{
+    text-align:center;
+    margin:45px 0 25px;
+}
+
+.signup a{
+    text-decoration:none;
+    color:#111;
+    font-size:22px;
+}
+
+button{
+    display:block;
+    margin:auto;
+    width:240px;
+    height:75px;
+    border:none;
+    border-radius:15px;
+    background:#648be6;
+    color:#fff;
+    font-size:44px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#4d75d7;
+}
