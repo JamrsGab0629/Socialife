@@ -9,56 +9,80 @@
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body id="login-signup-body">
 
-<div class="signup-card">
+<main id="signup-card" class="login-signup-card">
+    <script type="module" src="JSON/signup.js"></script>
 
     <div class="logo">
-        LOGO
+        <img src="#" alt="LOGO">
     </div>
 
-    <form>
-
-        <label>Username:</label>
-        <input type="text" placeholder="Enter your username">
-
-        <label>Password:</label>
-        <input type="password" placeholder="Enter your password">
-
-        <label>Confirm Password:</label>
-        <div class="password-box">
-            <input type="password" placeholder="Reenter your password">
-            <i class="fa-solid fa-eye"></i>
+    <form class="body">
+        <div class="label-input">
+            <label>Name:</label>
+            <input id="name-input" type="email" placeholder="Enter your gmail address">
         </div>
 
-        <label>Gmail Address:</label>
-        <input type="email" placeholder="Enter your gmail address">
-
-        <div class="login-link">
-            <a href="#">Already have an account?</a>
+        <div class="label-input">
+            <label>Username:</label>
+            <input id="username-input" type="text" placeholder="Enter your username">
         </div>
 
-        <button type="submit">SIGN UP!</button>
+        <div class="label-input">
+            <label>Password:</label>
+            <div id="password" class="password-box">
+                <input id="password-input" type="password" placeholder="Enter your password">
+                <i class="fa-solid fa-eye-slash"></i>
+            </div>
+        </div>
 
+        <div class="label-input">
+            <label>Confirm Password:</label>
+            <div id="confirm-password" class="password-box">
+                <input id="confirm-password-input" type="password" placeholder="Reenter your password">
+                <i class="fa-solid fa-eye-slash"></i>
+            </div>
+        </div>
     </form>
 
-</div>
+    <div class="action">
+        <a href="loginpage.html" id="login-signup">Already have an account?</a>
+
+        <button type="submit" id="signup-button">SIGN UP!</button>
+    </div>
+</main>
 
 <script>
-const eye = document.querySelector(".password-box i");
-const password = document.querySelector(".password-box input");
+    const password_eye = document.querySelector("#password i");
+    const password = document.querySelector("#password input");
 
-eye.addEventListener("click", () => {
-    if (password.type === "password") {
-        password.type = "text";
-        eye.classList.replace("fa-eye", "fa-eye-slash");
-    } else {
-        password.type = "password";
-        eye.classList.replace("fa-eye-slash", "fa-eye");
-    }
-});
+    const confirm_password_eye = document.querySelector("#confirm-password i");
+    const confirm_password = document.querySelector("#confirm-password input");
+
+    password_eye.addEventListener("click", () => {
+        if (password.type === "password") {
+            password.type = "text";
+            password_eye.classList.replace("fa-eye-slash", "fa-eye");
+
+        } else {
+            password.type = "password";
+            password_eye.classList.replace("fa-eye", "fa-eye-slash");
+        }
+    });
+
+    confirm_password_eye.addEventListener("click", () => {
+        if (confirm_password.type === "password") {
+            confirm_password.type = "text";
+            confirm_password_eye.classList.replace("fa-eye-slash", "fa-eye");
+
+        } else {
+            confirm_password.type = "password";
+            confirm_password_eye.classList.replace("fa-eye", "fa-eye-slash");
+        }
+    });
 </script>
 
 </body>
