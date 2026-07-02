@@ -11,39 +11,53 @@
 
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body id="login-signup-body">
+    <script type="module" src="JSON/login.js"></script>
 
-    <div class="login-card">
+    <main id="login-card" class="login-signup-card">
 
         <div class="logo">
-            LOGO
+            <img src="#" alt="LOGO">
         </div>
 
-        <form>
-
-            <label>Username:</label>
-            <input type="text" placeholder="Enter your username">
-
-            <label>Password:</label>
-
-            <div class="password-box">
-                <input type="password" placeholder="Enter your password">
-                <i class="fa-solid fa-eye"></i>
+        <form class="body">
+            <div class="label-input">
+                <label>Username:</label>
+                <input id="username-input" type="text" placeholder="Enter your username">
             </div>
 
-            <div class="forgot">
-                <a href="#">Forgot password?</a>
+            <div class="label-input">
+                <label>Password:</label>
+                    <div class="password-box">
+                <input id="password-input" type="password" placeholder="Enter your password">
+                <i class="fa-solid fa-eye-slash"></i>
+                </div>
             </div>
 
-            <div class="signup">
-                <a href="#">Sign up?</a>
-            </div>
-
-            <button type="submit">LOGIN</button>
-
+            <a href="#">Forgot password?</a>
         </form>
 
-    </div>
+        <div class="action">
+            <a href="signuppage.html">Sign up?</a>
 
+            <button type="submit" id="login-button">LOGIN</button>
+        </div>
+    </main>
+
+    <script>
+        const eye = document.querySelector(".password-box i");
+        const password = document.querySelector(".password-box input");
+
+        eye.addEventListener("click", () => {
+            if (password.type === "password") {
+                password.type = "text";
+                eye.classList.replace("fa-eye-slash", "fa-eye");
+
+            } else {
+                password.type = "password";
+                eye.classList.replace("fa-eye", "fa-eye-slash");
+            }
+        });
+    </script>
 </body>
 </html>
