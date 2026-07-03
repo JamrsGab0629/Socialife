@@ -1,0 +1,149 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+#login-signup-body{
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('PNG/login-signup-background.png');
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.login-signup-card {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width:440px;
+    min-width: 400px;
+    background:#87c8f4;
+    border:1px solid #333;
+    background: rgba(135, 200, 244, 0.45); 
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px); /* For Safari support */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+
+    border-radius:18px;
+    box-shadow:0 4px 10px rgba(0,0,0,.2);
+    padding: 30px 45px;
+}
+
+#signup-card{
+    min-height: 580px;
+}
+
+#login-card{
+    min-height: 500px;
+}
+
+.login-signup-card > .logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align:center;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+.login-signup-card > .body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    padding-bottom: 40px;
+}
+
+.login-signup-card > .body .label-input {
+    padding: 15px 0px 0px 0px;
+}
+
+.login-signup-card > .body label{
+    display:block;
+    font-size:16px;
+    padding: 4px 10px;
+}
+
+.login-signup-card > .body input{
+    width:100%;
+    height:38px;
+    border:1px solid #333;
+    border-radius:15px;
+    padding:0 18px;
+    font-size:16px;
+    outline:none;
+}
+
+.login-signup-card > .body .password-box{
+    position:relative;
+}
+
+.login-signup-card > .body .password-box input{
+    padding-right:50px;
+}
+
+.login-signup-card > .body .password-box i{
+    position:absolute;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    font-size:24px;
+    color:#222;
+}
+
+.login-signup-card > .body a{
+    text-decoration:none;
+    color:#111;
+    text-align:right;
+    margin-top:8px;
+    font-size:18px;
+    margin-left: auto;
+}
+
+.login-signup-card > .action{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 110px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.login-signup-card > .action a{
+    text-decoration:none;
+    color:#111;
+    font-size:14px;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.login-signup-card > .action button{
+    display:block;
+    margin:auto;
+    padding: 20px 40px;
+    border:none;
+    border-radius:15px;
+    background:#648be6;
+    color:#fff;
+    font-size:24px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.login-signup-card a:hover{
+    text-decoration: underline;
+}
+
+.login-signup-card > .action button:hover{
+    background:#4d75d7;
+}

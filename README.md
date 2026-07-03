@@ -1,11 +1,11 @@
 # SociaLife-appsdev
 
 ### PROJECT MANAGER
-- Andrei Luis Lucas(Xep)
-
+- Kim Balagantio
 ### TESTER
 - James Gabriel Santos
 - Andrei Luis Lucas
+- Kim Balagantio
 
 ### Api(Backend)
 - James Gabriel Santos
@@ -16,5 +16,5 @@
 ### Frontend/UI-UX
 - Kim Balagantio
 - John Florence Adriano
-- James Gabriel Santos
+
 

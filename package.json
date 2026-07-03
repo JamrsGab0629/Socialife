@@ -1,0 +1,15 @@
+{
+  "name": "SociaLife",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "mysql2": "^3.22.5"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2"
+  }
+}

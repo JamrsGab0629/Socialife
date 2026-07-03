@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="login-signup-body">
+    <script type="module" src="JSON/login.js"></script>
+
+    <main id="login-card" class="login-signup-card">
+
+        <div class="logo">
+            <img src="#" alt="LOGO">
+        </div>
+
+        <form class="body">
+            <div class="label-input">
+                <label>Username:</label>
+                <input id="username-input" type="text" placeholder="Enter your username">
+            </div>
+
+            <div class="label-input">
+                <label>Password:</label>
+                    <div class="password-box">
+                <input id="password-input" type="password" placeholder="Enter your password">
+                <i class="fa-solid fa-eye-slash"></i>
+                </div>
+            </div>
+
+            <!-- <a href="#" display="none">Forgot password?</a> -->
+        </form>
+
+        <div class="action">
+            <a href="signuppage.html">Sign up?</a>
+
+            <button type="submit" id="login-button">LOGIN</button>
+        </div>
+    </main>
+
+    <script>
+        const eye = document.querySelector(".password-box i");
+        const password = document.querySelector(".password-box input");
+
+        eye.addEventListener("click", () => {
+            if (password.type === "password") {
+                password.type = "text";
+                eye.classList.replace("fa-eye-slash", "fa-eye");
+
+            } else {
+                password.type = "password";
+                eye.classList.replace("fa-eye", "fa-eye-slash");
+            }
+        });
+    </script>
+</body>
+</html>

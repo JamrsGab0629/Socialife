@@ -1,0 +1,30 @@
+/* ===========================
+   SETTINGS PAGE
+=========================== */
+
+.settings-page{
+    padding:60px 90px;
+    display:flex;
+    flex-direction:column;
+    gap:35px;
+}
+
+.settings-page button{
+    width:320px;
+    background:none;
+    border:none;
+    font-size:34px;
+    text-align:left;
+    cursor:pointer;
+    transition:.25s;
+    color:#000;
+}
+
+.settings-page button:hover{
+    color:#4e86b8;
+    transform:translateX(8px);
+}
+
+.active{
+    font-weight:bold;
+}
