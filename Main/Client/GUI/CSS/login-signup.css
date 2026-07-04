@@ -1,24 +1,17 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
-
-#login-signup-body{
+body{
     min-height: 100vh;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('PNG/login-signup-background.png');
+    background: url('../PNG/login-signup-background.png');
     background-size: cover;
     background-position: center bottom;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
 
-.login-signup-card {
+main {
     display: flex;
     flex-direction: column;
     width: 90%;
@@ -36,15 +29,15 @@
     padding: 30px 45px;
 }
 
-#signup-card{
+.signup-card{
     min-height: 580px;
 }
 
-#login-card{
+.login-card{
     min-height: 500px;
 }
 
-.login-signup-card > .logo{
+main > .logo{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -53,7 +46,7 @@
     flex-shrink: 0;
 }
 
-.login-signup-card > .body {
+main > .body {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -62,17 +55,17 @@
     padding-bottom: 40px;
 }
 
-.login-signup-card > .body .label-input {
+main > .body .label-input {
     padding: 15px 0px 0px 0px;
 }
 
-.login-signup-card > .body label{
+main > .body label{
     display:block;
     font-size:16px;
     padding: 4px 10px;
 }
 
-.login-signup-card > .body input{
+main > .body input{
     width:100%;
     height:38px;
     border:1px solid #333;
@@ -82,15 +75,15 @@
     outline:none;
 }
 
-.login-signup-card > .body .password-box{
+main > .body .password-box{
     position:relative;
 }
 
-.login-signup-card > .body .password-box input{
+main > .body .password-box input{
     padding-right:50px;
 }
 
-.login-signup-card > .body .password-box i{
+main > .body .password-box i{
     position:absolute;
     right:18px;
     top:50%;
@@ -100,7 +93,7 @@
     color:#222;
 }
 
-.login-signup-card > .body a{
+main > .body a{
     text-decoration:none;
     color:#111;
     text-align:right;
@@ -109,7 +102,7 @@
     margin-left: auto;
 }
 
-.login-signup-card > .action{
+main > .action{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -119,7 +112,7 @@
     flex-shrink: 0;
 }
 
-.login-signup-card > .action a{
+main > .action a{
     text-decoration:none;
     color:#111;
     font-size:14px;
@@ -127,7 +120,7 @@
     text-align: center;
 }
 
-.login-signup-card > .action button{
+main > .action button{
     display:block;
     margin:auto;
     padding: 20px 40px;
@@ -140,10 +133,10 @@
     transition:.3s;
 }
 
-.login-signup-card a:hover{
+main a:hover{
     text-decoration: underline;
 }
 
-.login-signup-card > .action button:hover{
+main > .action button:hover{
     background:#4d75d7;
 }
