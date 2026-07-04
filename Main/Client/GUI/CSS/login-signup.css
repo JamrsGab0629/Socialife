@@ -16,7 +16,7 @@ main {
     flex-direction: column;
     width: 90%;
     max-width:440px;
-    min-width: 400px;
+    min-width: 390px;
     background:#87c8f4;
     border:1px solid #333;
     background: rgba(135, 200, 244, 0.45); 
