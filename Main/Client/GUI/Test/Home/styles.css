@@ -37,8 +37,12 @@
     position: fixed;
     top: 0;
     left: 0;
+<<<<<<< HEAD
     max-width: 250px;
     width: 250px;
+=======
+    width: 300px;
+>>>>>>> f0f8d7e (Added home for the post of the users)
     height: 100vh;
     z-index: 2;
   }
@@ -149,6 +153,10 @@
     background: var(--card-bg);
     border-left: 1px solid var(--card-border);
     border-right: 1px solid var(--card-border);
+<<<<<<< HEAD
+=======
+    margin-left: 300px;
+>>>>>>> f0f8d7e (Added home for the post of the users)
     margin-right: 340px;
     height: 100vh;
     overflow-y: auto;
@@ -418,6 +426,7 @@
     justify-content: center;
   }
 
+<<<<<<< HEAD
   @media (min-width: 641px) and (max-width: 900px) {
     .sidebar { width: 220px; }
     .main { margin-left: 220px; margin-right: 0;}
@@ -427,6 +436,20 @@
   @media (max-width: 640px) {
     .sidebar {
       max-width: 100%;
+=======
+  @media (max-width: 900px) {
+    .sidebar { width: 220px; }
+    .main { margin-left: 220px; margin-right: 240px; }
+    .right-col { width: 240px; }
+  }
+  @media (max-width: 760px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; margin-right: 0; }
+    .right-col { display: none; }
+  }
+  @media (max-width: 640px) {
+    .sidebar {
+>>>>>>> f0f8d7e (Added home for the post of the users)
       width: auto;
       right: 0;
       height: 60px;
@@ -450,7 +473,11 @@
       margin-right: 10px;
     }
     .profile-name { font-size: 14px; }
+<<<<<<< HEAD
     .nav, .logout, .sidebar-spacer , .right-col{ display: none; }
+=======
+    .nav, .logout, .sidebar-spacer { display: none; }
+>>>>>>> f0f8d7e (Added home for the post of the users)
     .mobile-bottom-nav { display: flex; }
     .main {
       margin-left: 0;
