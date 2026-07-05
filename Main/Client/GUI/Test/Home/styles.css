@@ -38,11 +38,16 @@
     top: 0;
     left: 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
     max-width: 250px;
     width: 250px;
 =======
     width: 300px;
 >>>>>>> f0f8d7e (Added home for the post of the users)
+=======
+    max-width: 250px;
+    width: 250px;
+>>>>>>> bd6205b (feat: add messaging page with sidebar, mobile navigation, and chat functionality)
     height: 100vh;
     z-index: 2;
   }
@@ -154,9 +159,13 @@
     border-left: 1px solid var(--card-border);
     border-right: 1px solid var(--card-border);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     margin-left: 300px;
 >>>>>>> f0f8d7e (Added home for the post of the users)
+=======
+    margin-left: 250px;
+>>>>>>> bd6205b (feat: add messaging page with sidebar, mobile navigation, and chat functionality)
     margin-right: 340px;
     height: 100vh;
     overflow-y: auto;
@@ -427,6 +436,7 @@
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   @media (min-width: 641px) and (max-width: 900px) {
     .sidebar { width: 220px; }
     .main { margin-left: 220px; margin-right: 0;}
@@ -438,18 +448,21 @@
       max-width: 100%;
 =======
   @media (max-width: 900px) {
+=======
+  @media (min-width: 641px) and (max-width: 900px) {
+>>>>>>> bd6205b (feat: add messaging page with sidebar, mobile navigation, and chat functionality)
     .sidebar { width: 220px; }
-    .main { margin-left: 220px; margin-right: 240px; }
-    .right-col { width: 240px; }
-  }
-  @media (max-width: 760px) {
-    .sidebar { width: 200px; }
-    .main { margin-left: 200px; margin-right: 0; }
+    .main { margin-left: 220px; margin-right: 0;}
     .right-col { display: none; }
   }
+
   @media (max-width: 640px) {
     .sidebar {
+<<<<<<< HEAD
 >>>>>>> f0f8d7e (Added home for the post of the users)
+=======
+      max-width: 100%;
+>>>>>>> bd6205b (feat: add messaging page with sidebar, mobile navigation, and chat functionality)
       width: auto;
       right: 0;
       height: 60px;
@@ -474,10 +487,14 @@
     }
     .profile-name { font-size: 14px; }
 <<<<<<< HEAD
+<<<<<<< HEAD
     .nav, .logout, .sidebar-spacer , .right-col{ display: none; }
 =======
     .nav, .logout, .sidebar-spacer { display: none; }
 >>>>>>> f0f8d7e (Added home for the post of the users)
+=======
+    .nav, .logout, .sidebar-spacer , .right-col{ display: none; }
+>>>>>>> bd6205b (feat: add messaging page with sidebar, mobile navigation, and chat functionality)
     .mobile-bottom-nav { display: flex; }
     .main {
       margin-left: 0;
