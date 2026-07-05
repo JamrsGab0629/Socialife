@@ -38,7 +38,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 300px;
+    max-width: 300px;
+    width: 250px;
     height: 100vh;
     z-index: 2;
   }
@@ -149,7 +150,7 @@
     background: var(--card-bg);
     border-left: 1px solid var(--card-border);
     border-right: 1px solid var(--card-border);
-    margin-left: 300px;
+    margin-left: 250px;
     margin-right: 340px;
     height: 100vh;
     overflow-y: auto;
@@ -475,7 +476,7 @@
 .conv-list {
   position: fixed;
   top: 0;
-  left: 300px;
+  left: 250px;
   width: 320px;
   height: 100vh;
   background: var(--card-bg);
@@ -573,7 +574,7 @@
 }
 
 .chat-panel {
-  margin-left: 620px;
+  margin-left: 570px;
   margin-right: 0;
   height: 100vh;
   display: flex;
@@ -740,15 +741,17 @@
 .send-btn:active { transform: translateY(0) scale(0.96); }
 .send-btn:disabled { background: #C7CDD5; cursor: default; box-shadow: none; }
 
-@media (max-width: 900px) {
-  .conv-list { left: 220px; width: 280px; }
-  .chat-panel { margin-left: 500px; }
-}
-@media (max-width: 760px) {
-  .conv-list { left: 200px; width: 260px; }
-  .chat-panel { margin-left: 460px; }
-}
+  @media (min-width: 641px) and (max-width: 900px) {
+    .sidebar { width: 220px; }
+    .conv-list { display: none;}
+    .chat-panel { margin-left: 220px;}
+  }
+
 @media (max-width: 640px) {
+  .sidebar {
+    max-width: 100%;
+  }
+
   .conv-list {
     left: 0;
     top: 60px;
