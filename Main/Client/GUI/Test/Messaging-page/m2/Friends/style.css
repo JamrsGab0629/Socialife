@@ -211,10 +211,6 @@ body {
    MOBILE MEDIA QUERY BREAKPOINT
    ========================================================================== */
 @media (max-width: 768px) {
-  .sidebar {
-    display: none; /* Hide Desktop side configurations */
-  }
-
   .friends-main {
     padding: 20px 16px 90px 16px !important; /* Extra bottom spacing so content clears navbar */
     width: 100%;
@@ -277,4 +273,4 @@ body {
     min-width: 10px;
     text-align: center;
   }
-}
+} 
