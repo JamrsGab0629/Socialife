@@ -1,0 +1,289 @@
+:root {
+    --sidebar-blue: #4a78b5;
+    --sidebar-blue-dark: #3d65a0;
+    --bg-page: #edeff2;
+    --card-bg: #ffffff;
+    --card-border: #e1e4e8;
+    --text-dark: #1c2733;
+    --text-muted: #8a94a0;
+    --accent-beige: #f5efe4;
+    --link-blue: #3b6fb0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+        sans-serif;
+    background: var(--bg-page);
+    color: var(--text-dark);
+    overflow: hidden;
+}
+
+.layout {
+    display: block;
+    height: 100vh;
+    position: relative;
+}
+
+/* ---------- SIDSEBAR ---------- */
+
+/* ---------- CENTER FEED ---------- */
+
+/* ---------- RIGHT PANEL ---------- */
+
+
+/* Bottom nav is hidden by default; only shown on narrow screens */
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: linear-gradient(180deg,
+            var(--sidebar-blue) 0%,
+            var(--sidebar-blue-dark) 100%);
+    z-index: 20;
+    align-items: stretch;
+    justify-content: space-around;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mnav-item {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.mnav-item.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.mnav-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.mnav-badge {
+    position: absolute;
+    top: 2px;
+    right: 20%;
+    background: #e8536b;
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =========================================================
+MESSAGING PAGE
+========================================================= */
+
+
+/* ---- Signature touch: trail-style date divider ---- */
+.trail-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 18px 0 10px;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.trail-divider::before,
+.trail-divider::after {
+    content: "";
+    flex: 1;
+    height: 0;
+    border-top: 1px dashed #d7dce2;
+}
+
+.trail-divider svg {
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+/* ---- Typing indicator ---- */
+.typing-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.typing-bubble {
+    background: #eef0f3;
+    border-radius: 18px;
+    border-bottom-left-radius: 5px;
+    padding: 11px 16px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.typing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #9aa3ad;
+    animation: typingBounce 1.2s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes typingBounce {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+
+    30% {
+        transform: translateY(-4px);
+        opacity: 1;
+    }
+}
+
+/* ---- Double-click reaction pop ---- */
+.msg-bubble {
+    position: relative;
+    cursor: pointer;
+}
+
+.reaction-pop {
+    position: absolute;
+    top: -22px;
+    font-size: 16px;
+    animation: reactionFloat 0.9s ease forwards;
+    pointer-events: none;
+}
+
+.msg-row.received .reaction-pop {
+    left: 6px;
+}
+
+.msg-row.sent .reaction-pop {
+    right: 6px;
+}
+
+@keyframes reactionFloat {
+    0% {
+        transform: translateY(4px) scale(0.6);
+        opacity: 0;
+    }
+
+    25% {
+        transform: translateY(-6px) scale(1.15);
+        opacity: 1;
+    }
+
+    80% {
+        transform: translateY(-16px) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-24px) scale(0.9);
+        opacity: 0;
+    }
+}
+
+.chat-input-bar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    border-top: 1px solid var(--card-border);
+    background: var(--card-bg);
+}
+
+.chat-input {
+    flex: 1;
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 11px 18px;
+    font-size: 14.5px;
+    font-family: inherit;
+    outline: none;
+    color: var(--text-dark);
+    transition:
+        box-shadow 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.chat-input:focus {
+    border-color: var(--link-blue);
+    box-shadow: 0 0 0 2px rgba(59, 111, 176, 0.18);
+}
+
+.send-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg,
+            var(--link-blue) 0%,
+            var(--sidebar-blue-dark) 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
+    box-shadow: 0 2px 6px rgba(59, 111, 176, 0.35);
+}
+
+.send-btn:hover {
+    transform: translateY(-1px) scale(1.04);
+}
+
+.send-btn:active {
+    transform: translateY(0) scale(0.96);
+}
+
+.send-btn:disabled {
+    background: #c7cdd5;
+    cursor: default;
+    box-shadow: none;
+}
