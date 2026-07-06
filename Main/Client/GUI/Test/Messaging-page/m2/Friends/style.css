@@ -216,12 +216,15 @@ body {
    ========================================================================== */
 @media (max-width: 768px) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   .sidebar {
     display: none; /* Hide Desktop side configurations */
   }
 
 >>>>>>> bd6205b (feat: add messaging page with sidebar, mobile navigation, and chat functionality)
+=======
+>>>>>>> cd7f202 (Refactor messaging page layout and styles; remove unused scripts and styles)
   .friends-main {
     padding: 20px 16px 90px 16px !important; /* Extra bottom spacing so content clears navbar */
     width: 100%;
@@ -285,7 +288,11 @@ body {
     text-align: center;
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 } 
 =======
 }
 >>>>>>> bd6205b (feat: add messaging page with sidebar, mobile navigation, and chat functionality)
+=======
+} 
+>>>>>>> cd7f202 (Refactor messaging page layout and styles; remove unused scripts and styles)
