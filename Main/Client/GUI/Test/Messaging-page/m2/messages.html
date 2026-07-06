@@ -1,83 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>Socialife - Messages</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <title>Socialife - Messages</title>
+
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/sidebar.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/conv.css">
+    <link rel="stylesheet" href="./css/msg.css">
+    <link rel="stylesheet" href="./css/media.css">
 </head>
+
 <body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <a class="logo" href="messages.html"><-</a>
 
-<div class="layout">
+        <div class="profile-block">
+            <div class="avatar-ring"><img src="./png/James.jpg" alt="James Gabriel Santos"></div>
+            <div class="profile-name">James Gabriel Santos</div>
+        </div>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <a class="logo" href="index.html"><-</a>
+        <nav class="nav">
+            <a class="nav-item" href="../../Home/Home.html">
+                <img class="simple-icon" src="./png/home.png">
+                Home
+            </a>
+            <a class="nav-item" href="">
+                <img class="simple-icon" src="./png/save.png">
+                Saved
+            </a>
+            <a class="nav-item" href="">
+                <img class="simple-icon" src="./png/settings.png">
+                Settings
+            </a>
+            <a class="nav-item" href="">
+                <img class="simple-icon" src="./png/group.png">
+                Friends
+            </a>
+            <a class="nav-item" href="">
+                <img class="simple-icon" src="./png/logout.png">
+                Log Out
+            </a>
+        </nav>
+    </aside>
 
-    <div class="profile-block">
-      <div class="avatar-ring"><img src="James.jpg" alt="James Gabriel Santos" width="142" height="142" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;"></div>
-      <div class="profile-name">James Gabriel Santos</div>
-    </div>
-
-    <nav class="nav">
-      <a class="nav-item" href="../../Home/Home.html">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
-        Home
-      </a>
-      <a class="nav-item" href="">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12v18l-6-4-6 4V3z"/></svg>
-        Saved
-      </a>
-      <a class="nav-item" href="">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>
-        Settings
-      </a>
-      <a class="nav-item" href="" style="position:relative;">
-        <span class="nav-badge">1</span>
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 20v-1a4 4 0 00-4-4H7a4 4 0 00-4 4v1"/><circle cx="9" cy="7" r="4"/><path d="M23 20v-1a4 4 0 00-3-3.9"/><path d="M16 3.1a4 4 0 010 7.8"/></svg>
-        Friends
-      </a>
+    <!-- MOBILE BOTTOM NAV -->
+    <nav class="mobile-bottom-nav">
+        <a class="nav-item" href="../../Home/Home.html">
+            <img class="simple-icon" src="./png/home.png">
+            Home
+        </a>
+        <a class="nav-item" href="">
+            <img class="simple-icon" src="./png/save.png">
+            Saved
+        </a>
+        <a class="nav-item" href="">
+            <img class="simple-icon" src="./png/settings.png">
+            Settings
+        </a>
+        <a class="nav-item" href="">
+            <img class="simple-icon" src="./png/group.png">
+            Friends
+        </a>
+        <a class="nav-item" href="">
+            <img class="simple-icon" src="./png/logout.png">
+            Log Out
+        </a>
     </nav>
 
-    <div class="sidebar-spacer"></div>
+    <!-- CONVERSATION LIST -->
+    <!-- CHAT PANEL -->
+    <main id="main-content">
 
-    <a class="logout" href="">
-      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
-      Log Out
-    </a>
-  </aside>
+    </main>
 
-  <!-- MOBILE BOTTOM NAV -->
-  <nav class="mobile-bottom-nav">
-    <a class="mnav-item" href="index.html">
-      <svg class="mnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
-      <span>Home</span>
-    </a>
-    <a class="mnav-item" href="">
-      <svg class="mnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12v18l-6-4-6 4V3z"/></svg>
-      <span>Saved</span>
-    </a>
-    <a class="mnav-item" href="">
-      <svg class="mnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>
-      <span>Settings</span>
-    </a>
-    <a class="mnav-item" href="">
-      <span class="mnav-badge">1</span>
-      <svg class="mnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 20v-1a4 4 0 00-4-4H7a4 4 0 00-4 4v1"/><circle cx="9" cy="7" r="4"/><path d="M23 20v-1a4 4 0 00-3-3.9"/><path d="M16 3.1a4 4 0 010 7.8"/></svg>
-      <span>Friends</span>
-    </a>
-    <a class="mnav-item" href="">
-      <svg class="mnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
-      <span>Log Out</span>
-    </a>
-  </nav>
-
-  <!-- CONVERSATION LIST -->
-  <!-- CHAT PANEL -->
-  <main id="main-content">
-
-  </main>
-
-<script src="script.js"></script>
-<script src="main-content.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
+
 </html>
