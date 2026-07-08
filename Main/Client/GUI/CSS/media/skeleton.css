@@ -19,17 +19,12 @@
     #main-content {
         margin-left: 220px;
     }
-
-    .conv-list {
-        width: 269px;
-    }
-
-    .chat-panel {
-        margin-left: 269px;
-    }
 }
 
 @media (max-width: 768px) {
+    /* ::-webkit-scrollbar {
+        display: none;
+    } */
     .sidebar {
         max-width: 100%;
         width: 100%;
@@ -72,22 +67,12 @@
 
     #main-content {
         margin-left: 0;
-    }
-
-    .conv-list {
-        left: 0;
-        top: 60px;
-        width: 100%;
-        height: calc(100vh - 60px - 64px);
-    }
-
-    .chat-panel {
-        margin-left: 0;
         margin-top: 60px;
         height: calc(100vh - 60px - 64px);
     }
 
     .mobile-bottom-nav {
+        max-height: 64px;
         display: flex;
     }
 }

@@ -4,32 +4,34 @@ function getId(name){
     return val;
 }
 
-window.addEventListener("DOMContentLoaded", async () => {
+export async function initMess() {
+    console.log("Mess init")
+    
     const mainView = getId('main-content');
 
     const html = {}
 
     try {
         const response = (async () => {
-            const [chatRes, convRes] = await Promise.all([
-                fetch('./chat-panel.html'),
-                fetch('./conv-list.html')
+            const [convRes, msgRes] = await Promise.all([
+                fetch('./html/mess-conv.html'),
+                fetch('./html/mess-msg.html')
             ]);
 
-            if(!chatRes.ok || !convRes.ok) throw new Error(`HTTP error! chat status: ${chatRes.status} | conv status: ${convRes.status}`);
+            if(!convRes.ok || !msgRes.ok) throw new Error(`HTTP error! chat status: ${convRes.status} | conv status: ${msgRes.status}`);
 
-            const [chatData, convData] = await Promise.all([
-                chatRes.text(),
-                convRes.text()
+            const [convDat, msgDat] = await Promise.all([
+                convRes.text(),
+                msgRes.text()
             ]);
 
-            return {chatData, convData};
+            return {convDat, msgDat};
         });
 
         const data = await response();
 
-        html.chat = data.chatData;
-        html.conv = data.convData;
+        html.conv = data.convDat;
+        html.msg = data.msgDat;
     } catch (error) {
         console.error(`Failed to load`, error);
         return;
@@ -44,15 +46,15 @@ window.addEventListener("DOMContentLoaded", async () => {
             const view = () => {
                 event.preventDefault();
                 console.log("View messages");
-                mainView.innerHTML = html.chat;
+                mainView.innerHTML = html.msg;
             }
 
             getId("andrei").addEventListener('click', view);
         }
-        else mainView.innerHTML = html.conv + html.chat; // It's desktop
+        else mainView.innerHTML = html.conv + html.msg; // It's desktop
     }
 
     resize(mediaQuery);
 
     mediaQuery.addEventListener('change', resize);
-});
+}
