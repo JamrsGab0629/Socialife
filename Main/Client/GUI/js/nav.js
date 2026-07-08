@@ -73,13 +73,22 @@ async function fetchHtml() {
 window.addEventListener("DOMContentLoaded", async () => {
     const main_view = getId('main-content');
 
-    const id = {
+    const nav_id = {
         home: getId("home-nav"),
         saved: getId("saved-nav"),
         settings: getId("settings-nav"),
-        freinds: getId("friends-nav"),
+        friends: getId("friends-nav"),
         logout: getId("logout-nav")
     }
+
+    const mobile_nav_id = {
+        home: getId("mobile-home-nav"),
+        saved: getId("mobile-saved-nav"),
+        settings: getId("mobile-settings-nav"),
+        friends: getId("mobile-friends-nav"),
+        logout: getId("mobile-logout-nav")
+    }
+
     const html = await fetchHtml();
 
     if(!html) {
@@ -88,19 +97,21 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 
     // initialize mone when opening
-    view_main(main_view, html, 'friends');
+    view_main(main_view, html, 'home');
 
-    const addSafeListener = (element, event, callback) => {
-            if (element) element.addEventListener(event, callback);
+    // safe listener
+    const navListener = (id, view_name) => {
+        id.addEventListener('click', (e) => {
+            e.preventDefault();
+            view_main(main_view, html, view_name);
+        });
     };
 
-    addSafeListener(id.home, 'click', () => {
-        console.log("Activated home nav");
-        view_main(main_view, html, 'home');
-    });
+    // side-nav
+    navListener(nav_id.home, 'home');
+    navListener(nav_id.friends, 'friends');
 
-    addSafeListener(id.friends, 'click', () => {
-        console.log("Activated friends nav"); 
-        view_main(main_view, html, 'friends');
-    });
+    // mobile-nav
+    navListener(mobile_nav_id.home, 'home');
+    navListener(mobile_nav_id.friends, 'friends');
 });
