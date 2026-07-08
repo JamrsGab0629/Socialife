@@ -13,6 +13,11 @@ async function view_main(main_view, html, nav){
             home_module.initHome();
             break;
         }
+        case 'saved' : {
+            main_view.innerHTML = html.saved;
+
+            break;
+        }
         case "friends": {
             main_view.innerHTML = html.friends;
 
@@ -40,27 +45,30 @@ async function fetchHtml() {
 
     try {
         const response = (async () => {
-            const [feedRes, suggestRes, freindsRes] = await Promise.all([
+            const [feedRes, suggestRes, savedRes, freindsRes] = await Promise.all([
                 fetch('./html/home-feed.html'),
                 fetch('./html/home-suggest.html'),
+                fetch('./html/saved.html'),
                 fetch('./html/friends.html')
             ]);
 
-            if(!feedRes.ok || !suggestRes.ok || !freindsRes.ok) throw new Error(`response failed: feed code ${feedRes.status} , suggest code ${suggestRes.status}, friends code ${freindsRes.status}`);
+            if(!feedRes.ok || !suggestRes.ok || !savedRes.ok || !freindsRes.ok) throw new Error(`response failed: \n> feed code ${feedRes.status} \n> suggest code ${suggestRes.status} \n> saved code ${savedRes.status} \n> friends code ${freindsRes.status}`);
 
-            const [feedDat, suggestDat, friendsDat] = await Promise.all([
+            const [feedDat, suggestDat, savedDat, friendsDat] = await Promise.all([
                 feedRes.text(),
                 suggestRes.text(),
+                savedRes.text(),
                 freindsRes.text()
             ]);
 
-            return {feedDat, suggestDat, friendsDat};
+            return {feedDat, suggestDat, savedDat, friendsDat};
         });
 
         const data = await response();
 
         html.feed = data.feedDat;
         html.suggest = data.suggestDat;
+        html.saved = data.savedDat;
         html.friends = data.friendsDat;
     } catch (error) {
         console.error(`Failed to load`, error);
@@ -97,7 +105,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 
     // initialize mone when opening
-    view_main(main_view, html, 'home');
+    view_main(main_view, html, 'saved');
 
     // safe listener
     const navListener = (id, view_name) => {
