@@ -14,8 +14,14 @@ export async function initHome(params) {
         timeline: getId("timeline-icon")
     };
 
-    id.message.addEventListener('click', async () => {
-        const message_module = await import(`../js/message.js?v=${Date.now()}`);
-        message_module.initMess();
-    });
+    const initModule = (id, filename) => {
+        id.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const module = await import(`../js/${filename}?v=${Date.now()}`);
+            module.init();
+        });
+    };
+
+    initModule(id.message, 'message.js');
+    initModule(id.timeline, 'timeline.js');
 }

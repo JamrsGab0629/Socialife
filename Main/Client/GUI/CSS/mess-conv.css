@@ -36,10 +36,9 @@
     padding: 9px 14px;
 }
 
-.conv-search svg {
-    flex-shrink: 0;
-    opacity: 0.6;
-    color: var(--text-muted);
+.conv-search img{
+    width: 15px;
+    height: 15px;
 }
 
 .conv-search input {
