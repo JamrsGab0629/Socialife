@@ -1,4 +1,4 @@
-body{
+.login-signup {
     min-height: 100vh;
     width: 100%;
     display: flex;
@@ -30,23 +30,24 @@ main {
 }
 
 .signup-card{
-    min-height: 580px;
+    min-height: 680px;
 }
 
 .login-card{
     min-height: 500px;
 }
 
-main > .logo{
+.logo {
     display: flex;
-    align-items: center;
+    flex-direction: row;
     justify-content: center;
-    text-align:center;
+    align-items: center;
     height: 80px;
     flex-shrink: 0;
+    overflow: hidden;
 }
 
-main > .body {
+.body {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -55,17 +56,17 @@ main > .body {
     padding-bottom: 40px;
 }
 
-main > .body .label-input {
+.body .label-input {
     padding: 15px 0px 0px 0px;
 }
 
-main > .body label{
+.body label{
     display:block;
     font-size:16px;
     padding: 4px 10px;
 }
 
-main > .body input{
+.body input{
     width:100%;
     height:38px;
     border:1px solid #333;
@@ -75,15 +76,15 @@ main > .body input{
     outline:none;
 }
 
-main > .body .password-box{
+.body .password-box{
     position:relative;
 }
 
-main > .body .password-box input{
+.body .password-box input{
     padding-right:50px;
 }
 
-main > .body .password-box i{
+.body .password-box i{
     position:absolute;
     right:18px;
     top:50%;
@@ -93,7 +94,7 @@ main > .body .password-box i{
     color:#222;
 }
 
-main > .body a{
+.body a{
     text-decoration:none;
     color:#111;
     text-align:right;
@@ -102,7 +103,7 @@ main > .body a{
     margin-left: auto;
 }
 
-main > .action{
+.action{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -112,7 +113,7 @@ main > .action{
     flex-shrink: 0;
 }
 
-main > .action a{
+.action a{
     text-decoration:none;
     color:#111;
     font-size:14px;
@@ -120,7 +121,7 @@ main > .action a{
     text-align: center;
 }
 
-main > .action button{
+.action button{
     display:block;
     margin:auto;
     padding: 20px 40px;
@@ -137,6 +138,6 @@ main a:hover{
     text-decoration: underline;
 }
 
-main > .action button:hover{
+.action button:hover{
     background:#4d75d7;
 }
