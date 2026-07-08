@@ -67,16 +67,9 @@
     flex-shrink: 0;
 }
 
-.notif-avatar {
-    width: 50px;
+.notif-avatar-wrap img {
     height: 50px;
-    border-radius: 50%;
-    display: block;
-}
-
-.notif-avatar svg,
-.notif-avatar img {
-    display: block;
+    width: 50px;
     border-radius: 50%;
 }
 
@@ -94,11 +87,17 @@
 }
 
 .notif-badge-icon.like {
-    background: var(--link-blue);
+    background-image: url("../images/icon/liked.png");
+    background-size: contain;     /* Forces the image to fit inside the 21x21 box */
+    background-repeat: no-repeat; /* Prevents the image from tiling */
+    background-position: center;  /* Centers it nicely */
 }
 
 .notif-badge-icon.comment {
-    background: #3BB273;
+    background-image: url("../images/icon/commented.png");
+    background-size: contain;     /* Forces the image to fit inside the 21x21 box */
+    background-repeat: no-repeat; /* Prevents the image from tiling */
+    background-position: center;  /* Centers it nicely */
 }
 
 .notif-body {
