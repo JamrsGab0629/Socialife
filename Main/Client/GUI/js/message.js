@@ -4,9 +4,9 @@ function getId(name){
     return val;
 }
 
-export async function initMess() {
+export async function init() {
     console.log("Mess init")
-    
+
     const mainView = getId('main-content');
 
     const html = {}
