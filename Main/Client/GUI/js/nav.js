@@ -29,17 +29,6 @@ async function view_main(main_view, html, nav){
     }
 }
 
-// async function navFactory(main_view, html, nav){
-//     switch(nav) {
-//         case "home" : {
-//             return 
-//         }
-//         default : {
-//             console.error(`nav name not valid ${nav}`);
-//         }
-//     }
-// }
-
 async function fetchHtml() {
     const html = {}
 
@@ -105,7 +94,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 
     // initialize mone when opening
-    view_main(main_view, html, 'saved');
+    view_main(main_view, html, 'home');
 
     // safe listener
     const navListener = (id, view_name) => {
@@ -117,9 +106,11 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     // side-nav
     navListener(nav_id.home, 'home');
+    navListener(nav_id.saved, 'saved');
     navListener(nav_id.friends, 'friends');
 
     // mobile-nav
     navListener(mobile_nav_id.home, 'home');
+    navListener(mobile_nav_id.saved, 'saved');
     navListener(mobile_nav_id.friends, 'friends');
 });
