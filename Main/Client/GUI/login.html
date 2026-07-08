@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
 
     <!-- Font Awesome -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+<<<<<<< HEAD:Main/Client/GUI/loginpage.html
     <link rel="stylesheet" href="css/login-signup.css">
     <link rel="stylesheet" href="css/styles.css">
 <<<<<<< HEAD
@@ -18,14 +19,20 @@
 >>>>>>> 8fb32d1 ("Modified the name and css link")
 =======
 >>>>>>> 6161e91 (Refactor file paths for images and styles, remove homepage, and add saved posts page)
+=======
+    <link rel="stylesheet" href="./css/login-signup.css">
+    <link rel="stylesheet" href="./css/global.css">
+>>>>>>> 657fe78 (Implement login and signup pages: add HTML structure, styles, and functionality for user authentication):Main/Client/GUI/login.html
 </head>
-<body>
-    <script type="module" src="JSON/login.js"></script>
+
+<body class="login-signup">
+    <script type="module" src="./js/login.js"></script>
 
     <main class="login-card">
 
         <div class="logo">
-            <img src="#" alt="LOGO">
+            <img width="80px" height="80px" src="./images/Socialife-stamp.png" alt="Socialife-Stamp">
+            <img width="160px" height="80px" class="logo" src="./images/Socialife-script.png" alt="Socialife-Script">
         </div>
 
         <form class="body">
@@ -36,9 +43,9 @@
 
             <div class="label-input">
                 <label>Password:</label>
-                    <div class="password-box">
-                <input id="password-input" type="password" placeholder="Enter your password">
-                <i class="fa-solid fa-eye-slash"></i>
+                <div class="password-box">
+                    <input id="password-input" type="password" placeholder="Enter your password">
+                    <i class="fa-solid fa-eye-slash"></i>
                 </div>
             </div>
 
@@ -46,7 +53,7 @@
         </form>
 
         <div class="action">
-            <a href="signuppage.html">Sign up?</a>
+            <a href="signup.html">Sign up?</a>
 
             <button type="submit" id="login-button">LOGIN</button>
         </div>
@@ -68,4 +75,5 @@
         });
     </script>
 </body>
+
 </html>

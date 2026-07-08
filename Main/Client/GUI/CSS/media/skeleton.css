@@ -3,9 +3,8 @@
         max-width: 220px;
     }
 
-    .logo {
-        height: 30px;
-        width: 30px;
+    .logo img{
+        height: 49px;
     }
 
     .nav-item {
@@ -22,9 +21,10 @@
 }
 
 @media (max-width: 768px) {
-    /* ::-webkit-scrollbar {
+    ::-webkit-scrollbar {
         display: none;
-    } */
+    }
+    
     .sidebar {
         max-width: 100%;
         width: 100%;
@@ -34,12 +34,16 @@
         gap: 10px;
     }
 
-    .logo {
+    .logo img{
         align-self: center;
-        height: 25px;
-        width: 25px;
+        height: 32px;
+        width: 32px;
         font-size: 14px;
         margin-bottom: 0;
+    }
+
+    .logo img:last-child {
+        display: none;
     }
 
     .profile-block {
