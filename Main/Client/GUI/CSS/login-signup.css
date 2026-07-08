@@ -4,7 +4,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('../PNG/login-signup-background.png');
+    background: url('../images/login-signup-background.png');
     background-size: cover;
     background-position: center bottom;
     background-repeat: no-repeat;
