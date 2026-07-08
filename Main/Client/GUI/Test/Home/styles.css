@@ -149,7 +149,6 @@
     background: var(--card-bg);
     border-left: 1px solid var(--card-border);
     border-right: 1px solid var(--card-border);
-    margin-left: 250px;
     margin-right: 340px;
     height: 100vh;
     overflow-y: auto;

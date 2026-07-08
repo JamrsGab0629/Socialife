@@ -1,3 +1,4 @@
+/* navigation bar on the left side*/
 .sidebar {
     background: linear-gradient(180deg, var(--sidebar-blue) 0%, var(--sidebar-blue-dark) 100%);
     color: white;
@@ -119,6 +120,73 @@
     font-weight: 700;
     width: 16px;
     height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* main content  */
+#main-content {
+    position: relative;
+    background: var(--card-bg);
+    border-left: 1px solid var(--card-border);
+    border-right: 1px solid var(--card-border);
+    margin-left: 250px;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+/* mobile navigation bar at the bottom */
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: linear-gradient(180deg,
+            var(--sidebar-blue) 0%,
+            var(--sidebar-blue-dark) 100%);
+    z-index: 20;
+    align-items: stretch;
+    justify-content: space-around;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mnav-item {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.mnav-item.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.mnav-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.mnav-badge {
+    position: absolute;
+    top: 2px;
+    right: 20%;
+    background: #e8536b;
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     display: flex;
     align-items: center;
