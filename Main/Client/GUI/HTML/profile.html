@@ -1,33 +1,13 @@
 <!-- Header -->
 <header>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     <div class="search-box">
         <input type="text" placeholder="Hinted search text">
         <span class="material-icons-outlined">search</span>
-=======
-    <div class="search-bar">
-        <input type="text" placeholder="Search...">
-        <span class="material-symbols-outlined">
-            search
-        </span>
->>>>>>> 5290803 (Refactor HTML structure: create new home, profile, and settings pages; remove old pages)
-=======
->>>>>>> 7a9ce66 (Updated a functional profile page with "All" and "Photos")
-=======
-    <div class="search-box">
-        <input type="text" placeholder="Hinted search text">
-        <span class="material-icons-outlined">search</span>
->>>>>>> 80965cc ((redo) Refactor HTML structure: create new home, profile, and settings pages; remove old pages)
     </div>
 
 </header>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 <!-- Create Post -->
 <section class="post">
 
@@ -36,40 +16,174 @@
     <textarea placeholder=""></textarea>
 
 </section>
-=======
-<!-- Blue Banner -->
-<section class="banner"></section>
-=======
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    tabs.forEach(t => {
-                        t.classList.remove('active');
-                        t.setAttribute('aria-selected', 'false');
-                    });
-                    this.classList.add('active');
-                    this.setAttribute('aria-selected', 'true');
->>>>>>> 7a9ce66 (Updated a functional profile page with "All" and "Photos")
-=======
-<!-- Create Post -->
-<section class="post">
->>>>>>> 80965cc ((redo) Refactor HTML structure: create new home, profile, and settings pages; remove old pages)
 
-    <h2>What's on your mind?</h2>
+    <!-- TABS (desktop) -->
+    <nav class="profile-tabs" id="desktop-tabs">
+        <button class="tab active" role="tab" aria-selected="true" data-tab="all">All</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="photos">Photos</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="settings">Settings</button>
+    </nav>
 
-    <textarea placeholder=""></textarea>
+    <!-- TAB: ALL -->
+    <div class="tab-content active" id="tab-all">
+        <div class="all-tab-grid">
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <h2>What's on your mind?</h2>
+            <!-- PHOTOS BOX -->
+            <div class="photos-section">
+                <div class="photos-header">
+                    <h3>Photos</h3>
+                    <a href="#">See all photos <span class="material-symbols-outlined" style="font-size:18px;">chevron_right</span></a>
+                </div>
+                <div class="photos-grid">
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                </div>
+            </div>
 
-    <div class="post-box"></div>
+            <!-- POSTS COLUMN -->
+            <div class="posts-column">
 
-</section>
->>>>>>> 5290803 (Refactor HTML structure: create new home, profile, and settings pages; remove old pages)
-=======
+                <!-- Post 1 -->
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <span class="material-symbols-outlined">account_circle</span>
+                        </div>
+                        <div class="post-author">
+                            <div class="name">Ngiyawn</div>
+                            <div class="time">
+                                <span class="material-symbols-outlined">public</span>
+                                June 27 at 9:38 AM
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">Not delulu anymore</div>
+                    <div class="post-comment">
+                        <div class="comment-avatar">
+                            <span class="material-symbols-outlined">account_circle</span>
+                        </div>
+                        <input type="text" placeholder="Write a comment..." />
+                    </div>
+                </div>
+
+                <!-- Post 2 (empty) -->
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <span class="material-symbols-outlined">account_circle</span>
+                        </div>
+                        <div class="post-author">
+                            <div class="name">Kim Balagantio</div>
+                            <div class="time"><span class="material-symbols-outlined">public</span> 2 hours ago</div>
+                        </div>
+                    </div>
+                    <div class="post-content empty">— empty post —</div>
+                    <div class="post-comment">
+                        <div class="comment-avatar">
+                            <span class="material-symbols-outlined">account_circle</span>
+                        </div>
+                        <input type="text" placeholder="Write a comment..." />
+                    </div>
+                </div>
+
+                <!-- Post 3 (empty) -->
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <span class="material-symbols-outlined">account_circle</span>
+                        </div>
+                        <div class="post-author">
+                            <div class="name">Kim Balagantio</div>
+                            <div class="time"><span class="material-symbols-outlined">public</span> 5 days ago</div>
+                        </div>
+                    </div>
+                    <div class="post-content empty">— empty post —</div>
+                    <div class="post-comment">
+                        <div class="comment-avatar">
+                            <span class="material-symbols-outlined">account_circle</span>
+                        </div>
+                        <input type="text" placeholder="Write a comment..." />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: PHOTOS -->
+    <div class="tab-content" id="tab-photos">
+        <div class="photos-grid" style="grid-template-columns: repeat(3,1fr); gap:8px;">
+            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+        </div>
+    </div>
+
+    <!-- TAB: SETTINGS -->
+    <div class="tab-content" id="tab-settings">
+        <div style="background:#ffffff; border-radius:16px; padding:30px; border:1px solid #d0d3d9; text-align:center; color:#6c6f76; font-size:16px;">
+            <span class="material-symbols-outlined" style="font-size:48px; color:#b0b3b8; display:block; margin-bottom:12px;">settings</span>
+            Settings page (placeholder)
+        </div>
+    </div>
+
+</div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav" id="mobile-nav">
+    <button class="nav-item active" role="tab" aria-selected="true" data-tab="all">
+        <span class="material-symbols-outlined">apps</span>
+        All
+    </button>
+    <button class="nav-item" role="tab" aria-selected="false" data-tab="photos">
+        <span class="material-symbols-outlined">photo_library</span>
+        Photos
+    </button>
+    <button class="nav-item" role="tab" aria-selected="false" data-tab="settings">
+        <span class="material-symbols-outlined">settings</span>
+        Settings
+    </button>
+</nav>
+
+<!-- TAB SWITCHING -->
+<script>
+(function() {
+    const triggers = document.querySelectorAll('#desktop-tabs .tab, #mobile-nav .nav-item');
+    const contents = {
+        all: document.getElementById('tab-all'),
+        photos: document.getElementById('tab-photos'),
+        settings: document.getElementById('tab-settings')
+    };
+    function activate(tabName) {
+        triggers.forEach(t => {
+            const active = t.getAttribute('data-tab') === tabName;
+            t.classList.toggle('active', active);
+            t.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        Object.keys(contents).forEach(key => {
+            contents[key].classList.toggle('active', key === tabName);
+        });
+    }
+    triggers.forEach(t => {
+        t.addEventListener('click', function() {
+            activate(this.getAttribute('data-tab'));
+        });
+    });
+})();
+</script>
+
 </body>
 </html>
->>>>>>> 7a9ce66 (Updated a functional profile page with "All" and "Photos")
-=======
-</section>
->>>>>>> 80965cc ((redo) Refactor HTML structure: create new home, profile, and settings pages; remove old pages)
