@@ -25,10 +25,13 @@
 
 /* Grid Layout Rows */
 .friends-grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
-  max-width: 600px;
+  min-width: 320px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .friend-card {
