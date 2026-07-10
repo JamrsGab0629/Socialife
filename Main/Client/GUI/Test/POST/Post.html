@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>post</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="modal-card">
+        
+        <div class="modal-header">
+            <h3>Create Post</h3>
+            <button class="close-modal" type="button">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <div class="user-row">
+                <div class="user-avatar">
+                    <span class="material-symbols-outlined">account_circle</span>
+                </div>
+                <div class="user-meta">
+                    <h4>Xeppy Louise</h4>
+                    <div class="badges">
+                        <span class="badge">
+                            <span class="material-symbols-outlined">group</span> 
+                            Friends 
+                            <span class="material-symbols-outlined">arrow_drop_down</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <textarea placeholder="What's on your mind, Xeppy?" rows="4" id="post-textarea"></textarea>
+
+            <div class="format-options">
+                <div class="color-box">Aa</div>
+            </div>
+
+            <div class="add-to-post-tray">
+                <span>Add to your post</span>
+                <div class="tray-icons">
+                    <button class="tray-btn" type="button" title="Add Photo/Video">
+                        <span class="material-symbols-outlined text-cyan">image</span>
+                    </button>
+                    <button class="tray-btn" type="button" title="Tag Friends">
+                        <span class="material-symbols-outlined text-indigo">person_add</span>
+                    </button>
+                </div>
+            </div>
+
+            <button class="submit-post-btn" type="button" id="submit-btn" disabled>Post</button>
+        </div>
+
+    </div>
+
+    <script>
+        const textarea = document.getElementById('post-textarea');
+        const submitBtn = document.getElementById('submit-btn');
+
+        textarea.addEventListener('input', () => {
+            if (textarea.value.trim().length > 0) {
+                submitBtn.removeAttribute('disabled');
+            } else {
+                submitBtn.setAttribute('disabled', 'true');
+            }
+        });
+    </script>
+</body>
+</html>
