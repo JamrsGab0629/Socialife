@@ -110,7 +110,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 
     currentNavAbortController = new AbortController();
-    nav_factory(main_view, html, 'settings', currentNavAbortController.signal);
+    nav_factory(main_view, html, 'home', currentNavAbortController.signal);
 
     const triggers = document.querySelectorAll('#profile-nav, .nav-item , .mobile-nav-item');
 
@@ -146,4 +146,6 @@ window.addEventListener("DOMContentLoaded", async () => {
             }
         });
     });
+
+    //will add clean up later...
 });
