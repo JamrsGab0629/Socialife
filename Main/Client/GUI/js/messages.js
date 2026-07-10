@@ -14,6 +14,8 @@ export async function init({ signal }) {
 
     try {
         const mainView = getId('main-content');
+        const logo = getId('main-logo');
+        const refresh = getId('refresh');
         const html = {};
 
         try {
@@ -43,6 +45,15 @@ export async function init({ signal }) {
 
         abortCheck();
 
+        // helpers
+        const back = (e) => {
+            e.preventDefault();
+            console.log("Back to convo");
+            mainView.innerHTML = html.conv;
+            refresh.href = "./skeleton.html";
+            logo.src = "./images/Socialife-stamp.png";
+        };
+
         mediaQuery = window.matchMedia('(max-width: 768px)');
 
         resizeHandler = (e) => {
@@ -52,20 +63,26 @@ export async function init({ signal }) {
             }
 
             if (e.matches) {
-                mainView.innerHTML = html.conv; 
+                mainView.innerHTML = html.conv;
 
-                const view = (e) => {
-                    e.preventDefault(); 
-                    console.log("View messages");
-                    mainView.innerHTML = html.msg;
-                };
+                mainView.addEventListener('click', (e) => {
+                    const andreiBtn = e.target.closest('#andrei');
 
-                const andreiBtn = document.getElementById("andrei");
-                if (andreiBtn) {
-                    andreiBtn.addEventListener('click', view);
-                }
+                    if (andreiBtn) {
+                        e.preventDefault();
+                        console.log("View messages");
+                        mainView.innerHTML = html.msg;
+                        refresh.href = "#";
+                        logo.src = "./images/icon/back.png";
+                    }
+                });
+
+                logo.addEventListener('click', back);
             } else {
-                mainView.innerHTML = html.conv + html.msg; 
+                refresh.href = "./skeleton.html";
+                logo.src = "./images/Socialife-stamp.png";
+                mainView.innerHTML = html.conv + html.msg;
+                logo.removeEventListener('click', back);
             }
         };
 

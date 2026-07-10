@@ -39,6 +39,13 @@ async function nav_factory(main_view, html, nav, signal) {
         case "settings": {
             main_view.innerHTML = html.settings;
 
+            if (signal.aborted) return;
+
+            const settings_module = await import(`./settings.js`);
+            if (signal.aborted) return;
+
+            settings_module.initSettings({signal});
+
             break;
         }
         default: {
@@ -103,7 +110,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 
     currentNavAbortController = new AbortController();
-    nav_factory(main_view, html, 'settings', currentNavAbortController);
+    nav_factory(main_view, html, 'settings', currentNavAbortController.signal);
 
     const triggers = document.querySelectorAll('#profile-nav, .nav-item , .mobile-nav-item');
 
