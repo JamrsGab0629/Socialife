@@ -11,6 +11,7 @@ export async function initProfile({ signal }) {
 
     let triggers = null;
     let seeAllLink = null;
+    
     try {
         abortCheck();
         console.log("profile init");

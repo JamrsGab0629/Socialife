@@ -8,51 +8,6 @@
     overflow-y: auto;
 }
 
-.topbar {
-    position: sticky;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    padding: 22px 32px;
-    border-bottom: 1px solid var(--card-border);
-    background: var(--card-bg);
-    z-index: 1;
-    width: 100%;
-    top: 0;
-}
-
-.search-box {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: #EEF0F3;
-    border-radius: 24px;
-    padding: 12px 20px;
-    color: var(--text-muted);
-    font-size: 15px;
-    transition: background 0.15s ease, box-shadow 0.15s ease;
-}
-
-.search-box:focus-within {
-    background: #E4EAF3;
-    box-shadow: 0 0 0 2px rgba(59, 111, 176, 0.25);
-}
-
-.search-input {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 15px;
-    font-family: inherit;
-    color: var(--text-dark);
-}
-
-.search-input::placeholder {
-    color: var(--text-muted);
-}
-
 .icon-btn {
     position: relative;
     width: 30px;

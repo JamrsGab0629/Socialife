@@ -70,7 +70,7 @@
     flex: 1;
 }
 
-.nav-item {
+.nav-item, .mobile-bottom-nav{
     display: flex;
     align-items: center;
     gap: 14px;
@@ -87,7 +87,7 @@
     margin-top: auto;
 }
 
-.nav-item img{
+.nav-item img, .mobile-bottom-nav img{
     max-width: 24px;
     aspect-ratio: 1 / 1;
     overflow: hidden;
@@ -152,7 +152,7 @@
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
 }
 
-.mnav-item {
+.mobile-nav-item {
     position: relative;
     flex: 1;
     display: flex;
@@ -165,17 +165,12 @@
     font-weight: 500;
 }
 
-.mnav-item.active {
+.mobile-nav-item.active {
     color: #ffffff;
     background: rgba(255, 255, 255, 0.12);
 }
 
-.mnav-icon {
-    width: 20px;
-    height: 20px;
-}
-
-.mnav-badge {
+.mobile-nav-badge {
     position: absolute;
     top: 2px;
     right: 20%;
