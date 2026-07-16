@@ -15,7 +15,11 @@
     box-shadow: 0 1px 3px rgba(20, 30, 50, 0.04);
     padding-top: 10px;
     width: 100%;
+<<<<<<< HEAD
     max-width: 500px;
+=======
+    max-width: 700px;
+>>>>>>> 57227457ae4e865c056d75c1e124a403ec61e1fb
     align-self: center;
 }
 

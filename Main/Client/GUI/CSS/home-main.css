@@ -8,6 +8,7 @@
     overflow-y: auto;
 }
 
+<<<<<<< HEAD
 .topbar {
     position: sticky;
     display: flex;
@@ -53,6 +54,8 @@
     color: var(--text-muted);
 }
 
+=======
+>>>>>>> 57227457ae4e865c056d75c1e124a403ec61e1fb
 .icon-btn {
     position: relative;
     width: 30px;
