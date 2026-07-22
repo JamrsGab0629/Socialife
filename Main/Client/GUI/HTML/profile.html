@@ -1,782 +1,214 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <title>Socialife - Messages</title>
 
-    /BOBO MAG COMMIT TANGNAMO/
-    <!-- META -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Socialife – Profile</title>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../css/animation.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
 
-    <!-- FONTS & ICONS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,1" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <!-- feed -->
+    <link rel="stylesheet" href="../css/onmind.css">
+    <link rel="stylesheet" href="../css/feed.css">
 
-    <style>
-        /* RESET & BASE */
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f0f2f5;
-            color: #1c1e21;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            padding-bottom: 70px;
-        }
-        .app {
-            width: 100%;
-            max-width: 900px;
-            background: #ffffff;
-            position: relative;
-            padding-bottom: 20px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.04);
-            min-height: 100vh;
-        }
+    <!-- profile -->
+    <link rel="stylesheet" href="../css/profile.css">
 
-        /* SCROLLBAR */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #e4e6eb; }
-        ::-webkit-scrollbar-thumb { background: #b0b3b8; border-radius: 8px; }
-        ::-webkit-scrollbar-thumb:hover { background: #8a8d94; }
-
-        /* HEADER */
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-            background: #ffffff;
-            border-bottom: 1px solid #d0d3d9;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(12px);
-        }
-        .header-left { display: flex; align-items: center; gap: 10px; }
-        .logo { font-size: 22px; font-weight: 700; color: #1877f2; }
-        .logo span { font-weight: 300; color: #8a8d94; }
-        .search-bar {
-            display: flex;
-            align-items: center;
-            background: #f0f2f5;
-            border-radius: 40px;
-            padding: 6px 16px 6px 18px;
-            gap: 8px;
-            flex: 1;
-            max-width: 380px;
-            border: 1px solid transparent;
-            transition: background 0.2s, box-shadow 0.2s;
-        }
-        .search-bar:focus-within {
-            background: #ffffff;
-            border-color: #1877f2;
-            box-shadow: 0 0 0 3px rgba(24,119,242,0.12);
-        }
-        .search-bar input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: #1c1e21;
-            font-size: 14px;
-            width: 100%;
-            padding: 6px 0;
-            font-family: 'Inter', sans-serif;
-        }
-        .search-bar input::placeholder { color: #6c6f76; }
-        .search-bar .material-symbols-outlined { font-size: 20px; color: #6c6f76; }
-        .search-bar:focus-within .material-symbols-outlined { color: #1877f2; }
-        .header-actions { display: flex; align-items: center; gap: 6px; }
-        .header-actions button {
-            background: transparent;
-            border: none;
-            color: #4b4f56;
-            cursor: pointer;
-            padding: 6px 8px;
-            border-radius: 40px;
-            transition: background 0.2s, color 0.2s;
-        }
-        .header-actions button:hover { background: #f0f2f5; color: #1c1e21; }
-        .header-actions .material-symbols-outlined { font-size: 24px; }
-        .header-actions .settings-btn { color: #4b4f56; }
-        .header-actions .settings-btn:hover { color: #1877f2; background: #e7f0ff; }
-
-        /* BANNER */
-        .banner {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(145deg, #d4d9e0, #b8c0cc, #c0c8d6);
-            border-bottom: 1px solid #d0d3d9;
-            overflow: hidden;
-            position: relative;
-        }
-        .banner::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 20% 30%, rgba(24,119,242,0.06) 0%, transparent 60%),
-                        radial-gradient(circle at 80% 70%, rgba(24,119,242,0.04) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        /* PROFILE HEADER */
-        .profile-header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: flex-end;
-            gap: 18px 24px;
-            padding: 0 24px 16px 24px;
-            margin-top: -52px;
-            position: relative;
-            z-index: 10;
-        }
-        .profile-avatar-wrapper { flex-shrink: 0; }
-        .profile-avatar {
-            width: 104px;
-            height: 104px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #e4e6eb, #d0d3d9);
-            border: 4px solid #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-            transition: transform 0.2s;
-        }
-        .profile-avatar:hover { transform: scale(1.02); }
-        .profile-avatar .material-symbols-outlined { font-size: 72px; color: #8a8d94; }
-        .profile-info { flex: 1; min-width: 200px; padding-bottom: 4px; }
-        .profile-info h1 { font-size: 26px; font-weight: 700; color: #1c1e21; }
-        .profile-info .friends-count { font-size: 14px; color: #6c6f76; margin-top: 2px; }
-        .profile-actions {
-            display: flex;
-            gap: 8px;
-            margin-left: auto;
-            align-self: center;
-            flex-wrap: wrap;
-        }
-        .profile-actions button {
-            padding: 8px 20px;
-            border-radius: 40px;
-            border: none;
-            font-weight: 600;
-            font-size: 13px;
-            font-family: 'Inter', sans-serif;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .profile-actions button:active { transform: scale(0.96); }
-        .btn-primary {
-            background: #1877f2;
-            color: #fff;
-            box-shadow: 0 4px 16px rgba(24,119,242,0.25);
-        }
-        .btn-primary:hover {
-            background: #1666d4;
-            box-shadow: 0 6px 24px rgba(24,119,242,0.35);
-            transform: translateY(-1px);
-        }
-        .btn-secondary { background: #e4e6eb; color: #1c1e21; }
-        .btn-secondary:hover { background: #d0d3d9; }
-        .btn-secondary .material-symbols-outlined { font-size: 18px; }
-
-        /* TABS (desktop) */
-        .profile-tabs {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            padding: 0 24px;
-            margin-top: 10px;
-            border-bottom: 1px solid #d0d3d9;
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-        .profile-tabs::-webkit-scrollbar { display: none; }
-        .profile-tabs .tab {
-            padding: 12px 20px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #6c6f76;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-            font-family: 'Inter', sans-serif;
-            position: relative;
-            transition: color 0.2s;
-            white-space: nowrap;
-        }
-        .profile-tabs .tab:hover { color: #1c1e21; }
-        .profile-tabs .tab.active { color: #1877f2; }
-        .profile-tabs .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 24px;
-            height: 3px;
-            border-radius: 4px;
-            background: #1877f2;
-        }
-        .profile-tabs .tab.active:hover::after { width: 32px; }
-
-        /* TAB CONTENT */
-        .tab-content {
-            padding: 20px 24px 0 24px;
-            display: none;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .tab-content.active { display: flex; }
-
-        /* ALL TAB: 2-COLUMN LAYOUT */
-        .all-tab-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 20px;
-            align-items: start;
-        }
-
-        /* PHOTOS BOX */
-        .photos-section {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 16px 16px 18px 16px;
-            border: 1px solid #d0d3d9;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-        }
-        .photos-section:hover { border-color: #b0b3b8; }
-        .photos-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .photos-header h3 { font-size: 18px; font-weight: 600; color: #1c1e21; }
-        .photos-header a {
-            font-size: 14px;
-            color: #1877f2;
-            text-decoration: none;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .photos-header a:hover { text-decoration: underline; }
-        .photos-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-        }
-        .photos-grid .photo-placeholder {
-            aspect-ratio: 1 / 1;
-            background: #e4e6eb;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #8a8d94;
-            font-size: 13px;
-            font-weight: 500;
-            transition: background 0.2s;
-        }
-        .photos-grid .photo-placeholder:hover { background: #d0d3d9; }
-        .photos-grid .photo-placeholder .material-symbols-outlined { font-size: 28px; color: #b0b3b8; }
-
-        /* POSTS COLUMN */
-        .posts-column { display: flex; flex-direction: column; gap: 16px; }
-
-        /* POST CARD */
-        .post-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 16px 20px 18px 20px;
-            border: 1px solid #d0d3d9;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-        }
-        .post-card:hover { border-color: #b0b3b8; }
-        .post-card .post-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .post-card .post-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #e4e6eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .post-card .post-avatar .material-symbols-outlined { font-size: 28px; color: #8a8d94; }
-        .post-card .post-author .name { font-weight: 600; font-size: 14px; color: #1c1e21; }
-        .post-card .post-author .time {
-            font-size: 12px;
-            color: #6c6f76;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .post-card .post-author .time .material-symbols-outlined { font-size: 14px; color: #8a8d94; }
-        .post-card .post-content {
-            margin-top: 10px;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #1c1e21;
-        }
-        .post-card .post-content.empty { color: #8a8d94; font-style: italic; min-height: 24px; }
-        .post-card .post-comment {
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #e4e6eb;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .post-card .post-comment .comment-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #e4e6eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .post-card .post-comment .comment-avatar .material-symbols-outlined { font-size: 18px; color: #8a8d94; }
-        .post-card .post-comment input {
-            flex: 1;
-            border: none;
-            background: #f0f2f5;
-            border-radius: 40px;
-            padding: 8px 16px;
-            font-size: 13px;
-            font-family: 'Inter', sans-serif;
-            outline: none;
-            transition: background 0.2s, box-shadow 0.2s;
-        }
-        .post-card .post-comment input::placeholder { color: #6c6f76; }
-        .post-card .post-comment input:focus {
-            background: #ffffff;
-            box-shadow: 0 0 0 2px rgba(24,119,242,0.15);
-        }
-
-        /* MOBILE BOTTOM NAV */
-        .mobile-bottom-nav {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #ffffff;
-            border-top: 1px solid #d0d3d9;
-            padding: 6px 0 10px 0;
-            z-index: 200;
-            justify-content: space-around;
-            align-items: center;
-            box-shadow: 0 -4px 16px rgba(0,0,0,0.04);
-        }
-        .mobile-bottom-nav .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            background: transparent;
-            border: none;
-            font-family: 'Inter', sans-serif;
-            font-size: 10px;
-            font-weight: 500;
-            color: #6c6f76;
-            cursor: pointer;
-            padding: 4px 12px;
-            transition: color 0.2s;
-            position: relative;
-        }
-        .mobile-bottom-nav .nav-item .material-symbols-outlined { font-size: 26px; }
-        .mobile-bottom-nav .nav-item.active { color: #1877f2; }
-        .mobile-bottom-nav .nav-item.active .material-symbols-outlined { color: #1877f2; }
-        .mobile-bottom-nav .nav-item.active::after {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: 20%;
-            right: 20%;
-            height: 3px;
-            border-radius: 0 0 4px 4px;
-            background: #1877f2;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 820px) {
-            .all-tab-grid { gap: 16px; }
-            .profile-header { padding: 0 16px 12px 16px; }
-            .profile-tabs { padding: 0 16px; }
-            .tab-content { padding: 16px 16px 0 16px; }
-        }
-        @media (max-width: 640px) {
-            body { padding-bottom: 70px; }
-            .mobile-bottom-nav { display: flex; }
-            .profile-tabs { display: none; }
-            header { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
-            .search-bar { max-width: 100%; order: 3; flex-basis: 100%; }
-            .header-left { flex: 1; }
-            .logo { font-size: 18px; }
-            .profile-header { padding: 0 14px 12px 14px; margin-top: -44px; gap: 12px; }
-            .profile-avatar { width: 72px; height: 72px; }
-            .profile-avatar .material-symbols-outlined { font-size: 48px; }
-            .profile-info h1 { font-size: 20px; }
-            .profile-actions { margin-left: 0; width: 100%; justify-content: flex-start; }
-            .tab-content { padding: 14px 14px 0 14px; gap: 14px; }
-            .banner { height: 140px; }
-            .all-tab-grid { grid-template-columns: 1fr; gap: 16px; }
-            .photos-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-            .post-card { padding: 14px 16px 16px 16px; }
-            .post-card .post-comment input { padding: 10px 16px; font-size: 14px; min-height: 44px; }
-            .profile-actions button { min-height: 44px; padding: 10px 20px; }
-        }
-        @media (max-width: 400px) {
-            .photos-grid { grid-template-columns: repeat(2, 1fr); }
-            .profile-avatar { width: 64px; height: 64px; }
-            .profile-avatar .material-symbols-outlined { font-size: 40px; }
-            .profile-info h1 { font-size: 18px; }
-            .profile-header { margin-top: -38px; }
-            .mobile-bottom-nav .nav-item .material-symbols-outlined { font-size: 22px; }
-            .mobile-bottom-nav .nav-item { font-size: 9px; padding: 2px 8px; }
-        }
-        @media (max-height: 500px) and (orientation: landscape) {
-            .banner { height: 100px; }
-            .profile-header { margin-top: -30px; }
-            .profile-avatar { width: 56px; height: 56px; }
-            .profile-avatar .material-symbols-outlined { font-size: 36px; }
-            .mobile-bottom-nav { padding: 2px 0 6px 0; }
-            .mobile-bottom-nav .nav-item .material-symbols-outlined { font-size: 20px; }
-            .mobile-bottom-nav .nav-item { font-size: 9px; }
-            body { padding-bottom: 54px; }
-        }
-    </style>
+    <!-- media -->
+    <link rel="stylesheet" href="../css/media/skeleton.css">
+    <link rel="stylesheet" href="../css/media/profile.css">
 </head>
+
 <body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <a id="refresh" href="home.html" class="logo">
+            <img id="main-logo" class="stamp" src="../images/Socialife-stamp.png" alt="Socialife-stamp">
+            <img class="script" src="../images/Socialife-script.png" alt="Socialife-script">
+        </a>
 
-<div class="app">
-
-    <!-- HEADER -->
-    <header>
-        <div class="header-left">
-            <div class="logo">Socialife<span></span></div>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Hinted search text" />
-            <span class="material-symbols-outlined">search</span>
-        </div>
-        <div class="header-actions">
-            <button class="settings-btn" aria-label="Settings">
-                <span class="material-symbols-outlined">settings</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- BANNER -->
-    <section class="banner"></section>
-
-    <!-- PROFILE HEADER -->
-    <section class="profile-header">
-        <div class="profile-avatar-wrapper">
-            <div class="profile-avatar">
-                <span class="material-symbols-outlined">account_circle</span>
+        <a nav-action="profile" id="profile-nav" href="profile.html">
+            <div class="profile-block">
+                <div class="avatar-ring"><img src="../images/profile/James.jpg" alt="James Gabriel Santos"></div>
+                <div class="profile-name">James Gabriel Santos</div>
             </div>
-        </div>
-        <div class="profile-info">
-            <h1>Kim Balagantio</h1>
-=======
-<div id="profile">
-    <section class="banner"></section>
+        </a>
 
-    <section class="profile-header">
-        <div class="profile-avatar">
-            <img src="./images/profile/James.jpg" alt="James Gabriel Santos">
-        </div>
-        <div class="profile-info">
-            <h1>James Gabriel Santos</h1>
->>>>>>> 57227457ae4e865c056d75c1e124a403ec61e1fb
-            <div class="friends-count">215 friends</div>
-        </div>
-        <div class="profile-actions">
-            <button class="btn-primary">
-<<<<<<< HEAD
-                <span class="material-symbols-outlined">person_add</span>
-                Follow
-            </button>
-            <button class="btn-secondary">
-                <span class="material-symbols-outlined">more_horiz</span>
-            </button>
-        </div>
-    </section>
+        <nav class="nav">
+            <a nav-action="home" class="nav-item" href="home.html">
+                <img class="simple-icon" src="../images/icon/home.png">
+                Home
+            </a>
+            <a nav-action="saved" class="nav-item" href="saved.html">
+                <img class="simple-icon" src="../images/icon/save.png">
+                Saved
+            </a>
+            <a nav-action="friends" class="nav-item" href="profile.html">
+                <img class="simple-icon" src="../images/icon/group.png">
+                Friends
+            </a>
+            <a nav-action="settings" class="nav-item" href="settings.html">
+                <img class="simple-icon" src="../images/icon/settings.png">
+                Settings
+            </a>
+            <a nav-action="log-out" class="nav-item" href="#">
+                <img class="simple-icon" src="../images/icon/logout.png">
+                Log Out
+            </a>
+        </nav>
+    </aside>
 
-    <!-- TABS (desktop) -->
-=======
-                Follow
-            </button>
-        </div>
-    </section>
-
->>>>>>> 57227457ae4e865c056d75c1e124a403ec61e1fb
-    <nav class="profile-tabs" id="desktop-tabs">
-        <button class="tab active" role="tab" aria-selected="true" data-tab="all">All</button>
-        <button class="tab" role="tab" aria-selected="false" data-tab="photos">Photos</button>
-        <button class="tab" role="tab" aria-selected="false" data-tab="settings">Settings</button>
+    <!-- MOBILE BOTTOM NAV -->
+    <nav class="mobile-bottom-nav">
+        <a nav-action="home" class="mobile-nav-item" href="home.html">
+            <img class="simple-icon" src="../images/icon/home.png">
+            Home
+        </a>
+        <a nav-action="saved" class="mobile-nav-item" href="saved.html">
+            <img class="simple-icon" src="../images/icon/save.png">
+            Saved
+        </a>
+        <a nav-action="friends" class="mobile-nav-item" href="freinds.html">
+            <img class="simple-icon" src="../images/icon/group.png">
+            Friends
+        </a>
+        <a nav-action="settings" class="mobile-nav-item" href="settings.html">
+            <img class="simple-icon" src="../images/icon/settings.png">
+            Settings
+        </a>
+        <a nav-action="log-out" class="mobile-nav-item" href="#">
+            <img class="simple-icon" src="../images/icon/logout.png">
+            Log Out
+        </a>
     </nav>
 
-<<<<<<< HEAD
-    <!-- TAB: ALL -->
-    <div class="tab-content active" id="tab-all">
-        <div class="all-tab-grid">
+    <main id="main-content">
+        <div id="profile">
+            <section class="banner"></section>
 
-            <!-- PHOTOS BOX -->
-            <div class="photos-section">
-                <div class="photos-header">
-                    <h3>Photos</h3>
-                    <a href="#">See all photos <span class="material-symbols-outlined" style="font-size:18px;">chevron_right</span></a>
+            <section class="profile-header">
+                <div class="profile-avatar">
+                    <img src="../images/profile/James.jpg" alt="James Gabriel Santos">
                 </div>
-                <div class="photos-grid">
-                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                <div class="profile-info">
+                    <h1>James Gabriel Santos</h1>
+                    <div class="friends-count">215 friends</div>
                 </div>
-            </div>
+                <div class="profile-actions">
+                    <button class="btn-primary">
+                        Follow
+                    </button>
+                </div>
+            </section>
 
-            <!-- POSTS COLUMN -->
-            <div class="posts-column">
+            <nav class="profile-tabs" id="desktop-tabs">
+                <button class="tab active" role="tab" aria-selected="true" data-tab="all">All</button>
+                <button class="tab" role="tab" aria-selected="false" data-tab="photos">Photos</button>
+                <button class="tab" role="tab" aria-selected="false" data-tab="settings">Settings</button>
+            </nav>
 
-                <!-- Post 1 -->
-                <div class="post-card">
-                    <div class="post-header">
-                        <div class="post-avatar">
-                            <span class="material-symbols-outlined">account_circle</span>
+            <div class="tab-content active" id="tab-all">
+                <div class="all-tab-grid">
+
+                    <div class="photos-section">
+                        <div class="photos-header">
+                            <h3>Photos</h3>
+                            <a href="#" id="see-all-photos-lnk">See all photos ></a>
                         </div>
-                        <div class="post-author">
-                            <div class="name">Ngiyawn</div>
-                            <div class="time">
-                                <span class="material-symbols-outlined">public</span>
-                                June 27 at 9:38 AM
+                        <div class="photos-grid" id="all-photos-preview"></div>
+                    </div>
+
+                    <div class="posts-column">
+
+                        <div class="post-card">
+                            <div class="post-header">
+                                <img src="../images/profile/James.jpg" alt="James Gabriel Santos">
+                                <h2>
+                                    <span class="post-author">James Gabriel Santos</span>
+                                    <span class="post-time">2 hours ago</span>
+                                </h2>
+                                <a class="action-more" href="#"><img src="../images/icon/more.png" alt="more"></a>
+                            </div>
+                            <div class="post-text">
+                                Just finished a great hike! The view from the peak was incredible. Check it out!
+                            </div>
+                            <div class="post-photo">
+                                <img src="../images/post/mountains.jpg" alt="mountain">
+                            </div>
+
+                            <div class="post-meta">3 comments</div>
+                            <div class="comments">
+                                <div class="comment">
+                                    <div class="comment-avatar">
+                                        <img src="../images/profile/Xep.jpg" alt="Xep">
+                                    </div>
+                                    <div><b>Andrei Luis Lucas</b>I'm a great hike!</div>
+                                </div>
+                                <div class="comment">
+                                    <div class="comment-avatar">
+                                        <img src="../images/profile/Xep.jpg" alt="Xep">
+                                    </div>
+                                    <div><b>Andrei Luis Lucas</b>Get it out!</div>
+                                </div>
+                            </div>
+                            <div class="post-actions">
+                                <div class="action-btn">
+                                    <a href="">
+                                        <img src="../images/icon/like.png" alt="like">
+                                        Like
+                                    </a>
+                                </div>
+                                <div class="action-btn">
+                                    <a href="">
+                                        <img src="../images/icon/chat.png" alt="comment">
+                                        Comment
+                                    </a>
+                                </div>
+                                <div class="action-btn">
+                                    <a href="">
+                                        <img src="../images/icon/export.png" alt="share">
+                                        Share
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="post-content">Not delulu anymore</div>
-                    <div class="post-comment">
-                        <div class="comment-avatar">
-                            <span class="material-symbols-outlined">account_circle</span>
-                        </div>
-                        <input type="text" placeholder="Write a comment..." />
-                    </div>
-                </div>
 
-                <!-- Post 2 (empty) -->
-                <div class="post-card">
-                    <div class="post-header">
-                        <div class="post-avatar">
-                            <span class="material-symbols-outlined">account_circle</span>
-                        </div>
-                        <div class="post-author">
-                            <div class="name">Kim Balagantio</div>
-                            <div class="time"><span class="material-symbols-outlined">public</span> 2 hours ago</div>
-                        </div>
-                    </div>
-                    <div class="post-content empty">— empty post —</div>
-                    <div class="post-comment">
-                        <div class="comment-avatar">
-                            <span class="material-symbols-outlined">account_circle</span>
-                        </div>
-                        <input type="text" placeholder="Write a comment..." />
-                    </div>
-                </div>
-
-                <!-- Post 3 (empty) -->
-                <div class="post-card">
-                    <div class="post-header">
-                        <div class="post-avatar">
-                            <span class="material-symbols-outlined">account_circle</span>
-                        </div>
-                        <div class="post-author">
-                            <div class="name">Kim Balagantio</div>
-                            <div class="time"><span class="material-symbols-outlined">public</span> 5 days ago</div>
-                        </div>
-                    </div>
-                    <div class="post-content empty">— empty post —</div>
-                    <div class="post-comment">
-                        <div class="comment-avatar">
-                            <span class="material-symbols-outlined">account_circle</span>
-                        </div>
-                        <input type="text" placeholder="Write a comment..." />
-                    </div>
-=======
-    <div class="tab-content active" id="tab-all">
-        <div class="all-tab-grid">
-
-            <div class="photos-section">
-                <div class="photos-header">
-                    <h3>Photos</h3>
-                    <a href="#" id="see-all-photos-lnk">See all photos ></a>
-                </div>
-                <div class="photos-grid" id="all-photos-preview"></div>
-            </div>
-
-            <div class="posts-column">
-
-                <div class="post-card">
-                    <div class="post-header">
-                        <img src="./images/profile/James.jpg" alt="James Gabriel Santos">
-                        <h2>
-                            <span class="post-author">James Gabriel Santos</span>
-                            <span class="post-time">2 hours ago</span>
-                        </h2>
-                        <a class="action-more" href="#"><img src="./images/icon/more.png" alt="more"></a>
-                    </div>
-                    <div class="post-text">
-                        Just finished a great hike! The view from the peak was incredible. Check it out!
-                    </div>
-                    <div class="post-photo">
-                        <img src="./images/post/mountains.jpg" alt="mountain">
-                    </div>
-
-                    <div class="post-meta">3 comments</div>
-                    <div class="comments">
-                        <div class="comment">
-                            <div class="comment-avatar">
-                                <img src="./images/profile/Xep.jpg" alt="Xep">
-                            </div>
-                            <div><b>Andrei Luis Lucas</b>I'm a great hike!</div>
-                        </div>
-                        <div class="comment">
-                            <div class="comment-avatar">
-                                <img src="./images/profile/Xep.jpg" alt="Xep">
-                            </div>
-                            <div><b>Andrei Luis Lucas</b>Get it out!</div>
-                        </div>
-                    </div>
-                    <div class="post-actions">
-                        <div class="action-btn">
-                            <a href="">
-                                <img src="./images/icon/like.png" alt="like">
-                                Like
-                            </a>
-                        </div>
-                        <div class="action-btn">
-                            <a href="">
-                                <img src="./images/icon/chat.png" alt="comment">
-                                Comment
-                            </a>
-                        </div>
-                        <div class="action-btn">
-                            <a href="">
-                                <img src="./images/icon/export.png" alt="share">
-                                Share
-                            </a>
-                        </div>
                     </div>
 >>>>>>> 57227457ae4e865c056d75c1e124a403ec61e1fb
                 </div>
+            </div>
 
+            <div class="tab-content" id="tab-photos">
+                <div class="photos-grid" id="master-photos-grid"
+                    style="grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                    <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-settings">
+                <div
+                    style="background: #ffffff; border-radius: 16px; padding: 30px; border: 1px solid #d0d3d9; text-align: center; color: #6c6f76; font-size: 16px;">
+                    <span class="material-symbols-outlined"
+                        style="font-size: 48px; color: #b0b3b8; display: block; margin-bottom: 12px;">settings</span>
+                    Settings page (placeholder)
+                </div>
             </div>
         </div>
-    </div>
-
-<<<<<<< HEAD
-    <!-- TAB: PHOTOS -->
-    <div class="tab-content" id="tab-photos">
-        <div class="photos-grid" style="grid-template-columns: repeat(3,1fr); gap:8px;">
-=======
-    <div class="tab-content" id="tab-photos">
-        <div class="photos-grid" id="master-photos-grid" style="grid-template-columns: repeat(3, 1fr); gap: 8px;">
->>>>>>> 57227457ae4e865c056d75c1e124a403ec61e1fb
-            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-            <div class="photo-placeholder"><span class="material-symbols-outlined">image</span></div>
-        </div>
-    </div>
-
-<<<<<<< HEAD
-    <!-- TAB: SETTINGS -->
-    <div class="tab-content" id="tab-settings">
-        <div style="background:#ffffff; border-radius:16px; padding:30px; border:1px solid #d0d3d9; text-align:center; color:#6c6f76; font-size:16px;">
-            <span class="material-symbols-outlined" style="font-size:48px; color:#b0b3b8; display:block; margin-bottom:12px;">settings</span>
-            Settings page (placeholder)
-        </div>
-    </div>
-
-</div>
-
-<!-- MOBILE BOTTOM NAV -->
-<nav class="mobile-bottom-nav" id="mobile-nav">
-    <button class="nav-item active" role="tab" aria-selected="true" data-tab="all">
-        <span class="material-symbols-outlined">apps</span>
-        All
-    </button>
-    <button class="nav-item" role="tab" aria-selected="false" data-tab="photos">
-        <span class="material-symbols-outlined">photo_library</span>
-        Photos
-    </button>
-    <button class="nav-item" role="tab" aria-selected="false" data-tab="settings">
-        <span class="material-symbols-outlined">settings</span>
-        Settings
-    </button>
-</nav>
-
-<!-- TAB SWITCHING -->
-<script>
-(function() {
-    const triggers = document.querySelectorAll('#desktop-tabs .tab, #mobile-nav .nav-item');
-    const contents = {
-        all: document.getElementById('tab-all'),
-        photos: document.getElementById('tab-photos'),
-        settings: document.getElementById('tab-settings')
-    };
-    function activate(tabName) {
-        triggers.forEach(t => {
-            const active = t.getAttribute('data-tab') === tabName;
-            t.classList.toggle('active', active);
-            t.setAttribute('aria-selected', active ? 'true' : 'false');
-        });
-        Object.keys(contents).forEach(key => {
-            contents[key].classList.toggle('active', key === tabName);
-        });
-    }
-    triggers.forEach(t => {
-        t.addEventListener('click', function() {
-            activate(this.getAttribute('data-tab'));
-        });
-    });
-})();
-</script>
-
+    </main>
 </body>
+
 </html>
-=======
-    <div class="tab-content" id="tab-settings">
-        <div style="background: #ffffff; border-radius: 16px; padding: 30px; border: 1px solid #d0d3d9; text-align: center; color: #6c6f76; font-size: 16px;">
-            <span class="material-symbols-outlined" style="font-size: 48px; color: #b0b3b8; display: block; margin-bottom: 12px;">settings</span>
-            Settings page (placeholder)
-        </div>
-    </div>
-</div>
->>>>>>> 57227457ae4e865c056d75c1e124a403ec61e1fb
