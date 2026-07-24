@@ -4,7 +4,7 @@ export class ComponentFactory {
     card.className = 'card';
 
     const heading = document.createElement('h3');
-    heading.textContent = title; 
+    heading.textContent = title;
 
     const button = document.createElement('button');
     button.className = 'card-action-btn';
