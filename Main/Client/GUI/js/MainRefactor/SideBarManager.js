@@ -84,4 +84,34 @@
       this.dom.overlay.classList.remove('overlay-active');
     }
   }
-    }
+  bindEvents() {
+    const { signal } = this.abortController;
+
+    this.dom.menuToggle.addEventListener('click', () => {
+      this.isSidebarOpen() ? this.closeSidebar() : this.openSidebar();
+    }, { signal });
+
+    this.dom.overlay.addEventListener('click', () => {
+      this.closeSidebar();
+    }, { signal });
+
+    let resizeTimeout;
+    let lastIsMobile = this.isMobile();
+
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const nowMobile = this.isMobile();
+        if (nowMobile !== lastIsMobile) {
+          lastIsMobile = nowMobile;
+          this.setInitialState();
+        }
+      }, 150);
+    }, { signal });
+  }
+
+  destroy() {
+    this.abortController.abort();
+  }
+}
+    
