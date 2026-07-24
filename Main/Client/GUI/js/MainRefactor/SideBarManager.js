@@ -45,4 +45,18 @@
     isMobile() {
         return this.mediaQuery.matches;
     }
+    isSidebarOpen() {
+    return !this.dom.sidebar.classList.contains('sidebar-closed');
+  }
+
+  openSidebar() {
+    console.log('[Activity Log] Action: Opening sidebar');
+    this.dom.sidebar.classList.remove('sidebar-closed');
+
+    if (this.isMobile()) {
+      this.dom.overlay.classList.add('overlay-active');
+    } else {
+      this.dom.mainContent.classList.remove('main-expanded');
+    }
+  }
     }
