@@ -13,4 +13,25 @@ export class SideBarManagement{
          this.init();
     }
 
+    
+    getElements() {
+    try {
+      const elements = {
+        menuToggle: document.getElementById(this.selectors.menuToggle),
+        sidebar: document.getElementById(this.selectors.sidebar),
+        mainContent: document.getElementById(this.selectors.mainContent),
+        overlay: document.getElementById(this.selectors.overlay),
+      };
+
+      Object.entries(elements).forEach(([key, el]) => {
+        if (!el) throw new Error(`Missing DOM element: #${this.selectors[key]}`);
+      });
+
+      return elements;
+    } catch (error) {
+      console.error(`[Error Catching] Initialization failed: ${error.message}`);
+      return null;
+    }
+  }
+
 }
