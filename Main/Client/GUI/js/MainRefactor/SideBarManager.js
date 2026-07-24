@@ -59,4 +59,29 @@
       this.dom.mainContent.classList.remove('main-expanded');
     }
   }
+
+  closeSidebar() {
+    try {
+      console.log('[Activity Log] Action: Closing sidebar');
+      this.dom.sidebar.classList.add('sidebar-closed');
+      this.dom.overlay.classList.remove('overlay-active');
+
+      if (!this.isMobile()) {
+        this.dom.mainContent.classList.add('main-expanded');
+      }
+    } catch (err) {
+      console.error('[Error Catching] Failed to close sidebar:', err);
+    }
+  }
+
+  setInitialState() {
+    console.log(`[Activity Log] Setting initial state (Mobile: ${this.isMobile()})`);
+    if (this.isMobile()) {
+      this.closeSidebar();
+    } else {
+      this.dom.sidebar.classList.remove('sidebar-closed');
+      this.dom.mainContent.classList.remove('main-expanded');
+      this.dom.overlay.classList.remove('overlay-active');
+    }
+  }
     }
