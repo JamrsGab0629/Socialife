@@ -2,9 +2,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const populator = new lazy_populator(document);
     const postMap = new Map();
 
-    // 1. Observer to hydrate/dehydrate images on view entry/exit
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
             const contentInstance = postMap.get(entry.target);
             if (!contentInstance) return;
 
@@ -14,17 +13,15 @@ window.addEventListener('DOMContentLoaded', () => {
                 contentInstance.is_outside();
             }
         });
-    }, {
-        rootMargin: '150px 0px' // Hydrate 150px before scrolling into view
-    });
+    }, { rootMargin: '150px 0p  x'});
 
     // Helper to register new post elements
     function attachPosts(elements) {
-        elements.forEach(el => {
-            if (!postMap.has(el)) {
-                const instance = new content(el);
-                postMap.set(el, instance);
-                observer.observe(el);
+        elements.forEach((element) => {
+            if (!postMap.has(element)) {
+                const instance = new content(element);
+                postMap.set(element, instance);
+                observer.observe(element);
             }
         });
     }
@@ -35,7 +32,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // 2. Infinite Scroll Trigger
     async function checkScrollPosition() {
         const scrollBottom = window.innerHeight + window.scrollY;
-        const threshold = document.documentElement.scrollHeight - 400; // 400px before bottom
+        const threshold = document.documentElement.scrollHeight - 400;
 
         if (scrollBottom >= threshold) {
             const newCardElements = await populator.next_batch();
