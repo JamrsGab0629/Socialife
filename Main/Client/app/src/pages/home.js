@@ -9,13 +9,13 @@ export default function Home() {
         <div id="main-feed">
             <div class="topbar">
                 <div class="search-box">
-                    <img width="18px" height="18px" src="../images/icon/search.png" alt="search">
+                    <img width="18px" height="18px" src="../public/icon/search.png" alt="search">
                     <input type="text" class="search-input" placeholder="Hinted search text">
                 </div>
 
                 <a action-button="timeline" class="icon-btn">
                     <span class="icon-dot">3</span>
-                    <img width="30px" src="../images/icon/bell.png" style="filter: invert(20%);" alt="bell">
+                    <img width="30px" src="../public/icon/bell.png" style="filter: invert(20%);" alt="bell">
                 </a>
             </div>
 
@@ -27,30 +27,30 @@ export default function Home() {
 
                 <div class="post-card">
                     <div class="post-header">
-                        <img src="../images/profile/James.jpg" alt="James Gabriel Santos">
+                        <img src="../public/profile/James.jpg" alt="James Gabriel Santos">
                         <h2>
                             <span class="post-author">James Gabriel Santos</span>
                             <span class="post-time">2 hours ago</span>
                         </h2>
-                        <a class="action-more" href="#"><img src="../images/icon/more.png" alt="more"></a>
+                        <a class="action-more" href="#"><img src="../public/icon/more.png" alt="more"></a>
                     </div>
                     <div class="post-text">Just finished a great hike! The view from the peak was incredible. Check it
                         out!</div>
                     <div class="post-photo">
-                        <img src="../images/post/mountains.jpg" alt="mountain" srcset="">
+                        <img src="../public/post/mountains.jpg" alt="mountain" srcset="">
                     </div>
 
                     <div class="post-meta">3 comments</div>
                     <div class="comments">
                         <div class="comment">
                             <div class="comment-avatar">
-                                <img src="../images/profile/Xep.jpg" alt="Xep">
+                                <img src="../public/profile/Xep.jpg" alt="Xep">
                             </div>
                             <div><b>Andrei Luis Lucas</b>I'm a great hike!</div>
                         </div>
                         <div class="comment">
                             <div class="comment-avatar">
-                                <img src="../images/profile/Xep.jpg" alt="Xep">
+                                <img src="../public/profile/Xep.jpg" alt="Xep">
                             </div>
                             <div><b>Andrei Luis Lucas</b>Get it out!</div>
                         </div>
@@ -58,19 +58,19 @@ export default function Home() {
                     <div class="post-actions">
                         <div class="action-btn">
                             <a href="">
-                                <img src="../images/icon/like.png" alt="comment">
+                                <img src="../public/icon/like.png" alt="comment">
                                 Like
                             </a>
                         </div>
                         <div class="action-btn">
                             <a href="">
-                                <img src="../images/icon/chat.png" alt="comment">
+                                <img src="../public/icon/chat.png" alt="comment">
                                 Comment
                             </a>
                         </div>
                         <div class="action-btn">
                             <a href="">
-                                <img src="../images/icon/export.png" alt="share">
+                                <img src="../public/icon/export.png" alt="share">
                                 Share
                             </a>
                         </div>
@@ -79,30 +79,30 @@ export default function Home() {
 
                 <div class="post-card">
                     <div class="post-header">
-                        <img src="../images/profile/Xep.jpg" alt="Andrei Luis Lucas">
+                        <img src="../public/profile/Xep.jpg" alt="Andrei Luis Lucas">
                         <h2>
                             <span class="post-author">Andrei Luis Lucas</span>
                             <span class="post-time">2 hours ago</span>
                         </h2>
-                        <a class="action-more" href="#"><img src="../images/icon/more.png" alt="more"></a>
+                        <a class="action-more" href="#"><img src="../public/icon/more.png" alt="more"></a>
                     </div>
                     <div class="post-text">Cooking a bost enoashing dripe, and can bazard with...</div>
                     <div class="post-actions">
                         <div class="action-btn">
                             <a href="">
-                                <img src="../images/icon/like.png" alt="comment">
+                                <img src="../public/icon/like.png" alt="comment">
                                 Like
                             </a>
                         </div>
                         <div class="action-btn">
                             <a href="">
-                                <img src="../images/icon/chat.png" alt="comment">
+                                <img src="../public/icon/chat.png" alt="comment">
                                 Comment
                             </a>
                         </div>
                         <div class="action-btn">
                             <a href="">
-                                <img src="../images/icon/export.png" alt="share">
+                                <img src="../public/icon/export.png" alt="share">
                                 Share
                             </a>
                         </div>
@@ -111,31 +111,31 @@ export default function Home() {
 
                 <div class="post-card">
                     <div class="post-header">
-                        <img src="../images/profile/dave.png" alt="Dave Lebico">
+                        <img src="../public/profile/dave.png" alt="Dave Lebico">
                         <h2>
                             <span class="post-author">Dave Lebico</span>
                             <span class="post-time">2 hours ago</span>
                         </h2>
-                        <a class="action-more" href="#"><img src="../images/icon/more.png" alt="more"></a>
+                        <a class="action-more" href="#"><img src="../public/icon/more.png" alt="more"></a>
                     </div>
                     <div class="post-text">Anyone up for badminton this weekend? Court's booked for Saturday morning.
                     </div>
                     <div class="post-actions">
                         <div class="action-btn">
                             <a href="">
-                                <img src="../images/icon/like.png" alt="comment">
+                                <img src="../public/icon/like.png" alt="comment">
                                 Like
                             </a>
                         </div>
                         <div class="action-btn">
                             <a href="">
-                                <img src="../images/icon/chat.png" alt="comment">
+                                <img src="../public/icon/chat.png" alt="comment">
                                 Comment
                             </a>
                         </div>
                         <div class="action-btn">
                             <a href="">
-                                <img src="../images/icon/export.png" alt="share">
+                                <img src="../public/icon/export.png" alt="share">
                                 Share
                             </a>
                         </div>
@@ -144,31 +144,31 @@ export default function Home() {
 
                 <div class="post-card">
                     <div class="post-header">
-                        <img src="../images/profile/Lee.jpg" alt="Dave Lebico">
+                        <img src="../public/profile/Lee.jpg" alt="Dave Lebico">
                         <h2>
                             <span class="post-author">Lee James</span>
                             <span class="post-time">8 hours ago</span>
                         </h2>
-                        <a class="action-more" href="#"><img src="../images/icon/more.png" alt="more"></a>
+                        <a class="action-more" href="#"><img src="../public/icon/more.png" alt="more"></a>
                     </div>
                     <div class="post-text">Finally finished reading that book everyone's been talking about. Worth the
                         hype!</div>
                     <div class="post-actions">
                         <div class="action-btn">
                             <a href="">
-                                <img src="../images/icon/like.png" alt="comment">
+                                <img src="../public/icon/like.png" alt="comment">
                                 Like
                             </a>
                         </div>
                         <div class="action-btn">
                             <a href="">
-                                <img src="../images/icon/chat.png" alt="comment">
+                                <img src="../public/icon/chat.png" alt="comment">
                                 Comment
                             </a>
                         </div>
                         <div class="action-btn">
                             <a href="">
-                                <img src="../images/icon/export.png" alt="share">
+                                <img src="../public/icon/export.png" alt="share">
                                 Share
                             </a>
                         </div>

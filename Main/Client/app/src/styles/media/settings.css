@@ -1,0 +1,5 @@
+@media (max-width: 768px) {
+    #settings{
+        height: calc(100vh - 60px - 64px) !important;
+    }
+}

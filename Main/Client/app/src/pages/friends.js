@@ -15,7 +15,7 @@ export default function Friends () {
             <div class="friends-grid">
                 <div class="friend-card" onclick="window.location.href='../messages.html'">
                     <div class="avatar-container">
-                        <img src="../images/profile/Xep.jpg" alt="Andrei Luis Lucas">
+                        <img src="./public/profile/Xep.jpg" alt="Andrei Luis Lucas">
                         <span class="status-indicator online"></span>
                     </div>
                     <div class="friend-details">
@@ -27,7 +27,7 @@ export default function Friends () {
 
                 <div class="friend-card" onclick="window.location.href='../messages.html'">
                     <div class="avatar-container">
-                        <img src="../images/profile/dave.png" alt="Dave Lebico">
+                        <img src="./public/profile/dave.png" alt="Dave Lebico">
                         <span class="status-indicator online"></span>
                     </div>
                     <div class="friend-details">
@@ -39,7 +39,7 @@ export default function Friends () {
 
                 <div class="friend-card" onclick="window.location.href='../messages.html'">
                     <div class="avatar-container">
-                        <img src="../images/profile/Philip.jpg" alt="Philip parenas">
+                        <img src="./public/profile/Philip.jpg" alt="Philip parenas">
                         <span class="status-indicator online"></span>
                     </div>
                     <div class="friend-details">
