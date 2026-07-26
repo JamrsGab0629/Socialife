@@ -1,3 +1,9 @@
+# To test the Website just run skeleton.html
+
+
+
+
+
 # SociaLife-appsdev
 
 ### PROJECT MANAGER
