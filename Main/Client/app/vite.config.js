@@ -5,7 +5,7 @@ export default {
     rollupOptions: {
       input: {
         main: './src/index.html',
-        styles: './src/styles/common.css'
+        styles: './src/styles/common.css',
       }
     }
   },
