@@ -1,6 +1,8 @@
 import Front from "../layouts/front";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import FAQ from "../components/landing/FAQ";
+import MobileNav from "../components/landing/MobileNav";
 
 export default function Landing() {
     const { header, main, footer } = new Front(this.root);
@@ -241,4 +243,7 @@ export default function Landing() {
         </main>
     `;
     Footer(footer);
+
+    MobileNav();
+    FAQ();
 }

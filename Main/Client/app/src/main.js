@@ -6,6 +6,8 @@ import Saved from './pages/saved';
 import Friends from './pages/friends';
 import PageNotFound from "./pages/pageNotFound";
 import Landing from "./pages/landing";
+import Login from "./pages/login";
+import Signup from "./pages/signup";
 
 const app = new SPA({
     root: document.getElementById('app'),
@@ -13,6 +15,8 @@ const app = new SPA({
 });
 
 app.add('/landing', Landing);
+app.add('/login', Login);
+app.add('/signup', Signup);
 app.add('/', Home);
 app.add('/home', Home);
 app.add('/profile', Profile);
