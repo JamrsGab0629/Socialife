@@ -1,0 +1,16 @@
+@media (max-width: 1021px) and (min-width: 769px){
+    .friends-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    #friends-main {
+        padding: 20px 16px 90px 16px !important; /* Extra bottom spacing so content clears navbar */
+        height: calc(100vh - 60px - 64px);
+    }
+
+    .friends-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

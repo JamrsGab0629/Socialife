@@ -1,0 +1,248 @@
+import Front from "../layouts/front";
+import Header from "../components/header";
+import Footer from "../components/footer";
+import FAQ from "../components/landing/FAQ";
+import MobileNav from "../components/landing/MobileNav";
+
+export default function Landing() {
+    const { header, main, footer } = new Front(this.root);
+
+    Header(header);
+    main.innerHTML = `
+        <section class="hero container">
+            <div class="hero-copy">
+                <span class="eyebrow">Open now for free</span>
+                <h1 class="hero-title">Find your <span class="hero-title-accent">frequency.</span><br>Not just your
+                    feed.</h1>
+                <p class="hero-sub">
+                    Socialife reads the signal, not the noise. Follow the people, topics and
+                    communities that actually move you — and let everything else settle to the bottom.
+                </p>
+                <div class="hero-ctas">
+                    <a href="/signup/" class="btn btn-primary">Get Started</a>
+                    <a href="#features" class="btn btn-ghost">Explore Platform</a>
+                </div>
+                <div class="hero-wave" aria-hidden="true">
+                    <svg viewBox="0 0 600 60" preserveAspectRatio="none">
+                        <path class="wave-path" d="M0 30 C 60 5, 120 55, 180 30 S 300 5, 360 30 S 480 55, 540 30 S 600 30 600 30" fill="none"
+                            stroke="currentColor" stroke-width="2" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+                <div class="mock-card mock-card-main">
+                    <div class="mock-card-head">
+                        <div class="mock-avatar"></div>
+                        <div>
+                            <div class="mock-name">Mara Villanueva</div>
+                            <div class="mock-meta">Posting to <b>#design-collective</b></div>
+                        </div>
+                    </div>
+                    <p class="mock-text">Shipped the new wave-motion prototype today — feels alive scrolling through it
+                        🌊</p>
+                    <div class="mock-media"></div>
+                    <div class="mock-actions">
+                        <span>♥ 482</span><span>💬 61</span><span>↗ 12</span>
+                    </div>
+                </div>
+                <div class="mock-card mock-card-float mock-card-1">
+                    <span class="mock-pill"> Trending in Tech</span>
+                    <p>"Signal over scroll" — 3.2k reposts</p>
+                </div>
+                <div class="mock-card mock-card-float mock-card-2">
+                    <div class="mock-live-dot"></div> 218 people are live in <b>Night Owls</b>
+                </div>
+            </div>
+        </section>
+
+        <div class="wave-divider" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+                <path d="M0 40 C 240 0, 480 80, 720 40 S 1200 0, 1440 40 V80 H0 Z" />
+            </svg></div>
+
+        <section class="features container" id="features">
+            <div class="section-head">
+                <span class="eyebrow">Core features</span>
+                <h2>Built for signal, not scroll.</h2>
+                <p class="section-sub">Three pieces that work together so your attention goes where you want it to.</p>
+            </div>
+
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <div class="feature-icon" style="--fi-bg: var(--royal-500)">
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path d="M3 12h4l3 8 4-16 3 8h4" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3>Real-time feeds</h3>
+                    <p>Posts arrive as a live current, ranked by relevance to you — never by what keeps you scrolling
+                        longest.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon" style="--fi-bg: #243ECC">
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                            <circle cx="8" cy="9" r="3" stroke="white" stroke-width="2" fill="none" />
+                            <circle cx="17" cy="9" r="3" stroke="white" stroke-width="2" fill="none" />
+                            <path d="M2 20c1-4 4-6 6-6s5 2 6 6M12 20c1-4 4-6 6-6" stroke="white" stroke-width="2" fill="none"
+                                stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3>Friend recommendations</h3>
+                    <p>Smart suggestions surface people you'd actually want to follow — based on shared interests, not
+                        just who's popular.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon" style="--fi-bg: #2F5EFF">
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                            <rect x="3" y="4" width="18" height="14" rx="2" stroke="white" stroke-width="2" fill="none" />
+                            <path d="M8 20h8M9 9l3 3 5-5" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3>Connect through posts &amp; comments</h3>
+                    <p>Every post is a conversation starter — reply, comment, and react to build real connections, not
+                        just an audience.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="compare" id="community">
+            <div class="container">
+                <div class="section-head">
+                    <span class="eyebrow">Why Socialife</span>
+                    <h2>Less clutter. More current.</h2>
+                    <p class="section-sub">Most feeds are engineered to hold your attention. Ours is engineered to
+                        respect it.</p>
+                </div>
+
+                <div class="compare-grid">
+                    <div class="compare-col compare-old">
+                        <span class="compare-label">Traditional feed</span>
+                        <ul>
+                            <li>Algorithmic outrage bait, sorted for engagement</li>
+                            <li>Ads disguised as posts, every third scroll</li>
+                            <li>Premium features locked behind a paywall</li>
+                            <li>One giant feed for every kind of interest</li>
+                        </ul>
+                    </div>
+                    <div class="compare-vs" aria-hidden="true">VS</div>
+                    <div class="compare-col compare-new">
+                        <span class="compare-label">Socialife</span>
+                        <ul>
+                            <li>Ranked by relevance to your actual interests</li>
+                            <li>Clearly labeled, opt-in sponsored content only</li>
+                            <li>Completely free — no premium tiers, ever</li>
+                            <li>Separate currents for each community you follow</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            </section>
+
+        <div class="wave-divider wave-divider-flip" aria-hidden="true">
+            <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+                <path d="M0 40 C 240 0, 480 80, 720 40 S 1200 0, 1440 40 V80 H0 Z" />
+            </svg>
+        </div>
+
+        <section class="stats-wrap">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat" data-target="4200000"><span class="stat-num" data-suffix="+">0</span><span class="stat-label">Active
+                            users</span></div>
+                    <div class="stat" data-target="58000000"><span class="stat-num" data-suffix="+">0</span><span class="stat-label">Posts
+                            shared</span></div>
+                </div>
+
+                <div class="section-head section-head-light">
+                    <span class="eyebrow">What people are saying</span>
+                    <h2>Trusted by people who were tired of the noise.</h2>
+                </div>
+
+                <div class="testimonial-grid">
+                    <article class="testimonial-card">
+                        <p>"First platform where my feed actually looks like my interests, not everyone else's
+                            arguments."</p>
+                        <div class="testimonial-who">
+                            <div class="mock-avatar mock-avatar-sm"></div>
+                            <div><b>Joaquin M.</b><span class="mock-meta">Product Designer</span></div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card">
+                        <p>"The community tools alone got our 400-person study group off three different chat apps."</p>
+                        <div class="testimonial-who">
+                            <div class="mock-avatar mock-avatar-sm"></div>
+                            <div><b>Patricia L.</b><span class="mock-meta">Community Lead</span></div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card">
+                        <p>"Moved my whole audience here in a week. Posting and getting real feedback finally feels
+                            effortless."</p>
+                        <div class="testimonial-who">
+                            <div class="mock-avatar mock-avatar-sm"></div>
+                            <div><b>Ben Alcaraz</b><span class="mock-meta">Independent Creator</span></div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq container" id="faq">
+            <div class="section-head">
+                <span class="eyebrow">Questions</span>
+                <h2>Everything you're wondering.</h2>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-q" aria-expanded="false">
+                        <span>How does Socialife handle my privacy?</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-a">
+                        <p>Your data is never sold to advertisers. You control exactly who sees each post — public,
+                            followers, or a specific community — and can export or delete your account data at any time.
+                        </p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" aria-expanded="false">
+                        <span>What are the community guidelines?</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-a">
+                        <p>Be honest about who you are, respect the space you're posting in, and no harassment or
+                            coordinated spam. Each community can layer on its own house rules on top of these baseline
+                            guidelines.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" aria-expanded="false">
+                        <span>How do I get started?</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-a">
+                        <p>Create a free account, pick three interests to seed your first feed, and follow a community.
+                            Your current adjusts automatically as you interact with more posts.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" aria-expanded="false">
+                        <span>Is Socialife free to use?</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-a">
+                        <p>Yes — Socialife is completely free to use, with no premium tiers or locked features.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    `;
+    Footer(footer);
+
+    MobileNav();
+    FAQ();
+}

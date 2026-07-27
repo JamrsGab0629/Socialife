@@ -1,0 +1,12 @@
+.onmind {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.onmind div {
+    align-self: center;
+    max-width: 700px;
+    width: 100%;
+}
