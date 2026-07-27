@@ -1,6 +1,6 @@
 export default function Auth_Brand(root){
     root.innerHTML = `
-        <a href="landing.html" class="auth-brand-logo">
+        <a href="/landing" class="auth-brand-logo">
             <span class="nav-logo-mark" aria-hidden="true">
                 <svg viewBox="0 0 32 32" width="24" height="24">
                     <path d="M2 20c4-8 8-8 12 0s8 8 12 0" fill="none" stroke="currentColor" stroke-width="3"
