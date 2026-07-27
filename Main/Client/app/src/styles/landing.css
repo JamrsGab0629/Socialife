@@ -620,6 +620,7 @@
 
 .faq-q[aria-expanded="true"] .faq-icon {
   transform: rotate(45deg);
+  transition: transform 1s ease-in-out;
 }
 
 .faq-a {
