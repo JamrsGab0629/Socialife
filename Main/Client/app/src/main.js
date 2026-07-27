@@ -19,9 +19,9 @@ const main = new SPA({
     defaultRoute: Landing
 });
 
-main.add('/', Landing);
+main.add(/\/(?:landing)?/i, Landing);
 main.add('/login', Login)
-main.add('/\/signup(?:\?ref=(?<id>\d+))?/i', Signup);
+main.add(/\/signup(?:\?ref=(?<id>\d+))?/i, Signup);
 
 // app.add('/', Home);
 // app.add('/home', Home);
