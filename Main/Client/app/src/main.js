@@ -9,19 +9,26 @@ import Landing from "./pages/landing";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
 
-const app = new SPA({
+// const app = new SPA({
+//     root: document.getElementById('app'),
+//     default: PageNotFound
+// });
+
+const main = new SPA({
     root: document.getElementById('app'),
-    default: PageNotFound
+    defaultRoute: Landing
 });
 
-app.add('/landing', Landing);
-app.add('/login', Login);
-app.add('/signup', Signup);
-app.add('/', Home);
-app.add('/home', Home);
-app.add('/profile', Profile);
-app.add('/settings', Settings);
-app.add('/saved', Saved);
-app.add('/friends', Friends);
+main.add('/', Landing);
+main.add('/login', Login)
+main.add('/\/signup(?:\?ref=(?<id>\d+))?/i', Signup);
 
-app.handleRouteChanges();
+// app.add('/', Home);
+// app.add('/home', Home);
+// app.add('/profile', Profile);
+// app.add('/settings', Settings);
+// app.add('/saved', Saved);
+// app.add('/friends', Friends);
+
+// app.handleRouteChanges();
+main.handleRouteChanges();

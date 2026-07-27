@@ -20,7 +20,7 @@ export default function Landing() {
                         communities that actually move you — and let everything else settle to the bottom.
                     </p>
                     <div class="hero-ctas">
-                        <a href="signup.html" class="btn btn-primary">Get Started</a>
+                        <a href="/signup" class="btn btn-primary">Get Started</a>
                         <a href="#features" class="btn btn-ghost">Explore Platform</a>
                     </div>
                     <div class="hero-wave" aria-hidden="true">

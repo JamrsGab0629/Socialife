@@ -18,8 +18,8 @@ export default function Header(root) {
             </ul>
 
             <div class="nav-actions">
-                <a href="login.html" class="btn btn-ghost nav-login">Log In</a>
-                <a href="signup.html" class="btn btn-primary nav-signup">Sign Up</a>
+                <a href="/login" class="btn btn-ghost nav-login">Log In</a>
+                <a href="/signup" class="btn btn-primary nav-signup">Sign Up</a>
             </div>
 
             <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
