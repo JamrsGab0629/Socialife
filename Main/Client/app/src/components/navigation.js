@@ -2,7 +2,7 @@ export default function Navigation(root) {
     root.innerHTML = `
         <!-- SIDEBAR -->
         <aside class="sidebar">
-            <a id="refresh" href="./skeleton.html" class="logo">
+            <a id="refresh" href="/" class="logo">
                 <img id="main-logo" class="stamp" src="./images/Socialife-stamp.png" alt="Socialife-stamp">
                 <img class="script" src="./images/Socialife-script.png" alt="Socialife-script">
             </a>

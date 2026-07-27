@@ -10,7 +10,7 @@ export default function Login(){
         <div class="auth-card">
             <div class="auth-tabs" role="tablist">
                 <a href="/login" class="auth-tab is-active" role="tab" aria-selected="true">Log In</a>
-                <a href="/signup" class="auth-tab" role="tab" aria-selected="false">Sign Up</a>
+                <a href="/signup/" class="auth-tab" role="tab" aria-selected="false">Sign Up</a>
                 <span class="auth-tab-indicator" aria-hidden="true"></span>
             </div>
 
@@ -39,7 +39,7 @@ export default function Login(){
 
                 <button type="submit" class="btn btn-primary auth-submit">Log In</button>
 
-                <p class="auth-switch">Don't have an account? <a href="signup.html">Sign Up</a></p>
+                <p class="auth-switch">Don't have an account? <a href="/signup/">Sign Up</a></p>
             </form>
         </div>
     `;

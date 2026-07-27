@@ -1,15 +1,15 @@
 export default function Front(root) {
     root.innerHTML = `
         <div id="container">
-            <header id="header"></header>
-            <main id="main"></main>
-            <footer id="footer"></footer>
+            <header class="nav-wrap" id="navWrap"></header>
+            <main id="top"></main>
+            <footer class="site-footer" id="footer"></footer>
         </div>
     `;
 
     return {
-        header : document.getElementById('header'),
-        main: document.getElementById('main'),
+        header : document.getElementById('navWrap'),
+        main: document.getElementById('top'),
         footer : document.getElementById('footer')
     }
 }

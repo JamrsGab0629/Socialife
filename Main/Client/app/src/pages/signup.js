@@ -6,17 +6,17 @@ export default function Signup(params) {
     Auth_Brand(aside);
 
     const counter = Number(params?.id) || 1;
+
     if ( counter === 1 ){
         main.innerHTML = `
             <div class="auth-card">
-
-                <div class="auth-tabs" role="tablist">
-                    <a href="login.html" class="auth-tab" role="tab" aria-selected="false">Log In</a>
-                    <a href="signup.html" class="auth-tab is-active" role="tab" aria-selected="true">Sign Up</a>
-                    <span class="auth-tab-indicator is-signup" aria-hidden="true"></span>
-                </div>
-
                 <form class="auth-form" id="signupForm" novalidate>
+                    <div class="auth-tabs" role="tablist">
+                        <a href="/login" class="auth-tab" role="tab" aria-selected="false">Log In</a>
+                        <a href="/signup/1" class="auth-tab is-active" role="tab" aria-selected="true">Sign Up</a>
+                        <span class="auth-tab-indicator is-signup" aria-hidden="true"></span>
+                    </div>
+
                     <label class="auth-field">
                         <span>Full Name</span>
                         <input type="text" name="fullname" autocomplete="name" required placeholder="Juan Dela Cruz">
@@ -50,24 +50,23 @@ export default function Signup(params) {
 
                     <button type="submit" class="btn btn-primary auth-submit">Create Account</button>
 
-                    <p class="auth-switch">Already have an account? <a href="login.html">Log In</a></p>
+                    <p class="auth-switch">Already have an account? <a href="login">Log In</a></p>
                 </form>
             </div>
         `
     } else if (counter === 2) {
         main.innerHTML = `
             <div class="auth-card">
-
-                <div class="auth-tabs" role="tablist">
-                    <a href="login.html" class="auth-tab" role="tab" aria-selected="false">Log In</a>
-                    <a href="signup.html" class="auth-tab is-active" role="tab" aria-selected="true">Sign Up</a>
-                    <span class="auth-tab-indicator is-signup" aria-hidden="true"></span>
-                </div>
-
                 <form class="auth-form" id="signupForm" novalidate>
+                    <div class="auth-tabs" role="tablist">
+                        <a href="/login" class="auth-tab" role="tab" aria-selected="false">Log In</a>
+                        <a href="/signup/2" class="auth-tab is-active" role="tab" aria-selected="true">Sign Up</a>
+                        <span class="auth-tab-indicator is-signup" aria-hidden="true"></span>
+                    </div>
+
                     <label class="auth-field">
                         <span>Full Name</span>
-                        <input type="text" name="fullname" autocomplete="name" required placeholder="Juan Dela Cruz">
+                        <input type="text" name="username" autocomplete="name" required placeholder="Juan DC">
                     </label>
 
                     <label class="auth-field">
@@ -98,21 +97,20 @@ export default function Signup(params) {
 
                     <button type="submit" class="btn btn-primary auth-submit">Create Account</button>
 
-                    <p class="auth-switch">Already have an account? <a href="login.html">Log In</a></p>
+                    <p class="auth-switch">Already have an account? <a href="login">Log In</a></p>
                 </form>
             </div>
         `
     } else if ( counter === 3) {
         main.innerHTML = `
-                        <div class="auth-card">
-
-                <div class="auth-tabs" role="tablist">
-                    <a href="login.html" class="auth-tab" role="tab" aria-selected="false">Log In</a>
-                    <a href="signup.html" class="auth-tab is-active" role="tab" aria-selected="true">Sign Up</a>
-                    <span class="auth-tab-indicator is-signup" aria-hidden="true"></span>
-                </div>
-
+            <div class="auth-card">
                 <form class="auth-form" id="signupForm" novalidate>
+                    <div class="auth-tabs" role="tablist">
+                        <a href="/login" class="auth-tab" role="tab" aria-selected="false">Log In</a>
+                        <a href="/signup/3" class="auth-tab is-active" role="tab" aria-selected="true">Sign Up</a>
+                        <span class="auth-tab-indicator is-signup" aria-hidden="true"></span>
+                    </div>
+
                     <label class="auth-field">
                         <span>Full Name</span>
                         <input type="text" name="fullname" autocomplete="name" required placeholder="Juan Dela Cruz">
@@ -146,7 +144,7 @@ export default function Signup(params) {
 
                     <button type="submit" class="btn btn-primary auth-submit">Create Account</button>
 
-                    <p class="auth-switch">Already have an account? <a href="login.html">Log In</a></p>
+                    <p class="auth-switch">Already have an account? <a href="login">Log In</a></p>
                 </form>
             </div>
         `

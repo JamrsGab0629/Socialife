@@ -1,6 +1,5 @@
 export default function Footer(root) {
     root.innerHTML = `
-    <footer class="site-footer">
         <div class="container footer-grid">
             <div class="footer-brand">
                 <a href="#top" class="nav-logo footer-logo">
@@ -42,6 +41,5 @@ export default function Footer(root) {
         <div class="container footer-bottom">
             <p>© 2026 Socialife. All rights reserved.</p>
         </div>
-    </footer>
     `;
 }
