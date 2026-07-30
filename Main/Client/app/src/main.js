@@ -23,12 +23,11 @@ main.add('/', Landing);
 main.add('/login', Login)
 main.add(/\/signup\/(?:(?<id>\d+))?/i, Signup);
 
-// app.add('/', Home);
-// app.add('/home', Home);
-// app.add('/profile', Profile);
-// app.add('/settings', Settings);
-// app.add('/saved', Saved);
-// app.add('/friends', Friends);
+// app.add(/\/app\/(?:home)?/i, Home);
+// app.add('app/profile', Profile);
+// app.add('app/settings', Settings);
+// app.add('app/saved', Saved);
+// app.add('app/friends', Friends);
 
 // app.handleRouteChanges();
 main.handleRouteChanges();
