@@ -5,7 +5,7 @@ import Settings from './pages/settings';
 import Saved from './pages/saved';
 import Friends from './pages/friends';
 import PageNotFound from "./pages/pageNotFound";
-import Landing from "./pages/landing";
+import Landing from "./pages/landing/landing";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
 
