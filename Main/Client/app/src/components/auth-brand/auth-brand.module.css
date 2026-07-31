@@ -1,0 +1,77 @@
+.auth-brand-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--fs-lg);
+}
+
+.auth-brand-logo .nav-logo-mark {
+    color: var(--royal-500);
+    display: inline-flex;
+}
+
+.auth-brand-copy {
+    max-width: 26rem;
+    margin-top: var(--sp-5);
+}
+
+.auth-brand-copy h1 {
+    font-size: var(--fs-2xl);
+    color: #fff;
+}
+
+.auth-brand-copy p {
+    margin-top: var(--sp-2);
+    color: var(--mist-300);
+    font-size: var(--fs-base);
+}
+
+.auth-brand-wave {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 6.5rem;
+    color: var(--royal-500);
+    opacity: 0.6;
+}
+
+.auth-brand-wave svg {
+    width: 100%;
+    height: auto;
+}
+
+.auth-quote {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-style: normal;
+    color: #fff;
+    border-left: 3px solid var(--royal-500);
+    padding-left: var(--sp-2);
+}
+
+.auth-quote cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: var(--fs-xs);
+    color: var(--mist-300);
+}
+
+@media (max-width: 940px) {
+    .auth-brand {
+        min-height: 16rem;
+    }
+
+    .auth-brand-wave {
+        display: none;
+    }
+
+    .auth-quote {
+        display: none;
+    }
+}
