@@ -1,6 +1,7 @@
 import style from './initial.module.css';
 import style_btn from "../../../styles/main/btn.module.css";
 import style_active from "../../../styles/main/active.module.css";
+import Component from './initial.component';
 
 export default function Initial(root){
     root.innerHTML = `
@@ -13,7 +14,7 @@ export default function Initial(root){
                 </div>
 
                 <label class="${style['auth-field']}">
-                    <span>Full Name</span>
+                    <span>Username</span>
                     <input type="text" name="username" autocomplete="name" required placeholder="JuanDC-123">
                 </label>
 
@@ -27,7 +28,7 @@ export default function Initial(root){
                     <div class="${style['auth-password-wrap']}">
                         <input type="password" name="password" id="signupPassword" autocomplete="new-password"
                             required placeholder="Create a password">
-                        <button type="button" class="${style['pw-toggle']}" data-target="signupPassword"
+                        <button type="button" class="${style['pw-toggle']} pw-toggle" data-target="signupPassword"
                             aria-label="Show password">Show</button>
                     </div>
                     <div class="${style['pw-strength']}" id="pwStrength" aria-hidden="true">
@@ -49,4 +50,6 @@ export default function Initial(root){
             </form>
         </div>
     `
+
+    Component();
 }
