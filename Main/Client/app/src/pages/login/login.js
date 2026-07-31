@@ -4,6 +4,7 @@ import style_active from "../../styles/main/active.module.css";
 
 import Auth_Brand from "../../components/auth-brand/auth-brand";
 import Auth from "../../layouts/auth/auth";
+import Component from "./login.component";
 
 export default function Login(){
     const { aside, main } = Auth(this.root);
@@ -47,4 +48,6 @@ export default function Login(){
             </form>
         </div>
     `;
+
+    Component();
 }
