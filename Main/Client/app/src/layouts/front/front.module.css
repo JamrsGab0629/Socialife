@@ -13,7 +13,13 @@
 }
 
 .site-footer {
-  background: var(--ink-900);
-  color: var(--mist-300);
-  padding-top: var(--sp-6);
+    background: var(--ink-900);
+    color: var(--mist-300);
+    padding-top: var(--sp-6);
+}
+
+@media (max-width: 640px) {
+    .site-footer {
+        padding-top: var(--sp-4);
+    }
 }

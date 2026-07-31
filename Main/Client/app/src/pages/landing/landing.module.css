@@ -516,12 +516,6 @@
 }
 
 @media (max-width: 640px) {
-  :root {
-    --sp-4: clamp(1.1rem, 0.9rem + 2vw, 1.5rem);
-    --sp-5: clamp(1.5rem, 1.2rem + 2vw, 2rem);
-    --sp-6: clamp(2rem, 1.6rem + 3vw, 2.75rem);
-  }
-
   .hero {
     padding-block: clamp(1.75rem, 6vw, 2.5rem) var(--sp-4);
   }
@@ -579,14 +573,5 @@
 
   .faq-a p {
     padding: 0 var(--sp-2) var(--sp-2);
-  }
-
-  .site-footer {
-    padding-top: var(--sp-4);
-  }
-
-  .footer-grid {
-    gap: var(--sp-3);
-    padding-bottom: var(--sp-3);
   }
 }
