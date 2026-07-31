@@ -1,5 +1,6 @@
 import style from './verify.module.css';
 import style_btn from '../../../styles/main/btn.module.css';
+import Component from './verify.component';
 
 export default function Verify(root) {
     root.innerHTML = `
@@ -34,4 +35,5 @@ export default function Verify(root) {
             </form>
         </div>
     `
+    Component();
 }
