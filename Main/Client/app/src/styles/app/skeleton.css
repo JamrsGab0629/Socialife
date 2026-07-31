@@ -125,7 +125,7 @@
 }
 
 /* main content  */
-#main-content {
+.main-content {
     position: relative;
     background: var(--card-bg);
     border-left: 1px solid var(--card-border);

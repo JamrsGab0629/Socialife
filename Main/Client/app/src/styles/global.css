@@ -18,6 +18,17 @@
   --warn: #E8A23D;
   --danger: #E0483F;
 
+
+  --sidebar-blue: #4a78b5;
+  --sidebar-blue-dark: #3d65a0;
+  --bg-page: #edeff2;
+  --card-bg: #ffffff;
+  --card-border: #e1e4e8;
+  --text-dark: #1c2733;
+  --text-muted: #8a94a0;
+  --accent-beige: #f5efe4;
+  --link-blue: #3b6fb0;
+
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
