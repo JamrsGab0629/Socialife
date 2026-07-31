@@ -1,9 +1,9 @@
 import SPA from "./core/spa";
-import Home from './pages/home/home';
+// import Home from './pages/home/home';
 // import Profile from './pages/profile';
 // import Settings from './pages/settings';
-// import Saved from './pages/saved';
-// import Friends from './pages/friends';
+ import Saved from './pages/saved/saved';
+ import Friends from './pages/friends/friends';
 import PageNotFound from "./pages/page-not-found/pageNotFound";
 
 import Landing from "./pages/landing/landing";
@@ -24,11 +24,11 @@ const app = new SPA({
 // main.add('/login', Login)
 // main.add(/\/signup\/(?:(?<id>\d+))?/i, Signup);
 
-app.add(/\/app(?:\/home)?/i, Home);
+//app.add(/\/app(?:\/home)?/i, Home);
 // app.add('app/profile', Profile);
 // app.add('app/settings', Settings);
-// app.add('app/saved', Saved);
-// app.add('app/friends', Friends);
+  app.add('/', Saved);
+ app.add('app/friends', Friends);
 
 app.handleRouteChanges();
 // main.handleRouteChanges();

@@ -1,5 +1,6 @@
 import Navigation from "../../components/navigation";
 import Layout from "../../layouts/default";
+import style from "./profile.css"
 
 export default function Profile(){
     const { navigation, main } = Layout(this.root);
