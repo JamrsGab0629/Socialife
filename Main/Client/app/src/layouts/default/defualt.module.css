@@ -1,0 +1,27 @@
+.main-content {
+    position: relative;
+    background: var(--card-bg);
+    border-left: 1px solid var(--card-border);
+    border-right: 1px solid var(--card-border);
+    margin-left: 250px;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+@media (max-width: 1021px) and (min-width: 769px) {
+    .main-content {
+        margin-left: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+        margin-top: 60px;
+        height: calc(100vh - 60px - 64px);
+    }
+}
