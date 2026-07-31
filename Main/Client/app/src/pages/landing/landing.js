@@ -1,11 +1,10 @@
 import style from './landing.module.css'
 import style_btn from '../../styles/main/btn.module.css'
-import FAQ from './landing.component';
+import Component from './landing.component';
 
 import Front from "../../layouts/front/front";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
-import MobileNav from "../../services/landing/mobile-nav/mobile-nav";
 
 export default function Landing() {
     const { header, main, footer } = new Front(this.root);
@@ -247,6 +246,5 @@ export default function Landing() {
     `;
     Footer(footer);
 
-    MobileNav();
-    FAQ();
+    Component();
 }

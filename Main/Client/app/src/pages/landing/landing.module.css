@@ -1,3 +1,7 @@
+.is-open {
+  display: flex !important;
+}
+
 .hero {
   display: grid;
   grid-template-columns: 1.1fr 1fr;

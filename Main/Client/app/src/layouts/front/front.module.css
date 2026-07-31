@@ -18,6 +18,10 @@
     padding-top: var(--sp-6);
 }
 
+.is-open {
+  display: flex !important;
+}
+
 @media (max-width: 640px) {
     .site-footer {
         padding-top: var(--sp-4);
