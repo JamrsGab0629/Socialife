@@ -42,3 +42,33 @@
 .search-input::placeholder {
     color: var(--text-muted);
 }
+
+.icon-btn {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    color: #556173;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.icon-btn:hover {
+    color: var(--link-blue);
+}
+
+.icon-dot {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: #E8536B;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

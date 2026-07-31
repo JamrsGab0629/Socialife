@@ -1,0 +1,139 @@
+.main-feed {
+    position: relative;
+    background: var(--card-bg);
+    border-left: 1px solid var(--card-border);
+    border-right: 1px solid var(--card-border);
+    margin-right: 320px;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.composer-label {
+    font-size: 20px;
+    color: #6B7684;
+    margin-bottom: 12px;
+}
+
+.composer-box {
+    background: #E7E9EC;
+    border-radius: 14px;
+    min-height: 96px;
+    padding: 16px 20px;
+    font-size: 15px;
+    color: var(--text-dark);
+    outline: none;
+    cursor: text;
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.composer-box:focus {
+    background: #FFFFFF;
+    box-shadow: 0 0 0 2px rgba(59, 111, 176, 0.25);
+}
+
+.composer-box:empty::before {
+    content: attr(data-placeholder);
+    color: var(--text-muted);
+}
+
+.right-col {
+    padding: 26px 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.recommend-box {
+    background: var(--accent-beige);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.recommend-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #3a2e1f;
+}
+
+.friend-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.friend-row:last-child {
+    border-bottom: none;
+}
+
+.friend-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.friend-avatar svg {
+    display: block;
+}
+
+.friend-name {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #2a3441;
+}
+
+.add-friend-btn {
+    border: 1px solid #c9bfa9;
+    background: white;
+    color: #3a2e1f;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.add-friend-btn:hover {
+    background: #faf7f0;
+}
+
+@media (max-width: 1021px) and (min-width: 769px){
+    .right-col {
+        display: none;
+    }
+
+    .main-feed {
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .right-col {
+        display: none;
+    }
+
+    .main-content{
+        height: auto;
+    }
+
+    .main-feed {
+        margin-right: 0;
+        height: calc(100vh - 60px - 64px);
+    }
+
+    .topbar {
+        position: sticky;
+        padding: 16px 25px;
+        height: 75px;
+    }
+}
