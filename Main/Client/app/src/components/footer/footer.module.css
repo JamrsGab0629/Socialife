@@ -38,3 +38,10 @@
   padding-block: var(--sp-3);
   font-size: var(--fs-xs);
 }
+
+@media (max-width: 640px) {
+  .footer-grid {
+    gap: var(--sp-3);
+    padding-bottom: var(--sp-3);
+  }
+}
