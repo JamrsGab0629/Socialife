@@ -54,6 +54,18 @@ export async function init({ signal }) {
             logo.src = "./images/Socialife-stamp.png";
         };
 
+        const andreiMess = (e) => {
+            e.preventDefault();
+            console.log("View messages");
+            mainView.innerHTML = html.msg;
+            refresh.href = "#";
+            logo.src = "./images/icon/back.png";
+        };
+
+        const mainSafeListener = (e) => {
+            getId('andrei').addEventListener('click', andreiMess);
+        };
+
         mediaQuery = window.matchMedia('(max-width: 768px)');
 
         resizeHandler = (e) => {
@@ -65,24 +77,15 @@ export async function init({ signal }) {
             if (e.matches) {
                 mainView.innerHTML = html.conv;
 
-                mainView.addEventListener('click', (e) => {
-                    const andreiBtn = e.target.closest('#andrei');
-
-                    if (andreiBtn) {
-                        e.preventDefault();
-                        console.log("View messages");
-                        mainView.innerHTML = html.msg;
-                        refresh.href = "#";
-                        logo.src = "./images/icon/back.png";
-                    }
-                });
-
+                mainView.addEventListener('click', mainSafeListener);
                 logo.addEventListener('click', back);
             } else {
                 refresh.href = "./skeleton.html";
                 logo.src = "./images/Socialife-stamp.png";
                 mainView.innerHTML = html.conv + html.msg;
                 logo.removeEventListener('click', back);
+                getId('andrei').removeEventListener('click', andreiMess);
+                mainView.removeEventListener('click', mainSafeListener);
             }
         };
 

@@ -1,0 +1,29 @@
+.nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: var(--sp-2) 0 0;
+    background: transparent;
+    transition: background 0.3s var(--ease);
+}
+
+.nav-wrap.is-scrolled {
+    background: rgba(246, 248, 252, 0.85);
+    backdrop-filter: blur(10px);
+}
+
+.site-footer {
+    background: var(--ink-900);
+    color: var(--mist-300);
+    padding-top: var(--sp-6);
+}
+
+.is-open {
+  display: flex !important;
+}
+
+@media (max-width: 640px) {
+    .site-footer {
+        padding-top: var(--sp-4);
+    }
+}

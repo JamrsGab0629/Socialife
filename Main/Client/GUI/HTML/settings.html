@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -749,106 +750,214 @@
             <input type="text" class="search-input" placeholder="Hinted search text">
         </div>
     </div>
+=======
+<!DOCTYPE html>
+<html lang="en">
+>>>>>>> fbb393ce6e3d5677e1ba48bfb75b4fe760d7c895
 
-    <!-- ─── BODY ─── -->
-    <div class="settings-body">
+<head>
+    <meta charset="UTF-8">
+    <title>Socialife - Messages</title>
 
-        <!-- ═══ YOUR ACCOUNT ═══ -->
-        <div class="section-heading">Your account</div>
-        <div class="settings-card">
-            <a class="settings-item" href="#">
-                <img class="settings-icon" src="./images/icon/user-avatar.png" alt="Users avatar">
-                <div class="item-content">
-                    <div class="item-title">
-                        Accounts Center
-                        <span class="badge badge-blue">verified</span>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../css/animation.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+
+    <!-- search -->
+    <link rel="stylesheet" href="../css/topbar-search.css">
+
+    <!-- settings -->
+    <link rel="stylesheet" href="../css/settings.css">
+
+    <!-- media -->
+    <link rel="stylesheet" href="../css/media/skeleton.css">
+    <link rel="stylesheet" href="../css/media/settings.css">
+</head>
+
+<body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <a id="refresh" href="home.html" class="logo">
+            <img id="main-logo" class="stamp" src="../images/Socialife-stamp.png" alt="Socialife-stamp">
+            <img class="script" src="../images/Socialife-script.png" alt="Socialife-script">
+        </a>
+
+        <a nav-action="profile" id="profile-nav" href="profile.html">
+            <div class="profile-block">
+                <div class="avatar-ring"><img src="../images/profile/James.jpg" alt="James Gabriel Santos"></div>
+                <div class="profile-name">James Gabriel Santos</div>
+            </div>
+        </a>
+
+        <nav class="nav">
+            <a nav-action="home" class="nav-item" href="home.html">
+                <img class="simple-icon" src="../images/icon/home.png">
+                Home
+            </a>
+            <a nav-action="saved" class="nav-item" href="saved.html">
+                <img class="simple-icon" src="../images/icon/save.png">
+                Saved
+            </a>
+            <a nav-action="friends" class="nav-item" href="profile.html">
+                <img class="simple-icon" src="../images/icon/group.png">
+                Friends
+            </a>
+            <a nav-action="settings" class="nav-item" href="settings.html">
+                <img class="simple-icon" src="../images/icon/settings.png">
+                Settings
+            </a>
+            <a nav-action="log-out" class="nav-item" href="#">
+                <img class="simple-icon" src="../images/icon/logout.png">
+                Log Out
+            </a>
+        </nav>
+    </aside>
+
+    <!-- MOBILE BOTTOM NAV -->
+    <nav class="mobile-bottom-nav">
+        <a nav-action="home" class="mobile-nav-item" href="home.html">
+            <img class="simple-icon" src="../images/icon/home.png">
+            Home
+        </a>
+        <a nav-action="saved" class="mobile-nav-item" href="saved.html">
+            <img class="simple-icon" src="../images/icon/save.png">
+            Saved
+        </a>
+        <a nav-action="friends" class="mobile-nav-item" href="freinds.html">
+            <img class="simple-icon" src="../images/icon/group.png">
+            Friends
+        </a>
+        <a nav-action="settings" class="mobile-nav-item" href="settings.html">
+            <img class="simple-icon" src="../images/icon/settings.png">
+            Settings
+        </a>
+        <a nav-action="log-out" class="mobile-nav-item" href="#">
+            <img class="simple-icon" src="../images/icon/logout.png">
+            Log Out
+        </a>
+    </nav>
+
+    <main id="main-content">
+        <div id="settings">
+            <!-- ─── SEARCH ─── -->
+            <div class="topbar">
+                <div class="search-box">
+                    <img width="18px" height="18px" src="../images/icon/search.png" alt="search">
+                    <input type="text" class="search-input" placeholder="Hinted search text">
+                </div>
+            </div>
+
+            <!-- ─── BODY ─── -->
+            <div class="settings-body">
+
+                <!-- ═══ YOUR ACCOUNT ═══ -->
+                <div class="section-heading">Your account</div>
+                <div class="settings-card">
+                    <a class="settings-item" href="#">
+                        <img class="settings-icon" src="../images/icon/user-avatar.png" alt="Users avatar">
+                        <div class="item-content">
+                            <div class="item-title">
+                                Accounts Center
+                                <span class="badge badge-blue">verified</span>
+                            </div>
+                            <div class="item-desc">Password, security, personal details, connected experiences, ad
+                                preferences
+                            </div>
+                        </div>
+                        <span class="item-chevron">›</span>
+                    </a>
+                </div>
+
+                <!-- ═══ PREFERENCES ═══ -->
+                <div class="section-heading">Preferences</div>
+                <div class="section-sub">Customize your experience on Socialife.</div>
+                <div class="settings-card">
+                    <a class="settings-item" href="#">
+                        <img class="settings-icon" src="../images/icon/bell.png" alt="Notifications">
+                        <div class="item-content">
+                            <div class="item-title">Notifications</div>
+                        </div>
+                        <span class="item-chevron">›</span>
+                    </a>
+                    <a class="settings-item dark-mode-row" href="#">
+                        <img class="settings-icon" src="../images/icon/contrast.png" alt="Light-Dark mode">
+                        <div class="item-content">
+                            <div class="item-title">Dark mode</div>
+                            <div class="item-desc">Switch to a darker theme</div>
+                        </div>
+                        <div class="toggle-wrap">
+                            <div class="toggle" id="darkModeToggle" role="button" tabindex="0"
+                                aria-label="Toggle dark mode">
+                                <span class="toggle-knob"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- ═══ AUDIENCE & VISIBILITY ═══ -->
+                <div class="section-heading">Audience and visibility</div>
+                <div class="section-sub">Control who can see what you share on Socialife.</div>
+                <div class="settings-card">
+                    <a class="settings-item" href="#">
+                        <img class="settings-icon" src="../images/icon/chat-bubble.png" alt="Contacts">
+                        <div class="item-content">
+                            <div class="item-title">How people find and contact you</div>
+                        </div>
+                        <span class="item-chevron">›</span>
+                    </a>
+                </div>
+
+                <!-- ═══ BLOCKING, PAYMENTS, ACTIVITY ═══ -->
+                <div class="section-heading">Privacy &amp; controls</div>
+                <div class="settings-card">
+                    <a class="settings-item" href="#">
+                        <img class="settings-icon" src="../images/icon/block-user.png" alt="Blocks">
+                        <div class="item-content">
+                            <div class="item-title">Blocking</div>
+                            <div class="item-desc">Manage blocked users and pages</div>
+                        </div>
+                        <span class="item-chevron">›</span>
+                    </a>
+                    <a class="settings-item" href="#">
+                        <img class="settings-icon" src="../images/icon/activity.png" alt="Activity">
+                        <div class="item-content">
+                            <div class="item-title">Your activity</div>
+                            <div class="item-desc">Review your activity and content you're tagged in</div>
+                        </div>
+                        <span class="item-chevron">›</span>
+                    </a>
+                </div>
+
+                <!-- ═══ COMMUNITY STANDARDS & LEGAL ═══ -->
+                <div class="section-heading">Community Standards and legal policies</div>
+                <div class="settings-card">
+                    <div class="check-item">
+                        <span class="check-box checked">✓</span>
+                        <span class="check-label">Terms of Service</span>
                     </div>
-                    <div class="item-desc">Password, security, personal details, connected experiences, ad preferences
+                    <div class="check-item">
+                        <span class="check-box checked">✓</span>
+                        <span class="check-label">Privacy Policy</span>
+                    </div>
+                    <div class="check-item">
+                        <span class="check-box checked">✓</span>
+                        <span class="check-label">Cookies policy</span>
+                    </div>
+                    <div class="check-item">
+                        <span class="check-box checked">✓</span>
+                        <span class="check-label">Community Standards</span>
                     </div>
                 </div>
-                <span class="item-chevron">›</span>
-            </a>
-        </div>
-
-        <!-- ═══ PREFERENCES ═══ -->
-        <div class="section-heading">Preferences</div>
-        <div class="section-sub">Customize your experience on Socialife.</div>
-        <div class="settings-card">
-            <a class="settings-item" href="#">
-                <img class="settings-icon" src="./images/icon/bell.png" alt="Notifications">
-                <div class="item-content">
-                    <div class="item-title">Notifications</div>
-                </div>
-                <span class="item-chevron">›</span>
-            </a>
-            <a class="settings-item dark-mode-row" href="#">
-                <img class="settings-icon" src="./images/icon/contrast.png" alt="Light-Dark mode">
-                <div class="item-content">
-                    <div class="item-title">Dark mode</div>
-                    <div class="item-desc">Switch to a darker theme</div>
-                </div>
-                <div class="toggle-wrap">
-                    <div class="toggle" id="darkModeToggle" role="button" tabindex="0" aria-label="Toggle dark mode">
-                        <span class="toggle-knob"></span>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <!-- ═══ AUDIENCE & VISIBILITY ═══ -->
-        <div class="section-heading">Audience and visibility</div>
-        <div class="section-sub">Control who can see what you share on Socialife.</div>
-        <div class="settings-card">
-            <a class="settings-item" href="#">
-                <img class="settings-icon" src="./images/icon/chat-bubble.png" alt="Contacts">
-                <div class="item-content">
-                    <div class="item-title">How people find and contact you</div>
-                </div>
-                <span class="item-chevron">›</span>
-            </a>
-        </div>
-
-        <!-- ═══ BLOCKING, PAYMENTS, ACTIVITY ═══ -->
-        <div class="section-heading">Privacy &amp; controls</div>
-        <div class="settings-card">
-            <a class="settings-item" href="#">
-                <img class="settings-icon" src="./images/icon/block-user.png" alt="Blocks">
-                <div class="item-content">
-                    <div class="item-title">Blocking</div>
-                    <div class="item-desc">Manage blocked users and pages</div>
-                </div>
-                <span class="item-chevron">›</span>
-            </a>
-            <a class="settings-item" href="#">
-                <img class="settings-icon" src="./images/icon/activity.png" alt="Activity">
-                <div class="item-content">
-                    <div class="item-title">Your activity</div>
-                    <div class="item-desc">Review your activity and content you're tagged in</div>
-                </div>
-                <span class="item-chevron">›</span>
-            </a>
-        </div>
-
-        <!-- ═══ COMMUNITY STANDARDS & LEGAL ═══ -->
-        <div class="section-heading">Community Standards and legal policies</div>
-        <div class="settings-card">
-            <div class="check-item">
-                <span class="check-box checked">✓</span>
-                <span class="check-label">Terms of Service</span>
-            </div>
-            <div class="check-item">
-                <span class="check-box checked">✓</span>
-                <span class="check-label">Privacy Policy</span>
-            </div>
-            <div class="check-item">
-                <span class="check-box checked">✓</span>
-                <span class="check-label">Cookies policy</span>
-            </div>
-            <div class="check-item">
-                <span class="check-box checked">✓</span>
-                <span class="check-label">Community Standards</span>
             </div>
         </div>
+<<<<<<< HEAD
     </div>
 </div>
 >>>>>>> 57227457ae4e865c056d75c1e124a403ec61e1fb
+=======
+    </main>
+</body>
+
+</html>
+>>>>>>> fbb393ce6e3d5677e1ba48bfb75b4fe760d7c895

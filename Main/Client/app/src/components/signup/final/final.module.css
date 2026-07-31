@@ -1,0 +1,70 @@
+.auth-card {
+    width: 100%;
+    max-width: 26rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lift);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+}
+
+.auth-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ink-700);
+}
+
+.auth-field input {
+    padding: 0.75em 1em;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--line-strong);
+    background: var(--bg-canvas);
+    color: var(--ink-900);
+    font-weight: 400;
+    transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.auth-field input:focus {
+    border-color: var(--royal-500);
+    background: var(--bg-surface);
+}
+
+.profile-card {
+  max-width: 28rem;
+}
+
+.profile-name-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-2);
+}
+
+.auth-field input[type="date"] {
+  color: var(--ink-900);
+  accent-color: var(--royal-500);
+}
+
+.auth-field input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s var(--ease);
+}
+
+.auth-field input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+@media (max-width: 480px) {
+  .profile-name-grid {
+    grid-template-columns: 1fr;
+  }
+}
