@@ -481,13 +481,13 @@
 .faq-icon {
   font-size: 1.4rem;
   color: var(--royal-500);
-  transition: transform 0.25s var(--ease);
+  transition: transform 175ms var(--ease);
   line-height: 1;
 }
 
 .faq-q[aria-expanded="true"] .faq-icon {
   transform: rotate(45deg);
-  transition: transform 1s ease-in-out;
+  transition: transform 200ms ease-out;
 }
 
 .faq-a {
