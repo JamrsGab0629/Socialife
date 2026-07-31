@@ -1,13 +1,14 @@
 import SPA from "./core/spa";
-import Home from './pages/home';
-import Profile from './pages/profile';
-import Settings from './pages/settings';
-import Saved from './pages/saved';
-import Friends from './pages/friends';
-import PageNotFound from "./pages/pageNotFound";
+// import Home from './pages/home';
+// import Profile from './pages/profile';
+// import Settings from './pages/settings';
+// import Saved from './pages/saved';
+// import Friends from './pages/friends';
+// import PageNotFound from "./pages/pageNotFound";
+
 import Landing from "./pages/landing/landing";
-import Login from "./pages/login";
-import Signup from "./pages/signup";
+import Login from "./pages/login/login";
+import Signup from "./pages/signup/signup";
 
 // const app = new SPA({
 //     root: document.getElementById('app'),
