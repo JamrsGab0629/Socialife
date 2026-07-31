@@ -4,7 +4,11 @@ export class ComponentFactory {
     card.className = 'card';
 
     const heading = document.createElement('h3');
+<<<<<<< HEAD
     heading.textContent = title;
+=======
+    heading.textContent = title; 
+>>>>>>> xep
 
     const button = document.createElement('button');
     button.className = 'card-action-btn';

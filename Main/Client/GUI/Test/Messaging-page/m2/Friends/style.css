@@ -103,6 +103,9 @@ body {
 }
 
 /* Friends Panel Area */
+<<<<<<< HEAD
+
+=======
 .friends-main {
   flex-grow: 1;
   padding: 32px;
@@ -201,6 +204,7 @@ body {
   background-color: #0084ff;
   color: #ffffff;
 }
+>>>>>>> James
 
 /* Mobile Nav Styles - Invisible on Desktop */
 .mobile-bottom-nav {

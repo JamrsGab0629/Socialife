@@ -1,0 +1,433 @@
+/* =========================================================
+   DESIGN TOKENS & SYSTEM BASE CONFIGURATION
+   ========================================================= */
+:root {
+  --primary-blue-wave: #3b62f6;
+  --logo-sky-blue: #22a6ff;
+  --text-dark: #1c2733;
+  --text-muted: #8a94a0;
+  --bg-page-white: #ffffff;
+  --card-border-subtle: rgba(28, 39, 51, 0.08);
+  --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-stack);
+  background-color: var(--bg-page-white);
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+/* =========================================================
+   BACKGROUND WAVE GEOMETRY SHAPE
+   ========================================================= */
+.bg-wave-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.bg-wave-graphic {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-blue-wave);
+  /* Applies the custom responsive HTML SVG wave path clipping pattern */
+  clip-path: url(#organic-wave-clip);
+}
+
+/* =========================================================
+   CORE STRUCTURE & VIEWPORT WRAPPER
+   ========================================================= */
+.hero-viewport-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+/* ---------- FIXED / ABSOLUTE TOP NAVBAR ---------- */
+.main-header {
+  width: 100%;
+  max-width: 1540px;
+  margin: 0 auto;
+  padding: 2.5rem 6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.brand-logo-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* SCALE UP: Logo size optimized for high visibility */
+.logo-img-asset {
+  height: 64px; /* Increased from 48px to 64px */
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+}
+
+/* Pop scaling micro-interaction on hover */
+.logo-img-asset:hover {
+  transform: scale(1.08);
+  filter: drop-shadow(0 4px 12px rgba(34, 166, 255, 0.3));
+}
+
+.header-auth-links {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+/* SCALE UP: Log In link size increased */
+.login-link {
+  font-size: 1.25rem; /* Increased from 1.05rem to 1.25rem */
+  font-weight: 600;
+  color: var(--text-dark);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.login-link:hover {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* SCALE UP: Sign In Button action item scaled up */
+.signin-btn {
+  background: #ffffff;
+  color: var(--text-dark);
+  padding: 1rem 2.4rem; /* Increased padding size */
+  border-radius: 35px;
+  font-size: 1.25rem; /* Increased from 1.05rem to 1.25rem */
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.signin-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* ---------- UNEVEN COMPOSITE CONTAINER SPLIT ---------- */
+.hero-container {
+  flex: 1;
+  width: 100%;
+  max-width: 1540px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  padding: 10rem 6rem 2rem 6rem;
+  gap: 4rem;
+}
+
+/* =========================================================
+   LEFT COLUMN SPECIFICATIONS (TYPOGRAPHY & ANIMATION)
+   ========================================================= */
+.content-left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  max-width: 36rem;
+  width: 100%;
+}
+
+.about-title {
+  font-size: 5rem;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--text-dark);
+}
+
+.about-description {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+
+.about-illustration-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 1.5rem;
+  perspective: 1000px;
+}
+
+.spinning-globe-graphic {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  aspect-ratio: 1 / 1; /* Protects image from vertical/horizontal squishing */
+  object-fit: contain;
+  animation: infinite3DSpinY 18s linear infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes infinite3DSpinY {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+/* =========================================================
+   RIGHT COLUMN SPECIFICATIONS (UI LAYERS)
+   ========================================================= */
+.visual-right-column {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 550px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* SCALE UP: Backdrop Graphic significantly enlarged */
+.custom-paper-image-backdrop {
+  position: absolute;
+  width: 580px; /* Increased from 460px to 580px */
+  height: 500px; /* Increased from 400px to 500px */
+  object-fit: contain;
+  z-index: 1;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.08));
+  animation: dynamicFloatingTilt 7s ease-in-out infinite;
+}
+
+/* Smooth ambient floating interaction keyframes */
+@keyframes dynamicFloatingTilt {
+  0% {
+    transform: rotate(-3.5deg) translate(-15px, 15px);
+  }
+  50% {
+    transform: rotate(-2deg) translate(-15px, -2px);
+  }
+  100% {
+    transform: rotate(-3.5deg) translate(-15px, 15px);
+  }
+}
+
+/* SCALE UP: Card element scaled to match backdrop */
+.ui-feed-card-component {
+  position: relative;
+  width: 440px; /* Increased from 390px to 440px */
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--card-border-subtle);
+  border-radius: 24px;
+  padding: 2.25rem;
+  box-shadow: 0 30px 60px rgba(28, 39, 51, 0.08);
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.ui-feed-card-component:hover {
+  transform: translateY(-4px);
+}
+
+.feed-user-header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.feed-avatar-placeholder {
+  width: 52px;
+  height: 52px;
+  background-color: #1a365d;
+  border-radius: 50%;
+}
+
+.feed-meta-skeleton {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-line-md {
+  height: 8px;
+  background: rgba(28, 39, 51, 0.08);
+  border-radius: 4px;
+  width: 55%;
+}
+
+.skeleton-line-sm {
+  height: 6px;
+  background: rgba(28, 39, 51, 0.04);
+  border-radius: 4px;
+  width: 30%;
+}
+
+.feed-body-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 1.75rem;
+}
+
+.skeleton-body-line {
+  height: 9px;
+  background: rgba(28, 39, 51, 0.06);
+  border-radius: 5px;
+  width: 100%;
+}
+
+.skeleton-body-line.short {
+  width: 78%;
+}
+
+.feed-interaction-footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid rgba(28, 39, 51, 0.06);
+  padding-top: 1.25rem;
+}
+
+.action-utility-icon-arrow {
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 11px solid var(--text-muted);
+  border-radius: 1px;
+}
+
+/* FLOATING CYAN CHAT BUBBLE BADGE OVERLAY */
+.floating-comment-badge {
+  position: absolute;
+  background: #00e5ff;
+  padding: 0.9rem 1.4rem;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 229, 255, 0.35);
+  z-index: 3;
+  top: 18%;
+  right: 0%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 180px;
+}
+
+.badge-avatar-xs {
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+}
+
+.badge-line-xs {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 3px;
+  flex: 1;
+}
+
+/* =========================================================
+   RESPONSIVE BLUEPRINT GRID ALIGNMENT
+   ========================================================= */
+@media (max-width: 1200px) {
+  .main-header { padding: 2rem 4rem; }
+  .hero-container { padding: 10rem 4rem 2rem 4rem; }
+  .about-title { font-size: 4.2rem; }
+}
+
+@media (max-width: 992px) {
+  body { overflow-y: auto; }
+
+  .bg-wave-container {
+    width: 100%;
+    height: 50%;
+    top: auto;
+    bottom: 0;
+  }
+
+  .bg-wave-graphic {
+    clip-path: none; 
+    width: 100%;
+    height: 100%;
+    right: 0;
+    border-radius: 100% 100% 0% 0% / 20% 20% 0% 0%;
+    transform: scaleY(1.1);
+    transform-origin: bottom center;
+  }
+}
+ .main-header {
+  width: 100%;
+  max-width: 1540px;
+  margin: 0 auto;
+  padding: 2.5rem 6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.brand-logo-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+
+.logo-img-asset {
+  height: 90px; 
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+}
+
+
+.logo-img-asset:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 6px 16px rgba(34, 166, 255, 0.4));
+}
+
+.header-auth-links {
+  display: flex;
+  align-items: center;
+  gap: 3.5rem;
+}
+@media (max-width: 480px) {
+  .about-title { font-size: 3.2rem; }
+  .header-auth-links { gap: 1.25rem; }
+  .floating-comment-badge {
+    right: 2%;
+    top: 15%;
+  }
+}

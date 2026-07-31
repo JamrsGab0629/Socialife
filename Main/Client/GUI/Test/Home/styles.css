@@ -149,7 +149,10 @@
     background: var(--card-bg);
     border-left: 1px solid var(--card-border);
     border-right: 1px solid var(--card-border);
+<<<<<<< HEAD
+=======
     margin-left: 250px;
+>>>>>>> James
     margin-right: 340px;
     height: 100vh;
     overflow-y: auto;
