@@ -195,3 +195,9 @@
     font-weight: 500;
     color: #1c1e21;
 }
+
+@media (max-width: 768px) {
+    #settings{
+        height: calc(100vh - 60px - 64px) !important;
+    }
+}

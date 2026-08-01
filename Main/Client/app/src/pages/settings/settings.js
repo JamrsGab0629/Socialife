@@ -1,17 +1,20 @@
-import Navigation from "../../components/navigation";
-import Layout from "../../layouts/default";
+import Navigation from "../../components/navigation/navigation";
+import Layout from "../../layouts/default/default";
+
+import style from "./settings.module.css";
+import style_topbar_search from "../../styles/app/topbar-search.module.css";
 
 export default function Settings() {
     const { navigation, main } = Layout(this.root);
 
     Navigation(navigation);
     main.innerHTML = `
-        <div id="settings">
+        <div id="settings" class="${style['settings']}">
             <!-- ─── SEARCH ─── -->
-            <div class="${style["topbar"]}">
-                <div class="${style["search-box"]}">
+            <div class="${style_topbar_search["topbar"]}">
+                <div class="${style_topbar_search["search-box"]}">
                     <img width="18px" height="18px" src="../images/icon/search.png" alt="search">
-                    <input type="text" class="${style["search-input"]}" placeholder="Hinted search text">
+                    <input type="text" class="${style_topbar_search["search-input"]}" placeholder="Hinted search text">
                 </div>
             </div>
 
