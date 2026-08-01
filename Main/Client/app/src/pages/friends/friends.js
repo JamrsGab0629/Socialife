@@ -1,12 +1,13 @@
 import Navigation from "../../components/navigation/navigation";
 import Layout from "../../layouts/default/default";
+import style from "./friends.module.css";
 
 export default function Friends () {
     const { navigation, main } = Layout(this.root);
 
     Navigation(navigation);
     main.innerHTML = `
-        <div id="friends-main">
+        <div id="friends-main" class="${style['friends-main']}">
             <div class="${style["friends-header"]}">
                 <h2>People</h2>
                 <div class="${style["active-count"]}">Active now (5)</div>
