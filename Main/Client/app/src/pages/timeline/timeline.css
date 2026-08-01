@@ -1,6 +1,0 @@
-@media (max-width: 768px) {
-    #timeline {
-        padding: 20px 16px 90px 16px !important; /* Extra bottom spacing so content clears navbar */
-        height: calc(100vh - 60px - 64px);
-    }
-}
