@@ -9,7 +9,7 @@ import Footer from "../../components/footer/footer";
 export default function Landing() {
     const { header, main, footer } = new Front(this.root);
 
-    console.log('debug.front', { header, main, footer})
+    // console.log('debug.front', { header, main, footer})
 
     Header(header);
 
