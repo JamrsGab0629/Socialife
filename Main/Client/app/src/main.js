@@ -1,15 +1,18 @@
 import SPA from "./core/spa";
 import Authentication from "./core/authentication";
+import Authenticated from "./core/authenticated";
 
 import PageNotFound from "./pages/404/pageNotFound";
 import Landing from "./pages/landing/landing";
 import Login from "./pages/login/login";
 import Signup from "./pages/signup/signup";
-// import Profile from './pages/profile/profile';
-// import Settings from './pages/settings';
+
+import Home from './pages/home/home';
+import Profile from './pages/profile/profile';
+import Settings from './pages/settings/settings';
 import Saved from './pages/saved/saved';
 import Friends from './pages/friends/friends';
-// import Home from './pages/home/home';
+import Timeline from "./pages/timeline/timeline";
 
 // const app = new SPA({
 //     root: document.getElementById('app'),
@@ -21,14 +24,14 @@ const app = new SPA({
     defaultRoute: PageNotFound,
 });
 
-app.add('/', Authentication(Landing));
-app.add('/login', Authentication(Login));
-app.add(/\/signup\/(?:(?<id>\d+))?/i, Authentication(Signup));
-// app.add('/app', AuthCheck(Home));
-// app.add("/app/home", Home);
-// app.add('/app/profile', Profile);
-// app.add('/app/settings', Settings);
+app.add('/', Authenticated(Landing));
+app.add('/login', Authenticated(Login));
+app.add(/^\/signup\/(?:(?<id>\d+))?$/i, Authenticated(Signup));
+app.add(/^\/app(?:\/home)?$/i, Authentication(Home, { isLoggedInRequired: true }));
+app.add('/app/profile', Profile);
+app.add('/app/settings', Settings);
 app.add('/app/saved', Authentication(Saved, { isLoggedInRequired: true }));
 app.add('/app/friends', Authentication(Friends,  { isLoggedInRequired: true }));
+app.add('/app/timeline', Authentication(Timeline,  { isLoggedInRequired: true }));
 
 app.handleRouteChanges();
