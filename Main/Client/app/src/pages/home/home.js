@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-import Navigation from '../../components/navigation';
-import Layout from '../../layouts/default';
-=======
 import Navigation from '../../components/navigation/navigation';
 import Layout from '../../layouts/default/default';
->>>>>>> 9e688d2f95920f7b3eaf8e789c078c12e606e7af
+import Component from './home.component';
 
 export default function Home() {
     const { navigation, main } = Layout(this.root);
@@ -238,4 +234,6 @@ export default function Home() {
             </div>
         </div>
     `;
+
+    Component();
 }
