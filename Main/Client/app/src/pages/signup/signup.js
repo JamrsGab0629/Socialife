@@ -4,13 +4,13 @@ import Initial from "../../components/signup/initial/initial";
 import Verify from "../../components/signup/verify/verify";
 import Auth from "../../layouts/auth/auth";
 
-export default function Signup(params) {
+export default function Signup( params ) {
     const { aside, main } = Auth(this.root);
     Auth_Brand(aside);
 
-    const counter = Number(params?.id) || 1;
+    // console.log("debug.Signup", this, params);
 
-    window.localStorage
+    const counter = Number(params?.id) || 1;
 
     if (counter === 1) Initial(main);
     else if (counter === 2) Verify(main);
