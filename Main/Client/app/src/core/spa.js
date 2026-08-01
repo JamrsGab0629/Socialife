@@ -42,6 +42,8 @@ class SPA {
       }
     }
 
+    // console.log("debug.SPA", params);
+
     route?.callback(params);
   }
 
