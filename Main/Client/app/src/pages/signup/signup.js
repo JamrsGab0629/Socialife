@@ -10,6 +10,8 @@ export default function Signup(params) {
 
     const counter = Number(params?.id) || 1;
 
+    window.localStorage
+
     if (counter === 1) Initial(main);
     else if (counter === 2) Verify(main);
     else if (counter === 3) Final(main);

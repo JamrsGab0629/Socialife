@@ -1,7 +1,7 @@
-import Navigation from "../../components/navigation";
-import Layout from "../../layouts/default";
-import style from "./saved.modules.css";
-import style from ""
+import Navigation from "../../components/navigation/navigation";
+import Layout from "../../layouts/default/default";
+import style from "./saved.module.css"
+
 export default function Saved () {
     const { navigation, main } = Layout(this.root);
 

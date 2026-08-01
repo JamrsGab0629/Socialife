@@ -5,6 +5,7 @@ import style from './home.module.css';
 import style_feed from '../../styles/app/feed.module.css';
 import style_onmind from '../../styles/app/onmind.module.css';
 import style_topbar_search from "../../styles/app/topbar-search.module.css";
+import Component from './home.component';
 
 export default function Home() {
     const { navigation, main } = Layout(this.root);
@@ -238,4 +239,6 @@ export default function Home() {
             </div>
         </div>
     `;
+
+    Component();
 }

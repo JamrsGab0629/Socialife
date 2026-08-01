@@ -1,5 +1,5 @@
-import Navigation from "../../components/navigation";
-import Layout from "../../layouts/default";
+import Navigation from "../../components/navigation/navigation";
+import Layout from "../../layouts/default/default";
 
 export default function Friends () {
     const { navigation, main } = Layout(this.root);

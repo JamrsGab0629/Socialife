@@ -1,34 +1,34 @@
 import SPA from "./core/spa";
-import Home from './pages/home/home';
-// import Profile from './pages/profile';
-// import Settings from './pages/settings';
-// import Saved from './pages/saved';
-// import Friends from './pages/friends';
-import PageNotFound from "./pages/page-not-found/pageNotFound";
+import Authentication from "./core/authentication";
 
+import PageNotFound from "./pages/404/pageNotFound";
 import Landing from "./pages/landing/landing";
 import Login from "./pages/login/login";
 import Signup from "./pages/signup/signup";
+// import Profile from './pages/profile/profile';
+// import Settings from './pages/settings';
+import Saved from './pages/saved/saved';
+import Friends from './pages/friends/friends';
+// import Home from './pages/home/home';
+
+// const app = new SPA({
+//     root: document.getElementById('app'),
+//     default: PageNotFound
+// });
 
 const app = new SPA({
     root: document.getElementById('app'),
-    default: PageNotFound
+    defaultRoute: PageNotFound,
 });
 
-// const main = new SPA({
-//     root: document.getElementById('app'),
-//     defaultRoute: Landing
-// });
-
-// main.add('/', Landing);
-// main.add('/login', Login)
-// main.add(/\/signup\/(?:(?<id>\d+))?/i, Signup);
-
-app.add(/\/app(?:\/home)?/i, Home);
-// app.add('app/profile', Profile);
-// app.add('app/settings', Settings);
-// app.add('app/saved', Saved);
-// app.add('app/friends', Friends);
+app.add('/', Authentication(Landing));
+app.add('/login', Authentication(Login));
+app.add(/\/signup\/(?:(?<id>\d+))?/i, Authentication(Signup));
+// app.add('/app', AuthCheck(Home));
+// app.add("/app/home", Home);
+// app.add('/app/profile', Profile);
+// app.add('/app/settings', Settings);
+app.add('/app/saved', Authentication(Saved, { isLoggedInRequired: true }));
+app.add('/app/friends', Authentication(Friends,  { isLoggedInRequired: true }));
 
 app.handleRouteChanges();
-// main.handleRouteChanges();

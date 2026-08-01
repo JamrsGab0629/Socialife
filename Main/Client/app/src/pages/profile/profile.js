@@ -1,12 +1,13 @@
-import Navigation from "../../components/navigation";
-import Layout from "../../layouts/default";
+import Navigation from "../../components/navigation/navigation";
+import Layout from "../../layouts/default/default";
+import style from "./profile.module.css"
 
 export default function Profile(){
     const { navigation, main } = Layout(this.root);
 
     Navigation(navigation);
     main.innerHTML = `
-        <div id="profile">
+        <div id="profile" class="profile">
             <section class="${style["banner"]}"></section>
 
             <section class="${style["profile-header"]}">
