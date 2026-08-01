@@ -1,13 +1,15 @@
 import Navigation from "../../components/navigation/navigation";
 import Layout from "../../layouts/default/default";
-import style from "./profile.module.css"
+
+import style from "./profile.module.css";
+import style_feed from "../../styles/app/feed.module.css"
 
 export default function Profile(){
     const { navigation, main } = Layout(this.root);
 
     Navigation(navigation);
     main.innerHTML = `
-        <div id="profile" class="profile">
+        <div id="profile" class="${style['profile']}">
             <section class="${style["banner"]}"></section>
 
             <section class="${style["profile-header"]}">
@@ -44,51 +46,51 @@ export default function Profile(){
 
                     <div class="${style["posts-column"]}">
 
-                        <div class="${style["post-card"]}">
-                            <div class="${style["post-header"]}">
+                        <div class="${style_feed["post-card"]}">
+                            <div class="${style_feed["post-header"]}">
                                 <img src="../images/profile/James.jpg" alt="James Gabriel Santos">
                                 <h2>
-                                    <span class="${style["post-author"]}">James Gabriel Santos</span>
-                                    <span class="${style["post-time"]}">2 hours ago</span>
+                                    <span class="${style_feed["post-author"]}">James Gabriel Santos</span>
+                                    <span class="${style_feed["post-time"]}">2 hours ago</span>
                                 </h2>
-                                <a class="${style["action-more"]}" href="#"><img src="../images/icon/more.png" alt="more"></a>
+                                <a class="${style_feed["action-more"]}" href="#"><img src="../images/icon/more.png" alt="more"></a>
                             </div>
-                            <div class="${style["post-text"]}">
+                            <div class="${style_feed["post-text"]}">
                                 Just finished a great hike! The view from the peak was incredible. Check it out!
                             </div>
-                            <div class="${style["post-photo"]}">
+                            <div class="${style_feed["post-photo"]}">
                                 <img src="../images/post/mountains.jpg" alt="mountain">
                             </div>
 
-                            <div class="${style["post-meta"]}">3 comments</div>
-                            <div class="${style["comments"]}">
-                                <div class="${style["comment"]}">
-                                    <div class="${style["comment-avatar"]}">
+                            <div class="${style_feed["post-meta"]}">3 comments</div>
+                            <div class="${style_feed["comments"]}">
+                                <div class="${style_feed["comment"]}">
+                                    <div class="${style_feed["comment-avatar"]}">
                                         <img src="../images/profile/Xep.jpg" alt="Xep">
                                     </div>
                                     <div><b>Andrei Luis Lucas</b>I'm a great hike!</div>
                                 </div>
-                                <div class="${style["comment"]}">
-                                    <div class="${style["comment-avatar"]}">
+                                <div class="${style_feed["comment"]}">
+                                    <div class="${style_feed["comment-avatar"]}">
                                         <img src="../images/profile/Xep.jpg" alt="Xep">
                                     </div>
                                     <div><b>Andrei Luis Lucas</b>Get it out!</div>
                                 </div>
                             </div>
-                            <div class="${style["post-actions"]}">
-                                <div class="${style["action-btn"]}">
+                            <div class="${style_feed["post-actions"]}">
+                                <div class="${style_feed["action-btn"]}">
                                     <a href="">
                                         <img src="../images/icon/like.png" alt="like">
                                         Like
                                     </a>
                                 </div>
-                                <div class="${style["action-btn"]}">
+                                <div class="${style_feed["action-btn"]}">
                                     <a href="">
                                         <img src="../images/icon/chat.png" alt="comment">
                                         Comment
                                     </a>
                                 </div>
-                                <div class="${style["action-btn"]}">
+                                <div class="${style_feed["action-btn"]}">
                                     <a href="">
                                         <img src="../images/icon/export.png" alt="share">
                                         Share
@@ -96,7 +98,6 @@ export default function Profile(){
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
