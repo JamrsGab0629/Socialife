@@ -1,4 +1,4 @@
-import style from './defualt.module.css'
+import style from './default.module.css'
 
 export default function Layout(root) {
     root.innerHTML = `
