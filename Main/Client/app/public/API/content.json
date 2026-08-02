@@ -4,8 +4,8 @@
     "view_status" : "Public || Private",
     "user_id" : "string",
     "caption" : "string",
-    "photos" : [
-        "photo_1_URL", "photo_2_URL", "photo_3_URL"
+    "content" : [
+        "post_id || ...photo_url"
     ],
     "like_counts" : "number",
     "like_data" : [
@@ -14,6 +14,7 @@
     "comment_count" : "number",
     "comment_data" : [
         {
+            "comment_time" : "ISO time_date",
             "user_id": "string",
             "comment": "string"
         }
