@@ -1,0 +1,21 @@
+{
+    "post_id" : "string",
+    "post_time" : "ISO time_date",
+    "view_status" : "Public || Private",
+    "user_id" : "string",
+    "caption" : "string",
+    "photos" : [
+        "photo_1_URL", "photo_2_URL", "photo_3_URL"
+    ],
+    "like_counts" : "number",
+    "like_data" : [
+        "...user_id"
+    ],
+    "comment_count" : "number",
+    "comment_data" : [
+        {
+            "user_id": "string",
+            "comment": "string"
+        }
+    ]
+}
