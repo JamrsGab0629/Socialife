@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socialife Loader Test</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <h1 class="logo">socialife</h1>
+
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <p class="progress-text" id="progressText">
+                Loading... 0%
+            </p>
+        </div>
+    </div>
+
+    <h1>Socialife Test Page</h1>
+
+
+    <script src="script.js"></script>
+    <script>
+   function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function loadPage() {
+
+    Socialife.loader.show();
+
+    // Simulate loading something
+    await sleep(3000);
+
+    Socialife.loader.hide();
+
+}
+
+loadPage();
+
+    </script>
+
+</body>
+</html>
