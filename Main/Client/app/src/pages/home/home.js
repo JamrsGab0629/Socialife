@@ -84,5 +84,5 @@ export default function Home() {
         </div>
     `;
 
-    Helper( main );
+    Helper();
 }
