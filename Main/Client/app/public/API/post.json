@@ -1,21 +1,22 @@
-{
-    "post_id" : "string",
-    "post_time" : "ISO time_date",
-    "view_status" : "Public || Private",
-    "user_id" : "string",
-    "caption" : "string",
-    "photos" : [
-        "photo_1_URL", "photo_2_URL", "photo_3_URL"
-    ],
-    "like_counts" : "number",
-    "like_data" : [
-        "...user_id"
-    ],
-    "comment_count" : "number",
-    "comment_data" : [
+    {
+
+        "view status" : "Public || Private"
+
+    , "user_id" : "string",
+        "captions" : "string" 
+    ,
+    "media/photo": [
         {
-            "user_id": "string",
-            "comment": "string"
+        "photo_id": 1,
+        "type": "image",
+        "url": "/images/posts/photo1.jpg"
+        },
+        {
+        "photo_id": 2,
+        "type": "image",
+        "url": "/images/posts/photo2.jpg"
         }
     ]
-}
+    
+    }
+
