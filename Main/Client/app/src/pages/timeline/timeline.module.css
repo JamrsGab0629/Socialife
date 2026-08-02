@@ -87,14 +87,14 @@
 }
 
 .notif-badge-icon.liked {
-    background-image: url("../images/icon/liked.png");
+    background-image: url("../../icons/liked.svg");
     background-size: contain;     /* Forces the image to fit inside the 21x21 box */
     background-repeat: no-repeat; /* Prevents the image from tiling */
     background-position: center;  /* Centers it nicely */
 }
 
 .notif-badge-icon.commented {
-    background-image: url("../images/icon/commented.png");
+    background-image: url("../../icons/commented.svg");
     background-size: contain;     /* Forces the image to fit inside the 21x21 box */
     background-repeat: no-repeat; /* Prevents the image from tiling */
     background-position: center;  /* Centers it nicely */
