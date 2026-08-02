@@ -3,9 +3,13 @@
     "post_time" : "ISO time_date",
     "view_status" : "Public || Private",
     "user_id" : "string",
+    "user_name": "string",
     "caption" : "string",
     "content" : [
-        "post_id || ...photo_url"
+        {
+            "type" : "photo || share",
+            "url" : "url"
+        }
     ],
     "like_counts" : "number",
     "like_data" : [
@@ -16,6 +20,7 @@
         {
             "comment_time" : "ISO time_date",
             "user_id": "string",
+            "user_name": "string",
             "comment": "string"
         }
     ]
