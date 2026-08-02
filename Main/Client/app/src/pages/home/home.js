@@ -2,10 +2,11 @@ import Navigation from '../../components/navigation/navigation';
 import Layout from '../../layouts/default/default';
 
 import style from './home.module.css';
-import style_feed from '../../styles/app/feed.module.css';
 import style_onmind from '../../styles/app/onmind.module.css';
 import style_topbar_search from "../../styles/app/topbar-search.module.css";
 import Component from './home.component';
+import Post from '../../components/post/post';
+import Helper from './home.helper';
 
 export default function Home() {
     const { navigation, main } = Layout(this.root);
@@ -15,171 +16,14 @@ export default function Home() {
         <div id="main-feed" class="${style['main-feed']}">
             <div class="${style_topbar_search["topbar"]}">
                 <div class="${style_topbar_search["search-box"]}">
-                    <img width="18px" height="18px" src="../public/icon/search.png" alt="search">
+                    <img width="18px" height="18px" src="../../icons/search.svg" alt="search">
                     <input type="text" class="${style_topbar_search["search-input"]}" placeholder="Hinted search text">
                 </div>
 
-                <a action-button="timeline" class="${style_topbar_search["icon-btn"]}">
+                <a action-button="timeline" class="${style_topbar_search["icon-btn"]}" href="/app/timeline">
                     <span class="${style_topbar_search["icon-dot"]}">3</span>
-                    <img width="30px" src="../public/icon/bell.png" style="filter: invert(20%);" alt="bell">
+                    <img width="30px" src="../../icons/bell.svg" style="filter: invert(20%);" alt="bell">
                 </a>
-            </div>
-
-            <div class="${style_feed["feed"]}">
-                <div class="${style_onmind["onmind"]}">
-                    <div class="${style["composer-label"]}">What's on your mind?</div>
-                    <div class="${style["composer-box"]}" contenteditable="true" data-placeholder="Write something..."></div>
-                </div>
-
-                <div class="${style_feed["post-card"]}">
-                    <div class="${style_feed["post-header"]}">
-                        <img src="../public/profile/James.jpg" alt="James Gabriel Santos">
-                        <h2>
-                            <span class="${style_feed["post-author"]}">James Gabriel Santos</span>
-                            <span class="${style_feed["post-time"]}">2 hours ago</span>
-                        </h2>
-                        <a class="${style_feed["action-more"]}" href="#"><img src="../public/icon/more.png" alt="more"></a>
-                    </div>
-                    <div class="${style_feed["post-text"]}">Just finished a great hike! The view from the peak was incredible. Check it
-                        out!</div>
-                    <div class="${style_feed["post-photo"]}">
-                        <img src="../public/post/mountains.jpg" alt="mountain" srcset="">
-                    </div>
-
-                    <div class="${style_feed["post-meta"]}">3 comments</div>
-                    <div class="${style_feed["comments"]}">
-                        <div class="${style_feed["comment"]}">
-                            <div class="${style_feed["comment-avatar"]}">
-                                <img src="../public/profile/Xep.jpg" alt="Xep">
-                            </div>
-                            <div><b>Andrei Luis Lucas</b>I'm a great hike!</div>
-                        </div>
-                        <div class="${style_feed["comment"]}">
-                            <div class="${style_feed["comment-avatar"]}">
-                                <img src="../public/profile/Xep.jpg" alt="Xep">
-                            </div>
-                            <div><b>Andrei Luis Lucas</b>Get it out!</div>
-                        </div>
-                    </div>
-                    <div class="${style_feed["post-actions"]}">
-                        <div class="${style_feed["action-btn"]}">
-                            <a href="">
-                                <img src="../public/icon/like.png" alt="comment">
-                                Like
-                            </a>
-                        </div>
-                        <div class="${style_feed["action-btn"]}">
-                            <a href="">
-                                <img src="../public/icon/chat.png" alt="comment">
-                                Comment
-                            </a>
-                        </div>
-                        <div class="${style_feed["action-btn"]}">
-                            <a href="">
-                                <img src="../public/icon/export.png" alt="share">
-                                Share
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="${style_feed["post-card"]}">
-                    <div class="${style_feed["post-header"]}">
-                        <img src="../public/profile/Xep.jpg" alt="Andrei Luis Lucas">
-                        <h2>
-                            <span class="${style_feed["post-author"]}">Andrei Luis Lucas</span>
-                            <span class="${style_feed["post-time"]}">2 hours ago</span>
-                        </h2>
-                        <a class="${style_feed["action-more"]}" href="#"><img src="../public/icon/more.png" alt="more"></a>
-                    </div>
-                    <div class="${style_feed["post-text"]}">Cooking a bost enoashing dripe, and can bazard with...</div>
-                    <div class="${style_feed["post-actions"]}">
-                        <div class="${style_feed["action-btn"]}">
-                            <a href="">
-                                <img src="../public/icon/like.png" alt="comment">
-                                Like
-                            </a>
-                        </div>
-                        <div class="${style_feed["action-btn"]}">
-                            <a href="">
-                                <img src="../public/icon/chat.png" alt="comment">
-                                Comment
-                            </a>
-                        </div>
-                        <div class="${style_feed["action-btn"]}">
-                            <a href="">
-                                <img src="../public/icon/export.png" alt="share">
-                                Share
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="${style_feed["post-card"]}">
-                    <div class="${style_feed["post-header"]}">
-                        <img src="../public/profile/dave.png" alt="Dave Lebico">
-                        <h2>
-                            <span class="${style_feed["post-author"]}">Dave Lebico</span>
-                            <span class="${style_feed["post-time"]}">2 hours ago</span>
-                        </h2>
-                        <a class="${style_feed["action-more"]}" href="#"><img src="../public/icon/more.png" alt="more"></a>
-                    </div>
-                    <div class="${style_feed["post-text"]}">Anyone up for badminton this weekend? Court's booked for Saturday morning.
-                    </div>
-                    <div class="${style_feed["post-actions"]}">
-                        <div class="${style_feed["action-btn"]}">
-                            <a href="">
-                                <img src="../public/icon/like.png" alt="comment">
-                                Like
-                            </a>
-                        </div>
-                        <div class="${style_feed["action-btn"]}">
-                            <a href="">
-                                <img src="../public/icon/chat.png" alt="comment">
-                                Comment
-                            </a>
-                        </div>
-                        <div class="${style_feed["action-btn"]}">
-                            <a href="">
-                                <img src="../public/icon/export.png" alt="share">
-                                Share
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="${style_feed["post-card"]}">
-                    <div class="${style_feed["post-header"]}">
-                        <img src="../public/profile/Lee.jpg" alt="Dave Lebico">
-                        <h2>
-                            <span class="${style_feed["post-author"]}">Lee James</span>
-                            <span class="${style_feed["post-time"]}">8 hours ago</span>
-                        </h2>
-                        <a class="${style_feed["action-more"]}" href="#"><img src="../public/icon/more.png" alt="more"></a>
-                    </div>
-                    <div class="${style_feed["post-text"]}">Finally finished reading that book everyone's been talking about. Worth the
-                        hype!</div>
-                    <div class="${style_feed["post-actions"]}">
-                        <div class="${style_feed["action-btn"]}">
-                            <a href="">
-                                <img src="../public/icon/like.png" alt="comment">
-                                Like
-                            </a>
-                        </div>
-                        <div class="${style_feed["action-btn"]}">
-                            <a href="">
-                                <img src="../public/icon/chat.png" alt="comment">
-                                Comment
-                            </a>
-                        </div>
-                        <div class="${style_feed["action-btn"]}">
-                            <a href="">
-                                <img src="../public/icon/export.png" alt="share">
-                                Share
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="${style["right-col"]}">
@@ -240,5 +84,5 @@ export default function Home() {
         </div>
     `;
 
-    Component();
+    Helper( main );
 }
