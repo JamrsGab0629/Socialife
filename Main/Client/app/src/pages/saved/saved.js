@@ -10,7 +10,7 @@ export default function Saved () {
 
     Navigation(navigation);
     main.innerHTML = `
-        <div id="saved" class="saved">
+        <div id="saved" class="${style['saved']}">
             <div class="${style["saved-header"]}">
                 <h2>Saved</h2>
                 <div class="${style["saved-count"]}">Saved posts (2)</div>
