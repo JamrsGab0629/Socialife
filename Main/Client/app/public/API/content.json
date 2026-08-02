@@ -11,7 +11,7 @@
             "url" : "url"
         }
     ],
-    "like_counts" : "number",
+    "like_count" : "number",
     "like_data" : [
         "...user_id"
     ],
