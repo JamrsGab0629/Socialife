@@ -1,0 +1,74 @@
+[
+  {
+    "user_id": "0001",
+    "type": "comment",
+    "isRead": "false",
+    "datetime": "2026-08-07T14:52:47Z",
+    "author": {
+      "user_id": "0003",
+      "username": "Dave Darryl Lebico"
+    },
+    "message": "commented on your post",
+    "content": "pa pivet yarn."
+  },
+  {
+    "user_id": "0001",
+    "type": "like",
+    "isRead": "false",
+    "datetime": "2026-08-07T14:43:47Z",
+    "author": {
+      "user_id": "0004",
+      "username": "Lee James Benigno"
+    },
+    "message": "liked your post",
+    "content": ""
+  },
+  {
+    "user_id": "0001",
+    "type": "comment",
+    "isRead": "true",
+    "datetime": "2026-08-07T12:55:47Z",
+    "author": {
+      "user_id": "0002",
+      "username": "Andrei Luis Lucas"
+    },
+    "message": "commented on your post",
+    "content": "\"SYBAU blud\""
+  },
+  {
+    "user_id": "0001",
+    "type": "like",
+    "isRead": "true",
+    "datetime": "2026-08-07T08:55:47Z",
+    "author": {
+      "user_id": "0005",
+      "username": "Philip Parenas"
+    },
+    "message": "liked your comment",
+    "content": ""
+  },
+  {
+    "user_id": "0001",
+    "type": "comment",
+    "isRead": "true",
+    "datetime": "2026-08-06T14:55:47Z",
+    "author": {
+      "user_id": "0004",
+      "username": "Lee James Benigno"
+    },
+    "message": "commented on your photo",
+    "content": "\"Gan is gay\""
+  },
+  {
+    "user_id": "0001",
+    "type": "like",
+    "isRead": "true",
+    "datetime": "2026-08-05T14:55:47Z",
+    "author": {
+      "user_id": "0006",
+      "username": "Julian Cagadas"
+    },
+    "message": "liked your post",
+    "content": ""
+  }
+]

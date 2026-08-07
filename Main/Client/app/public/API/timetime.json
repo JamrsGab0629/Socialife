@@ -1,0 +1,12 @@
+{
+    "user_id": "string",
+    "type": "string",
+    "isRead": "true || false",
+    "datetime": "datetime ISO",
+    "author": {
+        "user_id": "string",
+        "username": "string"
+    },
+    "message": "commented on your post || liked your post",
+    "content": "string."
+}
