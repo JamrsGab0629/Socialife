@@ -1,0 +1,34 @@
+/* Status Banner Notifications */
+.status-message {
+    padding: 10px 16px;
+    border-radius: 8px;
+    margin: 8px 0;
+    font-size: 14px;
+    display: none;
+}
+
+.status-message.show {
+    display: block;
+    background: rgba(24, 119, 242, 0.1);
+    color: #1877f2;
+    border: 1px solid rgba(24, 119, 242, 0.2);
+}
+
+.status-message.error {
+    display: block;
+    background: rgba(211, 47, 47, 0.1);
+    color: #d32f2f;
+    border: 1px solid rgba(211, 47, 47, 0.2);
+}
+
+.status-message.warning {
+    display: block;
+    background: rgba(255, 152, 0, 0.1);
+    color: #e65100;
+    border: 1px solid rgba(255, 152, 0, 0.2);
+}
+
+/* Utility Helpers */
+.text-danger {
+    color: #d32f2f;
+}
