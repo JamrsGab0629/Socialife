@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>socialife — post</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="viewer" id="viewer">
+
+  <section class="photo-stage">
+    <button class="stage-btn close-btn" id="closeBtn" type="button">
+      <svg class="icon" viewBox="0 0 24 24" fill="none">
+        <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+      </svg>
+    </button>
+
+    <button class="stage-btn nav-btn nav-prev" id="prevBtn" type="button">
+      <svg class="icon" viewBox="0 0 24 24" fill="none">
+        <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </button>
+
+    <div class="photo-frame" id="photoFrame"></div>
+
+    <button class="stage-btn nav-btn nav-next" id="nextBtn" type="button">
+      <svg class="icon" viewBox="0 0 24 24" fill="none">
+        <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </button>
+
+    <div class="photo-dots" id="photoDots"></div>
+  </section>
+
+  <section class="post-panel">
+
+    <div class="panel-top">
+      <span class="panel-brand">socialife</span>
+      <div class="viewer-avatar" id="viewerAvatar"></div>
+    </div>
+
+    <div class="post-header">
+      <div class="author-avatar" id="authorAvatar"></div>
+      <div class="author-meta">
+        <span class="author-name" id="authorName"></span>
+        <div class="post-sub">
+          <span class="privacy-pill" id="privacyPill"></span>
+          <span class="post-time" id="postTime"></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="post-caption" id="postCaption"></p>
+
+    <div class="reaction-bar">
+      <button class="like-btn" id="likeBtn" type="button">
+        <svg class="icon" viewBox="0 0 24 24" fill="none">
+          <path d="M12 20s-7-4.4-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.6"></path>
+        </svg>
+        <span id="likeCount">0</span>
+      </button>
+      <div class="reaction-stat">
+        <svg class="icon" viewBox="0 0 24 24" fill="none">
+          <path d="M4 5h16v11H8l-4 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"></path>
+        </svg>
+        <span id="commentCount">0</span>
+      </div>
+      <div class="reaction-stat">
+        <svg class="icon" viewBox="0 0 24 24" fill="none">
+          <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span id="shareCount">0</span>
+      </div>
+    </div>
+
+    <div class="panel-divider"></div>
+
+    <div class="comment-list" id="commentList"></div>
+
+    <div class="comment-composer">
+      <div class="viewer-avatar small" id="composerAvatar"></div>
+      <div class="comment-input-wrap">
+        <input type="text" class="comment-input" id="commentInput" placeholder="Write a comment...">
+        <button class="comment-send" id="commentSend" type="button">
+          <svg class="icon" viewBox="0 0 24 24" fill="none">
+            <path d="M4 20l16-8L4 4v6l10 2-10 2v6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
