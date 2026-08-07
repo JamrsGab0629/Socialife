@@ -1,36 +1,7 @@
 {
-  "saved_posts": [
-    {
-      "id": 1,
-      "saved_time": "Yesterday",
-      "user": {
-        "user_id": "0001",
-        "name": "Dave Darryl Lebico",
-        "profile_image": "/images/profile/dave.jpg"
-      },
-      "caption": "Pack ohh meme vice ang dating.",
-      "content": [
-        {
-          "type": "image",
-          "url": "/images/posts/post1.jpg"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "saved_time": "3 days ago",
-      "user": {
-        "user_id": "0002",
-        "name": "Lee James Benigno",
-        "profile_image": "/images/profile/lee.jpg"
-      },
-      "caption": "Dave mah loves.",
-      "content": [
-        {
-          "type": "image",
-          "url": "/images/posts/post2.jpg"
-        }
-      ]
+    "user_id": "string",
+    "content": {
+        "post_id": "string",
+        "url": "app/photo/post_id"
     }
-  ]
 }

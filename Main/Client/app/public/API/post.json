@@ -1,22 +1,17 @@
-    {
-
-        "view status" : "Public || Private"
-
-    , "user_id" : "string",
-        "captions" : "string" 
-    ,
-    "media/photo": [
+{
+    "view status": "Public || Private",
+    "user_id": "string",
+    "captions": "string",
+    "media": [
         {
-        "photo_id": 1,
-        "type": "image",
-        "url": "/images/posts/photo1.jpg"
+            "photo_id": 1,
+            "type": "image",
+            "url": "/images/posts/photo1.jpg"
         },
         {
-        "photo_id": 2,
-        "type": "image",
-        "url": "/images/posts/photo2.jpg"
+            "photo_id": 2,
+            "type": "image",
+            "url": "/images/posts/photo2.jpg"
         }
     ]
-    
-    }
-
+}

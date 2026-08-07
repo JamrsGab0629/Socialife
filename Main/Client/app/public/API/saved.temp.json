@@ -1,0 +1,16 @@
+[
+  {
+    "user_id": "0001",
+    "content": {
+      "post_id": "0001",
+      "url": "/images/posts/post1.jpg"
+    }
+  },
+  {
+    "user_id": "0001",
+    "content": {
+      "post_id": "image",
+      "url": "/images/posts/post2.jpg"
+    }
+  }
+]
