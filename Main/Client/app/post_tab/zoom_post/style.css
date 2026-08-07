@@ -68,6 +68,22 @@ body {
   visibility: visible;
 }
 
+.photo-placeholder {
+  position: absolute;
+  width: 70%;
+  height: 70%;
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(36, 62, 204, 0.55), rgba(36, 62, 204, 0.12));
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.photo-placeholder.active {
+  opacity: 1;
+  visibility: visible;
+}
+
 .stage-btn {
   position: absolute;
   width: 40px;

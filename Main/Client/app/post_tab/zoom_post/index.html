@@ -26,10 +26,7 @@
       </svg>
     </button>
 
-    <div class="photo-frame">
-      <img class="stage-photo active" src="../../../GUI/images/post/Dave.jpg" alt="" data-index="0">
-      <img class="stage-photo" src="../../../GUI/images/post/Lee.jpg" alt="" data-index="1">
-    </div>
+    <div class="photo-frame" id="photoFrame"></div>
 
     <button class="stage-btn nav-btn nav-next" id="nextBtn" type="button">
       <svg class="icon" viewBox="0 0 24 24" fill="none">
@@ -37,107 +34,56 @@
       </svg>
     </button>
 
-    <div class="photo-dots" id="photoDots">
-      <button class="photo-dot active" type="button" data-index="0"></button>
-      <button class="photo-dot" type="button" data-index="1"></button>
-    </div>
+    <div class="photo-dots" id="photoDots"></div>
   </section>
 
   <section class="post-panel">
 
     <div class="panel-top">
       <span class="panel-brand">socialife</span>
-      <div class="viewer-avatar">
-        <img src="../../../GUI/images/profile/James.jpg" alt="James Gabriel Santos">
-      </div>
+      <div class="viewer-avatar" id="viewerAvatar"></div>
     </div>
 
     <div class="post-header">
-      <div class="author-avatar">
-        <img src="../../../GUI/images/profile/James.jpg" alt="James Gabriel Santos">
-      </div>
+      <div class="author-avatar" id="authorAvatar"></div>
       <div class="author-meta">
-        <span class="author-name">James Gabriel Santos</span>
+        <span class="author-name" id="authorName"></span>
         <div class="post-sub">
-          <span class="privacy-pill">
-            <svg class="icon" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"></circle>
-              <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9s1.3-6.4 3.8-9z" stroke="currentColor" stroke-width="1.8"></path>
-            </svg>
-            <span>Public</span>
-          </span>
-          <span class="post-time">2d</span>
+          <span class="privacy-pill" id="privacyPill"></span>
+          <span class="post-time" id="postTime"></span>
         </div>
       </div>
     </div>
 
-    <p class="post-caption">Hahahaha dump kolang</p>
+    <p class="post-caption" id="postCaption"></p>
 
     <div class="reaction-bar">
       <button class="like-btn" id="likeBtn" type="button">
         <svg class="icon" viewBox="0 0 24 24" fill="none">
           <path d="M12 20s-7-4.4-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.6"></path>
         </svg>
-        <span id="likeCount">1,300</span>
+        <span id="likeCount">0</span>
       </button>
       <div class="reaction-stat">
         <svg class="icon" viewBox="0 0 24 24" fill="none">
           <path d="M4 5h16v11H8l-4 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"></path>
         </svg>
-        <span id="commentCount">2</span>
+        <span id="commentCount">0</span>
       </div>
       <div class="reaction-stat">
         <svg class="icon" viewBox="0 0 24 24" fill="none">
           <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
-        <span>62</span>
+        <span id="shareCount">0</span>
       </div>
     </div>
 
     <div class="panel-divider"></div>
 
-    <div class="comment-list" id="commentList">
-
-      <div class="comment-item">
-        <div class="comment-avatar">
-          <img src="../../../GUI/images/profile/Xep.jpg" alt="Xep">
-        </div>
-        <div class="comment-body">
-          <div class="comment-bubble">
-            <span class="comment-name">Xep Lucas</span>
-            <p class="comment-text">Angas erp</p>
-          </div>
-          <div class="comment-actions">
-            <button type="button" class="comment-like">Like</button>
-            <button type="button">Reply</button>
-            <span class="comment-time">1d</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="comment-item">
-        <div class="comment-avatar">
-          <img src="../../../GUI/images/profile/dave.png" alt="dave">
-        </div>
-        <div class="comment-body">
-          <div class="comment-bubble">
-            <span class="comment-name">Dave Darryl Lebico</span>
-            <p class="comment-text">Ganda ng lighting pre</p>
-          </div>
-          <div class="comment-actions">
-            <button type="button" class="comment-like">Like</button>
-            <button type="button">Reply</button>
-            <span class="comment-time">2d</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
+    <div class="comment-list" id="commentList"></div>
 
     <div class="comment-composer">
-      <div class="viewer-avatar small">
-        <img src="../../../GUI/images/profile/James.jpg" alt="James Gabriel Santos">
-      </div>
+      <div class="viewer-avatar small" id="composerAvatar"></div>
       <div class="comment-input-wrap">
         <input type="text" class="comment-input" id="commentInput" placeholder="Write a comment...">
         <button class="comment-send" id="commentSend" type="button">
@@ -152,6 +98,6 @@
 
 </div>
 
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 </body>
 </html>
