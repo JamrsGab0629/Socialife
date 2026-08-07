@@ -1,197 +1,248 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>socialife — home</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <title>socialife — home</title>
 
-  <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
+      rel="stylesheet"/>
 
-<main class="page-shell">
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-  <header class="home-header">
-    <span class="home-logo">socialife</span>
-  </header>
+  <body>
+    <main class="page-shell">
+     
+      <header class="home-header">
+        <span class="home-logo">socialife</span>
+      </header>
 
-  <section class="composer-card">
+      <section class="composer-card">
+       
+        <div class="composer-header">
+          <div class="avatar-wrap">
+            <svg class="aperture-ring" id="apertureRing" viewBox="0 0 72 72">
+              <circle class="aperture-track" cx="36" cy="36" r="32"></circle>
 
-    <div class="composer-header">
-      <div class="avatar-wrap">
-        <svg class="aperture-ring" id="apertureRing" viewBox="0 0 72 72">
-          <circle class="aperture-track" cx="36" cy="36" r="32"></circle>
-          <circle class="aperture-fill" id="apertureFill" cx="36" cy="36" r="32"></circle>
-        </svg>
-
-        <div class="avatar">JS</div>
-      </div>
-
-      <div class="header-meta">
-        <span class="user-name">James Gabriel Santos</span>
-
-        <div class="privacy-control">
-          <button class="privacy-toggle" id="privacyToggle" type="button">
-            <svg class="icon" id="privacyIcon" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"></circle>
-              <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9s1.3-6.4 3.8-9z"
-                    stroke="currentColor"
-                    stroke-width="1.8">
-              </path>
+              <circle
+                class="aperture-fill"
+                id="apertureFill"
+                cx="36"
+                cy="36"
+                r="32"
+              ></circle>
             </svg>
 
-            <span id="privacyLabel">Public</span>
+            <div class="avatar">JS</div>
+          </div>
 
-            <svg class="chevron" viewBox="0 0 24 24" fill="none">
-              <path d="M6 9l6 6 6-6"
+          <div class="header-meta">
+            <span class="user-name"> James Gabriel Santos </span>
+
+          
+            <div class="privacy-control">
+              <button class="privacy-toggle" id="privacyToggle" type="button">
+                <svg
+                  class="icon"
+                  id="privacyIcon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="9"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  ></circle>
+
+                  <path
+                    d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9s1.3-6.4 3.8-9z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  ></path>
+                </svg>
+
+                <span id="privacyLabel"> Public </span>
+
+                <svg class="chevron" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
                     stroke="currentColor"
                     stroke-width="2"
                     stroke-linecap="round"
-                    stroke-linejoin="round">
-              </path>
-            </svg>
-          </button>
+                    stroke-linejoin="round"
+                  ></path>
+                </svg>
+              </button>
 
-          <div class="privacy-menu" id="privacyMenu">
-
-            <button class="privacy-option" data-privacy="public" type="button">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="9"
-                        stroke="currentColor"
-                        stroke-width="1.8">
-                </circle>
-
-                <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9s1.3-6.4 3.8-9z"
+             
+              <div class="privacy-menu" id="privacyMenu">
+               
+                <button
+                  class="privacy-option"
+                  data-privacy="public"
+                  type="button"
+                >
+                  <svg class="icon" viewBox="0 0 24 24" fill="none">
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="9"
                       stroke="currentColor"
-                      stroke-width="1.8">
-                </path>
-              </svg>
+                      stroke-width="1.8"
+                    ></circle>
 
-              <span class="option-text">
-                <strong>Public</strong>
-                <small>Anyone on socialife can see this</small>
-              </span>
-            </button>
-
-            <button class="privacy-option" data-privacy="private" type="button">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <rect x="5" y="11" width="14" height="9" rx="2"
+                    <path
+                      d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9s1.3-6.4 3.8-9z"
                       stroke="currentColor"
-                      stroke-width="1.8">
-                </rect>
+                      stroke-width="1.8"
+                    ></path>
+                  </svg>
 
-                <path d="M8 11V8a4 4 0 0 1 8 0v3"
+                  <span class="option-text">
+                    <strong> Public </strong>
+
+                    <small> Anyone on socialife can see this </small>
+                  </span>
+                </button>
+
+                
+                <button
+                  class="privacy-option"
+                  data-privacy="private"
+                  type="button"
+                >
+                  <svg class="icon" viewBox="0 0 24 24" fill="none">
+                    <rect
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="2"
                       stroke="currentColor"
-                      stroke-width="1.8">
-                </path>
-              </svg>
+                      stroke-width="1.8"
+                    ></rect>
 
-              <span class="option-text">
-                <strong>Private</strong>
-                <small>Only people you tag can see this</small>
-              </span>
-            </button>
+                    <path
+                      d="M8 11V8a4 4 0 0 1 8 0v3"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    ></path>
+                  </svg>
 
+                  <span class="option-text">
+                    <strong> Private </strong>
+
+                    <small> Only people you tag can see this </small>
+                  </span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <textarea
-      class="caption-input"
-      id="captionInput"
-      placeholder="What's on your mind, James?"
-      rows="1"></textarea>
+        <!-- Caption -->
+        <textarea
+          class="caption-input"
+          id="captionInput"
+          placeholder="What's on your mind, James?"
+          rows="1"
+        >
+        </textarea>
 
-    <div class="photo-zone" id="photoZone">
-      <input type="file" id="photoInput" accept="image/*" multiple hidden>
+       
+        <div class="photo-section">
+          <!-- Hidden File Input -->
+          <input type="file" id="photoInput" accept="image/*" hidden />
 
-      <svg class="icon photo-icon" viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="5" width="18" height="14" rx="2"
-              stroke="currentColor"
-              stroke-width="1.6">
-        </rect>
-
-        <circle cx="8.5" cy="10" r="1.6" fill="currentColor"></circle>
-
-        <path d="M4 17l5-5 3.5 3.5L16 12l4 5"
-              stroke="currentColor"
-              stroke-width="1.6"
-              stroke-linecap="round"
-              stroke-linejoin="round">
-        </path>
-      </svg>
-
-      <p class="photo-zone-title">Drop photos here</p>
-      <p class="photo-zone-sub">or click to browse — images only, no videos</p>
-    </div>
-
-    <div class="photo-grid" id="photoGrid" hidden></div>
-
-    <p class="photo-warning" id="photoWarning" hidden>
-      Only photos are supported here — videos can't be added.
-    </p>
-
-    <div class="composer-toolbar">
-
-      <button class="tool-btn" id="addPhotoBtn" type="button">
-        <svg class="icon" viewBox="0 0 24 24" fill="none">
-          <rect x="3" y="5" width="18" height="14" rx="2"
+        
+          <button class="tool-btn" id="addPhotoBtn" type="button">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <rect
+                x="3"
+                y="5"
+                width="18"
+                height="14"
+                rx="2"
                 stroke="currentColor"
-                stroke-width="1.6">
-          </rect>
+                stroke-width="1.6"
+              ></rect>
 
-          <circle cx="8.5" cy="10" r="1.6" fill="currentColor"></circle>
+              <circle cx="8.5" cy="10" r="1.6" fill="currentColor"></circle>
 
-          <path d="M4 17l5-5 3.5 3.5L16 12l4 5"
+              <path
+                d="M4 17l5-5 3.5 3.5L16 12l4 5"
                 stroke="currentColor"
                 stroke-width="1.6"
                 stroke-linecap="round"
-                stroke-linejoin="round">
-          </path>
-        </svg>
+                stroke-linejoin="round"
+              ></path>
+            </svg>
 
-        Photo
-      </button>
+            <span> Photo </span>
+          </button>
 
-      <button class="post-btn" id="postBtn" type="button" disabled>
-        Post
-      </button>
+          <!-- Single Photo Preview -->
+          <div class="photo-preview" id="photoPreview" hidden>
+            <img id="photoPreviewImage" alt="Selected photo" />
 
-    </div>
+            <button
+              class="remove-photo-btn"
+              id="removePhotoBtn"
+              type="button"
+              aria-label="Remove photo">
+              
+            </button>
+          </div>
+        </div>
 
-  </section>
+        <!-- Composer Toolbar -->
+        <div class="composer-toolbar">
+          <button class="tool-btn" id="addPhotoBtnBottom" type="button">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <rect
+                x="3"
+                y="5"
+                width="18"
+                height="14"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="1.6"
+              ></rect>
 
-</main>
+              <circle cx="8.5" cy="10" r="1.6" fill="currentColor"></circle>
 
-<div class="loader" id="loader">
-  <div class="circle-wrap">
+              <path
+                d="M4 17l5-5 3.5 3.5L16 12l4 5"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
 
-    <svg class="progress-ring" viewBox="0 0 200 200">
-      <circle class="progress-ring-track" cx="100" cy="100" r="90"></circle>
-      <circle class="progress-ring-fill" id="ringFill" cx="100" cy="100" r="90"></circle>
-    </svg>
+            Photo
+          </button>
 
-    <div class="circle-content">
-      <span class="logo">socialife</span>
-      <span class="percentage" id="percentage">0%</span>
-    </div>
+          <button class="post-btn" id="postBtn" type="button" disabled>
+            Post
+          </button>
+        </div>
+      </section>
+    </main>
 
-  </div>
-</div>
+    <!-- Toast -->
+    <div class="toast" id="toast">Posted to your timeline</div>
 
-<div class="toast" id="toast">
-  Posted to your timeline
-</div>
-
-<script src="script.js"></script>
-
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
 
