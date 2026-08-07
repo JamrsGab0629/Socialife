@@ -4,11 +4,11 @@ import Helper from "./post.helper";
 
 export default async function Post( root ){
     const data = await Service();
-    console.log(Object.keys(data));
+    // console.log(Object.keys(data));
 
     if( Object.keys(data).length <= 0) throw new Error("Data empty");
 
-    console.log("debug.post", data);
+    // console.log("debug.post", data);
 
     const template = `
         <div class="${style["post-card"]} id="${data["post_id"]}">

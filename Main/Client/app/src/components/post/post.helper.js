@@ -1,7 +1,7 @@
 import style from "./post.module.css";
 
 export const Helper = ( comment_data ) => {
-    console.log('debig.helper', comment_data);
+    // console.log('debig.helper', comment_data);
     const data = comment_data || [];
     let template = "";
 
@@ -18,7 +18,7 @@ export const Helper = ( comment_data ) => {
         `
     });
 
-    console.log('debig.helper', template);
+    // console.log('debig.helper', template);
     return template;
 }
 
