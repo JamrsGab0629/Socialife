@@ -1,6 +1,6 @@
 {
     "user_id": "string",
-    "type": "string",
+    "type": "comment || like",
     "isRead": "true || false",
     "datetime": "datetime ISO",
     "author": {
