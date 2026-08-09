@@ -1,26 +1,27 @@
-# To test the Website just run skeleton.html
+# AppsDev SPA Template
+Vanilla JS SPA Template
 
+## Getting Started
 
+1. Clone repository
+2. Install dependencies
+  ```sh
+  npm install
+  ```
+3. Start the development server
+  ```sh
+  npm run dev
+  ```
 
+## Folder Structure
 
-
-# SociaLife-appsdev
-
-### PROJECT MANAGER
-- Kim Balagantio
-### TESTER
-- James Gabriel Santos
-- Andrei Luis Lucas
-- Kim Balagantio
-
-### Api(Backend)
-- James Gabriel Santos
-- Andrei Luis Lucas
-- Kim Balagantio
-- John Florence Adriano
-
-### Frontend/UI-UX
-- Kim Balagantio
-- John Florence Adriano
-
-
+- `public/` Public assets folder
+- `src/`
+  - `components/` Components
+  - `core/` Important code resides here(e.g. SPA)
+  - `icons/` You could place SVG files here
+  - `layouts/` Layout functions
+  - `pages/` Page functions
+  - `index.html` Application entry point
+  - `main.js` Application module
+ 
