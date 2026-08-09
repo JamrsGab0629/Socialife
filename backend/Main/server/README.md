@@ -5,3 +5,9 @@ The server is responsible for receiving HTTP requests, processing them through t
 Framework:
 
 Express.js
+
+To install
+
+```bash
+npm install express
+```
