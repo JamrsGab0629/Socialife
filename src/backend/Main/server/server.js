@@ -1,6 +1,7 @@
 import app from "./app.js";
 import sequelize from "../config/database.config.js";
 import "dotenv/config";
+import User from "../model/user.model.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -10,6 +11,9 @@ const startServer = async () => {
 
         console.log("Database connected successfully.");
 
+        await sequelize.sync();
+
+        console.log("Database tables synchronized.");
         app.listen(PORT, () => {
             console.log(`Server is running on PORT ${PORT}`);
         });
