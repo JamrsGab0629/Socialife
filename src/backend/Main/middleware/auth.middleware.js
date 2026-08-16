@@ -1,39 +1,34 @@
-import User from "../model/user.model.js";
-import { verifyToken } from "../services/jwt/verifyToken.service.js"; 
+import { verifyToken } from "../services/jwt/verifyToken.service.js";
+import TokenBlocklist from "../model/tokenBlocklist.model.js";
 
-export const authenticateUser = async (req, res, next) => {
+export const isAuthenticated = async (req, res, next) => {
     try {
-        // Look for token in cookies or Authorization header
-        const token = req.cookies?.token || req.headers.authorization?.split(" ")[1];
+        const token = req.cookies.token;
 
         if (!token) {
-            return res.status(401).json({ message: "Authentication required. No token provided." });
+            return res.status(401).json({ message: "No token provided. Please log in." });
         }
 
-        // Verify token 
+        // Verify and decode token
         const decoded = verifyToken(token);
 
-        // Find user in database to ensure they still exist
-        const user = await User.findByPk(decoded.userId);
-        if (!user) {
-            return res.status(401).json({ message: "User belonging to this token no longer exists." });
+        // Check if the jti is blocklisted 
+        const isBlocked = await TokenBlocklist.findOne({ where: { jti: decoded.jti } });
+        if (isBlocked) {
+            return res.status(401).json({ message: "Token has been revoked. Please log in again." });
         }
 
-        // Attach user to request object
-        req.user = user;
+        req.user = decoded;
         next();
     } catch (error) {
         return res.status(403).json({ message: "Invalid or expired token." });
     }
 };
 
-export const authorizeRoles = (...allowedRoles) => {
-    return (req, res, next) => {
-        if (!req.user || !allowedRoles.includes(req.user.role)) {
-            return res.status(403).json({ 
-                message: "Access denied. You do not have permission to access this resource." 
-            });
-        }
-        next();
-    };
+// Checks if the logged-in user is an admin
+export const isAdmin = (req, res, next) => {
+    if (req.user?.role !== "admin") {
+        return res.status(403).json({ message: "Access denied. Admins only." });
+    }
+    next();
 };

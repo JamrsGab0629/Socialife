@@ -1,7 +1,7 @@
 import User from "../model/user.model.js";
 import { hashPassword } from "../utils/passwordHashing.utils.js";
 import { generateToken } from "./jwt/genToken.service.js";
-import { validateEmail, validatePassword } from "../utils/validatiors.utils.js";
+import { validateEmail, validatePassword } from "../utils/validators.utils.js";
 
 const registerUser = async ({
     username,
