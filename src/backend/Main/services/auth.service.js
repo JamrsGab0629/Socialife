@@ -1,6 +1,7 @@
 import User from "../model/user.model.js";
 import { hashPassword } from "../utils/passwordHashing.utils.js";
 import { generateToken } from "./jwt/genToken.service.js";
+import { validateEmail, validatePassword } from "../utils/validatiors.utils.js";
 
 const registerUser = async ({
     username,
@@ -11,7 +12,15 @@ const registerUser = async ({
     last_name,
     birth_date
 }) => {
+    if (!validateEmail(email)) {
+        throw new Error("Email must be a valid address ending with @gmail.com.");
+    }
 
+    // Validate password length 
+    if (!validatePassword(password)) {
+        throw new Error("Password must be at least 8 characters long.");
+    }
+    
     // Check username
     const existingUsername = await User.findOne({
         where: { username }
@@ -46,8 +55,8 @@ const registerUser = async ({
         auth: "local"
     });
 
-    // Generate JWT
-    const token = generateToken(user.user_id);
+    // Generate JWT 
+    const token = generateToken(user.user_id, user.role);
 
     // Don't return password
     const userData = user.toJSON();
