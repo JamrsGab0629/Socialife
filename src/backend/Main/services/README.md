@@ -12,3 +12,18 @@ Process transaction
 Validate business rules
 
 This keeps business logic independent from Express-specific code.
+
+
+
+http://localhost:3000/api/auth/register
+
+
+{
+    "username": "james123",
+    "email": "james@gmail.com",
+    "password": "TestPassword123!",
+    "first_name": "James",
+    "middle_name": "Gabriel",
+    "last_name": "Santos",
+    "birth_date": "2005-08-21"
+}
