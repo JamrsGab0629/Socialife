@@ -1,7 +1,11 @@
 import User from "../model/user.model.js";
+import Otp from "../model/otp.model.js";
 import { hashPassword } from "../utils/passwordHashing.utils.js";
 import { generateToken } from "./jwt/genToken.service.js";
 import { validateEmail, validatePassword } from "../utils/validators.utils.js";
+import { generateOTP } from "../utils/gmail_utils/otpGen.utils.js";
+import { getOTPExpiration } from "../utils/gmail_utils/otpExpired.utils.js";
+import { sendVerificationEmail } from "../services/gmail/email.service.js";
 
 const registerUser = async ({
     username,
@@ -54,6 +58,21 @@ const registerUser = async ({
         role: "user",
         auth: "local"
     });
+
+   
+    const otpCode = generateOTP();
+    const expiresAt = getOTPExpiration(5); // 5 minutes expiration
+
+    // Save the OTP to the separate Otp table linked via user_id
+    await Otp.create({
+        user_id: user.user_id,
+        otp_code: otpCode,
+        otp_expires_at: expiresAt
+    });
+
+    // Send the verification code to their email
+    await sendVerificationEmail(email, otpCode);
+    
 
     // Generate JWT 
     const token = generateToken(user.user_id, user.role);
