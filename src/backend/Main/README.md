@@ -84,5 +84,26 @@ Body (JSON):
 }
 ```
 
+### Log in - Note after you register your already logged in.
+
+URL POST /api/auth/login
+
+BODY (JSON)
+
+```json
+
+{
+    "email ":"exampleemail@gmail.com",
+    "password": "your password"
+}
+
+
+```
+
+
+### LOG OUT
+
+URL POST /api/auth/logout
+
 
 

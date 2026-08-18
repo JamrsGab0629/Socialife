@@ -4,16 +4,15 @@ import "dotenv/config";
 import User from "../model/user.model.js";
 import "../model/tokenBlocklist.model.js";
 
-
 const PORT = process.env.PORT || 3000;
 
 const startServer = async () => {
     try {
         await sequelize.authenticate();
-
         console.log("Database connected successfully.");
 
-        await sequelize.sync();
+      
+        await sequelize.sync({ alter: true });
 
         console.log("Database tables synchronized.");
         app.listen(PORT, () => {
