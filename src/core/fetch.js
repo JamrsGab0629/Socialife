@@ -1,29 +1,37 @@
 import axios from "axios"
+import axiosRetry from "axios-retry";
 import "dotenv/config"
 
 const HOST = process.env.HOST || "localhost";
 const PORT = process.env.PORT || 3000;
 const BASE_DB_URL = `http://${HOST}:${PORT}/api`;
 
-export default async function Fetch( { param , ...args = [] } ){
-    if ( !param || !param.has("/")){
-        throw new Error("Complete parameter is needed");
+axiosRetry(axios, {
+    retries: 3,
+    retryDelay: axiosRetry.exponentialDelay,
+    retryCondition: (error) => {
+        return axiosRetry.isNetworkOrIdempotentRequestError(error);
     }
-    
-    DB_URL_PATH = `${BASE_DB_URL}${param};`
-    arguments = args?.[0] || {};
+});
 
+export default async function Fetch({ param, args }) {
     try {
-        const response = await axios.post( DB_URL_PATH, {} );
-        // console.log("debug.fetch", response);
+        if (!param || !param.startsWith("/")) {
+            throw new Error("Complete parameter is needed");
+        }
 
-        if (!response.ok) throw new Error("Feching failed:", response.status);
-        
-        const data = await response.json();
-        console.log("debug.fetch", data);
-        return data;
+        const DB_URL_PATH = `${BASE_DB_URL}${param}`;
+        const extra_arguments = args || {};
+
+        const response = await axios.post(DB_URL_PATH, extra_arguments);
+
+        return response.data;
     } catch (error) {
-        console.error(error);
-        return;
+        if (error.response && error.response.data) {
+            console.error("Server responded with error data:", error.response.data);
+            throw new Error(`Error fetching: ${error.response.data.message} status: ${error.response.status}`);
+        }
+
+        throw error.message;
     }
 }
