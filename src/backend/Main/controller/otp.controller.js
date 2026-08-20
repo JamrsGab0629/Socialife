@@ -1,10 +1,10 @@
-import User from "../model/user.model.js";
-import Otp from "../model/otp.model.js";
+import { verifyOtpService } from "../services/verifyOtp.service.js";
 import { generateOTP } from "../utils/gmail_utils/otpGen.utils.js";
-import { getOTPExpiration } from "../utils/gmail_utils/otpExpired.utils.js";
 import { sendVerificationEmail } from "../services/gmail/email.service.js";
+import { setAuthCookie } from "../utils/cookie.utils.js";
+import { generateToken } from "../services/jwt/genToken.service.js"; 
+import { otpCache } from "../utils/memoryCached.utils.js"; 
 
-//  Verify the OTP code
 export const verifyOtp = async (req, res) => {
     try {
         const { email, otp } = req.body;
@@ -13,38 +13,28 @@ export const verifyOtp = async (req, res) => {
             return res.status(400).json({ message: "Email and OTP code are required" });
         }
 
-        const user = await User.findOne({ where: { email } });
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
+     
+        const newUser = await verifyOtpService({ email, otp });
 
-        const otpRecord = await Otp.findOne({ where: { user_id: user.user_id } });
-        if (!otpRecord) {
-            return res.status(400).json({ message: "No active OTP found. Please request a new one." });
-        }
+        // Generate token and set cookie after successful verification
+        const token = generateToken(newUser.user_id, newUser.role); 
+        setAuthCookie(res, token);
 
-        if (otpRecord.otp_code !== otp) {
-            return res.status(400).json({ message: "Invalid OTP code" });
-        }
-
-        if (new Date() > new Date(otpRecord.otp_expires_at)) {
-            return res.status(400).json({ message: "OTP code has expired. Please request a new one." });
-        }
-
-        //  Destroy the OTP record so it cannot be reused
-        await otpRecord.destroy();
-
-        return res.status(200).json({
-            message: "Email verified successfully!"
+        return res.status(201).json({
+            message: "Account verified and created successfully!",
+            user: {
+                username: newUser.username,
+                email: newUser.email,
+                first_name: newUser.first_name,
+                last_name: newUser.last_name
+            }
         });
 
     } catch (error) {
-        console.error("VERIFY OTP ERROR:", error);
-        return res.status(500).json({ message: "Server error during verification" });
+        return res.status(400).json({ message: error.message || "Server error during verification" });
     }
 };
 
-//  Resend a new OTP
 export const resendOtp = async (req, res) => {
     try {
         const { email } = req.body;
@@ -53,32 +43,17 @@ export const resendOtp = async (req, res) => {
             return res.status(400).json({ message: "Email is required" });
         }
 
-        const user = await User.findOne({ where: { email } });
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
+        const pendingUser = otpCache.get(email);
+
+        if (!pendingUser) {
+            return res.status(400).json({ message: "Registration session expired. Please register again." });
         }
 
-        // Generate new code and expiration
         const newOtpCode = generateOTP();
-        const newExpiresAt = getOTPExpiration(5);
+        pendingUser.otp = newOtpCode;
+        pendingUser.expiresAt = Date.now() + 5 * 60 * 1000;
+        otpCache.set(email, pendingUser);
 
-        // Find existing OTP record or create one if it was deleted
-        let otpRecord = await Otp.findOne({ where: { user_id: user.user_id } });
-
-        if (otpRecord) {
-            await otpRecord.update({
-                otp_code: newOtpCode,
-                otp_expires_at: newExpiresAt
-            });
-        } else {
-            await Otp.create({
-                user_id: user.user_id,
-                otp_code: newOtpCode,
-                otp_expires_at: newExpiresAt
-            });
-        }
-
-        // Send the new email
         await sendVerificationEmail(email, newOtpCode);
 
         return res.status(200).json({

@@ -1,92 +1,60 @@
 import User from "../model/user.model.js";
-import Otp from "../model/otp.model.js";
 import { hashPassword } from "../utils/passwordHashing.utils.js";
-import { generateToken } from "./jwt/genToken.service.js";
 import { validateEmail, validatePassword } from "../utils/validators.utils.js";
 import { generateOTP } from "../utils/gmail_utils/otpGen.utils.js";
-import { getOTPExpiration } from "../utils/gmail_utils/otpExpired.utils.js";
 import { sendVerificationEmail } from "../services/gmail/email.service.js";
+import { otpCache } from "../utils/memoryCached.utils.js"; 
 
-const registerUser = async ({
-    username,
-    email,
-    password,
-    first_name,
-    middle_name,
-    last_name,
-    birth_date
-}) => {
+const registerUser = async ({ username, email, password, first_name, middle_name, last_name, birth_date }) => {
+    // 1. Validations
     if (!validateEmail(email)) {
         throw new Error("Email must be a valid address ending with @gmail.com.");
     }
-
-    // Validate password length 
     if (!validatePassword(password)) {
         throw new Error("Password must be at least 8 characters long.");
     }
     
-    // Check username
-    const existingUsername = await User.findOne({
-        where: { username }
-    });
-
+    const existingUsername = await User.findOne({ where: { username } });
     if (existingUsername) {
         throw new Error("Username already exists");
     }
 
-    // Check email
-    const existingEmail = await User.findOne({
-        where: { email }
-    });
-
+    const existingEmail = await User.findOne({ where: { email } });
     if (existingEmail) {
         throw new Error("Email already exists");
     }
 
-    // Hash password
+    // 2. Hash password
     const hashedPassword = await hashPassword(password);
 
-    // Create user
-    const user = await User.create({
+    // 3. Generate OTP and set expiration (5 minutes from now)
+    const otpCode = generateOTP();
+    const expiresAt = Date.now() + 5 * 60 * 1000; 
+
+    // 4. Create the pending user payload
+    const pendingUser = {
         username,
         email,
         password: hashedPassword,
         first_name,
-        middle_name,
+        middle_name: middle_name || null,
         last_name,
         birth_date,
         role: "user",
-        auth: "local"
-    });
+        auth: "local",
+        otp: otpCode,
+        expiresAt
+    };
 
-   
-    const otpCode = generateOTP();
-    const expiresAt = getOTPExpiration(5); // 5 minutes expiration
+    // 5. Save directly to Node.js memory
+    otpCache.set(email, pendingUser);
 
-    // Save the OTP to the separate Otp table linked via user_id
-    await Otp.create({
-        user_id: user.user_id,
-        otp_code: otpCode,
-        otp_expires_at: expiresAt
-    });
-
-    // Send the verification code to their email
+    // 6. Send the verification code to their email
     await sendVerificationEmail(email, otpCode);
-    
-
-    // Generate JWT 
-    const token = generateToken(user.user_id, user.role);
-
-    // Don't return password
-    const userData = user.toJSON();
-    delete userData.password;
 
     return {
-        user: userData,
-        token
+        message: "Registration initiated. OTP sent to email."
     };
 };
 
-export {
-    registerUser
-};
+export { registerUser };
