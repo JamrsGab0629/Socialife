@@ -5,7 +5,7 @@ const generateOTP = () => {
 };
 
 // Test
-console.log(generateOTP());
+// console.log(generateOTP());
 export {
     generateOTP
 };

@@ -12,12 +12,8 @@ export const loginService = async ({ email, password }) => {
     }
 
     const user = await User.findOne({ where: { email } });
-    if (!user) {
-        throw new Error("Invalid email or password.");
-    }
-
-    const isPasswordValid = await comparePassword(password, user.password);
-    if (!isPasswordValid) {
+    const isPasswordValid = await comparePassword(password, user?.password);
+    if (!user || !isPasswordValid) {
         throw new Error("Invalid email or password.");
     }
 

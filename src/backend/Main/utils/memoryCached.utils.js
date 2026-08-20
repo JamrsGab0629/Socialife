@@ -1,6 +1,3 @@
-
-
-
 export const otpCache = new Map();
 
 // Run a cleanup every 5 minutes to prevent memory leaks
