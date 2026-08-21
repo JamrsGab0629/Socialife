@@ -4,9 +4,9 @@ import style_active from "../../styles/main/active.module.css";
 
 import Auth_Brand from "../../components/auth-brand/auth-brand";
 import Auth from "../../layouts/auth/auth";
-import Component from "./login.component";
+import { toggle_password, setup_form } from "./login.helper";
 
-export default function Login(){
+export default function Login() {
     const { aside, main } = Auth(this.root);
 
     Auth_Brand(aside);
@@ -19,19 +19,24 @@ export default function Login(){
                 <span class="${style['auth-tab-indicator']}" aria-hidden="true"></span>
             </div>
 
+            <!-- Added top-level error banner container -->
+            <div class="${style['auth-error-banner']}" id="formErrorBanner" aria-live="polite"></div>
+
             <form class="${style['auth-form']}" id="loginForm" novalidate>
                 <label class="${style['auth-field']}">
                     <span>Email or Username</span>
-                    <input type="text" name="email" autocomplete="username" required placeholder="you@email.com">
+                    <!-- Added error class handling support -->
+                    <input type="text" name="email" id="loginEmail" autocomplete="username" required placeholder="you@email.com">
+                    <span class="${style['field-error-msg']}" id="emailError"></span>
                 </label>
 
                 <label class="${style['auth-field']}">
                     <span>Password</span>
                     <div class="${style['auth-password-wrap']}">
-                        <input type="password" name="pass" id="loginPassword" autocomplete="current-password" required
-                            placeholder="••••••••">
+                        <input type="password" name="password" id="loginPassword" autocomplete="current-password" required placeholder="••••••••">
                         <button type="button" class="${style['pw-toggle']}" data-target="loginPassword" aria-label="Show password">Show</button>
                     </div>
+                    <span class="${style['field-error-msg']}" id="passwordError"></span>
                 </label>
 
                 <div class="${style['auth-row']}">
@@ -49,5 +54,10 @@ export default function Login(){
         </div>
     `;
 
-    Component();
+    function init() {
+        toggle_password(`.${style['pw-toggle']}`);
+        setup_form(style);
+    };
+
+    init();
 }
