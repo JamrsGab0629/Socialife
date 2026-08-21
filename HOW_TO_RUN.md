@@ -5,7 +5,7 @@ prerequisites...
 > all of your node_modules be updated to lates for least hastle
 
 ``` bash
-npm install cors axios asioxRetry
+npm install cors axios axiosRetry
 ```
 
 ## step 1
