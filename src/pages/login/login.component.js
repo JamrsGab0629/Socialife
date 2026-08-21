@@ -1,3 +1,4 @@
+import HandleLogin from '../../core/handlelogin';
 import style from './login.module.css';
 
 export default function Component() {
@@ -13,9 +14,15 @@ export default function Component() {
         });
     });
 
-    loginForm.addEventListener('submit', (e) => {
+    let has_submit = false;
+
+    loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        console.log('Login submitted:', Object.fromEntries(new FormData(loginForm)));
-        window.location.href = 'app/';
+
+        if(has_submit) return;
+
+        has_submit = true;
+        console.log('Login submitted:', await HandleLogin(Object.fromEntries(new FormData(loginForm))));
+        has_submit = false;
     });
 }

@@ -22,13 +22,13 @@ export default function Login(){
             <form class="${style['auth-form']}" id="loginForm" novalidate>
                 <label class="${style['auth-field']}">
                     <span>Email or Username</span>
-                    <input type="text" name="identifier" autocomplete="username" required placeholder="you@email.com">
+                    <input type="text" name="email" autocomplete="username" required placeholder="you@email.com">
                 </label>
 
                 <label class="${style['auth-field']}">
                     <span>Password</span>
                     <div class="${style['auth-password-wrap']}">
-                        <input type="password" name="password" id="loginPassword" autocomplete="current-password" required
+                        <input type="password" name="pass" id="loginPassword" autocomplete="current-password" required
                             placeholder="••••••••">
                         <button type="button" class="${style['pw-toggle']}" data-target="loginPassword" aria-label="Show password">Show</button>
                     </div>
