@@ -1,10 +1,6 @@
 import axios from "axios"
 import axiosRetry from "axios-retry";
-import "dotenv/config"
-
-const HOST = process.env.HOST || "localhost";
-const PORT = process.env.PORT || 3000;
-const BASE_DB_URL = `http://${HOST}:${PORT}/api`;
+import BASE_DB_URL from "./url";
 
 axiosRetry(axios, {
     retries: 3,
