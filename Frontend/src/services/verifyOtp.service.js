@@ -1,5 +1,5 @@
-import User from "../model/user.model.js";
-import { otpCache } from "../utils/memoryCached.utils.js"; 
+import User from "../../../backend/model/user.model.js";
+import { otpCache } from "../../../backend/utils/memoryCached.utils.js"; 
 
 const verifyOtpService = async ({ email, otp }) => {
     // 1. Get the user from memory cache
