@@ -1,5 +1,5 @@
 import { login$ } from '../../validators/user.validators';
-import HandleLogin from '/core/handlelogin';
+import { login } from '/helpers/auth/users.request';
 
 const getErrorMessage = (error) => {
     if (!navigator.onLine || error?.code === "ERR_NETWORK" || error?.message?.includes("Network Error")) {
@@ -110,7 +110,9 @@ const setup_form = (style = {}) => {
                 return;
             }
 
-            const response = await HandleLogin(validation.data);
+            console.log("debug.setup_form", validation.data )
+
+            const response = await login(validation.data);
             if(response?.error) throw new Error(response.error);
 
             console.log('Login successful:', response);
