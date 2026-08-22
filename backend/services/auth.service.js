@@ -2,7 +2,7 @@ import User from "../model/user.model.js";
 import { hashPassword } from "../utils/passwordHashing.utils.js";
 import { validateEmail, validatePassword } from "../utils/validators.utils.js";
 import { generateOTP } from "../utils/gmail_utils/otpGen.utils.js";
-import { sendVerificationEmail } from "../services/gmail/email.service.js";
+import { sendVerificationEmail } from "./gmail/email.service.js";
 import { otpCache } from "../utils/memoryCached.utils.js"; 
 
 const registerUser = async ({ username, email, password, first_name, middle_name, last_name, birth_date }) => {
