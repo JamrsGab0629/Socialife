@@ -4,6 +4,8 @@ import { generateToken } from "./jwt/genToken.service.js";
 import { validateEmail, validatePassword } from "../utils/validators.utils.js";
 
 export const loginService = async ({ email, password }) => {
+    // console.log("debig.loginService", email, password);
+
     if (!validateEmail(email)) {
         throw new Error("Email must be a valid address ending with @gmail.com.");
     }
@@ -12,7 +14,7 @@ export const loginService = async ({ email, password }) => {
     }
 
     const user = await User.findOne({ where: { email } });
-    const isPasswordValid = await comparePassword(password, user?.password);
+    const isPasswordValid = await comparePassword(password, user?.password ?? "_");
     if (!user || !isPasswordValid) {
         throw new Error("Invalid email or password.");
     }
