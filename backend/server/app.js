@@ -10,7 +10,7 @@ const app = express();
 
 app.use(cors({
     origin: 'http://localhost:5173', // Allow only your frontend app
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true // Allow session cookies/headers if you need them later
 }))
 
