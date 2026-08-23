@@ -31,6 +31,7 @@ export const login$ = z.object({
 }).strict();
 
 export const signup$ = z.object({
+    username: z.string().trim().min(8, "Username must be at least 8").max(20, "Must be less than 20 characters").regex(/[A_Za-z\d\_\-]/, "Must only contain Alphanumeric and _ -"),
     email: email,
     password: password,
 }).strict();
