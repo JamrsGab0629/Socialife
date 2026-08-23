@@ -1,4 +1,4 @@
-import { verifyOtpService, resendOtpService } from "../services/verifyOtp.service.js";
+import { verify_OTP, resend_OTP } from "../services/auth.service.js";
 import { verifyOtpSchema } from "../validators/otp.validator.js";
 import { z } from "zod";
 
@@ -6,19 +6,26 @@ export const verifyOtp = async (req, res) => {
     try {
         // 1. Validate req.body using Zod
         const validatedData = verifyOtpSchema.parse(req.body);
+        console.log(req.body, validatedData);
 
         // 2. Pass to service
-        const user = await verifyOtpService(validatedData.email, validatedData.otp, res);
+        const very = await verify_OTP(validatedData)
 
         return res.status(200).json({
-            message: "OTP verified successfully! You are now logged in.",
-            user: {
-                username: user.username,
-                email: user.email,
-                first_name: user.first_name,
-                last_name: user.last_name
-            }
-        });
+            message: "OTP verified successfuly!",
+        })
+
+        // const user = await verifyOtpService(validatedData.email, validatedData.otp, res);
+
+        // return res.status(200).json({
+        //     message: "OTP verified successfully! You are now logged in.",
+        //     user: {
+        //         username: user.username,
+        //         email: user.email,
+        //         first_name: user.first_name,
+        //         last_name: user.last_name
+        //     }
+        // });
 
     } catch (error) {
         if (error.name === "ZodError") {
@@ -37,9 +44,11 @@ export const resendOtp = async (req, res) => {
         });
 
         const { email } = emailSchema.parse(req.body);
-        const result = await resendOtpService(email);
+        const result = await resend_OTP( {email} );
 
-        return res.status(200).json({ message: result.message });
+        return res.status(200).json({ ...result })
+
+        // return res.status(200).json({ message: result.message });
 
     } catch (error) {
         if (error.name === "ZodError") {
