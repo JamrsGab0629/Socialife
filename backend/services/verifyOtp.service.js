@@ -1,47 +1,87 @@
 import User from "../model/user.model.js";
-import { otpCache } from "../utils/memoryCached.utils.js"; 
+import Otp from "../model/otp.model.js";
+import { generateToken } from "./jwt/genToken.service.js";
+import { setAuthCookie } from "../utils/cookie.utils.js";
+import { generateOTP } from "../utils/gmail_utils/otpGen.utils.js";
+import { getOTPExpiration } from "../utils/gmail_utils/otpExpired.utils.js";
+import { sendVerificationEmail } from "./gmail/email.service.js";
 
-const verifyOtpService = async ({ email, otp }) => {
-    // 1. Get the user from memory cache
-    const pendingUser = otpCache.get(email);
-
-    if (!pendingUser) {
-        throw new Error("No pending registration found or session expired.");
+const verifyOtpService = async (email, otp_code, res) => {
+    // 1. Find the user first
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+        throw new Error("User not found.");
     }
 
-    // 2. Check expiration time
-    if (Date.now() > pendingUser.expiresAt) {
-        otpCache.delete(email);
-        throw new Error("OTP has expired. Please register again.");
+    if (user.is_verified) {
+        throw new Error("Account is already verified. Please log in.");
     }
 
-    // 3. Validate OTP
-    if (pendingUser.otp !== otp) {
+    // 2. Find the corresponding OTP record in the 'otps' table using user_id
+    const otpRecord = await Otp.findOne({ where: { user_id: user.user_id } });
+    if (!otpRecord) {
+        throw new Error("No OTP request found for this user. Please request a new one.");
+    }
+
+    // 3. Check if the OTP code matches
+    if (otpRecord.otp_code !== otp_code) {
         throw new Error("Invalid OTP code.");
     }
 
-    // 4. Success! Save to PostgreSQL database now
-    const newUser = await User.create({
-        username: pendingUser.username,
-        email: pendingUser.email,
-        password: pendingUser.password, // Already hashed
-        first_name: pendingUser.first_name,
-        middle_name: pendingUser.middle_name,
-        last_name: pendingUser.last_name,
-        birth_date: pendingUser.birth_date,
-        role: pendingUser.role,
-        auth: pendingUser.auth,
-        is_verified: true
-    });
+    // 4. Check if the OTP has expired
+    if (new Date() > new Date(otpRecord.otp_expires_at)) {
+        await otpRecord.destroy();
+        throw new Error("OTP has expired. Please request a new one.");
+    }
 
-    //  Delete from memory cache so it can't be reused
-    otpCache.delete(email);
+    // 5. Flip user status to verified
+    user.is_verified = true;
+    await user.save();
 
-    // Return the newly created user object so the controller can generate the token/cookie
-    const userData = newUser.toJSON();
+    // 6. Delete the OTP record so it cannot be reused
+    await otpRecord.destroy();
+
+    // 7. Automatically log them in with your access token cookie
+    const authToken = generateToken(user.user_id, user.role);
+    setAuthCookie(res, authToken);
+
+    const userData = user.toJSON();
     delete userData.password;
 
     return userData;
 };
 
-export { verifyOtpService };
+const resendOtpService = async (email) => {
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+        throw new Error("User not found.");
+    }
+
+    if (user.is_verified) {
+        throw new Error("Account is already verified. Please log in.");
+    }
+
+    const otpCode = generateOTP();
+    const otpExpiresAt = getOTPExpiration(15);
+
+    // Upsert the OTP record
+    const [otpRecord, created] = await Otp.findOrCreate({
+        where: { user_id: user.user_id },
+        defaults: {
+            otp_code: otpCode,
+            otp_expires_at: otpExpiresAt
+        }
+    });
+
+    if (!created) {
+        otpRecord.otp_code = otpCode;
+        otpRecord.otp_expires_at = otpExpiresAt;
+        await otpRecord.save();
+    }
+
+    await sendVerificationEmail(email, otpCode);
+
+    return { message: "A new 6-digit OTP code has been sent to your email." };
+};
+
+export { verifyOtpService, resendOtpService };

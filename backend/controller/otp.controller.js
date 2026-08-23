@@ -1,67 +1,52 @@
-import { verifyOtpService } from "../services/verifyOtp.service.js";
-import { generateOTP } from "../utils/gmail_utils/otpGen.utils.js";
-import { sendVerificationEmail } from "../services/gmail/email.service.js";
-import { setAuthCookie } from "../utils/cookie.utils.js";
-import { generateToken } from "../services/jwt/genToken.service.js"; 
-import { otpCache } from "../utils/memoryCached.utils.js"; 
+import { verifyOtpService, resendOtpService } from "../services/verifyOtp.service.js";
+import { verifyOtpSchema } from "../validators/otp.validator.js";
+import { z } from "zod";
 
 export const verifyOtp = async (req, res) => {
     try {
-        const { email, otp } = req.body;
+        // 1. Validate req.body using Zod
+        const validatedData = verifyOtpSchema.parse(req.body);
 
-        if (!email || !otp) {
-            return res.status(400).json({ message: "Email and OTP code are required" });
-        }
+        // 2. Pass to service
+        const user = await verifyOtpService(validatedData.email, validatedData.otp, res);
 
-     
-        const newUser = await verifyOtpService({ email, otp });
-
-        // Generate token and set cookie after successful verification
-        const token = generateToken(newUser.user_id, newUser.role); 
-        setAuthCookie(res, token);
-
-        return res.status(201).json({
-            message: "Account verified and created successfully!",
+        return res.status(200).json({
+            message: "OTP verified successfully! You are now logged in.",
             user: {
-                username: newUser.username,
-                email: newUser.email,
-                first_name: newUser.first_name,
-                last_name: newUser.last_name
+                username: user.username,
+                email: user.email,
+                first_name: user.first_name,
+                last_name: user.last_name
             }
         });
 
     } catch (error) {
-        return res.status(400).json({ message: error.message || "Server error during verification" });
+        if (error.name === "ZodError") {
+            const errorMessages = error.errors.map(err => err.message).join(", ");
+            return res.status(400).json({ message: errorMessages });
+        }
+
+        return res.status(400).json({ message: error.message || "Server error during OTP verification" });
     }
 };
 
 export const resendOtp = async (req, res) => {
     try {
-        const { email } = req.body;
-
-        if (!email) {
-            return res.status(400).json({ message: "Email is required" });
-        }
-
-        const pendingUser = otpCache.get(email);
-
-        if (!pendingUser) {
-            return res.status(400).json({ message: "Registration session expired. Please register again." });
-        }
-
-        const newOtpCode = generateOTP();
-        pendingUser.otp = newOtpCode;
-        pendingUser.expiresAt = Date.now() + 5 * 60 * 1000;
-        otpCache.set(email, pendingUser);
-
-        await sendVerificationEmail(email, newOtpCode);
-
-        return res.status(200).json({
-            message: "A new OTP code has been sent to your email."
+        const emailSchema = z.object({
+            email: z.string().email("Invalid email address")
         });
 
+        const { email } = emailSchema.parse(req.body);
+        const result = await resendOtpService(email);
+
+        return res.status(200).json({ message: result.message });
+
     } catch (error) {
-        console.error("RESEND OTP ERROR:", error);
-        return res.status(500).json({ message: "Server error while resending OTP" });
+        if (error.name === "ZodError") {
+            const errorMessages = error.errors.map(err => err.message).join(", ");
+            return res.status(400).json({ message: errorMessages });
+        }
+
+        return res.status(400).json({ message: error.message || "Server error while resending OTP" });
     }
 };
