@@ -4,73 +4,181 @@ import { hashPassword } from "../utils/passwordHashing.utils.js";
 import { sendVerificationEmail } from "./gmail/email.service.js";
 import { generateOTP } from "../utils/gmail_utils/otpGen.utils.js";
 import { getOTPExpiration } from "../utils/gmail_utils/otpExpired.utils.js";
+import { generate_OTP } from "../utils/otp.utlis.js";
+import { DateTime } from "luxon";
 
-const registerUser = async ({ username, email, password, first_name, middle_name, last_name, birth_date }) => {
+const registerUser = async ({ username, email, password }) => {
     // 1. Check if username or email already exists
     const existingUsername = await User.findOne({ where: { username } });
-    if (existingUsername && existingUsername.is_verified) {
+    if (existingUsername && existingUsername?.is_verified) {
         throw new Error("Username already exists");
     }
 
     const existingEmail = await User.findOne({ where: { email } });
+    if (existingEmail && existingEmail?.is_verified) {
+        throw new Error("Email already in used? Try logging in.");
+    }
+
     const hashedPassword = await hashPassword(password);
 
-    // Use your utility functions here!
-    const otpCode = generateOTP();
-    const otpExpiresAt = getOTPExpiration(15); // Sets expiration to 15 minutes for testing its 15 but 5 after
-
+    // create account
     let targetUser;
+    if (existingEmail && !existingEmail.is_verified) {
+        // if email alreaddy exist
+        existingEmail.username = username;
+        existingEmail.password = hashedPassword;
+        existingEmail.created_at = DateTime.now().toJSDate();
 
-    if (existingEmail) {
-        if (!existingEmail.is_verified) {
-            // Pending user collision handling: update their info
-            existingEmail.username = username;
-            existingEmail.password = hashedPassword;
-            existingEmail.first_name = first_name;
-            existingEmail.middle_name = middle_name || null;
-            existingEmail.last_name = last_name;
-            existingEmail.birth_date = birth_date;
-            await existingEmail.save();
+        await existingEmail.save()
 
-            targetUser = existingEmail;
-        } else {
-            throw new Error("Email already registered. Please log in.");
-        }
+        targetUser = existingEmail;
     } else {
-        // 2. Save brand new pending user to PostgreSQL with is_verified: false
         targetUser = await User.create({
-            username,
-            email,
+            username: username,
+            email: email,
             password: hashedPassword,
-            first_name,
-            middle_name: middle_name || null,
-            last_name,
-            birth_date,
-            role: "user",
-            auth: "local",
-            is_verified: false
         });
     }
 
-    // 3. Upsert the 6-digit OTP in your separate 'otps' table
-    const [otpRecord, created] = await Otp.findOrCreate({
-        where: { user_id: targetUser.user_id },
-        defaults: {
-            otp_code: otpCode,
-            otp_expires_at: otpExpiresAt
-        }
-    });
+    const otp = generate_OTP(targetUser.user_id, targetUser.email, targetUser.created_at);
 
-    if (!created) {
-        otpRecord.otp_code = otpCode;
-        otpRecord.otp_expires_at = otpExpiresAt;
-        await otpRecord.save();
-    }
+    return {
+        message: `Registration initiated. Please check your email for the 6-digit OTP code. otp is ${otp}... [please remove after testing]`,
+    };
+    // Use your utility functions here!
+    // const otpCode = generateOTP( existingEmail.user_id , email, existingEmail.created_at );
+    // const otpExpiresAt = getOTPExpiration(15); // Sets expiration to 15 minutes for testing its 15 but 5 after
+
+    // let targetUser;
+
+    // if (existingEmail) {
+    //     if (!existingEmail.is_verified) {
+    //         // Pending user collision handling: update their info
+    //         existingEmail.username = username;
+    //         existingEmail.password = hashedPassword;
+    //         existingEmail.first_name = first_name;
+    //         existingEmail.middle_name = middle_name || null;
+    //         existingEmail.last_name = last_name;
+    //         existingEmail.birth_date = birth_date;
+    //         await existingEmail.save();
+
+    //         targetUser = existingEmail;
+    //     } else {
+    //         throw new Error("Email already registered. Please log in.");
+    //     }
+    // } else {
+    //     // 2. Save brand new pending user to PostgreSQL with is_verified: false
+    //     targetUser = await User.create({
+    //         username,
+    //         email,
+    //         password: hashedPassword,
+    //         first_name,
+    //         middle_name: middle_name || null,
+    //         last_name,
+    //         birth_date,
+    //         role: "user",
+    //         auth: "local",
+    //         is_verified: false
+    //     });
+    // }
+
+    // // 3. Upsert the 6-digit OTP in your separate 'otps' table
+    // const [otpRecord, created] = await Otp.findOrCreate({
+    //     where: { user_id: targetUser.user_id },
+    //     defaults: {
+    //         otp_code: otpCode,
+    //         otp_expires_at: otpExpiresAt
+    //     }
+    // });
+
+    // if (!created) {
+    //     otpRecord.otp_code = otpCode;
+    //     otpRecord.otp_expires_at = otpExpiresAt;
+    //     await otpRecord.save();
+    // }
 
     // 4. Send the 6-digit OTP code via email
-    await sendVerificationEmail(email, otpCode);
-
-    return { message: "Registration initiated. Please check your email for the 6-digit OTP code." };
+    // await sendVerificationEmail(email, otpCode);
 };
 
-export { registerUser };
+const verify_OTP = async ({ email, otp }) => {
+    const existingEmail = await User.findOne({ where: { email } });
+
+    // failsafes
+    if (!existingEmail) {
+        throw new Error("No active email is in used");
+    }
+
+    // check if the otp code has passed
+    const createdAt = DateTime.fromJSDate(existingEmail.created_at);
+    const now = DateTime.now();
+
+    if (now.valueOf() - createdAt.valueOf() > 5 * 60 * 1000) {
+        throw new Error("OTP expired. Generate new code by hitting resend");
+    }
+
+    // generate otp and compares them
+    const otp_now = generate_OTP(existingEmail.user_id, email, existingEmail.created_at);
+    const is_same = ( otp_now === otp )
+    console.log("verify_OTP", otp_now, otp)
+
+    if (!is_same) {
+        throw new Error("OTP code not same");
+    }
+
+    existingEmail.is_verified = true;
+    existingEmail.is_activated = true;
+    existingEmail.save();
+
+    return {
+        message: "OTP succesfull",
+    }
+}
+
+const resend_OTP = async ({ email }) => {
+    const existingEmail = await User.findOne({ where: { email } });
+
+    if (!existingEmail) {
+        throw new Error("No active email is in used");
+    }
+
+    // check if the otp code has passed
+    const createdAt = DateTime.fromJSDate(existingEmail.created_at);
+    const now = DateTime.now();
+
+    if (now.valueOf() - createdAt.valueOf() > 5 * 60 * 1000) {
+        existingEmail.created_at = now.toJSDate();
+
+        await existingEmail.save();
+    }
+
+    console.log(now.valueOf() - createdAt.valueOf());
+
+    const otp = generate_OTP(existingEmail.user_id, email, existingEmail.created_at);
+
+    return {
+        message: "OTP resent",
+        temp: `otp is ${otp}... [please remove after testing]`,
+    }
+}
+
+const completeUser = async ({ email, firstname, lastname, birthdate }) => {
+    const existingEmail = await User.findOne({ where: email });
+
+    if (!existingEmail) {
+        throw new Error("No active email is in used");
+    }
+
+    existingEmail.firstname = firstname,
+        existingEmail.lastname = lastname,
+        existingEmail.birthdate = birthdate,
+        existingEmail.is_completed = true,
+
+        await existingEmail.save();
+
+    return {
+        message: "Registration complete",
+    }
+}
+
+export { registerUser, verify_OTP, resend_OTP, completeUser };
