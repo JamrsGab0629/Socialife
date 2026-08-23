@@ -1,26 +1,31 @@
 import style from './initial.module.css';
 import style_btn from "../../../styles/main/btn.module.css";
 import style_active from "../../../styles/main/active.module.css";
-import Component from './initial.component';
+import { password_strength, setup_form, toggle_password } from './initial.helper';
 
-export default function Initial(root){
+export default function Initial(root) {
     root.innerHTML = `
         <div class="${style['auth-card']}">
-            <form class="${style['auth-form']}" id="signupForm" novalidate>
-                <div class="${style['auth-tabs']}" role="tablist">
-                    <a href="/login" class="${style['auth-tab']}" role="tab" aria-selected="false">Log In</a>
-                    <a href="/signup/1" class="${style['auth-tab']} ${style_active['is-active']}" role="tab" aria-selected="true">Sign Up</a>
-                    <span class="${style['auth-tab-indicator']} ${style['is-signup']}" aria-hidden="true"></span>
-                </div>
+            <div class="${style['auth-tabs']}" role="tablist">
+                <a href="/login" class="${style['auth-tab']}" role="tab" aria-selected="false">Log In</a>
+                <a href="/signup/1" class="${style['auth-tab']} ${style_active['is-active']}" role="tab" aria-selected="true">Sign Up</a>
+                <span class="${style['auth-tab-indicator']} ${style['is-signup']}" aria-hidden="true"></span>
+            </div>
 
+            <!-- Added top-level error banner container -->
+            <div class="${style['auth-error-banner']}" id="formErrorBanner" aria-live="polite"></div>
+
+            <form class="${style['auth-form']}" id="signupForm" novalidate>
                 <label class="${style['auth-field']}">
                     <span>Username</span>
                     <input type="text" name="username" autocomplete="name" required placeholder="JuanDC-123">
+                    <span class="${style['field-error-msg']}" id="usernameError"></span>
                 </label>
 
                 <label class="${style['auth-field']}">
                     <span>Email Address</span>
                     <input type="email" name="email" autocomplete="email" required placeholder="you@email.com">
+                    <span class="${style['field-error-msg']}" id="emailError"></span>
                 </label>
 
                 <label class="${style['auth-field']}">
@@ -31,6 +36,8 @@ export default function Initial(root){
                         <button type="button" class="${style['pw-toggle']} pw-toggle" data-target="signupPassword"
                             aria-label="Show password">Show</button>
                     </div>
+                    <span class="${style['field-error-msg']}" id="passwordError"></span>
+
                     <div class="${style['pw-strength']}" id="pwStrength" aria-hidden="true">
                         <div class="${style['pw-strength-bar']}"><span></span></div>
                         <span class="${style['pw-strength-label']}">Weak</span>
@@ -51,5 +58,11 @@ export default function Initial(root){
         </div>
     `
 
-    Component();
+    function init() {
+        toggle_password(`.${style['pw-toggle']}`);
+        password_strength(style);
+        setup_form(style);
+    };
+
+    init();
 }
