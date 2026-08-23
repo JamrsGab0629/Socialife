@@ -17,10 +17,10 @@ User.init(
       allowNull: false,
     },
 
-    auth: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+    // auth: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    // },
 
     username: {
       type: DataTypes.STRING,
@@ -35,22 +35,19 @@ User.init(
 
     first_name: {
       type: DataTypes.STRING,
+      defaultValue: "first",
       allowNull: false,
-    },
-
-    middle_name: {
-      type: DataTypes.STRING,
-      allowNull: true,
     },
 
     last_name: {
       type: DataTypes.STRING,
+      defaultValue: "last",
       allowNull: false,
     },
 
     birth_date: {
       type: DataTypes.DATEONLY,
-      allowNull: false,
+      allowNull: true,
     },
 
     email: {
@@ -61,11 +58,30 @@ User.init(
         isEmail: true,
       },
     },
+
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+      allowNull: false,
+    },
+
+    is_actived: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
+    },
+
     is_verified: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
       allowNull: false,
     },
+
+    is_completed: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
+    }
   },
   {
     sequelize,
