@@ -37,7 +37,7 @@ export const signup$ = z.object({
 }).strict();
 
 export const otp$ = z.object({
-    otp: z.string().regex(/^\d{6}$/, "OTP must be exactly 6 digits"), 
+    otp: z.string().regex(/^\d{6}$/, "OTP must be exactly 6 digits"),
 }).strict();
 
 export const register$ = z.object({

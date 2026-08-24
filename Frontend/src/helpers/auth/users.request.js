@@ -27,7 +27,7 @@ export async function verify_otp(args) {
     });
 }
 
-export async function request_new_otp(args) {
+export async function request_otp(args) {
     return await Request({
         param: "/auth/resend-otp",
         method: "POST",
