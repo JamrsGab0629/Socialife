@@ -3,13 +3,8 @@ import Initial from "../../components/signup/initial/initial";
 import Verify from "../../components/signup/verify/verify";
 
 export default function Helper( counter ){
-    const step = Number(localStorage.getItem("signup-step")) || 1;
+    const step = counter || 1;
     // console.log("debug.signup.helper", this);
-
-    if( step !== counter ) {
-        this.redirect(`/signup/${step}`);
-        return;
-    }
 
     switch(step){
         case 1 : return Initial;

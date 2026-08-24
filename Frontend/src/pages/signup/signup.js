@@ -12,6 +12,6 @@ export default function Signup( params ) {
     const component = helper(counter);
 
     if(typeof component === "function"){
-        component(main);
+        component.bind(this.redirect)(main);
     }
 }
