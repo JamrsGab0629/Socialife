@@ -1,5 +1,6 @@
 import { verifyToken } from "../services/jwt/verifyToken.service.js";
 import TokenBlocklist from "../model/tokenBlocklist.model.js";
+import { findAuthorizedUserById } from "../services/authUser.service.js";
 
 export const isAuthenticated = async (req, res, next) => {
     try {
@@ -26,9 +27,16 @@ export const isAuthenticated = async (req, res, next) => {
 };
 
 // Checks if the logged-in user is an admin
-export const isAdmin = (req, res, next) => {
-    if (req.user?.role !== "admin") {
-        return res.status(403).json({ message: "Access denied. Admins only." });
+export const isAdmin = async (req, res, next) => {
+    try {
+        const user = await findAuthorizedUserById(req.user?.userId);
+
+        if (!user || user.role !== "admin") {
+            return res.status(403).json({ message: "Access denied. Admins only." });
+        }
+
+        next();
+    } catch (error) {
+        return res.status(500).json({ message: "Unable to verify administrator access." });
     }
-    next();
 };

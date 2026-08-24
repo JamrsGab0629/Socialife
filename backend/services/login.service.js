@@ -26,7 +26,9 @@ export const loginService = async ({ email, password }) => {
         throw new Error("Invalid email or password.");
     }
 
-    const token = generateToken(user.user_id, user.role);
+    console.log(user.role === "admin" ? "Welcome admin" : "Welcome user"); // to show the role
+
+    const token = generateToken(user.user_id);
 
     const userData = user.toJSON();
     delete userData.password;
