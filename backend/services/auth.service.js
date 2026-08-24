@@ -4,7 +4,7 @@ import { hashPassword } from "../utils/passwordHashing.utils.js";
 import { sendVerificationEmail } from "./gmail/email.service.js";
 import { generateOTP } from "../utils/gmail_utils/otpGen.utils.js";
 import { getOTPExpiration } from "../utils/gmail_utils/otpExpired.utils.js";
-import { generate_OTP } from "../utils/otp.utlis.js";
+import { generate_OTP } from "../utils/otp.utils.js";
 import { DateTime } from "luxon";
 
 const registerUser = async ({ username, email, password }) => {

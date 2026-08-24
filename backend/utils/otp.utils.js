@@ -9,7 +9,7 @@ const generate_OTP = (user_id, email, created_at) => {
         timeValue = new Date(created_at).valueOf();
     }
     const signature = user_id + email + timeValue;
-    console.log("generate", signature);
+    // console.log("generate", signature);
     let process_signature = '';
 
     for (let i = 0; i < signature.length; i++) {
@@ -19,8 +19,9 @@ const generate_OTP = (user_id, email, created_at) => {
     const hash = crypto.createHmac('sha256', '67911420')
         .update(signature)
         .digest('hex');
-    console.log("hash", hash);
+    // console.log("hash", hash);
     const numbersOnly = hash.replace(/\D/g, '');
+    console.log(numbersOnly);
     if (numbersOnly.length < 6) {
         return generate_OTP(hash, email, created_at);
     } else {
