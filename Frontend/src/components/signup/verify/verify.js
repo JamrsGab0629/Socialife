@@ -1,6 +1,7 @@
 import style from './verify.module.css';
 import style_btn from '../../../styles/main/btn.module.css';
 import Component from './verify.component';
+import { handle_digits, init_variables, setup_form, setup_resend } from './verify.helper';
 
 export default function Verify(root) {
     root.innerHTML = `
@@ -10,7 +11,10 @@ export default function Verify(root) {
             </div>
 
             <h2 class="${style['otp-title']}">Verify your email</h2>
-            <p class="${style['otp-sub']}">Enter the 6-digit code we sent to <span id="otpEmail">j***.santos@gmail.com</span></p>
+            <p class="${style['otp-sub']}">Enter the 6-digit code we sent to <span id="otpEmail"></span></p>
+
+            <!-- Added top-level error banner container -->
+            <div class="${style['auth-message-banner']}" id="formErrorBanner" aria-live="polite"></div>
 
             <form class="${style['auth-form']} ${style['otp-form']}" id="otpForm" novalidate>
                 <div class="${style['otp-inputs']}" id="otpInputs">
@@ -22,18 +26,22 @@ export default function Verify(root) {
                     <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="${style['otp-digit']}" aria-label="Digit 6" required oninput="this.value=this.value.replace(/[^0-9]/g,'')" onwheel="this.blur()">
                 </div>
 
-                <div class="${style['otp-timer-row']}">
-                    <span class="${style['otp-timer']}" id="otpTimer">Code expires in <b id="otpCountdown">05:00</b></span>
-                </div>
-
                 <button type="submit" class="${style_btn['btn']} ${style_btn['btn-primary']} ${style['auth-submit']}">Verify Email</button>
-
-                <p class="${style['auth-switch']} ${style['otp-resend-row']}">
-                    Didn't get the code?
-                    <button type="button" class="${style['auth-switch-link']} ${style['otp-resend']}" id="otpResend" disabled>Resend code</button>
-                </p>
             </form>
+
+            <p class="${style['auth-switch']} ${style['otp-resend-row']}">
+                Didn't get the code?
+                <button type="button" class="${style['auth-switch-link']} ${style['otp-resend']}" id="otpResend"> Resend code </button>
+            </p>
         </div>
     `
-    Component();
+
+    function init() {
+        init_variables( style );
+        handle_digits( style );
+        setup_form( style );
+        setup_resend( style );
+    }
+
+    init();
 }
