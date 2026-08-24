@@ -120,7 +120,7 @@ const setup_form = (style = {}) => {
         } catch (error) {
             console.error('Network or application runtime error:', error);
 
-            const message = getErrorMessage(error.message);
+            const message = getErrorMessage(error?.message ?? error);
             showBannerError(message);
 
             const emailInput = loginForm.querySelector('input[name="email"]');
