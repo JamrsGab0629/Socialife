@@ -1,15 +1,14 @@
 import { registerUser } from "../services/auth.service.js";
-import { registerSchema } from "../validators/auth.validators.js";
+import { register$ } from "../validators/auth.validators.js";
 
 const register = async (req, res) => {
     try {
         // console.log("req", req.body)
         // 1. Validate request body using Zod
-        // const validatedData = registerSchema.parse(req.body);
-        const body = req.body
+        const validatedData = register$.parse(req.body);
 
         // 2. Send clean data to service
-        const result = await registerUser({...body});
+        const result = await registerUser(validatedData);
 
         return res.status(200).json({
             message: result.message
