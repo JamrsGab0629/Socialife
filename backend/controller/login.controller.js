@@ -1,17 +1,12 @@
 import { loginService } from "../services/login.service.js";
+import { login$ } from "../validators/auth.validators.js";
 import { setAuthCookie } from "../utils/cookie.utils.js";
 
 export const login = async (req, res) => {
     try {
-        const { email, password } = req.body;
-
-        if (!email || !password) {
-            return res.status(400).json({ 
-                message: "Email and password are required." 
-            });
-        }
+        const validatedData = login$.parse(req.body);
         
-        const { user, token } = await loginService({ email, password });
+        const { user, token } = await loginService(validatedData);
 
         setAuthCookie(res, token);
 
@@ -21,6 +16,11 @@ export const login = async (req, res) => {
         });
 
     } catch (error) {
+        if (error.name === "ZodError") {
+            const errorMessages = error.errors.map(err => err.message).join(", ");
+            return res.status(400).json({ message: errorMessages });
+        }
+
         return res.status(400).json({
             message: error.message
         });
