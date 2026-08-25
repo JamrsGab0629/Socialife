@@ -14,19 +14,6 @@ export const verifyOtp = async (req, res) => {
         return res.status(200).json({
             message: "OTP verified successfuly!",
         })
-
-        // const user = await verifyOtpService(validatedData.email, validatedData.otp, res);
-
-        // return res.status(200).json({
-        //     message: "OTP verified successfully! You are now logged in.",
-        //     user: {
-        //         username: user.username,
-        //         email: user.email,
-        //         first_name: user.first_name,
-        //         last_name: user.last_name
-        //     }
-        // });
-
     } catch (error) {
         if (error.name === "ZodError") {
             const errorMessages = error.errors.map(err => err.message).join(", ");
@@ -43,12 +30,10 @@ export const resendOtp = async (req, res) => {
             email: z.string().email("Invalid email address")
         });
 
-        const { email } = emailSchema.parse(req.body);
-        const result = await resend_OTP( {email} );
+        const email = emailSchema.parse(req.body);
+        const result = await resend_OTP(email);
 
-        return res.status(200).json({ ...result })
-
-        // return res.status(200).json({ message: result.message });
+        return res.status(200).json( result );
 
     } catch (error) {
         if (error.name === "ZodError") {
