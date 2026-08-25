@@ -46,60 +46,6 @@ const registerUser = async ({ username, email, password }) => {
     return {
         message: `Registration initiated. Please check your email for the 6-digit OTP code. otp is ${otp}... [please remove after testing]`,
     };
-    // Use your utility functions here!
-    // const otpCode = generateOTP( existingEmail.user_id , email, existingEmail.created_at );
-    // const otpExpiresAt = getOTPExpiration(15); // Sets expiration to 15 minutes for testing its 15 but 5 after
-
-    // let targetUser;
-
-    // if (existingEmail) {
-    //     if (!existingEmail.is_verified) {
-    //         // Pending user collision handling: update their info
-    //         existingEmail.username = username;
-    //         existingEmail.password = hashedPassword;
-    //         existingEmail.first_name = first_name;
-    //         existingEmail.middle_name = middle_name || null;
-    //         existingEmail.last_name = last_name;
-    //         existingEmail.birth_date = birth_date;
-    //         await existingEmail.save();
-
-    //         targetUser = existingEmail;
-    //     } else {
-    //         throw new Error("Email already registered. Please log in.");
-    //     }
-    // } else {
-    //     // 2. Save brand new pending user to PostgreSQL with is_verified: false
-    //     targetUser = await User.create({
-    //         username,
-    //         email,
-    //         password: hashedPassword,
-    //         first_name,
-    //         middle_name: middle_name || null,
-    //         last_name,
-    //         birth_date,
-    //         role: "user",
-    //         auth: "local",
-    //         is_verified: false
-    //     });
-    // }
-
-    // // 3. Upsert the 6-digit OTP in your separate 'otps' table
-    // const [otpRecord, created] = await Otp.findOrCreate({
-    //     where: { user_id: targetUser.user_id },
-    //     defaults: {
-    //         otp_code: otpCode,
-    //         otp_expires_at: otpExpiresAt
-    //     }
-    // });
-
-    // if (!created) {
-    //     otpRecord.otp_code = otpCode;
-    //     otpRecord.otp_expires_at = otpExpiresAt;
-    //     await otpRecord.save();
-    // }
-
-    // 4. Send the 6-digit OTP code via email
-    // await sendVerificationEmail(email, otpCode);
 };
 
 const verify_OTP = async ({ email, otp }) => {
