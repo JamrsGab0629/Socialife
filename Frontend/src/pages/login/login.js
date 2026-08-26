@@ -54,10 +54,10 @@ export default function Login() {
         </div>
     `;
 
-    function init() {
+    function init( redirect) {
         toggle_password(`.${style['pw-toggle']}`);
-        setup_form(style);
+        setup_form(style, redirect );
     };
 
-    init();
+    init( this.redirect );
 }
