@@ -7,13 +7,13 @@ export async function login(args) {
         args: args,
     });
 
-    console.log("debug.login", res);
+    // console.log("debug.login", res);
     return res;
 }
 
 export async function signup(args) {
     return await Request({
-        param: "/auth/register",
+        param: "/auth/signup",
         method: "POST",
         args: args,
     });
@@ -33,6 +33,13 @@ export async function request_otp(args) {
         method: "POST",
         args: args,
     });
+}
+export async function register(args) {
+    return await Request({
+        param: "auth/register",
+        method: "POST",
+        args: args
+    })
 }
 
 export async function logout(args) {
