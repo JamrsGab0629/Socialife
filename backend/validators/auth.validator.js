@@ -41,6 +41,7 @@ export const otp$ = z.object({
 }).strict();
 
 export const register$ = z.object({
+    email: email,
     firstname: name.regex(/^[A-Za-z\s]+$/, "Must only include characters and spaces"),
     middlename: name.regex(/^(?!\.)(?!.*\.\.)[A-Za-z\s.]+[A-Za-z.]$/, "Must contain only characters, spaces, or end with a dot (.)").optional(),
     lastname: name.regex(/^[A-Za-z]+$/, "Must only include characters"),
