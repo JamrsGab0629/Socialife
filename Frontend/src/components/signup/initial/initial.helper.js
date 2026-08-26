@@ -1,12 +1,9 @@
 import { signup$ } from "../../../validators/user.validators";
 import { signup } from "../../../helpers/auth/users.request";
+import { setEmail } from "/core/email.state"; // Imported state setter
 
-const on_success = ( gmail ) => {
-    localStorage.setItem("gmail", gmail);
-    if(localStorage.getItem("gmail")){
-        window.location.href = "/signup/2";
-        return;
-    }
+const on_success = (gmail) => {
+    setEmail(gmail);
 }
 
 const getErrorMessage = (error) => {
@@ -83,7 +80,9 @@ const password_strength = (style = {}) => {
     });
 };
 
-const setup_form = (style = {}) => {
+const setup_form = (style = {}, redirect ) => {
+    console.log(redirect);
+
     const signupForm = document.getElementById("signupForm");
     if (!signupForm) return;
 
@@ -154,7 +153,12 @@ const setup_form = (style = {}) => {
             const response = await signup(validation.data);
             if (response?.error) throw new Error(response.error);
 
+            if (validation.data?.email) {
+                setEmail(validation.data.email);
+            }
+
             on_success(validation.data.email);
+            redirect("/signup/2");
 
         } catch (error) {
             console.error("Signup submit error:", error);
