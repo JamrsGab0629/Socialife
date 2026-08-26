@@ -2,7 +2,7 @@ import axios from "axios"
 import axiosRetry from "axios-retry";
 import BASE_DB_URL from "./url";
 
-const VALID_METHODS = [ "POST", "GET", "PATCH", "PUT", "DELETE" ];
+const VALID_METHODS = ["POST", "GET", "PATCH", "PUT", "DELETE"];
 
 axiosRetry(axios, {
     retries: 3,
@@ -19,7 +19,7 @@ export default async function Request({ param, method, args }) {
             throw new Error("Complete parameter is needed");
         }
 
-        if(!method || typeof method !== "string" || !VALID_METHODS.includes(method.trim().toUpperCase())) {
+        if (!method || typeof method !== "string" || !VALID_METHODS.includes(method.trim().toUpperCase())) {
             throw new Error("Method invalid");
         }
 
@@ -32,9 +32,17 @@ export default async function Request({ param, method, args }) {
         const config = {
             method: METHOD,
             url: DB_URL_PATH,
-            ...( METHOD === "GET" ? { params : extra_arguments } : { data : extra_arguments } ),
-        }
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
 
+        if (METHOD === "GET") {
+            // Converts JS object into clean query string parameters (?email=user@domain.com)
+            config.params = extra_arguments;
+        } else {
+            config.data = extra_arguments;
+        }
         console.log("debug.config", config);
 
         const response = await axios(config);
