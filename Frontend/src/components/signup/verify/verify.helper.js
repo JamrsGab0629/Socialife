@@ -1,5 +1,6 @@
 import { otp$ } from "/validators/user.validators";
 import { verify_otp, request_otp } from "/helpers/auth/users.request";
+import { getEmail } from "/core/email.state"; // Imported state setter
 import style from "./verify.module.css";
 
 const getClass = (key) => style[key] || key;
@@ -13,15 +14,16 @@ let gmail = "";
 const getOtpForm = () => document.getElementById("otpForm");
 const getDigits = () => Array.from(document.querySelectorAll(`.${getClass("otp-digit")}`));
 
-const init_variables = () => {
-    gmail = localStorage.getItem("gmail");
+const init_variables = ( ) => {
+    gmail = getEmail();
 
-    if (!gmail) {
+    if (gmail === "") {
         window.location.href = "/signup/1";
         return;
     }
 
     const otpEmail = document.getElementById("otpEmail");
+
     if( otpEmail ){
         otpEmail.innerHTML = `${gmail.slice(0, 3)}***@gmail.com`;
     }
@@ -118,7 +120,7 @@ const handle_digits = () => {
     });
 };
 
-const setup_form = () => {
+const setup_form = ( redirect ) => {
     const otpForm = getOtpForm();
     if (!otpForm) return;
 
@@ -145,6 +147,8 @@ const setup_form = () => {
 
             const response = await verify_otp({ email: gmail, otp: validation.data.otp });
             if (response?.error) throw new Error(response.error);
+
+            redirect("/signup/3")
 
         } catch (error) {
             console.error("OTP verification error:", error);
