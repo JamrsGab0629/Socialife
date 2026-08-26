@@ -21,7 +21,7 @@ const app = new SPA({
 
 app.add('/', Authenticated(Landing));
 app.add('/login', Authenticated(Login));
-app.add(/^\/signup\/(?:(?<id>\d+))?$/i, Authenticated(Signup));
+app.add(/^\/signup\/(?:(?<id>\d+))?$/i, Authenticated(Authentication(Signup, { isLoggedInRequired: false , isSignup: true })));
 app.add(/^\/app(?:\/home)?$/i, Authentication(Home, { isLoggedInRequired: true }));
 app.add('/app/profile', Authentication(Profile, { isLoggedInRequired: true }));
 app.add('/app/settings', Authentication(Settings, { isLoggedInRequired: true }));
