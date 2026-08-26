@@ -1,5 +1,6 @@
 import { login$ } from '../../validators/user.validators';
 import { login } from '/helpers/auth/users.request';
+import { setEmail } from '/core/email.state'; // Imported state setter
 
 const getErrorMessage = (error) => {
     if (!navigator.onLine || error?.code === "ERR_NETWORK" || error?.message?.includes("Network Error")) {
@@ -38,7 +39,7 @@ const toggle_password = ( style_name ) => {
     });
 }
 
-const setup_form = (style = {}) => {
+const setup_form = (style = {}, redirect ) => {
     const loginForm = document.getElementById('loginForm');
     if (!loginForm) return;
 
@@ -110,13 +111,19 @@ const setup_form = (style = {}) => {
                 return;
             }
 
-            console.log("debug.setup_form", validation.data )
+            console.log("debug.setup_form", validation.data);
 
             const response = await login(validation.data);
             if(response?.error) throw new Error(response.error);
 
-            console.log('Login successful:', response);
+            // Store email in state on successful submission
+            if (validation.data?.email) {
+                setEmail(validation.data.email);
+            }
+            
+            redirect("/app");
 
+            console.log('Login successful:', response);
         } catch (error) {
             console.error('Network or application runtime error:', error);
 
