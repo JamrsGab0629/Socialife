@@ -7,7 +7,7 @@ import { getOTPExpiration } from "../utils/gmail_utils/otpExpired.utils.js";
 import { generate_OTP } from "../utils/otp.utils.js";
 import { DateTime } from "luxon";
 
-const registerUser = async ({ username, email, password }) => {
+const signup = async ({ username, email, password }) => {
     // 1. Check if username or email already exists
     const existingUsername = await User.findOne({ where: { username } });
     if (existingUsername && existingUsername?.is_verified) {
@@ -102,10 +102,10 @@ const resend_OTP = async ({ email }) => {
     console.log(now.valueOf() - createdAt.valueOf());
 
     const otp = generate_OTP(existingEmail.user_id, email, existingEmail.created_at);
+    console.log("debug.resendotp [for testing purposes]", otp)
 
     return {
-        message: "OTP resent",
-        temp: `otp is ${otp}... [please remove after testing]`,
+        message: "OTP resent"
     }
 }
 
@@ -128,4 +128,4 @@ const completeUser = async ({ email, firstname, lastname, birthdate }) => {
     }
 }
 
-export { registerUser, verify_OTP, resend_OTP, completeUser };
+export { signup, verify_OTP, resend_OTP, completeUser };
