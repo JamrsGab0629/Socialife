@@ -1,11 +1,11 @@
 let zState = {
-    email: ""
+    email: "",
 };
 
 export const setEmail = (email) => {
-    signupState.email = email;
+    zState.email = email;
 };
 
 export const getEmail = () => {
-    return signupState.email;
+    return zState.email;
 };
