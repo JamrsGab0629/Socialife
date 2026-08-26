@@ -1,5 +1,5 @@
-import { registerUser } from "../services/auth.service.js";
-import { register$ } from "../validators/auth.validators.js";
+import { registerService } from "../services/register.service.js";
+import { register$ } from "../validators/auth.validator.js";
 
 const register = async (req, res) => {
     try {
@@ -8,10 +8,10 @@ const register = async (req, res) => {
         const validatedData = register$.parse(req.body);
 
         // 2. Send clean data to service
-        const result = await registerUser(validatedData);
+        const result = await registerService(validatedData);
 
         return res.status(200).json({
-            message: result.message
+            message: "registration complete. Ready for deployment"
         });
 
     } catch (error) {
