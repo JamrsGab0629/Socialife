@@ -1,9 +1,9 @@
 import style from './verify.module.css';
 import style_btn from '../../../styles/main/btn.module.css';
-import Component from './verify.component';
 import { handle_digits, init_variables, setup_form, setup_resend } from './verify.helper';
 
 export default function Verify(root) {
+    // console.log("debig.verify", this)
     root.innerHTML = `
         <div class="${style['auth-card']}">
             <div class="${style['otp-icon']}" aria-hidden="true">
@@ -37,11 +37,11 @@ export default function Verify(root) {
     `
 
     function init() {
-        init_variables( style );
-        handle_digits( style );
-        setup_form( style );
-        setup_resend( style );
+        init_variables( );
+        handle_digits( );
+        setup_form( this );
+        setup_resend( );
     }
 
-    init();
+    init.bind(this)();
 }
