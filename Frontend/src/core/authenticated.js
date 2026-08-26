@@ -1,6 +1,8 @@
 export const Authenticated = ( component ) => {
     return function( ...args ) {
         if (typeof component !== 'function') throw new Error('component must be a function');
+        // console.log(args);
+
 
         // console.log('debug.authenticated', args);
 
