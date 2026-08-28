@@ -81,7 +81,7 @@ const password_strength = (style = {}) => {
 };
 
 const setup_form = (style = {}, redirect ) => {
-    console.log(redirect);
+    // console.log(redirect);
 
     const signupForm = document.getElementById("signupForm");
     if (!signupForm) return;

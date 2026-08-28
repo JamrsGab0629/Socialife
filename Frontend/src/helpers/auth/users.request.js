@@ -35,8 +35,9 @@ export async function request_otp(args) {
     });
 }
 export async function register(args) {
+    console.log(args);
     return await Request({
-        param: "auth/register",
+        param: "/auth/register",
         method: "POST",
         args: args
     })
