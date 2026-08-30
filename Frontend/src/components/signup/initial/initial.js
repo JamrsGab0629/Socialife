@@ -4,7 +4,7 @@ import style_active from "../../../styles/main/active.module.css";
 import { password_strength, setup_form, toggle_password } from './initial.helper';
 
 export default function Initial(root) {
-    console.log(this);
+    // console.log(this);
     root.innerHTML = `
         <div class="${style['auth-card']}">
             <div class="${style['auth-tabs']}" role="tablist">
@@ -60,7 +60,7 @@ export default function Initial(root) {
     `
 
     function init() {
-        console.log(this);
+        // console.log(this);
 
         toggle_password(`.${style['pw-toggle']}`);
         password_strength(style);

@@ -42,8 +42,8 @@ export const otp$ = z.object({
 
 export const register$ = z.object({
     firstname: name.regex(/^[A-Za-z\s]+$/, "Must only include characters and spaces"),
-    middlename: name.regex(/^(?!\.)(?!.*\.\.)[A-Za-z\s.]+[A-Za-z.]$/, "Must contain only characters, spaces, or end with a dot (.)").optional(),
+    // middlename: name.regex(/^(?!\.)(?!.*\.\.)[A-Za-z\s.]+[A-Za-z.]$/, "Must contain only characters, spaces, or end with a dot (.)").optional(),
     lastname: name.regex(/^[A-Za-z]+$/, "Must only include characters"),
     birthday: birthday_format,
-    address: z.string().trim().min(10, "Address must be at least 10 characters").max(100, "Address must be at most 100 characters"),
+    // address: z.string().trim().min(10, "Address must be at least 10 characters").max(100, "Address must be at most 100 characters"),
 }).strict();
