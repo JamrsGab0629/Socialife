@@ -2,7 +2,6 @@
 
 ### 1. Database & Models (PostgreSQL + Sequelize)
 - [x] **User Model** (`users` table, UUIDs, roles: `user`/`admin`, `is_verified` / `is_actived` flags)
-- [x] **OTP Model** (`otps` table, 6-digit code, expiration, status tracking)
 - [x] **Token Blocklist Model** (`token_blocklist` table, token revocation by `jti`)
 - [x] **Associations** (`User` 1:1 `Otp`) & Sequelize connection/sync
 
