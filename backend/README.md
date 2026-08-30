@@ -104,6 +104,3 @@ BODY (JSON)
 ### LOG OUT
 
 URL POST /api/auth/logout
-
-
-
