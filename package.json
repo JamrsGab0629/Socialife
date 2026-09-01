@@ -1,0 +1,10 @@
+{
+  "name": "socialife-appsdev-2026",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix Frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.4"
+  }
+}

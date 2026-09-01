@@ -4,8 +4,8 @@ export default {
     outDir: '../dist',
     rollupOptions: {
       input: {
-        main: './src/index.html',
-        styles: './src/styles/common.css',
+        main: './index.html',
+        styles: './styles/global.css',
       }
     }
   },
