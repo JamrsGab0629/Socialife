@@ -5,6 +5,7 @@ import authRoutes from "../routes/auth.routes.js";
 import adminRoutes from "../routes/admin.routes.js";
 import otpRoutes from "../routes/otp.routes.js"; 
 import profileRoutes from "../routes/profile.routes.js"; 
+import postRoutes from "../routes/post.routes.js"; 
 import cors from "cors";
 
 const app = express();
@@ -23,5 +24,6 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/auth", otpRoutes);
 app.use("/api/profiles", profileRoutes); 
+app.use("/api/posts", postRoutes); 
 
 export default app;
