@@ -1,7 +1,8 @@
+
+import "dotenv/config";
 import app from "./app.js";
 import sequelize from "../config/database.config.js";
-import "dotenv/config";
-import User from "../model/user.model.js";
+
 import "../model/tokenBlocklist.model.js";
 
 const PORT = process.env.PORT || 3000;
@@ -22,6 +23,7 @@ const startServer = async () => {
     } catch (error) {
         console.error("Database connection failed:", error);
     }
+    
 };
 
 startServer();

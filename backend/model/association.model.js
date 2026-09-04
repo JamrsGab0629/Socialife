@@ -5,4 +5,21 @@ import Otp from "./otp.model.js";
 User.hasOne(Otp, { foreignKey: "user_id", as: "otpRecord", onDelete: "CASCADE" });
 Otp.belongsTo(User, { foreignKey: "user_id", as: "user" });
 
+
+// User A initiates
+User.belongsToMany(User, {
+  as: 'SentRequests',
+  through: Friendship,
+  foreignKey: 'requester_id',
+  otherKey: 'addressee_id',
+});
+
+// User A receives
+User.belongsToMany(User, {
+  as: 'ReceivedRequests',
+  through: Friendship,
+  foreignKey: 'addressee_id',
+  otherKey: 'requester_id',
+});
+
 export { User, Otp };

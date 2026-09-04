@@ -17,11 +17,6 @@ User.init(
       allowNull: false,
     },
 
-    // auth: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    // },
-
     username: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -59,6 +54,17 @@ User.init(
       },
     },
 
+    profile_url: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
+    friend_count: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false,
+    },
+
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
@@ -88,6 +94,8 @@ User.init(
     modelName: "User",
     tableName: "users",
     timestamps: true,
+    updatedAt: false,       
+    createdAt: 'created_at',  
   },
 );
 

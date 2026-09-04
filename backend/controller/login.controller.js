@@ -17,7 +17,8 @@ export const login = async (req, res) => {
 
     } catch (error) {
         if (error.name === "ZodError") {
-            const errorMessages = error.errors.map(err => err.message).join(", ");
+            // Changed error.errors to error.issues
+            const errorMessages = error.issues.map(err => err.message).join(", ");
             return res.status(400).json({ message: errorMessages });
         }
 
