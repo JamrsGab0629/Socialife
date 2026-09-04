@@ -11,4 +11,11 @@ router.get("/", isAuthenticated, postController.getHomeFeed);
 router.get("/user/:userId", isAuthenticated, postController.getProfileFeed);
 router.patch("/:postId/deactivate", isAuthenticated, postController.deactivatePost);
 
+// Like routes
+router.post("/:postId/like", isAuthenticated, postController.toggleLike);
+
+// Comment routes
+router.post("/:postId/comments", isAuthenticated, postController.addComment);
+router.get("/:postId/comments", isAuthenticated, postController.getComments);
+
 export default router;
