@@ -1,0 +1,18 @@
+{
+    "avatar_url": "/profile/James.jpg",
+    "avatar_alt": "James Gabriel Santos",
+    "photos": [
+        { "photo_url": "/post/mountains.jpg", "photo_alt": "Mountain hike" },
+        { "photo_url": "/profile/James.jpg", "photo_alt": "Profile photo" },
+        { "photo_url": "/profile/Xep.jpg", "photo_alt": "With a friend" },
+        { "photo_url": "/post/mountains.jpg", "photo_alt": "Mountain hike" },
+        { "photo_url": "/profile/James.jpg", "photo_alt": "Profile photo" },
+        { "photo_url": "/profile/Xep.jpg", "photo_alt": "With a friend" },
+        { "photo_url": "/post/mountains.jpg", "photo_alt": "Mountain hike" },
+        { "photo_url": "/profile/James.jpg", "photo_alt": "Profile photo" },
+        { "photo_url": "/profile/Xep.jpg", "photo_alt": "With a friend" },
+        { "photo_url": "/post/mountains.jpg", "photo_alt": "Mountain hike" },
+        { "photo_url": "/profile/James.jpg", "photo_alt": "Profile photo" },
+        { "photo_url": "/profile/Xep.jpg", "photo_alt": "With a friend" }
+    ]
+}

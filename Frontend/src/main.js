@@ -21,12 +21,26 @@ const app = new SPA({
 
 app.add('/', Authenticated(Landing));
 app.add('/login', Authenticated(Login));
-app.add(/^\/signup\/(?:(?<id>\d+))?$/i, Authenticated(Authentication(Signup, { isLoggedInRequired: false , isSignup: true })));
-app.add(/^\/app(?:\/home)?$/i, Authentication(Home, { isLoggedInRequired: true }));
-app.add('/app/profile', Authentication(Profile, { isLoggedInRequired: true }));
-app.add('/app/settings', Authentication(Settings, { isLoggedInRequired: true }));
-app.add('/app/saved', Authentication(Saved, { isLoggedInRequired: true }));
-app.add('/app/friends', Authentication(Friends,  { isLoggedInRequired: true }));
-app.add('/app/timeline', Authentication(Timeline,  { isLoggedInRequired: true }));
+app.add(/^\/signup\/(?:(?<id>\d+))?$/i, Authenticated(Authentication(Signup, { isLoginRequired: false, isSignup: true })));
+
+// backend-dependent routes (typo fixed: isLoggedInRequired -> isLoginRequired) check nyo nalang
+app.add(/^\/app(?:\/home)?$/i, Authentication(Home, { isLoginRequired: true }));
+app.add('/app/profile', Authentication(Profile, { isLoginRequired: true }));
+app.add('/app/settings', Authentication(Settings, { isLoginRequired: true }));
+app.add('/app/saved', Authentication(Saved, { isLoginRequired: true }));
+app.add('/app/friends', Authentication(Friends, { isLoginRequired: true }));
+app.add('/app/timeline', Authentication(Timeline, { isLoginRequired: true }));
+
+// --- FRONTEND-ONLY DEV MODE ---
+// If your backend is offline and you just want to see/work on the UI,
+// comment out the block above and uncomment the lines below instead.
+// This skips the auth/backend check entirely for these routes.
+//
+/*app.add(/^\/app(?:\/home)?$/i, Home);
+app.add('/app/profile', Profile);
+app.add('/app/settings', Settings);
+app.add('/app/saved', Saved);
+app.add('/app/friends', Friends);
+app.add('/app/timeline', Timeline); */
 
 app.handleRouteChanges();

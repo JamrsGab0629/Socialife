@@ -2,6 +2,14 @@ import style from "./post.module.css";
 import Service from "./post.service";
 import Helper from "./post.helper";
 
+const renderContent = (content) => {
+    const items = content || [];
+    return items
+        .filter((item) => item["type"] === "img")
+        .map((item) => `<img src="${item["url"]}" alt="post photo">`)
+        .join("");
+}
+
 export default async function Post( root ){
     const data = await Service();
     // console.log(Object.keys(data));
@@ -13,7 +21,7 @@ export default async function Post( root ){
     const template = `
         <div class="${style["post-card"]} id="${data["post_id"]}">
             <div class="${style["post-header"]}">
-                <img src="../public/profile/${data["user_id"]}" alt="${data["user_name"]}">
+                <img src="${data["avatar_url"]}" alt="${data["user_name"]}">
                 <h2>
                     <span class="${style["post-author"]}">${data["user_name"]}</span>
                     <span class="${style["post-time"]}">${data["post_time"]}</span>
@@ -22,11 +30,11 @@ export default async function Post( root ){
             </div>
 
             <div class="${style["post-text"]}">
-                Just finished a great hike! The view from the peak was incredible. Check it out!
+                ${data["caption"]}
             </div>
 
             <div class="${style["post-photo"]}">
-                <img src="../public/post/mountains.jpg" alt="mountain" srcset="">
+                ${renderContent(data["content"])}
             </div>
 
             <div class="${style["post-meta"]}">${data['comment_count']} comments</div>

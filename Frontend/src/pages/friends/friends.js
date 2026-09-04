@@ -1,8 +1,10 @@
 import Navigation from "../../components/navigation/navigation";
 import Layout from "../../layouts/default/default";
 import style from "./friends.module.css";
+import Helper, { FriendsTemplate } from "./friends.helper";
+import Service from "./friends.service";
 
-export default function Friends () {
+export default async function Friends() {
     const { navigation, main } = Layout(this.root);
 
     Navigation(navigation);
@@ -10,46 +12,21 @@ export default function Friends () {
         <div id="friends-main" class="${style['friends-main']}">
             <div class="${style["friends-header"]}">
                 <h2>People</h2>
-                <div class="${style["active-count"]}">Active now (5)</div>
+                <div id="active-count" class="${style["active-count"]}">Active now</div>
             </div>
 
-            <div class="${style["friends-grid"]}">
-                <div class="${style["friend-card"]}" onclick="window.location.href='../messages.html'">
-                    <div class="${style["avatar-container"]}">
-                        <img src="./public/profile/Xep.jpg" alt="Andrei Luis Lucas">
-                        <span class="${style["status-indicator"]} ${style["online"]}"></span>
-                    </div>
-                    <div class="${style["friend-details"]}">
-                        <div class="${style["friend-name"]}">Andrei Luis Lucas</div>
-                        <div class="${style["friend-status"]}">Active now</div>
-                    </div>
-                    <button class="${style["chat-shortcut-btn"]}">Message</button>
-                </div>
-
-                <div class="${style["friend-card"]}" onclick="window.location.href='../messages.html'">
-                    <div class="${style["avatar-container"]}">
-                        <img src="./public/profile/dave.png" alt="Dave Lebico">
-                        <span class="${style["status-indicator"]} ${style["online"]}"></span>
-                    </div>
-                    <div class="${style["friend-details"]}">
-                        <div class="${style["friend-name"]}">Dave Lebico</div>
-                        <div class="${style["friend-status"]}">Active 5m ago</div>
-                    </div>
-                    <button class="${style["chat-shortcut-btn"]}">Message</button>
-                </div>
-
-                <div class="${style["friend-card"]}" onclick="window.location.href='../messages.html'">
-                    <div class="${style["avatar-container"]}">
-                        <img src="./public/profile/Philip.jpg" alt="Philip parenas">
-                        <span class="${style["status-indicator"]} ${style["online"]}"></span>
-                    </div>
-                    <div class="${style["friend-details"]}">
-                        <div class="${style["friend-name"]}">Philip Parenas</div>
-                        <div class="${style["friend-status"]}">Active 1h ago</div>
-                    </div>
-                    <button class="${style["chat-shortcut-btn"]}">Message</button>
-                </div>
-            </div>
+            <div id="friends-grid" class="${style["friends-grid"]}"></div>
         </div>
     `;
+
+    const grid = document.getElementById('friends-grid');
+    Helper(grid); // bind click delegation once, before any render
+
+    const friends_data = await Service();
+    grid.innerHTML = FriendsTemplate(friends_data); // clean re-render, no duplicate nodes
+
+    const activeCountEl = document.getElementById('active-count');
+    if (activeCountEl) {
+        activeCountEl.textContent = `Active now (${friends_data.length})`;
+    }
 }

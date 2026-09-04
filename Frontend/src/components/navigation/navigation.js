@@ -5,13 +5,13 @@ export default function Navigation(root) {
         <!-- SIDEBAR -->
         <aside class="${style['sidebar']}">
             <a id="refresh" href="/" class="${style['logo']}">
-                <img id="main-logo" class="${style['stamp']}" src="./images/Socialife-stamp.svg" alt="Socialife-stamp">
-                <img class="${style['script']}" src="./images/Socialife-script.svg" alt="Socialife-script">
+                <img id="main-logo" class="${style['stamp']}" src="/Socialife-stamp.png" alt="Socialife-stamp">
+                <img class="${style['script']}" src="/Socialife-script.png" alt="Socialife-script">
             </a>
 
             <a nav-action="profile" id="profile-nav" href="/app/profile">
                 <div class="${style['profile-block']}">
-                    <div class="${style['avatar-ring']}"><img src="./images/profile/James.jpg" alt="James Gabriel Santos"></div>
+                    <div class="${style['avatar-ring']}"><img src="/profile/James.jpg" alt="James Gabriel Santos"></div>
                     <div class="${style['profile-name']}">James Gabriel Santos</div>
                 </div>
             </a>

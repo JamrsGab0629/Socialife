@@ -4,11 +4,12 @@
     "view_status" : "Public",
     "user_id" : "0001",
     "user_name" :"James Gabriel Santos",
+    "avatar_url" : "/profile/James.jpg",
     "caption" : "Mountains for life",
     "content" : [
         {
             "type": "img",
-            "url" : "#"
+            "url" : "/post/mountains.jpg"
         }
     ],
     "like_count" : 1,
@@ -21,18 +22,21 @@
             "comment_time" : "01-01-2000",
             "user_id": "0002",
             "user_name": "XeP",
+            "avatar_url" : "/profile/Xep.jpg",
             "comment": "Damn"
         },
         {
             "comment_time" : "01-01-2000",
             "user_id": "0001",
             "user_name": "James Gabriel Santos",
+            "avatar_url" : "/profile/James.jpg",
             "comment": "I know right!"
         },
         {
             "comment_time" : "01-01-2000",
             "user_id": "0002",
             "user_name": "XeP",
+            "avatar_url" : "/profile/Xep.jpg",
             "comment": "I wanna come next time"
         }
     ]

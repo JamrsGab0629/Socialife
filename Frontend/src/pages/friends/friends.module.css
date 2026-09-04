@@ -61,6 +61,22 @@
   border-radius: 50%;
 }
 
+/* Fallback avatar: colored circle + initial, used when there's no profile image.
+   Sized to match .avatar-container img exactly so layout doesn't shift. */
+.avatar-fallback {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+  user-select: none;
+}
+
 .status-indicator {
   position: absolute;
   bottom: 2px;
@@ -106,6 +122,15 @@
 .friend-card:hover .chat-shortcut-btn {
   background-color: #0084ff;
   color: #ffffff;
+}
+
+/* Shown when the friends list comes back empty */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 16px;
+  color: #65676b;
+  font-size: 15px;
 }
 
 @media (max-width: 1021px) and (min-width: 769px){

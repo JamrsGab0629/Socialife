@@ -15,7 +15,7 @@ export default async function Notification(root) {
         template += `
             <div class="${style["notif-item"]}">
                 <div class="${style["notif-avatar-wrap"]}">
-                    <img src="../images/profile/${auth["user_id"]}" alt="${auth["username"]}">
+                    <img src="${auth["avatar_url"]}" alt="${auth["username"]}">
                     <span class="${style["notif-badge-icon"]} ${style[d['type']]}"></span>
                 </div>
                 <div class="${style["notif-body"]}">

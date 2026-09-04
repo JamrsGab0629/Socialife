@@ -6,7 +6,8 @@
     "datetime": "2026-08-07T14:52:47Z",
     "author": {
       "user_id": "0003",
-      "username": "Dave Darryl Lebico"
+      "username": "Dave Darryl Lebico",
+      "avatar_url": "/profile/dave.png"
     },
     "message": "commented on your post",
     "content": "pa pivet yarn."
@@ -18,7 +19,8 @@
     "datetime": "2026-08-07T14:43:47Z",
     "author": {
       "user_id": "0004",
-      "username": "Lee James Benigno"
+      "username": "Lee James Benigno",
+      "avatar_url": "/profile/Lee.jpg"
     },
     "message": "liked your post",
     "content": ""
@@ -30,7 +32,8 @@
     "datetime": "2026-08-07T12:55:47Z",
     "author": {
       "user_id": "0002",
-      "username": "Andrei Luis Lucas"
+      "username": "Andrei Luis Lucas",
+      "avatar_url": "/profile/Mike.jpg"
     },
     "message": "commented on your post",
     "content": "\"SYBAU blud\""
@@ -42,7 +45,8 @@
     "datetime": "2026-08-07T08:55:47Z",
     "author": {
       "user_id": "0005",
-      "username": "Philip Parenas"
+      "username": "Philip Parenas",
+      "avatar_url": "/profile/Philip.jpg"
     },
     "message": "liked your comment",
     "content": ""
@@ -54,7 +58,8 @@
     "datetime": "2026-08-06T14:55:47Z",
     "author": {
       "user_id": "0004",
-      "username": "Lee James Benigno"
+      "username": "Lee James Benigno",
+      "avatar_url": "/profile/Lee.jpg"
     },
     "message": "commented on your photo",
     "content": "\"Gan is gay\""
@@ -66,7 +71,8 @@
     "datetime": "2026-08-05T14:55:47Z",
     "author": {
       "user_id": "0006",
-      "username": "Julian Cagadas"
+      "username": "Julian Cagadas",
+      "avatar_url": "/profile/Nathan.jpg"
     },
     "message": "liked your post",
     "content": ""
