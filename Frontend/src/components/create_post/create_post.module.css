@@ -1,0 +1,510 @@
+/* =========================
+    COMPOSER
+  ========================= */
+
+.composer-card {
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 22px;
+
+  box-shadow: 0 20px 50px rgba(36, 62, 204, 0.16);
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Close Button */
+
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #5a628c;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  z-index: 5;
+}
+
+.close-btn:hover {
+  background-color: #f4f6ff;
+  color: #0d1230;
+}
+
+/* =========================
+    USER HEADER
+  ========================= */
+
+.composer-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.avatar-wrap {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+.aperture-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  transform: rotate(-90deg);
+}
+
+.aperture-track {
+  fill: none;
+  stroke: rgba(36, 62, 204, 0.1);
+  stroke-width: 2.5;
+}
+
+.aperture-fill {
+  fill: none;
+  stroke: #243ecc;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+
+  stroke-dasharray: 201.06;
+  stroke-dashoffset: 0;
+
+  filter: drop-shadow(0 0 4px rgba(36, 62, 204, 0.55));
+
+  transition:
+    stroke-dashoffset 0.5s cubic-bezier(0.65, 0, 0.35, 1),
+    stroke 0.4s ease,
+    opacity 0.4s ease;
+}
+
+.avatar-wrap.locked .aperture-fill {
+  stroke: #5a628c;
+  stroke-dasharray: 6 8;
+  opacity: 0.7;
+  filter: none;
+}
+
+.avatar {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+
+  width: 46px;
+  height: 46px;
+
+  border-radius: 50%;
+
+  background: #243ecc;
+  color: #ffffff;
+
+  font-family: "Sora", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  letter-spacing: 0.5px;
+}
+
+.header-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.user-name {
+  font-family: "Sora", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.2px;
+}
+
+/* =========================
+    PRIVACY
+  ========================= */
+
+.privacy-control {
+  position: relative;
+}
+
+.privacy-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  border: none;
+  background: rgba(36, 62, 204, 0.06);
+
+  color: #243ecc;
+
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 12.5px;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.privacy-toggle:hover {
+  background: rgba(36, 62, 204, 0.1);
+}
+
+.privacy-toggle .icon {
+  width: 14px;
+  height: 14px;
+}
+
+.privacy-toggle .chevron {
+  width: 12px;
+  height: 12px;
+
+  transition: transform 0.2s ease;
+}
+
+.privacy-control.open .chevron {
+  transform: rotate(180deg);
+}
+
+.privacy-menu {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  left: 0;
+
+  width: 260px;
+
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow: 0 16px 40px rgba(36, 62, 204, 0.18);
+
+  padding: 6px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(-6px);
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s ease;
+
+  z-index: 20;
+}
+
+.privacy-control.open .privacy-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.privacy-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  border: none;
+  background: transparent;
+
+  padding: 10px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  font-family: "Inter", sans-serif;
+
+  width: 100%;
+}
+
+.privacy-option:hover {
+  background: #f4f6ff;
+}
+
+.privacy-option .icon {
+  width: 18px;
+  height: 18px;
+
+  color: #243ecc;
+
+  flex-shrink: 0;
+
+  margin-top: 2px;
+}
+
+.option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.option-text strong {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #0d1230;
+}
+
+.option-text small {
+  font-size: 11.5px;
+  color: #5a628c;
+}
+
+/* =========================
+    CAPTION
+  ========================= */
+
+.caption-input {
+  width: 100%;
+
+  border: none;
+  outline: none;
+  resize: none;
+
+  font-family: "Sora", sans-serif;
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.4;
+
+  color: #0d1230;
+
+  min-height: 30px;
+
+  background: transparent;
+}
+
+.caption-input::placeholder {
+  color: #b4badd;
+  font-weight: 600;
+}
+
+/* =========================
+    PHOTO
+  ========================= */
+
+.photo-section {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* =========================
+    PHOTO PREVIEW
+  ========================= */
+
+.photo-preview {
+  position: relative;
+
+  width: 100%;
+  max-width: 100%;
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  background: #f4f6ff;
+}
+
+.photo-preview img {
+  display: block;
+
+  width: 100%;
+  max-width: 100%;
+
+  max-height: 500px;
+
+  height: auto;
+
+  object-fit: contain;
+
+  border-radius: 14px;
+}
+
+.remove-photo-btn {
+  position: absolute;
+
+  top: 10px;
+  right: 10px;
+
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(13, 18, 48, 0.7);
+
+  color: #ffffff;
+
+  font-size: 22px;
+  line-height: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.remove-photo-btn:hover {
+  background: rgba(13, 18, 48, 0.9);
+}
+
+.remove-photo-btn:active {
+  transform: scale(0.92);
+}
+
+/* =========================
+    COMPOSER TOOLBAR
+  ========================= */
+
+.composer-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-top: 1px solid rgba(36, 62, 204, 0.08);
+
+  padding-top: 14px;
+}
+
+.tool-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  border: none;
+
+  background: #f4f6ff;
+  color: #5a628c;
+
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 12.5px;
+
+  padding: 8px 12px;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.tool-btn:hover {
+  background: rgba(36, 62, 204, 0.06);
+  color: #243ecc;
+}
+
+.tool-btn .icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* =========================
+    POST BUTTON
+  ========================= */
+
+.post-btn {
+  position: relative;
+
+  min-width: 88px;
+  height: 40px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: #243ecc;
+  color: #ffffff;
+
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    opacity 0.2s ease;
+}
+
+.post-btn:hover:not(:disabled) {
+  background: #243ecc;
+}
+
+.post-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.post-btn:disabled {
+  background: rgba(36, 62, 204, 0.25);
+  cursor: not-allowed;
+}
+
+/* =========================
+    MOBILE
+  ========================= */
+
+@media (max-width: 480px) {
+  .composer-card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .caption-input {
+    font-size: 17px;
+  }
+
+  .privacy-menu {
+    width: 230px;
+  }
+
+  .photo-preview img {
+    max-height: 400px;
+  }
+}
+
+/* =========================
+    UTILITY
+  ========================= */
+
+.hidden {
+  display: none !important;
+}
