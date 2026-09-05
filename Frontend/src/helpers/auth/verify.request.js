@@ -10,3 +10,11 @@ export async function state(args) {
     // console.log("debug.login", res);
     return res;
 }
+
+export async function isAuthenticated(args = {}) {
+    return await Request({
+        param: "auth/is-authenticated",
+        method: "POSt",
+        args: args,
+    })
+}
