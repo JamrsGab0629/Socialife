@@ -1,9 +1,10 @@
+// home.js
 import Navigation from '../../components/navigation/navigation';
 import Layout from '../../layouts/default/default';
 
 import style from './home.module.css';
 import style_topbar_search from "../../styles/app/topbar-search.module.css";
-import Helper, { FriendsTemplate } from './home.helper';
+import Helper, { FriendsTemplate, initComposerOverlay } from './home.helper';
 import Service, { fetchHomeFeedService } from './home.service';
 import Post from '../../components/post/post';
 import { InfiniteScroll } from '../../helpers/utils/InfiniteScroll'; 
@@ -26,7 +27,12 @@ export default async function Home() {
                 </a>
             </div>
             
-            <div id="feed-container"></div>
+            <div id="feed-container">
+                <div id="composer-trigger" class="${style['onmind']}" style="cursor: pointer;">
+                    <div class="${style['composer-label']}">What's on your mind?</div>
+                    <div class="${style['composer-box']}">Write something...</div>
+                </div>
+            </div>
             <div id="feed-sentinel" style="height: 20px;"></div>
         </div>
 
@@ -36,15 +42,19 @@ export default async function Home() {
                 <div id="friend-list"></div>
             </div>
         </div>
+
+        <!-- Overlay Modal Container -->
+        <div id="composer-overlay-backdrop" class="${style['overlay-backdrop']}" hidden>
+            <div id="composer-overlay-container" class="${style['overlay-modal']}"></div>
+        </div>
     `;
 
-    // Renders composer widget into #main-feed
     Helper();
+    initComposerOverlay(); // Bind overlay event listener
 
     const feedContainer = document.getElementById('feed-container');
     const sentinel = document.getElementById('feed-sentinel');
 
-    // InfiniteScroll renders posts using the Post component directly
     new InfiniteScroll({
         container: feedContainer,
         sentinel: sentinel,

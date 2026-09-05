@@ -1,5 +1,6 @@
+// home.helper.js
 import style from "./home.module.css";
-import style_feed from '../../styles/app/feed.module.css';
+import Create_Post from '../../components/create_post/create_post';
 
 const avatar_colors = ["#E8A5A0", "#A5C7E8", "#C7A5E8", "#A5E8C0", "#E8D5A5"];
 
@@ -36,20 +37,27 @@ export const FriendsTemplate = (friends_data) => {
     return template;
 };
 
-export default function Helper() {
-    const feed = document.createElement('div');
-    feed.className = style_feed['feed'];
-    feed.innerHTML = `
-        <div class="${style['onmind']}">
-            <div class="${style['composer-label']}">What's on your mind?</div>
-            <div class="${style['composer-box']}" contenteditable="true" data-placeholder="Write something..."></div>
-        </div>
-    `;
+export function initComposerOverlay() {
+    const trigger = document.getElementById('composer-trigger');
+    const backdrop = document.getElementById('composer-overlay-backdrop');
+    const container = document.getElementById('composer-overlay-container');
 
-    const topbar = document.querySelector(`.${style_topbar_search["topbar"]}`);
-    if (topbar && topbar.nextSibling) {
-        topbar.parentNode.insertBefore(feed, topbar.nextSibling);
-    } else {
-        document.getElementById('main-feed').prepend(feed);
-    }
+    if (!trigger || !backdrop || !container) return;
+
+    // Open Modal
+    trigger.addEventListener('click', () => {
+        backdrop.hidden = false;
+        container.innerHTML = '';
+        Create_Post(container); // Mount Create_Post component inside overlay
+    });
+
+    // Close Modal on backdrop click outside the content card
+    backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) {
+            backdrop.hidden = true;
+            container.innerHTML = '';
+        }
+    });
 }
+
+export default function Helper() {}

@@ -8,6 +8,10 @@
     overflow-y: auto;
 }
 
+.onmind {
+    padding: 20px 40px;
+}
+
 .composer-label {
     font-size: 20px;
     color: #6B7684;
@@ -116,6 +120,34 @@
 
 .add-friend-btn:hover {
     background: #faf7f0;
+}
+
+/* home.module.css */
+
+.overlay-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.overlay-backdrop[hidden] {
+    display: none;
+}
+
+.overlay-modal {
+    width: 100%;
+    max-width: 540px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
 }
 
 @media (max-width: 1021px) and (min-width: 769px){
