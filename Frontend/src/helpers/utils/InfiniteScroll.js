@@ -1,17 +1,16 @@
 export class InfiniteScroll {
     constructor({
         container,
+        sentinel,
         loadMore,
         renderItems,
-        limit = 10,
-        preloadAt = 7
+        limit = 10
     }) {
         this.container = container;
+        this.sentinel = sentinel;
         this.loadMore = loadMore;
         this.renderItems = renderItems;
-
         this.limit = limit;
-        this.preloadAt = preloadAt;
 
         this.page = 1;
         this.loading = false;
@@ -28,7 +27,9 @@ export class InfiniteScroll {
             }
         );
 
-        this.loadNext();
+        if (this.sentinel) {
+            this.observer.observe(this.sentinel);
+        }
     }
 
     async loadNext() {
@@ -42,15 +43,18 @@ export class InfiniteScroll {
                 limit: this.limit
             });
 
-            this.renderItems(result.data);
-
-            this.hasMore = result.pagination.hasMore;
-            this.page++;
+            if (result && result.data && result.data.length > 0) {
+                this.renderItems(result.data, this.container);
+                
+                // Update pagination status
+                this.hasMore = result.pagination ? result.pagination.hasMore : false;
+                this.page++;
+            } else {
+                this.hasMore = false;
+            }
 
             if (!this.hasMore) {
                 this.destroy();
-            } else {
-                this.updateSentinel();
             }
         } catch (error) {
             console.error("Failed to load more items:", error);
@@ -59,33 +63,10 @@ export class InfiniteScroll {
         }
     }
 
-    updateSentinel() {
-        const items = this.container.children;
-
-        if (items.length <= this.preloadAt) {
-            this.observeLastItem();
-            return;
-        }
-
-        const index = items.length - (this.limit - this.preloadAt);
-
-        this.observe(items[index]);
-    }
-
-    observeLastItem() {
-        const lastItem = this.container.lastElementChild;
-
-        if (lastItem) {
-            this.observe(lastItem);
-        }
-    }
-
-    observe(element) {
-        this.observer.disconnect();
-        this.observer.observe(element);
-    }
-
     destroy() {
         this.observer.disconnect();
+        if (this.sentinel && this.sentinel.parentNode) {
+            this.sentinel.remove(); // Clean up sentinel when no more data exists
+        }
     }
 }
