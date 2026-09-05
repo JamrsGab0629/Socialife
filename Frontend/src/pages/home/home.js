@@ -2,12 +2,11 @@ import Navigation from '../../components/navigation/navigation';
 import Layout from '../../layouts/default/default';
 
 import style from './home.module.css';
-import style_onmind from '../../styles/app/onmind.module.css';
 import style_topbar_search from "../../styles/app/topbar-search.module.css";
-import Component from './home.component';
-import Post from '../../components/post/post';
 import Helper, { FriendsTemplate } from './home.helper';
-import Service from './home.service';
+import Service, { fetchHomeFeedService } from './home.service';
+import Post from '../../components/post/post';
+import { InfiniteScroll } from '../../helpers/utils/InfiniteScroll'; 
 
 export default async function Home() {
     const { navigation, main } = Layout(this.root);
@@ -26,7 +25,11 @@ export default async function Home() {
                     <img width="30px" src="../../icons/bell.svg" style="filter: invert(20%);" alt="bell">
                 </a>
             </div>
+            
+            <div id="feed-container"></div>
+            <div id="feed-sentinel" style="height: 20px;"></div>
         </div>
+
         <div class="${style["right-col"]}">
             <div class="${style["recommend-box"]}">
                 <div class="${style["recommend-title"]}">Friend Recommendations</div>
@@ -35,7 +38,27 @@ export default async function Home() {
         </div>
     `;
 
+    // Renders composer widget into #main-feed
     Helper();
+
+    const feedContainer = document.getElementById('feed-container');
+    const sentinel = document.getElementById('feed-sentinel');
+
+    // InfiniteScroll renders posts using the Post component directly
+    new InfiniteScroll({
+        container: feedContainer,
+        sentinel: sentinel,
+        limit: 10,
+        loadMore: async ({ page, limit }) => {
+            return await fetchHomeFeedService(page, limit);
+        },
+        renderItems: (posts, container) => {
+            posts.forEach((postData) => {
+                const postMarkup = Post(postData);
+                container.insertAdjacentHTML('beforeend', postMarkup);
+            });
+        }
+    });
 
     const friends_data = await Service();
     document.getElementById('friend-list').innerHTML = FriendsTemplate(friends_data);

@@ -1,5 +1,3 @@
-import Post from "../../components/post/post";
-
 import style from "./home.module.css";
 import style_feed from '../../styles/app/feed.module.css';
 
@@ -32,13 +30,13 @@ export const FriendsTemplate = (friends_data) => {
                 <div class="${style["friend-name"]}">${friend["user_name"]}</div>
                 <button class="${style["add-friend-btn"]}" data-user-id="${friend["user_id"]}">Add Friend</button>
             </div>
-        `
+        `;
     });
 
     return template;
-}
+};
 
-export default function Helper(){
+export default function Helper() {
     const feed = document.createElement('div');
     feed.className = style_feed['feed'];
     feed.innerHTML = `
@@ -46,8 +44,12 @@ export default function Helper(){
             <div class="${style['composer-label']}">What's on your mind?</div>
             <div class="${style['composer-box']}" contenteditable="true" data-placeholder="Write something..."></div>
         </div>
-    `
-    document.getElementById('main-feed').appendChild(feed);
-    
-    Post(feed);
+    `;
+
+    const topbar = document.querySelector(`.${style_topbar_search["topbar"]}`);
+    if (topbar && topbar.nextSibling) {
+        topbar.parentNode.insertBefore(feed, topbar.nextSibling);
+    } else {
+        document.getElementById('main-feed').prepend(feed);
+    }
 }
