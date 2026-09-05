@@ -47,7 +47,7 @@ export const getHomeFeedService = async (query) => {
         where: { is_active: true }, // Filter out soft-deleted posts
         include: [
             { model: User, as: "author", attributes: ["user_id", "username", "profile_url"] },
-            { model: PhotoData, as: "photo" }
+            { model: PhotoData, as: "photo" },
         ],
         order: [["created_at", "DESC"]]
     });
