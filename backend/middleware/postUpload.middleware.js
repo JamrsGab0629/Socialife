@@ -11,7 +11,7 @@ cloudinary.config({
 const postStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'social_media_posts',
+    folder: 'social_media_post',
     allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
     transformation: [{ width: 1000, height: 1000, crop: 'limit' }],
   },
