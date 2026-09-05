@@ -17,7 +17,7 @@ export const profileService = {
   // Update profile picture URL from Cloudinary
   async updateProfilePicture(userId, fileUrl) {
     const user = await User.findByPk(userId);
-    
+
     if (!user) {
       throw new Error('User not found');
     }
@@ -28,5 +28,21 @@ export const profileService = {
     return {
       profile_url: user.profile_url,
     };
+  },
+
+  async getProfileByUsername(username) {
+    const user = await User.findOne({
+      where: {
+        username,
+        is_active: true
+      },
+      attributes: { exclude: ['password'] },
+    });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    return user;
   }
 };
