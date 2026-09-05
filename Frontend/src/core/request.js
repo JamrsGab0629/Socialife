@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 import axiosRetry from "axios-retry";
 import BASE_DB_URL from "./url";
 
@@ -14,7 +14,6 @@ axiosRetry(axios, {
 
 export default async function Request({ param, method, args }) {
     try {
-        // console.log(typeof param);
         if (!param || typeof param !== "string" || !param.startsWith("/")) {
             throw new Error("Complete parameter is needed");
         }
@@ -32,6 +31,7 @@ export default async function Request({ param, method, args }) {
         const config = {
             method: METHOD,
             url: DB_URL_PATH,
+            withCredentials: true, // Enables sending cross-site Access-Control requests with credentials (cookies, headers)
             headers: {
                 "Content-Type": "application/json",
             }
@@ -51,9 +51,11 @@ export default async function Request({ param, method, args }) {
     } catch (error) {
         if (error.response && error.response.data) {
             console.error("Server responded with error data:", error.response.data);
-            throw new Error(`Error fetching: ${error.response.data.message} status: ${error.response.status}`);
+            const message = error.response.data.message || "An error occurred";
+            throw new Error(`Error fetching: ${message} status: ${error.response.status}`);
         }
 
-        throw error.message;
+        // Always throw an Error instance rather than a raw string
+        throw error instanceof Error ? error : new Error(String(error));
     }
 }
