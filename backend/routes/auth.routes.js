@@ -12,6 +12,7 @@ router.post("/register", register);
 router.post("/signup", signingup);
 router.post("/login", login);
 router.post("/logout", logout);
+router.post("/is-authenticated", isAuthenticated);
 
 router.get("/state", state);
 
