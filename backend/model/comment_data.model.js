@@ -1,5 +1,5 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from "../config/database.config";
+import sequelize from "../config/database.config.js";
 
 class CommentData extends Model {};
 
@@ -30,3 +30,5 @@ CommentData.init({
     updatedAt: false,
     createdAt: 'created_at',
 })
+
+export default CommentData;
