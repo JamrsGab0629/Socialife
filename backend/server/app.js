@@ -7,6 +7,7 @@ import otpRoutes from "../routes/otp.routes.js";
 import profileRoutes from "../routes/profile.routes.js"; 
 import postRoutes from "../routes/post.routes.js"; 
 import savedPostRoutes from "../routes/savedPost.routes.js"; 
+import sharedPostRoutes from "../routes/sharedPost.routes.js"; // <-- 1. Import the route
 import cors from "cors";
 
 const app = express();
@@ -27,5 +28,6 @@ app.use("/api/auth", otpRoutes);
 app.use("/api/profiles", profileRoutes); 
 app.use("/api/posts", postRoutes); 
 app.use("/api/saved-posts", savedPostRoutes); 
+app.use("/api/posts", sharedPostRoutes); 
 
 export default app;

@@ -46,3 +46,56 @@ Hybrid loading (lazy + eager)
 ​
 Authentication: Required
 ​Description: Sets is_active to false on the post to preserve data integrity without permanent deletion.
+
+### 5.Share a Post
+Allows an authenticated user to share an existing active post with a custom caption.
+
+Method: POST
+
+Endpoint URL: http://localhost:3000/api/posts/:postId/share
+
+Required URL Parameter:
+
+postId (string) — Post ID of the target post you want to share.
+
+Headers:
+
+Content-Type: application/json
+
+Body (raw JSON):
+
+```json
+
+{
+  "caption": "Check this out!"
+}
+```
+
+### 6.Get Unified Profile Feed
+Fetches a chronologically sorted, mixed timeline of original posts and shared posts.
+
+Method: GET
+
+Endpoint URL: http://localhost:3000/api/profiles/:userId/feed?page=1&limit=10
+
+Required URL Parameter:
+
+userId (string) — User ID of the profile feed owner.
+
+Query Parameters (Optional):
+
+page (number)
+
+limit (number)
+
+
+### 7. Get Friend Stats (Lightweight Profile Stats)
+Quickly fetches a targeted, minimal payload containing just the user's name and friend count.
+
+Method: GET
+
+Endpoint URL: http://localhost:3000/api/profiles/:userId/friend-stats
+
+Required URL Parameter:
+
+userId (string) — User ID of the profile stats you want to fetch.

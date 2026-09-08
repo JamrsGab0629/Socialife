@@ -44,5 +44,18 @@ export const profileService = {
     }
 
     return user;
+  },
+
+  // Fetch only the name and friend count fields for a user
+  async getFriendCountAndName(userId) {
+    const user = await User.findByPk(userId, {
+      attributes: ["username", "first_name", "last_name", "friend_count"]
+    });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    return user;
   }
 };

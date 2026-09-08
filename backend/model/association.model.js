@@ -4,7 +4,8 @@ import Friendship from "./friend.model.js";
 import Post from "./post.model.js";
 import PhotoData from "./photo_data.model.js";
 import SavedPost from "./savedPost.model.js";
-import LikeData from "./like_data.model.js";       
+import SharedPost from "./shared_post.model.js"; // Adjust filename if needed
+import LikeData from "./like_data.model.js";        
 import CommentData from "./comment_data.model.js"; 
 
 // --- OTP Associations ---
@@ -44,6 +45,13 @@ SavedPost.belongsTo(User, { foreignKey: "user_id", as: "user" });
 Post.hasMany(SavedPost, { foreignKey: "post_id", as: "saves", onDelete: "CASCADE" });
 SavedPost.belongsTo(Post, { foreignKey: "post_id", as: "post" });
 
+// --- Shared Posts Associations ---
+User.hasMany(SharedPost, { foreignKey: "user_id", as: "sharedPosts", onDelete: "CASCADE" });
+SharedPost.belongsTo(User, { foreignKey: "user_id", as: "user" });
+
+Post.hasMany(SharedPost, { foreignKey: "post_id", as: "shares", onDelete: "CASCADE" });
+SharedPost.belongsTo(Post, { foreignKey: "post_id", as: "post" });
+
 // --- Like Associations ---
 Post.hasMany(LikeData, { foreignKey: "post_id", as: "likes", onDelete: "CASCADE" });
 LikeData.belongsTo(Post, { foreignKey: "post_id", as: "post" });
@@ -64,7 +72,8 @@ export {
     Friendship, 
     Post, 
     PhotoData, 
-    SavedPost, 
+    SavedPost,
+    SharedPost, 
     LikeData, 
     CommentData 
 };

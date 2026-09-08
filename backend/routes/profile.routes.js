@@ -11,7 +11,14 @@ router.get('/me', isAuthenticated, profileController.getMyProfile);
 // PUT /api/profiles/picture
 router.put('/picture', isAuthenticated, upload.single('image'), profileController.updatePicture);
 
-// GET /api/user/:username
+// GET /api/profiles/user/:username
 router.get("/user/:username", isAuthenticated, profileController.getUserProfile);
+
+
+// GET /api/profiles/:userId/feed -> Unified profile timeline (sorted mix of original & shared posts)
+router.get('/:userId/feed', isAuthenticated, profileController.getProfileFeed);
+
+// GET /api/profiles/:userId/friend-stats -> Lightweight stats (name and friend count)
+router.get('/:userId/friend-stats', isAuthenticated, profileController.getFriendCountAndName);
 
 export default router;
