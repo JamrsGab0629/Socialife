@@ -1,0 +1,71 @@
+import { FriendService } from "../services/friend.service.js";
+
+export const sendFriendRequest = async (req, res) => {
+    try {
+        console.log("DECODED REQ.USER:", req.user);
+
+        const requesterId = req.user.userId; 
+        const { userId: addresseeId } = req.params;
+
+        const request = await FriendService.sendRequest(requesterId, addresseeId);
+        return res.status(201).json({ success: true, message: "Friend request sent successfully", data: request });
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+export const acceptFriendRequest = async (req, res) => {
+    try {
+        const currentUserId = req.user.userId; 
+        const { userId: requesterId } = req.params;
+
+        const updated = await FriendService.respondToRequest(currentUserId, requesterId, 'accepted');
+        return res.status(200).json({ success: true, message: "Friend request accepted", data: updated });
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+export const declineFriendRequest = async (req, res) => {
+    try {
+        const currentUserId = req.user.userId; 
+        const { userId: requesterId } = req.params;
+
+        const updated = await FriendService.respondToRequest(currentUserId, requesterId, 'declined');
+        return res.status(200).json({ success: true, message: "Friend request declined", data: updated });
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+export const getFriendsList = async (req, res) => {
+    try {
+        const userId = req.user.userId; 
+        const friends = await FriendService.getFriends(userId);
+        return res.status(200).json({ success: true, data: friends });
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+export const getPendingRequestsList = async (req, res) => {
+    try {
+        const userId = req.user.userId; 
+        const requests = await FriendService.getPendingRequests(userId);
+        return res.status(200).json({ success: true, data: requests });
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+export const removeFriend = async (req, res) => {
+    try {
+        const userId = req.user.userId; 
+        const { userId: targetId } = req.params;
+
+        await FriendService.removeFriendship(userId, targetId);
+        return res.status(200).json({ success: true, message: "Friendship removed successfully" });
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};

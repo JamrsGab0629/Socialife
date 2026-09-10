@@ -4,7 +4,7 @@ import Friendship from "./friend.model.js";
 import Post from "./post.model.js";
 import PhotoData from "./photo_data.model.js";
 import SavedPost from "./savedPost.model.js";
-import SharedPost from "./shared_post.model.js"; // Adjust filename if needed
+import SharedPost from "./shared_post.model.js"; 
 import LikeData from "./like_data.model.js";        
 import CommentData from "./comment_data.model.js"; 
 
@@ -65,6 +65,9 @@ CommentData.belongsTo(Post, { foreignKey: "post_id", as: "post" });
 
 User.hasMany(CommentData, { foreignKey: "author_id", as: "comments", onDelete: "CASCADE" });
 CommentData.belongsTo(User, { foreignKey: "author_id", as: "author" });
+
+Friendship.belongsTo(User, { foreignKey: 'requester_id', as: 'requester' });
+Friendship.belongsTo(User, { foreignKey: 'addressee_id', as: 'addressee' });
 
 export { 
     User, 
