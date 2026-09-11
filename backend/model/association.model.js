@@ -7,6 +7,7 @@ import SavedPost from "./savedPost.model.js";
 import SharedPost from "./shared_post.model.js"; 
 import LikeData from "./like_data.model.js";        
 import CommentData from "./comment_data.model.js"; 
+import Notification from "./notifications.model.js"; // <--- Added Notification Import
 
 // --- OTP Associations ---
 User.hasOne(Otp, { foreignKey: "user_id", as: "otpRecord", onDelete: "CASCADE" });
@@ -14,18 +15,28 @@ Otp.belongsTo(User, { foreignKey: "user_id", as: "user" });
 
 // --- Friendship Associations ---
 User.belongsToMany(User, {
-  as: 'SentRequests',
-  through: Friendship,
-  foreignKey: 'requester_id',
-  otherKey: 'addressee_id',
+    as: 'SentRequests',
+    through: Friendship,
+    foreignKey: 'requester_id',
+    otherKey: 'addressee_id',
 });
 
 User.belongsToMany(User, {
-  as: 'ReceivedRequests',
-  through: Friendship,
-  foreignKey: 'addressee_id',
-  otherKey: 'requester_id',
+    as: 'ReceivedRequests',
+    through: Friendship,
+    foreignKey: 'addressee_id',
+    otherKey: 'requester_id',
 });
+
+Friendship.belongsTo(User, { foreignKey: 'requester_id', as: 'requester' });
+Friendship.belongsTo(User, { foreignKey: 'addressee_id', as: 'addressee' });
+
+// --- Notification Associations ---
+User.hasMany(Notification, { foreignKey: "user_id", as: "notifications", onDelete: "CASCADE" });
+Notification.belongsTo(User, { foreignKey: "user_id", as: "recipient" });
+
+User.hasMany(Notification, { foreignKey: "author_id", as: "triggeredNotifications", onDelete: "CASCADE" });
+Notification.belongsTo(User, { foreignKey: "author_id", as: "author" });
 
 // --- Post & User Associations ---
 User.hasMany(Post, { foreignKey: "user_id", as: "posts", onDelete: "CASCADE" });
@@ -66,9 +77,6 @@ CommentData.belongsTo(Post, { foreignKey: "post_id", as: "post" });
 User.hasMany(CommentData, { foreignKey: "author_id", as: "comments", onDelete: "CASCADE" });
 CommentData.belongsTo(User, { foreignKey: "author_id", as: "author" });
 
-Friendship.belongsTo(User, { foreignKey: 'requester_id', as: 'requester' });
-Friendship.belongsTo(User, { foreignKey: 'addressee_id', as: 'addressee' });
-
 export { 
     User, 
     Otp, 
@@ -78,5 +86,6 @@ export {
     SavedPost,
     SharedPost, 
     LikeData, 
-    CommentData 
+    CommentData,
+    Notification
 };
