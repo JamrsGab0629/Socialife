@@ -1,5 +1,6 @@
 import { Post, User, PhotoData, LikeData, CommentData } from "../model/association.model.js";
 import { hybridLoad } from "../utils/loaders/hybrid.loader.js";
+import { NotificationService } from "./notification.service.js"; // <--- Import Notification Service
 
 export const createPostService = async (userId, body, file) => {
     const { caption, content } = body;
@@ -125,6 +126,20 @@ export const toggleLikeService = async (postId, userId) => {
             await post.increment("like_count", { by: 1, transaction: t });
             await t.commit();
 
+            // 🔔 Trigger notification if someone else liked the post
+            if (post.user_id !== userId) {
+                try {
+                    await NotificationService.createNotification({
+                        userId: post.user_id, // Post owner
+                        authorId: userId,     // Person who liked it
+                        type: "like",
+                        content: "liked your post."
+                    });
+                } catch (notifError) {
+                    console.error("Failed to create like notification:", notifError);
+                }
+            }
+
             return { liked: true };
         }
     } catch (error) {
@@ -157,6 +172,20 @@ export const addCommentService = async (postId, userId, comment) => {
 
         await post.increment("comment_count", { by: 1, transaction: t });
         await t.commit();
+
+      
+        if (post.user_id !== userId) {
+            try {
+                await NotificationService.createNotification({
+                    userId: post.user_id, 
+                    authorId: userId,    
+                    type: "comment",
+                    content: "commented on your post."
+                });
+            } catch (notifError) {
+                console.error("Failed to create comment notification:", notifError);
+            }
+        }
 
         return newComment;
     } catch (error) {
