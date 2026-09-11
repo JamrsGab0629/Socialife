@@ -2,156 +2,50 @@ import * as postService from "../services/post.service.js";
 
 export const createPost = async (req, res) => {
     try {
-
         const userId = req.user.userId || req.user.user_id;
-
         if (!userId) {
             return res.status(401).json({ success: false, message: "Unauthorized: User ID not found in token" });
         }
 
         const result = await postService.createPostService(userId, req.body, req.file);
-
-        return res.status(201).json({
-            success: true,
-            message: "Post created successfully!",
-            data: result
-        });
+        return res.status(201).json({ success: true, message: "Post created successfully!", data: result });
     } catch (error) {
         console.error("Error creating post:", error);
-        return res.status(500).json({
-            success: false,
-            message: error.message || "Internal server error"
-        });
+        return res.status(500).json({ success: false, message: error.message || "Internal server error" });
     }
 };
 
 export const getHomeFeed = async (req, res) => {
     try {
         const result = await postService.getHomeFeedService(req.query);
-
-        return res.status(200).json({
-            success: true,
-            message: "Home feed fetched successfully",
-            ...result
-        });
+        return res.status(200).json({ success: true, message: "Home feed fetched successfully", ...result });
     } catch (error) {
         console.error("Error fetching home feed:", error);
-        return res.status(500).json({
-            success: false,
-            message: error.message || "Internal server error"
-        });
+        return res.status(500).json({ success: false, message: error.message || "Internal server error" });
     }
 };
 
 export const getProfileFeed = async (req, res) => {
     try {
-        const { userId } = req.params;
-        const result = await postService.getProfileFeedService(userId, req.query);
-
-        return res.status(200).json({
-            success: true,
-            message: "Profile posts fetched successfully",
-            ...result
-        });
+        const result = await postService.getProfileFeedService(req.params.userId, req.query);
+        return res.status(200).json({ success: true, message: "Profile posts fetched successfully", ...result });
     } catch (error) {
         console.error("Error fetching profile feed:", error);
-        return res.status(500).json({
-            success: false,
-            message: error.message || "Internal server error"
-        });
+        return res.status(500).json({ success: false, message: error.message || "Internal server error" });
     }
 };
 
 export const deactivatePost = async (req, res) => {
     try {
-        const { postId } = req.params;
-        const userId = req.user.user_id;
+        const userId = req.user?.userId || req.user?.user_id;
+        if (!userId) {
+            return res.status(401).json({ success: false, message: "Unauthorized: User ID not found in token" });
+        }
 
-        await postService.deactivatePostService(postId, userId);
-
-        return res.status(200).json({
-            success: true,
-            message: "Post deactivated successfully"
-        });
+        await postService.deactivatePostService(req.params.postId, userId);
+        return res.status(200).json({ success: true, message: "Post deactivated successfully" });
     } catch (error) {
         console.error("Error deactivating post:", error);
-        return res.status(400).json({
-            success: false,
-            message: error.message || "Internal server error"
-        });
-    }
-};
-
-export const toggleLike = async (req, res) => {
-    try {
-        const { postId } = req.params;
-        const userId = req.user?.userId || req.user?.user_id;
-
-        if (!userId) {
-            return res.status(401).json({ success: false, message: "Unauthorized: User ID not found in token" });
-        }
-
-        const result = await postService.toggleLikeService(postId, userId);
-
-        return res.status(200).json({
-            success: true,
-            message: result.liked ? "Post liked" : "Post unliked",
-            data: result
-        });
-    } catch (error) {
-        console.error("Error toggling like:", error);
-        return res.status(400).json({
-            success: false,
-            message: error.message || "Internal server error"
-        });
-    }
-};
-
-export const addComment = async (req, res) => {
-    try {
-        const { postId } = req.params;
-        const { comment } = req.body;
-        const userId = req.user?.userId || req.user?.user_id;
-
-        if (!userId) {
-            return res.status(401).json({ success: false, message: "Unauthorized: User ID not found in token" });
-        }
-
-        if (!comment || comment.trim() === "") {
-            return res.status(400).json({ success: false, message: "Comment body cannot be empty" });
-        }
-
-        const result = await postService.addCommentService(postId, userId, comment);
-
-        return res.status(201).json({
-            success: true,
-            message: "Comment added successfully",
-            data: result
-        });
-    } catch (error) {
-        console.error("Error adding comment:", error);
-        return res.status(400).json({
-            success: false,
-            message: error.message || "Internal server error"
-        });
-    }
-};
-
-export const getComments = async (req, res) => {
-    try {
-        const { postId } = req.params;
-        const result = await postService.getCommentsService(postId, req.query);
-
-        return res.status(200).json({
-            success: true,
-            message: "Comments fetched successfully",
-            ...result
-        });
-    } catch (error) {
-        console.error("Error fetching comments:", error);
-        return res.status(500).json({
-            success: false,
-            message: error.message || "Internal server error"
-        });
+        return res.status(400).json({ success: false, message: error.message || "Internal server error" });
     }
 };

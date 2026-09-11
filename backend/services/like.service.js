@@ -1,5 +1,5 @@
 import { Post, LikeData } from "../model/association.model.js";
-import { safeNotify } from "../utils/notify.util.js";
+import { safeNotify } from "../utils/notify.utils.js";
 
 export const toggleLikeService = async (postId, userId) => {
     const t = await LikeData.sequelize.transaction();

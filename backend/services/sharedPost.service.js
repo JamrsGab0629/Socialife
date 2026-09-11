@@ -1,26 +1,59 @@
-import { SharedPost, Post, User } from "../model/association.model.js"; // Fixed extension typo
+import SavedPost from "../model/savedPost.model.js";
+import Post from "../model/post.model.js";
+import PhotoData from "../model/photo_data.model.js";
+import { hybridLoad } from "../utils/loaders/hybrid.loader.js";
+import { safeNotify } from "../utils/notify.util.js";
 
-export const createShareRecord = async (userId, postId, caption) => {
-  // 1. Verify that the post exists and is active before allowing a share
+export const savePostService = async (userId, postId) => {
   const post = await Post.findOne({
-    where: { post_id: postId, is_active: true }
+    where: { post_id: postId, is_active: true },
   });
-
   if (!post) {
-    throw new Error("Post not found or has been deactivated");
+    throw new Error("No post");
   }
 
-  // 2. Create the share record
-  return await SharedPost.create({
-    user_id: userId,
-    post_id: postId,
-    caption: caption || null,
+  const [saved, created] = await SavedPost.findOrCreate({
+    where: { user_id: userId, post_id: postId },
   });
+
+  if (!created) {
+    throw new Error("Saved");
+  }
+
+  safeNotify(post.user_id, userId, "save", "saved your post.");
+  return saved;
 };
 
-export const getPostShares = async (postId) => {
-  return await SharedPost.findAll({
-    where: { post_id: postId },
-    include: [{ model: User, as: "user", attributes: ["user_id", "username", "profile_url"] }],
+export const unsavePostService = async (userId, postId) => {
+  const deletedCount = await SavedPost.destroy({
+    where: { user_id: userId, post_id: postId },
+  });
+
+  if (deletedCount === 0) {
+    throw new Error("Hindi naka-save");
+  }
+
+  return { message: "Post removed from saved items." };
+};
+
+export const getSavedPostsService = async (userId, page, limit) => {
+  return await hybridLoad(SavedPost, {
+    page,
+    limit,
+    where: { user_id: userId },
+    include: [
+      {
+        model: Post,
+        as: "post",
+        where: { is_active: true },
+        include: [
+          {
+            model: PhotoData,
+            as: "photo",
+          },
+        ],
+      },
+    ],
+    order: [["created_at", "DESC"]],
   });
 };

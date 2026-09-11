@@ -1,6 +1,6 @@
 import { Post, User, CommentData } from "../model/association.model.js";
 import { hybridLoad } from "../utils/loaders/hybrid.loader.js";
-import { safeNotify } from "../utils/notify.util.js";
+import { safeNotify } from "../utils/notify.utils.js";
 
 export const addCommentService = async (postId, userId, comment) => {
     const t = await CommentData.sequelize.transaction();
