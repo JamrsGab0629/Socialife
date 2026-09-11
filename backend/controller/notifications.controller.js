@@ -3,8 +3,6 @@ import { NotificationService } from "../services/notifications.service.js";
 export const getNotifications = async (req, res) => {
     try {
         const userId = req.user?.userId || req.user?.user_id;
-        console.log("DECODED REQ.USER:", req.user);
-        console.log("RESOLVED USER ID:", userId);
         if (!userId) {
             return res.status(401).json({ success: false, message: "Unauthorized" });
         }

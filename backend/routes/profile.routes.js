@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { profileController } from '../controller/profile.controller.js';
 import { isAuthenticated } from '../middleware/auth.middleware.js'; 
 import { upload } from '../middleware/profile.middleware.js'; 
+import { rateLimiter } from '../middleware/ratelimiter.middleware.js';
 
 const router = Router();
 
@@ -9,7 +10,7 @@ const router = Router();
 router.get('/me', isAuthenticated, profileController.getMyProfile);
 
 // PUT /api/profiles/picture
-router.put('/picture', isAuthenticated, upload.single('image'), profileController.updatePicture);
+router.put('/picture', isAuthenticated, rateLimiter(5, 60000), upload.single('image'), profileController.updatePicture);
 
 // GET /api/profiles/user/:username
 router.get("/user/:username", isAuthenticated, profileController.getUserProfile);
