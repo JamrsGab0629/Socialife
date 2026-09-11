@@ -1,4 +1,4 @@
-import { NotificationService } from "../services/notification.service.js";
+import { NotificationService } from "../services/notifications.service.js";
 
 export const safeNotify = (userId, authorId, type, content) => {
     if (userId !== authorId) {

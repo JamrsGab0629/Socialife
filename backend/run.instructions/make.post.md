@@ -9,6 +9,7 @@
 
 ​caption (Text): Short title or summary (e.g., "Beautiful sunset!")
 ​content (Text): Main body text or description of the post.
+
 ​image (File, Optional): An image file (JPG, PNG) to upload via Cloudinary. If omitted, a text-only post is created.
 
 ​Postman Setup:
