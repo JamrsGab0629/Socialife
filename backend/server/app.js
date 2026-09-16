@@ -10,6 +10,7 @@ import savedPostRoutes from "../routes/savedPost.routes.js";
 import sharedPostRoutes from "../routes/sharedPost.routes.js";
 import friendRoutes from "../routes/friend.routes.js";
 import notificationRoutes from "../routes/notifications.routes.js";
+import mentionRoutes from "../routes/mention.routes.js";
 import cors from "cors";
 
 const app = express();
@@ -33,5 +34,6 @@ app.use("/api/saved-posts", savedPostRoutes);
 app.use("/api/posts", sharedPostRoutes); 
 app.use("/api/friends", friendRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/mention", mentionRoutes)
 
 export default app;
