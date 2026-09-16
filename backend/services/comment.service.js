@@ -31,3 +31,7 @@ export const getCommentsService = async (postId, query) => {
         order: [["created_at", "DESC"]]
     });
 };
+
+export const getPostById = async (postId) => {
+  return await Post.findByPk(postId);
+};

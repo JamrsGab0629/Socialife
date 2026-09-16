@@ -64,3 +64,19 @@ export const deactivatePostService = async (postId, userId) => {
     await post.save();
     return post;
 };
+
+export const getPostById = async (postId, userId) => {
+  return await Post.findOne({
+    where: { 
+      post_id: postId, 
+      user_id: userId 
+    },
+    include: [
+      {
+        model: User,
+        as: "users", // Must match the alias defined in your association model
+        where: { is_active: true }
+      }
+    ]
+  });
+};
