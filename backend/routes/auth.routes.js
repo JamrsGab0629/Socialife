@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { register } from "../controller/auth.controller.js";
-import { signingup } from "../controller/signup.controller.js";
-import { login } from "../controller/login.controller.js";
-import { logout } from "../controller/logout.controller.js";
-import { state } from "../controller/state.controller.js";
+import { register } from "../controller/auth/auth.controller.js";
+import { signingup } from "../controller/auth/signup.controller.js";
+import { login } from "../controller/auth/login.controller.js";
+import { logout } from "../controller/auth/logout.controller.js";
+import { state } from "../controller/auth/state.controller.js";
 import { isAuthenticated } from "../middleware/auth.middleware.js";
 
 const router = Router();

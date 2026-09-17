@@ -1,7 +1,7 @@
 import express from "express";
 import { 
     mentionController
-} from "../controller/mention.controller.js";
+} from "../controller/post/mention.controller.js";
 import { isAuthenticated } from "../middleware/auth.middleware.js";
 
 const router = express.Router()

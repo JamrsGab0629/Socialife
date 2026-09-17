@@ -6,7 +6,7 @@ import {
     getFriendsList, 
     getPendingRequestsList, 
     removeFriend 
-} from "../controller/friend.controller.js";
+} from "../controller/user/friend.controller.js";
 import { isAuthenticated } from "../middleware/auth.middleware.js";
 
 import { rateLimiter } from "../middleware/ratelimiter.middleware.js";

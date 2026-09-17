@@ -1,7 +1,7 @@
 import express from "express";
-import * as postController from "../controller/post.controller.js";
-import * as likeController from "../controller/like.controller.js";
-import * as commentController from "../controller/comment.controller.js";
+import * as postController from "../controller/post/post.controller.js";
+import * as likeController from "../controller/post/like.controller.js";
+import * as commentController from "../controller/post/comment.controller.js";
 import { isAuthenticated } from "../middleware/auth.middleware.js";
 import { uploadPostImage } from "../middleware/postUpload.middleware.js"; 
 import { rateLimiter } from "../middleware/ratelimiter.middleware.js"; // Import your rate limiter

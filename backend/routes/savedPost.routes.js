@@ -1,5 +1,5 @@
 import express from "express";
-import * as savedPostController from "../controller/savedPost.controller.js";
+import * as savedPostController from "../controller/post/savedPost.controller.js";
 import { isAuthenticated } from "../middleware/auth.middleware.js";
 import { postIdSchema, validate } from "../validators/savedPost.validator.js";
 import { rateLimiter } from "../middleware/ratelimiter.middleware.js"; // 1. Import rate limiter

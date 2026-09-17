@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { profileController } from '../controller/profile.controller.js';
+import { profileController } from '../controller/user/profile.controller.js';
 import { isAuthenticated } from '../middleware/auth.middleware.js'; 
 import { upload } from '../middleware/profile.middleware.js'; 
 import { rateLimiter } from '../middleware/ratelimiter.middleware.js';

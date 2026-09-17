@@ -1,5 +1,5 @@
 import express from "express";
-import * as sharedPostController from "../controller/sharedPost.controller.js";
+import * as sharedPostController from "../controller/post/sharedPost.controller.js";
 import { isAuthenticated } from "../middleware/auth.middleware.js"; 
 import { rateLimiter } from "../middleware/ratelimiter.middleware.js";
 const router = express.Router();
