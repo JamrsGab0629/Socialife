@@ -1,3 +1,4 @@
+import Sequelize from "sequelize";
 import { Post, User, CommentData } from "../model/association.model.js";
 import { hybridLoad } from "../utils/loaders/hybrid.loader.js";
 import { safeNotify } from "../utils/notify.utils.js";
@@ -20,18 +21,120 @@ export const addCommentService = async (postId, userId, comment) => {
     }
 };
 
-export const getCommentsService = async (postId, query) => {
+export const addReplyService = async (postId, parentId, userId, commentText) => {
+    const t = await CommentData.sequelize.transaction();
+    try {
+        const post = await Post.findOne({ 
+            where: { post_id: postId, is_active: true }, 
+            transaction: t 
+        });
+        if (!post) throw new Error("Post not found");
+
+        const parentComment = await CommentData.findByPk(parentId, { transaction: t });
+        if (!parentComment) throw new Error("Parent comment not found");
+
+        const newComment = await CommentData.create({ 
+            post_id: postId, 
+            author_id: userId, 
+            comment: commentText, 
+            parent_id: parentId 
+        }, { transaction: t });
+
+        await post.increment("comment_count", { by: 1, transaction: t });
+        await t.commit();
+
+        // Notify the author of the parent comment
+        safeNotify(parentComment.author_id, userId, "reply", "replied to your comment.");
+
+        return newComment;
+    } catch (error) {
+        await t.rollback();
+        throw error;
+    }
+};
+
+export const getCommentsService = async (postId, query = {}) => {
+    const page = Math.max(1, parseInt(query.page, 10) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(query.limit, 10) || 10));
+
     return await hybridLoad(CommentData, {
-        page: query.page,
-        limit: query.limit,
-        where: { post_id: postId },
+        page,
+        limit,
+        where: { 
+            post_id: postId,
+            parent_id: null // Restrict to top-level comments
+        },
+        attributes: {
+            include: [
+                // Computes total replies for each top-level comment
+                [
+                    Sequelize.literal(`(
+                        SELECT COUNT(*)
+                        FROM comment_data AS reply
+                        WHERE reply.parent_id = CommentData.comment_data_id
+                    )`),
+                    "reply_count"
+                ]
+            ]
+        },
         include: [
-            { model: User, as: "author", attributes: ["user_id", "username", "profile_url"] }
+            { 
+                model: User, 
+                as: "author", 
+                attributes: ["user_id", "username", "profile_url"] 
+            },
+            {
+                model: CommentData,
+                as: "replies",
+                limit: 3, // Initial preview of top replies
+                include: [
+                    {
+                        model: User,
+                        as: "author",
+                        attributes: ["user_id", "username", "profile_url"]
+                    }
+                ],
+                order: [["created_at", "ASC"]]
+            }
         ],
         order: [["created_at", "DESC"]]
     });
 };
 
+export const getRepliesService = async (parentId, query = {}) => {
+    const page = Math.max(1, parseInt(query.page, 10) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(query.limit, 10) || 10));
+
+    return await hybridLoad(CommentData, {
+        page,
+        limit,
+        where: { 
+            parent_id: parentId 
+        },
+        attributes: {
+            include: [
+                // Computes nested replies count if multi-tier threading is allowed
+                [
+                    Sequelize.literal(`(
+                        SELECT COUNT(*)
+                        FROM comment_data AS nested_reply
+                        WHERE nested_reply.parent_id = CommentData.comment_data_id
+                    )`),
+                    "reply_count"
+                ]
+            ]
+        },
+        include: [
+            { 
+                model: User, 
+                as: "author", 
+                attributes: ["user_id", "username", "profile_url"] 
+            }
+        ],
+        order: [["created_at", "ASC"]] // Display replies chronologically
+    });
+};
+
 export const getPostById = async (postId) => {
-  return await Post.findByPk(postId);
+    return await Post.findByPk(postId);
 };
