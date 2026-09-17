@@ -8,6 +8,7 @@ import SharedPost from "./shared_post.model.js";
 import LikeData from "./like_data.model.js";        
 import CommentData from "./comment_data.model.js"; 
 import Notification from "./notifications.model.js"; // <--- Added Notification Import
+import Report from "./report.model.js";
 
 // --- OTP Associations ---
 User.hasOne(Otp, { foreignKey: "user_id", as: "otpRecord", onDelete: "CASCADE" });
@@ -81,6 +82,16 @@ CommentData.belongsTo(User, { foreignKey: "author_id", as: "author" });
 CommentData.hasMany(CommentData, { foreignKey: "parent_id", as: "replies", onDelete: "CASCADE" });
 CommentData.belongsTo(CommentData, { foreignKey: "parent_id", as: "parent" });
 
+// --- Report & User Relations ---
+
+// 1. Author (User who submitted the report)
+User.hasMany(Report, { foreignKey: "author_id", as: "submitted_reports", onDelete: "CASCADE" });
+Report.belongsTo(User, { foreignKey: "author_id", as: "author" });
+
+// 2. Target User (User who is being reported)
+User.hasMany(Report, { foreignKey: "user_id", as: "received_reports", onDelete: "CASCADE" });
+Report.belongsTo(User, { foreignKey: "user_id", as: "reported_user" });
+
 export { 
     User, 
     Otp, 
@@ -91,5 +102,6 @@ export {
     SharedPost, 
     LikeData, 
     CommentData,
-    Notification
+    Notification,
+    Report
 };
