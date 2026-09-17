@@ -1,7 +1,7 @@
-import { MentionService } from "../services/mention.service";
-import { NotificationService } from "../services/notifications.service";
-import { CommentService } from "../services/comment.service";
-import { PostService } from "../services/post.service";
+import { MentionService } from "../../services/mention.service";
+import { NotificationService } from "../../services/notifications.service";
+import { CommentService } from "../../services/comment.service";
+import { PostService } from "../../services/post.service";
 
 /**
  * Interface body = {

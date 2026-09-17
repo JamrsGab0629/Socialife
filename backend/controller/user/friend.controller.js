@@ -1,4 +1,4 @@
-import { FriendService } from "../services/friend.service.js";
+import { FriendService } from "../../services/friend.service.js";
 
 export const sendFriendRequest = async (req, res) => {
     try {

@@ -1,4 +1,4 @@
-import { createShareRecord } from "../services/sharedPost.service.js";
+import { createShareRecord } from "../../services/sharedPost.service.js";
 
 export const sharePost = async (req, res) => {
   try {

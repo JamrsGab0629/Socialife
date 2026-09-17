@@ -1,5 +1,5 @@
-import { profileService } from '../services/profile.service.js';
-import * as profileFeedService from '../services/profileFeed.service.js'; 
+import { profileService } from '../../services/profile.service.js';
+import * as profileFeedService from '../../services/profileFeed.service.js'; 
 
 export const profileController = {
   // GET /api/profiles/me

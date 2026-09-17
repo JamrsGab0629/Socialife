@@ -1,4 +1,4 @@
-import * as savedPostService from "../services/savedPost.service.js";
+import * as savedPostService from "../../services/savedPost.service.js";
 
 export const savePost = async (req, res) => {
     try {
