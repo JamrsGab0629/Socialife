@@ -21,7 +21,10 @@ CommentData.init({
     comment: {
         type: DataTypes.STRING(100),
         allowNull: false,
-    }
+    },
+    parent_id: {
+        type: DataTypes.UUID,
+    },
 },{
     sequelize,
     modelName: "CommentData",

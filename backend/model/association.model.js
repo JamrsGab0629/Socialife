@@ -77,6 +77,10 @@ CommentData.belongsTo(Post, { foreignKey: "post_id", as: "post" });
 User.hasMany(CommentData, { foreignKey: "author_id", as: "comments", onDelete: "CASCADE" });
 CommentData.belongsTo(User, { foreignKey: "author_id", as: "author" });
 
+// --- Self-Referencing Comment Relations (For Replies) ---
+CommentData.hasMany(CommentData, { foreignKey: "parent_id", as: "replies", onDelete: "CASCADE" });
+CommentData.belongsTo(CommentData, { foreignKey: "parent_id", as: "parent" });
+
 export { 
     User, 
     Otp, 
