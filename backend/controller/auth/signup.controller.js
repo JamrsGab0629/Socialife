@@ -1,5 +1,5 @@
-import { signup$ } from "../validators/auth.validator.js";
-import { signup } from "../services/auth.service.js";
+import { signup$ } from "../../validators/auth.validator.js";
+import { signup } from "../../services/auth.service.js";
 
 const signingup = async (req, res) => {
     try {

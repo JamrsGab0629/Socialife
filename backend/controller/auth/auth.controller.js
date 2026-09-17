@@ -1,5 +1,5 @@
-import { registerService } from "../services/register.service.js";
-import { register$ } from "../validators/auth.validator.js";
+import { registerService } from "../../services/register.service.js";
+import { register$ } from "../../validators/auth.validator.js";
 
 const register = async (req, res) => {
     try {

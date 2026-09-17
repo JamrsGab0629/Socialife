@@ -1,6 +1,6 @@
-import { loginService } from "../services/login.service.js";
-import { login$ } from "../validators/auth.validator.js";
-import { setAuthCookie } from "../utils/cookie.utils.js";
+import { loginService } from "../../services/login.service.js";
+import { login$ } from "../../validators/auth.validator.js";
+import { setAuthCookie } from "../../utils/cookie.utils.js";
 
 export const login = async (req, res) => {
     try {

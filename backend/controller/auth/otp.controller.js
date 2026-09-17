@@ -1,5 +1,5 @@
-import { verify_OTP, resend_OTP } from "../services/auth.service.js";
-import { verifyOtpSchema } from "../validators/otp.validator.js";
+import { verify_OTP, resend_OTP } from "../../services/auth.service.js";
+import { verifyOtpSchema } from "../../validators/otp.validator.js";
 import { z } from "zod";
 
 export const verifyOtp = async (req, res) => {

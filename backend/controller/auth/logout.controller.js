@@ -1,4 +1,4 @@
-import { revokeTokenService } from "../services/tokenBlocklisted.service.js";
+import { revokeTokenService } from "../../services/tokenBlocklisted.service.js";
 
 export const logout = async (req, res) => {
     try {
