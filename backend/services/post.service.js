@@ -1,5 +1,6 @@
 import { Post, User, PhotoData } from "../model/association.model.js";
 import { hybridLoad } from "../utils/loaders/hybrid.loader.js";
+export { getUnifiedProfileFeedService as getProfileFeedService } from "./profileFeed.service.js";
 
 const createNotFoundError = (message) => {
   const error = new Error(message);
@@ -80,31 +81,6 @@ export const getHomeFeedService = async (query = {}) => {
   });
 };
 
-export const getProfileFeedService = async (targetUserId, query = {}) => {
-  return hybridLoad(Post, {
-    page: query.page,
-    limit: query.limit,
-
-    where: {
-      user_id: targetUserId,
-      is_active: true,
-    },
-
-    include: [
-      {
-        model: User,
-        as: "author",
-        attributes: ["user_id", "username", "profile_url"],
-      },
-      {
-        model: PhotoData,
-        as: "photo",
-      },
-    ],
-
-    order: [["created_at", "DESC"]],
-  });
-};
 
 export const deactivatePostService = async (postId, userId) => {
   const post = await Post.findOne({

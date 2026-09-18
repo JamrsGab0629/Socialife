@@ -1,68 +1,55 @@
 import { Post, SharedPost, User, PhotoData } from "../model/association.model.js";
 
 export const getUnifiedProfileFeedService = async (targetUserId, query) => {
-    const { page = 1, limit = 10 } = query;
-    const parsedPage = Math.max(1, parseInt(page, 10) || 1);
-    const parsedLimit = Math.max(1, parseInt(limit, 10) || 10);
+    const page = Math.max(1, parseInt(query.page, 10) || 1);
+    const limit = Math.max(1, parseInt(query.limit, 10) || 10);
+    const offset = (page - 1) * limit;
 
-   
-    const userPosts = await Post.findAll({
-        where: { user_id: targetUserId, is_active: true },
-        include: [
-            { model: User, as: "author", attributes: ["user_id", "username", "profile_url"] },
-            { model: PhotoData, as: "photo" }
-        ]
-    });
+    // Fetch original posts and shared posts concurrently
+    const [userPosts, userShares] = await Promise.all([
+        Post.findAll({
+            where: { user_id: targetUserId, is_active: true },
+            include: [
+                { model: User, as: "author", attributes: ["user_id", "username", "profile_url"] },
+                { model: PhotoData, as: "photo" }
+            ]
+        }),
+        SharedPost.findAll({
+            where: { user_id: targetUserId },
+            include: [
+                { model: User, as: "user", attributes: ["user_id", "username", "profile_url"] },
+                { 
+                    model: Post, 
+                    as: "post", 
+                    where: { is_active: true }, 
+                    include: [
+                        { model: User, as: "author", attributes: ["user_id", "username", "profile_url"] },
+                        { model: PhotoData, as: "photo" }
+                    ] 
+                }
+            ]
+        })
+    ]);
 
-    const formattedPosts = userPosts.map(post => ({
-        feedItemType: "original",
-        created_at: post.created_at,
-        data: post
-    }));
+    // Format and combine both arrays chronologically
+    const combinedFeed = [
+        ...userPosts.map(post => ({ feedItemType: "original", created_at: post.created_at, data: post })),
+        ...userShares.map(share => ({ feedItemType: "shared", created_at: share.created_at, data: share }))
+    ].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-  
-    const userShares = await SharedPost.findAll({
-        where: { user_id: targetUserId },
-        include: [
-            { model: User, as: "user", attributes: ["user_id", "username", "profile_url"] },
-            { 
-                model: Post, 
-                as: "post", 
-                where: { is_active: true }, 
-                include: [
-                    { model: User, as: "author", attributes: ["user_id", "username", "profile_url"] },
-                    { model: PhotoData, as: "photo" }
-                ] 
-            }
-        ]
-    });
-
-    const formattedShares = userShares.map(share => ({
-        feedItemType: "shared",
-        created_at: share.created_at, 
-        data: share
-    }));
-
-    
-    const combinedFeed = [...formattedPosts, ...formattedShares];
-
-   
-    combinedFeed.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-   
+    // Pagination calculations
     const totalItems = combinedFeed.length;
-    const totalPages = Math.ceil(totalItems / parsedLimit);
-    const startIndex = (parsedPage - 1) * parsedLimit;
-    const paginatedItems = combinedFeed.slice(startIndex, startIndex + parsedLimit);
+    const totalPages = Math.ceil(totalItems / limit);
+    const paginatedItems = combinedFeed.slice(offset, offset + limit);
 
     return {
         data: paginatedItems,
         pagination: {
-            page: parsedPage,
-            limit: parsedLimit,
+            page,
+            limit,
             totalItems,
             totalPages,
-            hasMore: startIndex + parsedLimit < totalItems
+            hasMore: offset + limit < totalItems
         }
     };
 };
