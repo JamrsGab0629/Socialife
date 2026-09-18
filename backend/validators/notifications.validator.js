@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const notificationParamSchema = z.object({
     params: z.object({
-        id: z.string().uuid({ message: "Invalid notification ID format" }),
+        notificationId: z.string().uuid({ message: "Invalid notification ID format" }),
     }),
 });
 

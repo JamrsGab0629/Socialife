@@ -1,7 +1,5 @@
-
-
 import { MentionService } from "../../services/mention.service.js";
-import { NotificationService } from "../../services/notifications.service.js";
+import * as notificationService from "../../services/notifications.service.js";
 import { findCommentById } from "../../services/comment.service.js";
 import { getPostByIdService } from "../../services/post.service.js";
 
@@ -13,7 +11,7 @@ export const mentionController = async (req, res, next) => {
             mentions = [],
             entityId,
             type = "comment",
-        } = req.body;
+        } = req.validated?.body || req.body;
 
         // Validate mentions
         if (!Array.isArray(mentions) || mentions.length === 0) {
@@ -52,7 +50,7 @@ export const mentionController = async (req, res, next) => {
         }
 
         if (type === "post") {
-            const post = await getPostByIdService(entityId);
+            const post = await getPostByIdService(entityId, authorId);
 
             if (!post) {
                 return res.status(404).json({
@@ -62,7 +60,7 @@ export const mentionController = async (req, res, next) => {
             }
         }
 
-        // Create mentions and notifications
+        // Create mentions and notifications concurrently
         const results = await Promise.all(
             mentions.map(async (recipientId) => {
                 try {
@@ -87,8 +85,9 @@ export const mentionController = async (req, res, next) => {
                                   entityId
                               );
 
+                    // Updated to use the correct namespace function import
                     const notification =
-                        await NotificationService.createNotification(
+                        await notificationService.createNotificationService(
                             mentionData
                         );
 
