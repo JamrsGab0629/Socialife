@@ -9,13 +9,16 @@ export const Authenticated = (component) => {
         // Asynchronously check backend authentication in the background
         isAuthenticated()
             .then((isAuth) => {
-                if (!isAuth && typeof this?.redirect === 'function') {
-                    this.redirect("/login");
+                if (isAuth && this?.redirect === 'function') {
+                    this.redirect("/app");
                 }
             })
             .catch((err) => {
+                // Guard for repeated going to login when your already in login
+                const currentPath = window.location.pathname;
+
                 console.error("Authentication error:", err);
-                if (typeof this?.redirect === 'function') {
+                if (typeof this?.redirect === 'function' && currentPath !== "/login") {
                     this.redirect("/login");
                 }
             });

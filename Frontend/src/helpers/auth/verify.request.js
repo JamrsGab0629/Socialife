@@ -13,7 +13,7 @@ export async function state(args) {
 
 export async function isAuthenticated(args = {}) {
     return await Request({
-        param: "auth/is-authenticated",
+        param: "/auth/is-authenticated",
         method: "POST",
         args: args,
     })

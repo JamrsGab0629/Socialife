@@ -19,7 +19,7 @@ const app = new SPA({
     defaultRoute: PageNotFound,
 });
 
-app.add('/', Authenticated(Landing));
+app.add('/', Landing);
 app.add('/login', Authenticated(Login));
 app.add(/^\/signup\/(?:(?<id>\d+))?$/i, Authenticated(Authentication(Signup, { isLoginRequired: false, isSignup: true })));
 
