@@ -30,11 +30,7 @@ export const isAuth = (component) => {
                 return component.apply(this, args);
             })
             .catch((err) => {
-                console.error("Authentication error:", err);
-                if (hasRedirect && currentPath !== "/login") {
-                    this.redirect("/login");
-                }
-                return null;
+                return component.apply(this, args);
             });
     };
 };
