@@ -72,3 +72,4 @@ vite.config.ts.timestamp-*
 .vite/
 /Test
 .env
+/temp

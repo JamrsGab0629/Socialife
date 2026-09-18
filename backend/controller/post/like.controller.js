@@ -1,4 +1,4 @@
-import * as likeService from "../services/like.service.js";
+import * as likeService from "../../services/like.service.js";
 
 export const toggleLike = async (req, res) => {
     try {
