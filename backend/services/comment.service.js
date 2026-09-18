@@ -131,3 +131,6 @@ export const getRepliesService = async (parentId, query = {}) => {
 export const getPostById = async (postId) => {
     return await Post.findByPk(postId);
 };
+export const findCommentById = async (commentId) => {
+    return await CommentData.findByPk(commentId);
+};

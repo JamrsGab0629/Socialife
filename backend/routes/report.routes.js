@@ -1,6 +1,8 @@
 import express from "express";
-import { isAuthenticated } from "../middleware/auth.middleware";
-import { isAdmin } from "../middleware/auth.middleware";
+import {
+    isAuthenticated,
+    isAdmin,
+} from "../middleware/auth.middleware.js";
 import * as reportController from "../controller/post/report.controller.js";
 
 const router = express.Router();
@@ -13,6 +15,6 @@ router.use(isAuthenticated);
 router.post("/", reportController.addReport);
 
 // GET /api/report/
-router.get("/", reportController.getReports);
+router.get("/", isAdmin,reportController.getReports);
 
 export default router;

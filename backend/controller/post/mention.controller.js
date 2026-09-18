@@ -1,126 +1,120 @@
-
 import { MentionService } from "../../services/mention.service.js";
 import { NotificationService } from "../../services/notifications.service.js";
-import { CommentService } from "../../services/comment.service.js";
-import { PostService } from "../../services/post.service.js";
-
-/**
- * Request body:
- * {
- *   mentions: string[],       // user UUIDs
- *   entityId: string,         // post_id or comment_id
- *   type: "comment" | "post"
- * }
- */
+import { findCommentById } from "../../services/comment.service.js";
+import { getPostById } from "../../services/post.service.js";
 
 export const mentionController = async (req, res, next) => {
-  try {
-    const authorId = req.user?.userId || req.user?.user_id;
+    try {
+        const authorId = req.user.user_id || req.user.userId;
 
-    if (!authorId) {
-      return res.status(401).json({
-        success: false,
-        message: "Unauthorized",
-      });
-    }
+        const {
+            mentions = [],
+            entityId,
+            type = "comment",
+        } = req.body;
 
-    const {
-      mentions = [],
-      entityId,
-      type = "comment",
-    } = req.body;
-
-    // Validate request input
-    if (!mentions.length) {
-      return res.status(400).json({
-        success: false,
-        message: "No recipients to mention",
-      });
-    }
-
-    if (!entityId) {
-      return res.status(400).json({
-        success: false,
-        message: "entityId is required",
-      });
-    }
-
-    if (!["comment", "post"].includes(type)) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid mention type",
-      });
-    }
-
-    // Verify entity existence
-    if (type === "comment") {
-      const comment = await CommentService.findById(entityId);
-
-      if (!comment) {
-        return res.status(404).json({
-          success: false,
-          message: "Comment not found",
-        });
-      }
-    }
-
-    if (type === "post") {
-      const post = await PostService.findById(entityId, authorId);
-
-      if (!post) {
-        return res.status(404).json({
-          success: false,
-          message: "Post not found",
-        });
-      }
-    }
-
-    const errors = [];
-    const successfulNotifications = [];
-
-    // Process mentions in parallel
-    await Promise.all(
-      mentions.map(async (recipientId) => {
-        try {
-          const mentionData =
-            type === "comment"
-              ? await MentionService.commentMention(
-                  recipientId,
-                  authorId
-                )
-              : await MentionService.postMention(
-                  recipientId,
-                  authorId
-                );
-
-          const notification =
-            await NotificationService.createNotification(
-              mentionData
-            );
-
-          successfulNotifications.push(notification);
-        } catch (err) {
-          errors.push({
-            recipientId,
-            message: err.message,
-          });
+        if (!mentions.length) {
+            return res.status(400).json({
+                success: false,
+                message: "No recipients to mention",
+            });
         }
-      })
-    );
 
-    const hasErrors = errors.length > 0;
+        if (!entityId) {
+            return res.status(400).json({
+                success: false,
+                message: "entityId is required",
+            });
+        }
 
-    const status =
-      hasErrors && successfulNotifications.length === 0
-        ? 500
-        : 200;
+        if (!["comment", "post"].includes(type)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid mention type",
+            });
+        }
 
-    return res.status(status).json({
-      success: successfulNotifications.length > 0,
-      data: successfulNotifications,
-      ...(hasErrors && { errors }),
-    });
-  } catch (error) {
-    next(error);
-  }
+        // Verify entity
+        if (type === "comment") {
+            const comment = await findCommentById(entityId);
+
+            if (!comment) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Comment not found",
+                });
+            }
+        }
+
+        if (type === "post") {
+            const post = await getPostById(entityId, authorId);
+
+            if (!post) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Post not found",
+                });
+            }
+        }
+
+        const results = await Promise.all(
+            mentions.map(async (recipientId) => {
+                try {
+                    const mentionData =
+                        type === "comment"
+                            ? await MentionService.commentMention(
+                                  recipientId,
+                                  authorId
+                              )
+                            : await MentionService.postMention(
+                                  recipientId,
+                                  authorId
+                              );
+
+                    const notification =
+                        await NotificationService.createNotification(
+                            mentionData
+                        );
+
+                    return {
+                        success: true,
+                        data: notification,
+                    };
+                } catch (error) {
+                    return {
+                        success: false,
+                        recipientId,
+                        message: error.message,
+                    };
+                }
+            })
+        );
+
+        const successfulNotifications = results
+            .filter((result) => result.success)
+            .map((result) => result.data);
+
+        const errors = results.filter(
+            (result) => !result.success
+        );
+
+        if (
+            successfulNotifications.length === 0 &&
+            errors.length > 0
+        ) {
+            return res.status(400).json({
+                success: false,
+                data: [],
+                errors,
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: successfulNotifications,
+            ...(errors.length > 0 && { errors }),
+        });
+    } catch (error) {
+        next(error);
+    }
 };
