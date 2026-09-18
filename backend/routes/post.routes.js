@@ -11,93 +11,99 @@ import { rateLimiter } from "../middleware/ratelimiter.middleware.js";
 import validate from "../validators/main.validator.js";
 
 import {
-  createPostSchema,
-  getHomeFeedSchema,
-  getProfileFeedSchema,
-  deactivatePostSchema,
+    createPostSchema,
+    getHomeFeedSchema,
+    getProfileFeedSchema,
+    deactivatePostSchema,
 } from "../validators/post.validators.js";
 
 import {
-  addCommentSchema,
-  addReplySchema,
-  getCommentsSchema,
-  getRepliesSchema,
+    toggleLikeSchema,
+} from "../validators/like.validators.js";
+
+import {
+    addCommentSchema,
+    addReplySchema,
+    getCommentsSchema,
+    getRepliesSchema,
 } from "../validators/comment.validator.js";
 
 const router = express.Router();
 
-// posts
+//  POSTS 
 
 router.post(
-  "/",
-  isAuthenticated,
-  rateLimiter(5, 60000),
-  uploadPostImage,
-  validate(createPostSchema),
-  postController.createPost,
+    "/",
+    isAuthenticated,
+    rateLimiter(5, 60000),
+    uploadPostImage,
+    validate(createPostSchema),
+    postController.createPost
 );
 
 router.get(
-  "/",
-  isAuthenticated,
-  validate(getHomeFeedSchema),
-  postController.getHomeFeed,
+    "/",
+    isAuthenticated,
+    validate(getHomeFeedSchema),
+    postController.getHomeFeed
 );
 
 router.get(
-  "/user/:userId",
-  isAuthenticated,
-  validate(getProfileFeedSchema),
-  postController.getProfileFeed,
+    "/user/:userId",
+    isAuthenticated,
+    validate(getProfileFeedSchema),
+    postController.getProfileFeed
 );
 
 router.patch(
-  "/:postId/deactivate",
-  isAuthenticated,
-  validate(deactivatePostSchema),
-  postController.deactivatePost,
+    "/:postId/deactivate",
+    isAuthenticated,
+    validate(deactivatePostSchema),
+    postController.deactivatePost
 );
 
-// likes
+// LIKES 
+
 router.post(
-  "/:postId/like",
-  isAuthenticated,
-  rateLimiter(15, 60000),
-  likeController.toggleLike,
+    "/:postId/like",
+    isAuthenticated,
+    rateLimiter(15, 60000),
+    validate(toggleLikeSchema),
+    likeController.toggleLike
 );
 
-// comments
+// COMMENTS
 
 router.post(
-  "/:postId/comments",
-  isAuthenticated,
-  rateLimiter(10, 60000),
-  validate(addCommentSchema),
-  commentController.addComment,
+    "/:postId/comments",
+    isAuthenticated,
+    rateLimiter(10, 60000),
+    validate(addCommentSchema),
+    commentController.addComment
 );
 
 router.get(
-  "/:postId/comments",
-  isAuthenticated,
-  validate(getCommentsSchema),
-  commentController.getComments,
+    "/:postId/comments",
+    isAuthenticated,
+    validate(getCommentsSchema),
+    commentController.getComments
 );
 
-// replys
+// REPLIES
 
 router.post(
-  "/:postId/:parentId/replies",
-  isAuthenticated,
-  rateLimiter(10, 60000),
-  validate(addReplySchema),
-  commentController.addReply,
+    "/:postId/:parentId/replies",
+    isAuthenticated,
+    rateLimiter(10, 60000),
+    validate(addReplySchema),
+    commentController.addReply
 );
 
 router.get(
-  "/:postId/:parentId/replies",
-  isAuthenticated,
-  validate(getRepliesSchema),
-  commentController.getReplies,
+    "/:postId/:parentId/replies",
+    isAuthenticated,
+    validate(getRepliesSchema),
+    commentController.getReplies
 );
 
 export default router;
