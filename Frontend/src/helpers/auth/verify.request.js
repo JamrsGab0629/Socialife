@@ -11,9 +11,9 @@ export async function state(args) {
     return res;
 }
 
-export async function isAuthenticated(args = {}) {
+export async function checkAuth(args = {}) {
     return await Request({
-        param: "/auth/is-authenticated",
+        param: "/auth/checkAuth",
         method: "POST",
         args: args,
     })
