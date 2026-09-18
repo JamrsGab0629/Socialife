@@ -1,17 +1,33 @@
 import express from "express";
 import * as savedPostController from "../controller/post/savedPost.controller.js";
 import { isAuthenticated } from "../middleware/auth.middleware.js";
-import { postIdSchema, validate } from "../validators/savedPost.validator.js";
-import { rateLimiter } from "../middleware/ratelimiter.middleware.js"; // 1. Import rate limiter
+import validate from "../validators/main.validator.js";
+import { postIdSchema, paginationSchema } from "../validators/savedPost.validator.js"; 
+import { rateLimiter } from "../middleware/ratelimiter.middleware.js";
 
 const router = express.Router();
 
+router.post(
+    "/:postId", 
+    isAuthenticated, 
+    rateLimiter(20, 60000), 
+    validate(postIdSchema), 
+    savedPostController.savePost
+);
 
-router.use(isAuthenticated);
+router.delete(
+    "/:postId", 
+    isAuthenticated, 
+    rateLimiter(20, 60000), 
+    validate(postIdSchema), 
+    savedPostController.unsavePost
+);
 
-
-router.post("/:postId", rateLimiter(20, 60000), validate(postIdSchema), savedPostController.savePost);
-router.delete("/:postId", rateLimiter(20, 60000), validate(postIdSchema), savedPostController.unsavePost);
-router.get("/", savedPostController.getSavedPosts);
+router.get(
+    "/", 
+    isAuthenticated, 
+    validate(paginationSchema), 
+    savedPostController.getSavedPosts
+);
 
 export default router;

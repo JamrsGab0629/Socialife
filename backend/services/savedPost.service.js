@@ -3,12 +3,24 @@ import Post from "../model/post.model.js";
 import PhotoData from "../model/photo_data.model.js";
 import { hybridLoad } from "../utils/loaders/hybrid.loader.js";
 
+
+const createNotFoundError = (message) => {
+    const error = new Error(message);
+    error.statusCode = 404;
+    return error;
+};
+
+const createBadRequestError = (message) => {
+    const error = new Error(message);
+    error.statusCode = 400;
+    return error;
+};
+
 // Save a post
 export const savePostService = async (userId, postId) => {
-    // Ensure post exists and is active
     const post = await Post.findOne({ where: { post_id: postId, is_active: true } });
     if (!post) {
-        throw new Error("Post not found or has been deactivated.");
+        throw createNotFoundError("Post not found or has been deactivated.");
     }
 
     const [saved, created] = await SavedPost.findOrCreate({
@@ -16,7 +28,7 @@ export const savePostService = async (userId, postId) => {
     });
 
     if (!created) {
-        throw new Error("Post is already saved.");
+        throw createBadRequestError("Post is already saved.");
     }
 
     return saved;
@@ -29,17 +41,17 @@ export const unsavePostService = async (userId, postId) => {
     });
 
     if (deletedCount === 0) {
-        throw new Error("Saved post record not found.");
+        throw createNotFoundError("Saved post record not found.");
     }
 
     return { message: "Post removed from saved items." };
 };
 
-
-export const getSavedPostsService = async (userId, page, limit) => {
+// Get saved posts
+export const getSavedPostsService = async (userId, query = {}) => {
     return await hybridLoad(SavedPost, {
-        page,
-        limit,
+        page: query.page,
+        limit: query.limit,
         where: { user_id: userId },
         include: [
             {

@@ -1,9 +1,9 @@
 import * as savedPostService from "../../services/savedPost.service.js";
 
-export const savePost = async (req, res) => {
+export const savePost = async (req, res, next) => {
     try {
         const userId = req.user.userId || req.user.user_id;
-        const { postId } = req.params;
+        const { postId } = req.validated.params; 
 
         const result = await savedPostService.savePostService(userId, postId);
 
@@ -13,17 +13,14 @@ export const savePost = async (req, res) => {
             data: result
         });
     } catch (error) {
-        return res.status(400).json({
-            success: false,
-            message: error.message
-        });
+        next(error); 
     }
 };
 
-export const unsavePost = async (req, res) => {
+export const unsavePost = async (req, res, next) => {
     try {
         const userId = req.user.userId || req.user.user_id;
-        const { postId } = req.params;
+        const { postId } = req.validated.params; 
 
         const result = await savedPostService.unsavePostService(userId, postId);
 
@@ -32,19 +29,16 @@ export const unsavePost = async (req, res) => {
             message: result.message
         });
     } catch (error) {
-        return res.status(400).json({
-            success: false,
-            message: error.message
-        });
+        next(error);
     }
 };
 
-export const getSavedPosts = async (req, res) => {
+export const getSavedPosts = async (req, res, next) => {
     try {
         const userId = req.user.userId || req.user.user_id;
-        const { page, limit } = req.query;
+        const query = req.validated.query; 
 
-        const result = await savedPostService.getSavedPostsService(userId, page, limit);
+        const result = await savedPostService.getSavedPostsService(userId, query);
 
         return res.status(200).json({
             success: true,
@@ -53,9 +47,6 @@ export const getSavedPosts = async (req, res) => {
             pagination: result.pagination
         });
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        });
+        next(error);
     }
 };
