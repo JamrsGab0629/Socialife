@@ -14,7 +14,7 @@ const router = express.Router();
  * @query {number} [page=1]
  * @query {number} [limit=10]
  */
-router.get("/get/:status?", getAllReports);
+router.get("/get/:status", getAllReports);
 
 /** 
  * PUT /api/admin/reports/:reportId/update
