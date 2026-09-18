@@ -43,7 +43,7 @@ export async function register(args) {
     })
 }
 
-export async function logout(args) {
+export async function logout(args = {}) {
     return await Request({
         param: "/auth/logout",
         method: "POST",
