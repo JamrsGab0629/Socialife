@@ -1,28 +1,26 @@
 import { createShareRecord } from "../../services/sharedPost.service.js";
 
-export const sharePost = async (req, res) => {
-  try {
-    const { postId } = req.params;
-    const { caption } = req.body;
-    
-    const userId = req.user?.user_id || req.user?.userId;
+export const sharePost = async (req, res, next) => {
+    try {
+        const userId = req.user?.userId;
 
-    if (!userId) {
-      return res.status(401).json({ success: false, message: "Unauthorized: User ID missing from token" });
+        if (!userId) {
+            const error = new Error("Unauthorized: User ID missing from token payload");
+            error.statusCode = 401;
+            throw error;
+        }
+
+        const { postId } = req.validated.params; 
+        const { caption } = req.validated.body; 
+
+        const newShare = await createShareRecord(userId, postId, caption);
+
+        return res.status(201).json({
+            success: true,
+            message: "Post shared successfully",
+            data: newShare,
+        });
+    } catch (error) {
+        next(error); 
     }
-
-    const newShare = await createShareRecord(userId, postId, caption);
-
-    return res.status(201).json({
-      success: true,
-      message: "Post shared successfully",
-      data: newShare,
-    });
-  } catch (error) {
-    const statusCode = error.message === "Post not found or has been deactivated" ? 404 : 500;
-    return res.status(statusCode).json({
-      success: false,
-      message: error.message,
-    });
-  }
 };

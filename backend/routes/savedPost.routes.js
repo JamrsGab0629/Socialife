@@ -25,7 +25,7 @@ router.delete(
 
 router.get(
     "/", 
-    isAuthenticated, 
+    isAuthenticated,rateLimiter(15,60000),
     validate(paginationSchema), 
     savedPostController.getSavedPosts
 );
