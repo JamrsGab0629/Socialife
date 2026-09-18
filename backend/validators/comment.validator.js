@@ -29,6 +29,11 @@ export const getCommentsSchema = z.object({
 
 export const getRepliesSchema = z.object({
     body: z.object({}).optional(),
-    params: z.object({ parentId: z.string().uuid() }),
-    query: z.object({}).optional(),
+
+    params: z.object({
+        postId: z.string().uuid(),
+        parentId: z.string().uuid()
+    }),
+
+    query: z.object({}).optional()
 });
