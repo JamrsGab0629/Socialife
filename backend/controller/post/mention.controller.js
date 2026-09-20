@@ -11,7 +11,9 @@ export const mentionController = async (req, res, next) => {
             mentions = [],
             entityId,
             type = "comment",
-        } = req.validated?.body || req.body;
+        } = req.body;
+
+        // console.log(mentions);
 
         // Validate mentions
         if (!Array.isArray(mentions) || mentions.length === 0) {
