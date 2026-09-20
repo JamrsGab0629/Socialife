@@ -2,7 +2,7 @@ import User from "../model/user.model.js"
 
 export const registerService = async ( body ) => {
     const email = body.email;
-    const data = await  User.findOne( { where: { email } });
+    const data = await User.findOne( { where: { email } });
 
     if(!data) {
         throw new Error("Email hasnt been registered");
