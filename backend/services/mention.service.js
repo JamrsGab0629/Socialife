@@ -15,10 +15,10 @@ export class MentionService {
         }
 
         return {
-            user_id: recipientId,
-            author_id: authorId,
+            userId: recipientId,
+            authorId: authorId,
             type: "Mention",
-            message: `${user.first_name} ${user.last_name} mentioned you on their ${classifier}`,
+            content: `${user.first_name} ${user.last_name} mentioned you on their ${classifier}`,
         };
     }
 
