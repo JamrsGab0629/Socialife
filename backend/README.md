@@ -8,13 +8,18 @@ Clone the repository and install all required dependencies instantly with the fo
 
 Must be on root directory.
 ```sh
-npm install bcrypt cookie-parser dotenv express globals jsonwebtoken nodemailer pg pg-hstore sequelize
+npm install
 
 ```
+# build the backend on docker
+```sh
+docker build -t socialife-backend .
+```
+
 Environment Setup (.env)
 ```bash
 PORT=3000
-DB_HOST=localhost
+DB_HOST=host.docker.internal
 DB_PORT=5432
 DB_USER=postgres
 DB_PASSWORD=your_postgres_password
@@ -28,10 +33,9 @@ JWT_SECRET=jwt_secret
 🏃‍♂️ Running the Server
 Navigate to your server directory and start the application:
 
-```bash
-cd src/backend/main/server
-node server.js
-
+```sh
+cd backend
+docker run --name socialife-backend -p 3000:3000 --env-file .env socialife-backend
 ```
 
 🧪 API Usage Guide (Thunder Client: download this on vs code extensions) All endpoints run locally at http://localhost:3000.  
