@@ -1,14 +1,15 @@
 import { loginService } from "../../services/login.service.js";
 import { login$ } from "../../validators/auth.validator.js";
-import { setAuthCookie } from "../../utils/cookie.utils.js";
+import { setAccessTokenCookie, setRefreshTokenCookie } from "../../utils/cookie.utils.js";
 
 export const login = async (req, res) => {
     try {
         const validatedData = login$.parse(req.body);
-        
-        const { user, token } = await loginService(validatedData);
 
-        setAuthCookie(res, token);
+        const { user, refreshToken, accessToken } = await loginService(validatedData);
+
+        setAccessTokenCookie(res, accessToken);
+        setRefreshTokenCookie(res, refreshToken);
 
         return res.status(200).json({
             message: "Login successful!",

@@ -1,6 +1,6 @@
-import User from "../model/user.model.js"; 
+import User from "../model/user.model.js";
 import { comparePassword } from "../utils/passwordHashing.utils.js";
-import { generateToken } from "./jwt/genToken.service.js";
+import { generateAccessToken, generateRefreshToken } from "./jwt/genToken.service.js";
 import { validateEmail, validatePassword } from "../utils/validators.utils.js";
 
 export const loginService = async ({ email, password }) => {
@@ -26,15 +26,17 @@ export const loginService = async ({ email, password }) => {
         throw new Error("Invalid email or password.");
     }
 
-    console.log(user.role === "admin" ? "Welcome admin" : "Welcome user"); // to show the role
+    // console.log(user.role === "admin" ? "Welcome admin" : "Welcome user"); // to show the role
 
-    const token = generateToken(user.user_id);
+    const refreshToken = generateRefreshToken(user.user_id, user.role);
+    const accessToken = generateAccessToken(user.user_id, user.role)
 
     const userData = user.toJSON();
     delete userData.password;
 
     return {
         user: userData,
-        token
+        refreshToken,
+        accessToken,
     };
 };
