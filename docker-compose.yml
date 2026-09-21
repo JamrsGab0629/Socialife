@@ -1,4 +1,16 @@
 services:
+  database:
+    image: postgres:17
+    container_name: socialife-database
+    environment:
+      POSTGRES_DB: socialife
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: gabgab0629
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    expose:
+      - "5432"
+
   backend:
     build:
       context: ./backend
@@ -6,9 +18,12 @@ services:
     env_file:
       - ./backend/.env
     environment:
-      DB_HOST: host.docker.internal
+      DB_HOST: database
+      DB_PORT: 5432
     expose:
       - "3000"
+    depends_on:
+      - database
 
   frontend:
     build:
@@ -26,3 +41,6 @@ services:
     depends_on:
       - backend
       - frontend
+
+volumes:
+  postgres_data:
