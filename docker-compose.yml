@@ -1,0 +1,28 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: socialife-backend
+    env_file:
+      - ./backend/.env
+    environment:
+      DB_HOST: host.docker.internal
+    expose:
+      - "3000"
+
+  frontend:
+    build:
+      context: ./Frontend
+    container_name: socialife-frontend
+    expose:
+      - "80"
+
+  nginx:
+    build:
+      context: ./nginx
+    container_name: socialife-nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
