@@ -42,6 +42,7 @@ const signup = async ({ username, email, password }) => {
     }
 
     const otp = generate_OTP(targetUser.user_id, targetUser.email, targetUser.created_at);
+    await sendVerificationEmail(targetUser.email, otp);
 
     return {
         message: `Registration initiated. Please check your email for the 6-digit OTP code. otp is ${otp}... [please remove after testing]`,
@@ -66,8 +67,8 @@ const verify_OTP = async ({ email, otp }) => {
 
     // generate otp and compares them
     const otp_now = generate_OTP(existingEmail.user_id, email, existingEmail.created_at);
-    const is_same = ( otp_now === otp )
-    console.log("verify_OTP", otp_now, otp)
+    // const is_same = ( otp_now === otp )
+    // console.log("verify_OTP", otp_now, otp)
 
     if (!is_same) {
         throw new Error("OTP code not same");
@@ -102,7 +103,9 @@ const resend_OTP = async ({ email }) => {
     console.log(now.valueOf() - createdAt.valueOf());
 
     const otp = generate_OTP(existingEmail.user_id, email, existingEmail.created_at);
-    console.log("debug.resendotp [for testing purposes]", otp)
+    // console.log("debug.resendotp [for testing purposes]", otp)
+    await sendVerificationEmail(targetUser.email, otp);
+
 
     return {
         message: "OTP resent"
