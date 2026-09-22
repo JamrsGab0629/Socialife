@@ -71,18 +71,16 @@ export default async function Home() {
     });
 
     // Prepend newly created post immediately at the top of the feed
-    window.addEventListener('post:created', (event) => {
-        const newPost = event.detail;
-        if (!newPost) return;
+   window.addEventListener('post:created', (event) => {
+    const newPost = event.detail;
+    if (!newPost) return;
 
-        const postMarkup = Post(newPost);
-        const composerTrigger = document.getElementById('composer-trigger');
-        if (composerTrigger) {
-            composerTrigger.insertAdjacentHTML('afterend', postMarkup);
-        } else {
-            feedContainer.insertAdjacentHTML('afterbegin', postMarkup);
-        }
-    });
+    const postMarkup = Post(newPost);
+    const composerTrigger = document.getElementById('composer-trigger');
+    if (composerTrigger) {
+        composerTrigger.insertAdjacentHTML('afterend', postMarkup); // Places it right at the top of the feed
+    }
+});
 
     const friends_data = await Service();
     document.getElementById('friend-list').innerHTML = FriendsTemplate(friends_data);

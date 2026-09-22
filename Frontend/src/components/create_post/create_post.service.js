@@ -24,7 +24,6 @@ export async function createPostService(user_id, data = {}, file = null) {
     // Multer upload middleware expects field name 'image'
     if (file) {
       formData.append("image", file);
-      formData.append("media", file);
     }
 
     const response = await post_content(formData);

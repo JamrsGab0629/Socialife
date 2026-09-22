@@ -46,10 +46,10 @@ export function initComposerOverlay() {
 
     // Open Modal
     trigger.addEventListener('click', () => {
-        backdrop.hidden = false;
-        container.innerHTML = '';
-        Create_Post(container); // Mount Create_Post component inside overlay
-    });
+    backdrop.hidden = false;
+    container.innerHTML = '';
+    Create_Post(container); // Mounts the modal component
+});
 
     // Close Modal on backdrop click outside the content card
     backdrop.addEventListener('click', (e) => {

@@ -28,10 +28,7 @@ export const createPostSchema = z.object({
             .trim()
             .max(5000, "Post content cannot exceed 5000 characters")
             .optional(),
-    }).refine((data) => Boolean((data.content && data.content.length > 0) || (data.caption && data.caption.length > 0)), {
-        message: "Post content or caption cannot be empty",
-        path: ["content"]
-    }),
+    }), // Removed the strict .refine() block so image-only posts are allowed through validation
 
     params: z.object({}),
     query: z.object({}),
