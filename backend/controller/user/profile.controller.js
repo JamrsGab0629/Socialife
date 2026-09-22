@@ -5,7 +5,7 @@ export const profileController = {
   // GET /api/profiles/me
   async getMyProfile(req, res, next) {
     try {
-      const userId = req.user.userId;
+      const userId = req.user.user_id || req.user.userId;
       const profile = await profileService.getProfileById(userId);
 
       return res.status(200).json({
@@ -23,7 +23,7 @@ export const profileController = {
   // PUT /api/profiles/picture
   async updatePicture(req, res, next) {
     try {
-      const userId = req.user.userId;
+      const userId = req.user.user_id || req.user.userId;
 
       if (!req.file) {
         return res.status(400).json({ success: false, message: 'No image file provided' });

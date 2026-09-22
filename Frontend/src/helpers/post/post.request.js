@@ -1,8 +1,8 @@
 import Request from "../../core/request";
 
 /**
- * Sends the create post FormData to the backend API.
- * @param {FormData} formData - The multipart form data containing caption and image.
+ * Submits a new post payload with optional media attachment.
+ * @param {FormData} formData - The multipart form data.
  * @returns {Promise<Object>} API response payload.
  */
 export async function post_content(formData) {
@@ -18,28 +18,74 @@ export async function post_content(formData) {
     }
 }
 
-export async function like_content(args) {
+/**
+ * Toggles a like on a post.
+ * @param {string|number} postId - The ID of the post.
+ * @returns {Promise<Object>} API response payload.
+ */
+export async function like_content(postId) {
     try {
         return await Request({
-            param: `/posts/${args.content_id}/like`,
+            param: `/posts/${postId}/like`,
             method: "POST",
-            args: args,
+            args: {},
         });
     } catch (error) {
-        console.error("Failed inside like_content:", error);
+        console.error("Failed inside like_content request helper:", error);
         throw error;
     }
 }
 
-export async function comment_content(args) {
+/**
+ * Adds a comment to a post.
+ * @param {string|number} postId - The ID of the post.
+ * @param {string} commentText - The text content of the comment.
+ * @returns {Promise<Object>} API response payload.
+ */
+export async function comment_content(postId, commentText) {
     try {
         return await Request({
-            param: `/posts/${args.content_id}/comments`,
+            param: `/posts/${postId}/comments`,
             method: "POST",
-            args: args,
+            args: { comment: commentText },
         });
     } catch (error) {
-        console.error("Failed inside comment_content:", error);
+        console.error("Failed inside comment_content request helper:", error);
         throw error;
     }
+}
+
+/**
+ * Fetches comments for a specific post.
+ * @param {string|number} postId - The ID of the post.
+ * @param {number} page - Page number.
+ * @param {number} limit - Limit per page.
+ * @returns {Promise<Object>} API response payload.
+ */
+export async function get_comments(postId, page = 1, limit = 10) {
+    try {
+        return await Request({
+            param: `/posts/${postId}/comments`,
+            method: "GET",
+            args: { page, limit },
+        });
+    } catch (error) {
+        console.error("Failed inside get_comments request helper:", error);
+        throw error;
+    }
+}
+
+export async function reply_content(postId, parentId, commentText) {
+    return Request({
+        param: `/posts/${postId}/${parentId}/replies`,
+        method: "POST",
+        args: { comment: commentText },
+    });
+}
+
+export async function get_replies(postId, parentId) {
+    return Request({
+        param: `/posts/${postId}/${parentId}/replies`,
+        method: "GET",
+    });
 }

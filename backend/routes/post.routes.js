@@ -35,7 +35,7 @@ const router = express.Router();
 router.post(
     "/",
     isAuthenticated,
-    rateLimiter(5, 60000),
+    rateLimiter(20, 60000),
     uploadPostImage,
     validate(createPostSchema),
     postController.createPost
@@ -67,7 +67,7 @@ router.patch(
 router.post(
     "/:postId/like",
     isAuthenticated,
-    rateLimiter(15, 60000),
+    rateLimiter(30, 60000),
     validate(toggleLikeSchema),
     likeController.toggleLike
 );
@@ -77,7 +77,7 @@ router.post(
 router.post(
     "/:postId/comments",
     isAuthenticated,
-    rateLimiter(10, 60000),
+    rateLimiter(30, 60000),
     validate(addCommentSchema),
     commentController.addComment
 );

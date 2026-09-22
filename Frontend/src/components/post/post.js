@@ -45,10 +45,8 @@ export default function Post(data) {
     const avatarUrl = data.avatar_url || data.author?.profile_url || "../../icons/user-avatar.svg";
     const postTime = formatPostTime(data.post_time || data.created_at);
     
-    // Support caption or text content
     const textContent = data.caption || (typeof data.content === "string" ? data.content : "");
 
-    // Photo support: from Sequelize photo relation (photo.href) or mock content array
     let photoHtml = "";
     if (data.photo && data.photo.href) {
         photoHtml = `<img src="${data.photo.href}" alt="post photo">`;
@@ -60,6 +58,8 @@ export default function Post(data) {
 
     const commentCount = data.comment_count ?? (data.comment_data?.length || 0);
     const commentData = data.comment_data || data.comments || [];
+    const likesCount = data.like_count ?? data.likes_count ?? 0;
+    const isLiked = Boolean(data.is_liked || data.liked);
 
     return `
         <div class="${style["post-card"]}" id="${postId}">
@@ -76,31 +76,36 @@ export default function Post(data) {
 
             ${photoHtml ? `<div class="${style["post-photo"]}">${photoHtml}</div>` : ""}
 
-            <div class="${style["post-meta"]}">${commentCount} comments</div>
+            <div class="${style["post-meta"]}"><span class="like-count">${likesCount}</span> likes · <span class="comment-count">${commentCount}</span> comments</div>
 
             <div class="${style["comments"]}">
                 ${Helper(commentData)}
             </div>
 
             <div class="${style["post-actions"]}">
-                <div class="${style["action-btn"]}">
-                    <a href="#" data-post-id="${postId}">
-                        <img src="../../icons/like.svg" alt="like">
-                        Like
-                    </a>
+                <button type="button" class="${style["action-btn"]} ${isLiked ? style.liked : ""}" data-action="like" data-post-id="${postId}" aria-pressed="${isLiked}">
+                    <img src="../../icons/like.svg" alt="like">
+                    Like
+                </button>
+                <button type="button" class="${style["action-btn"]}" data-action="toggle-comments" data-post-id="${postId}">
+                    <img src="../../icons/chat.svg" alt="comment">
+                    Comment
+                </button>
+                <button type="button" class="${style["action-btn"]}">
+                    <img src="../../icons/export.svg" alt="share">
+                    Share
+                </button>
+            </div>
+<!-- COMMENTS INTERACTIVE SECTION (Hidden by default) -->
+            <div class="${style["comments-section"]}" data-comments-section style="display: none;">
+                <div class="${style["comment-box-row"]}">
+                    <img src="${avatarUrl}" alt="avatar" class="${style["comment-user-avatar"]}" data-comment-avatar onerror="this.src='../../icons/user-avatar.svg'">
+                    <div class="${style["comment-input-wrapper"]}">
+                        <input type="text" class="comment-input" data-comment-input placeholder="Write a public comment...">
+                        <button type="button" class="${style["comment-submit-btn"]}" data-action="submit-comment" data-post-id="${postId}">Post</button>
+                    </div>
                 </div>
-                <div class="${style["action-btn"]}">
-                    <a href="#" data-post-id="${postId}">
-                        <img src="../../icons/chat.svg" alt="comment">
-                        Comment
-                    </a>
-                </div>
-                <div class="${style["action-btn"]}">
-                    <a href="#" data-post-id="${postId}">
-                        <img src="../../icons/export.svg" alt="share">
-                        Share
-                    </a>
-                </div>
+                <div class="${style["comments-list"]}" data-comments-list></div>
             </div>
         </div>
     `;

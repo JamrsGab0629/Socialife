@@ -61,7 +61,7 @@
 
 .post-photo {
     width: 100%;
-    background: #000; /* Optional: adds a clean dark backdrop if the image has letterboxing */
+    background: #000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -70,12 +70,13 @@
 
 .post-photo img {
     width: 100%;
-    height: auto;        /* Keeps the image's original aspect ratio so nothing is cut off */
-    max-height: 600px;   /* Prevents extremely tall images from taking over the whole screen */
-    object-fit: contain; /* Ensures the whole picture fits inside the container */
+    height: auto;
+    max-height: 600px;
+    object-fit: contain;
     display: block;
     margin: 0 auto;
 }
+
 .post-meta {
     padding: 12px 20px;
     font-size: 14px;
@@ -134,6 +135,9 @@
     font-weight: 600;
     color: #556173;
     cursor: pointer;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
 }
 
 .action-btn:hover {
@@ -153,4 +157,106 @@
 .action-btn.liked img {
     fill: var(--link-blue);
     stroke: var(--link-blue);
+}
+
+/* --- FACEBOOK-STYLE COMMENT INPUT SECTION --- */
+.comments-section {
+    padding: 12px 16px;
+    background: #ffffff;
+    border-top: 1px solid var(--card-border, #e4e6eb);
+}
+
+.comment-box-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.comment-user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.comment-input-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: #f0f2f5;
+    border-radius: 20px;
+    padding: 6px 12px;
+    gap: 8px;
+    border: 1px solid transparent;
+}
+
+.comment-input-wrapper:focus-within {
+    border-color: #1877f2;
+    background: #ffffff;
+}
+
+.comment-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    color: #050505;
+    padding: 4px 0;
+}
+
+.comment-input::placeholder {
+    color: #65676b;
+}
+
+.comment-submit-btn {
+    border: none;
+    background: #1877f2;
+    color: white;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.comment-submit-btn:hover {
+    background: #166fe5;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.comment-actions button {
+    border: 0;
+    padding: 0;
+    color: var(--link-blue);
+    background: transparent;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.replies {
+    margin-left: 28px;
+}
+
+.reply-form {
+    display: flex;
+    gap: 8px;
+    margin: 8px 0 0 44px;
 }

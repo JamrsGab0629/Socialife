@@ -4,7 +4,7 @@ import Layout from '../../layouts/default/default';
 
 import style from './home.module.css';
 import style_topbar_search from "../../styles/app/topbar-search.module.css";
-import Helper, { FriendsTemplate, initComposerOverlay } from './home.helper';
+import Helper, { FriendsTemplate, initComposerOverlay, initCommentInteractions } from './home.helper';
 import Service, { fetchHomeFeedService } from './home.service';
 import Post from '../../components/post/post';
 import { InfiniteScroll } from '../../helpers/utils/InfiniteScroll'; 
@@ -55,6 +55,9 @@ export default async function Home() {
     const feedContainer = document.getElementById('feed-container');
     const sentinel = document.getElementById('feed-sentinel');
 
+    // Initialize comment interactions using event delegation on the feed container
+    initCommentInteractions(feedContainer);
+
     new InfiniteScroll({
         container: feedContainer,
         sentinel: sentinel,
@@ -71,16 +74,16 @@ export default async function Home() {
     });
 
     // Prepend newly created post immediately at the top of the feed
-   window.addEventListener('post:created', (event) => {
-    const newPost = event.detail;
-    if (!newPost) return;
+    window.addEventListener('post:created', (event) => {
+        const newPost = event.detail;
+        if (!newPost) return;
 
-    const postMarkup = Post(newPost);
-    const composerTrigger = document.getElementById('composer-trigger');
-    if (composerTrigger) {
-        composerTrigger.insertAdjacentHTML('afterend', postMarkup); // Places it right at the top of the feed
-    }
-});
+        const postMarkup = Post(newPost);
+        const composerTrigger = document.getElementById('composer-trigger');
+        if (composerTrigger) {
+            composerTrigger.insertAdjacentHTML('afterend', postMarkup); // Places it right at the top of the feed
+        }
+    });
 
     const friends_data = await Service();
     document.getElementById('friend-list').innerHTML = FriendsTemplate(friends_data);
