@@ -180,3 +180,26 @@
         height: 75px;
     }
 }
+/* Center and constrain your feed container */
+#feed-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Horizontally centers all posts inside it */
+    width: 100%;
+    padding: 20px 0;
+}
+
+/* Constrain the width of individual posts so they look like a clean social feed */
+#feed-container > * {
+    width: 90%;
+    max-width: 600px; /* Standard comfortable reading width */
+    margin-bottom: 20px;
+}
+
+/* Constrain post images so they don't blow up to full height */
+#feed-container img {
+    max-height: 480px;
+    width: 100%;
+    object-fit: cover; /* Keeps image proportions clean without distortion */
+    border-radius: 8px;
+}

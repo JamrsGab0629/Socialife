@@ -21,3 +21,6 @@ async function fetchProfileFeed(userId, page = 1, limit = 10) {
         throw error;
     }
 }
+
+
+export default fetchProfileFeed;

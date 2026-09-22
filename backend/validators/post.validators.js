@@ -26,8 +26,11 @@ export const createPostSchema = z.object({
         content: z
             .string()
             .trim()
-            .min(1, "Post content cannot be empty")
-            .max(5000, "Post content cannot exceed 5000 characters"),
+            .max(5000, "Post content cannot exceed 5000 characters")
+            .optional(),
+    }).refine((data) => Boolean((data.content && data.content.length > 0) || (data.caption && data.caption.length > 0)), {
+        message: "Post content or caption cannot be empty",
+        path: ["content"]
     }),
 
     params: z.object({}),

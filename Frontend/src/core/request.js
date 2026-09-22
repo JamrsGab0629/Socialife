@@ -13,6 +13,16 @@ const api = axios.create({
     },
 });
 
+// Remove Content-Type header for FormData so browser sets multipart boundary correctly
+api.interceptors.request.use((config) => {
+    if (typeof FormData !== "undefined" && config.data instanceof FormData) {
+        if (config.headers) {
+            delete config.headers["Content-Type"];
+        }
+    }
+    return config;
+});
+
 // Retry configuration
 axiosRetry(api, {
     retries: 3,

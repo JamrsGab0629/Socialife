@@ -6,9 +6,9 @@
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(20, 30, 50, 0.04);
     padding-top: 10px;
-    width: 100%;
-    max-width: 700px;
-    align-self: center;
+    width: 92%;          
+    max-width: 650px;   
+    margin: 0 auto 20px auto; 
 }
 
 .post-header {
@@ -61,16 +61,21 @@
 
 .post-photo {
     width: 100%;
-    display: block;
+    background: #000; /* Optional: adds a clean dark backdrop if the image has letterboxing */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
 }
 
 .post-photo img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;        /* Keeps the image's original aspect ratio so nothing is cut off */
+    max-height: 600px;   /* Prevents extremely tall images from taking over the whole screen */
+    object-fit: contain; /* Ensures the whole picture fits inside the container */
+    display: block;
+    margin: 0 auto;
 }
-
 .post-meta {
     padding: 12px 20px;
     font-size: 14px;

@@ -1,6 +1,12 @@
-import Request from "/core/request";
+import Request from "../../core/request.js";
 
-async function fetchHomeFeed(page = 1, limit = 10) {
+/**
+ * Fetches the paginated home feed using the backend's hybrid loader.
+ * @param {number} [page=1]
+ * @param {number} [limit=10]
+ * @returns {Promise<{ success: boolean, data: Array<Object>, pagination: Object }>}
+ */
+export async function fetchHomeFeed(page = 1, limit = 10) {
     try {
         const result = await Request({
             param: "/posts",
@@ -9,8 +15,6 @@ async function fetchHomeFeed(page = 1, limit = 10) {
         });
 
         if (result && result.success) {
-            console.log("Home Posts:", result.data);
-            console.log("Pagination Meta:", result.pagination);
             return result;
         } else {
             console.error("Failed to load home feed:", result?.message || "Unknown error");
@@ -21,3 +25,5 @@ async function fetchHomeFeed(page = 1, limit = 10) {
         throw error;
     }
 }
+
+export default fetchHomeFeed;

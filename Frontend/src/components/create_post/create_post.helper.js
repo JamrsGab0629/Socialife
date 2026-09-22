@@ -65,6 +65,10 @@ export function initCreatePost(root = document, style = {}, userId = 'CURRENT_US
 
   function closeComposer() {
     resetComposer();
+    const backdrop = document.getElementById('composer-overlay-backdrop');
+    if (backdrop) {
+      backdrop.hidden = true;
+    }
     if (composerCard) {
       composerCard.style.display = 'none';
     }
@@ -124,14 +128,21 @@ export function initCreatePost(root = document, style = {}, userId = 'CURRENT_US
         postBtn.textContent = 'Posting...';
 
         // Execute API call via service
-        await createPostService(
+        const response = await createPostService(
           userId,
-          { caption: captionText },
+          { caption: captionText, content: captionText },
           selectedPhoto
         );
 
         resetComposer();
+        closeComposer();
         showToast('Post created!');
+
+        // Dispatch event so Home feed can instantly prepend the new post
+        const createdPost = response?.data || response;
+        if (createdPost) {
+          window.dispatchEvent(new CustomEvent('post:created', { detail: createdPost }));
+        }
       } catch (error) {
         console.error('Failed to publish post:', error);
         showToast('Failed to create post. Try again.');

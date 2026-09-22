@@ -12,11 +12,14 @@ export const createPostService = async (userId, body, file) => {
   const transaction = await Post.sequelize.transaction();
 
   try {
+    const caption = body.caption || body.content || null;
+    const content = body.content || body.caption || null;
+
     const newPost = await Post.create(
       {
         user_id: userId,
-        caption: body.caption,
-        content: body.content,
+        caption: caption,
+        content: content,
         like_count: 0,
         comment_count: 0,
         is_active: true,
@@ -33,7 +36,7 @@ export const createPostService = async (userId, body, file) => {
         {
           user_id: userId,
           post_id: newPost.post_id,
-          href: file.path,
+          href: file.path || file.secure_url || file.url,
         },
         {
           transaction,
@@ -43,10 +46,23 @@ export const createPostService = async (userId, body, file) => {
 
     await transaction.commit();
 
-    return {
-      post: newPost,
-      photo: savedPhoto,
-    };
+    // Re-fetch post with author and photo associations for immediate frontend rendering
+    const completePost = await Post.findOne({
+      where: { post_id: newPost.post_id },
+      include: [
+        {
+          model: User,
+          as: "author",
+          attributes: ["user_id", "username", "profile_url"],
+        },
+        {
+          model: PhotoData,
+          as: "photo",
+        },
+      ],
+    });
+
+    return completePost || { ...newPost.toJSON(), photo: savedPhoto };
   } catch (error) {
     if (!transaction.finished) {
       await transaction.rollback();

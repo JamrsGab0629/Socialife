@@ -18,7 +18,7 @@ export class InfiniteScroll {
 
         this.observer = new IntersectionObserver(
             (entries) => {
-                if (entries[0].isIntersecting) {
+                if (entries[0]?.isIntersecting) {
                     this.loadNext();
                 }
             },
@@ -30,6 +30,9 @@ export class InfiniteScroll {
         if (this.sentinel) {
             this.observer.observe(this.sentinel);
         }
+
+        // Trigger immediate first page load
+        this.loadNext();
     }
 
     async loadNext() {
@@ -43,11 +46,17 @@ export class InfiniteScroll {
                 limit: this.limit
             });
 
-            if (result && result.data && result.data.length > 0) {
-                this.renderItems(result.data, this.container);
+            const items = Array.isArray(result?.data) 
+                ? result.data 
+                : (Array.isArray(result) ? result : []);
+
+            if (items.length > 0) {
+                this.renderItems(items, this.container);
                 
-                // Update pagination status
-                this.hasMore = result.pagination ? result.pagination.hasMore : false;
+                // Update pagination status from backend hybrid loader
+                this.hasMore = result?.pagination 
+                    ? Boolean(result.pagination.hasMore) 
+                    : (items.length >= this.limit);
                 this.page++;
             } else {
                 this.hasMore = false;
@@ -64,9 +73,11 @@ export class InfiniteScroll {
     }
 
     destroy() {
-        this.observer.disconnect();
-        if (this.sentinel && this.sentinel.parentNode) {
-            this.sentinel.remove(); // Clean up sentinel when no more data exists
+        if (this.observer) {
+            this.observer.disconnect();
+        }
+        if (this.sentinel) {
+            this.sentinel.style.display = "none";
         }
     }
 }
