@@ -8,6 +8,7 @@ import Helper, { FriendsTemplate, initComposerOverlay, initCommentInteractions, 
 import Service, { fetchHomeFeedService } from './home.service';
 import Post from '../../components/post/post';
 import { InfiniteScroll } from '../../helpers/utils/InfiniteScroll'; 
+import { getNotifications } from '../../components/notification/notification.service';
 
 export default async function Home() {
     const { navigation, main } = Layout(this.root);
@@ -22,7 +23,7 @@ export default async function Home() {
                 </div>
 
                 <a action-button="timeline" class="${style_topbar_search["icon-btn"]}" href="/app/timeline">
-                    <span class="${style_topbar_search["icon-dot"]}">3</span>
+                    <span class="${style_topbar_search["icon-dot"]}" data-notification-count hidden></span>
                     <img width="30px" src="../../icons/bell.svg" style="filter: invert(20%);" alt="bell">
                 </a>
             </div>
@@ -98,6 +99,16 @@ export default async function Home() {
         }
     });
 
-    const friends_data = await Service();
+    const [friends_data, notificationResult] = await Promise.all([
+        Service(),
+        getNotifications().catch(() => null),
+    ]);
     document.getElementById('friend-list').innerHTML = FriendsTemplate(friends_data);
+
+    const unreadCount = (notificationResult?.data || []).filter((notification) => !notification.is_read).length;
+    const notificationBadge = document.querySelector('[data-notification-count]');
+    if (notificationBadge && unreadCount > 0) {
+        notificationBadge.textContent = String(unreadCount);
+        notificationBadge.hidden = false;
+    }
 }

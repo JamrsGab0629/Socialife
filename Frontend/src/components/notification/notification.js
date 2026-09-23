@@ -1,32 +1,62 @@
-import Service from "./notification.service";
-
+import { getNotifications, markNotificationAsRead } from "./notification.service";
 import style from "./notification.module.css";
 
 export default async function Notification(root) {
-    const data = await Service();
+    root.textContent = "Loading notifications...";
 
-    let template = "";
-    
-    data.forEach((d) => {
-        const auth = d["author"];
+    try {
+        const result = await getNotifications();
+        const notifications = Array.isArray(result?.data) ? result.data : [];
 
-        console.log("debug.notif", d["type"]);
+        if (!notifications.length) {
+            root.textContent = "You have no notifications yet.";
+            return;
+        }
 
-        template += `
-            <div class="${style["notif-item"]}">
-                <div class="${style["notif-avatar-wrap"]}">
-                    <img src="${auth["avatar_url"]}" alt="${auth["username"]}">
-                    <span class="${style["notif-badge-icon"]} ${style[d['type']]}"></span>
-                </div>
-                <div class="${style["notif-body"]}">
-                    <div class="${style["notif-text"]}"><b>${auth["username"]}</b>${d["message"]}</div>
-                    ${d["type"] === "comment" ? `<div class="${style["notif-quote"]}">${d["content"]}</div>` : ``}
-                    <div class="${style["notif-time"]}">${d["datetime"]}</div>
-                </div>
-                ${!d["isRead"] ? `<span class="${style["notif-dot"]}"></span>` : ``}
-            </div>
-        `
-    });
+        root.innerHTML = notifications.map((notification) => {
+            const author = notification.author || {};
+            const isRead = Boolean(notification.is_read);
 
-    root.innerHTML += template;
+            return `
+                <button type="button" class="${style["notif-item"]} ${isRead ? "" : style.unread}" data-notification-id="${notification.notification_id}">
+                    <div class="${style["notif-avatar-wrap"]}">
+                        <img src="${author.profile_url || "../../icons/user-avatar.svg"}" alt="${author.username || "User"}" onerror="this.src='../../icons/user-avatar.svg'">
+                        <span class="${style["notif-badge-icon"]} ${style[notification.type] || ""}"></span>
+                    </div>
+                    <div class="${style["notif-body"]}">
+                        <div class="${style["notif-text"]}"><b>${author.username || "Someone"}</b> ${notification.content}</div>
+                        <div class="${style["notif-time"]}">${formatTime(notification.created_at)}</div>
+                    </div>
+                    ${!isRead ? `<span class="${style["notif-dot"]}"></span>` : ""}
+                </button>
+            `;
+        }).join("");
+
+        root.addEventListener("click", async (event) => {
+            const item = event.target.closest("[data-notification-id]");
+            if (!item || !item.classList.contains(style.unread)) return;
+
+            try {
+                await markNotificationAsRead(item.dataset.notificationId);
+                item.classList.remove(style.unread);
+                item.querySelector(`.${style["notif-dot"]}`)?.remove();
+            } catch (error) {
+                console.error("Failed to mark notification as read:", error);
+            }
+        });
+    } catch (error) {
+        console.error("Failed to load notifications:", error);
+        root.textContent = "Unable to load notifications. Please try again.";
+    }
+}
+
+function formatTime(timestamp) {
+    const date = new Date(timestamp);
+    if (Number.isNaN(date.getTime())) return "";
+
+    const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
+    if (seconds < 60) return "Just now";
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+    return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
