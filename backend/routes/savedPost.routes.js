@@ -10,7 +10,7 @@ const router = express.Router();
 router.post(
     "/:postId", 
     isAuthenticated, 
-    rateLimiter(20, 60000), 
+    rateLimiter(50, 60000), 
     validate(postIdSchema), 
     savedPostController.savePost
 );
@@ -25,7 +25,7 @@ router.delete(
 
 router.get(
     "/", 
-    isAuthenticated,rateLimiter(15,60000),
+    isAuthenticated, rateLimiter(60, 60000),
     validate(paginationSchema), 
     savedPostController.getSavedPosts
 );

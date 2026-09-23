@@ -32,13 +32,66 @@
     flex: 1;
 }
 
-.action-more > img {
-    height: 15px;
-    margin-bottom: auto;
+.post-menu {
+    position: relative;
 }
 
-.action-more > img:hover {
+.action-more {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+}
+
+.action-more > img {
+    height: 15px;
+}
+
+.action-more:hover {
+    background: #F0F2F5;
     cursor: pointer;
+}
+
+.post-menu-popover {
+    position: absolute;
+    z-index: 2;
+    top: calc(100% + 4px);
+    right: 0;
+    min-width: 132px;
+    padding: 4px;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(20, 30, 50, 0.14);
+}
+
+.post-menu-popover button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 10px;
+    border: 0;
+    border-radius: 5px;
+    color: #2A3441;
+    background: transparent;
+    font: inherit;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.post-menu-popover button:hover {
+    background: #F0F2F5;
+}
+
+.post-menu-popover img {
+    width: 14px;
+    height: 14px;
 }
 
 .post-author {
@@ -50,6 +103,19 @@
     font-size: 13px;
     color: var(--text-muted);
     margin-top: 1px;
+}
+
+.share-context {
+    padding: 10px 20px 0;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.share-caption {
+    margin-top: 6px;
+    color: #2A3441;
+    font-size: 15px;
+    line-height: 1.4;
 }
 
 .post-text {
@@ -158,6 +224,7 @@
     fill: var(--link-blue);
     stroke: var(--link-blue);
 }
+
 
 /* --- FACEBOOK-STYLE COMMENT INPUT SECTION --- */
 .comments-section {

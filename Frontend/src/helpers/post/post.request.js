@@ -89,3 +89,27 @@ export async function get_replies(postId, parentId) {
         method: "GET",
     });
 }
+
+export async function save_post(postId) {
+    return Request({
+        param: `/saved-posts/${postId}`,
+        method: "POST",
+        args: {},
+    });
+}
+
+export async function unsave_post(postId) {
+    return Request({
+        param: `/saved-posts/${postId}`,
+        method: "DELETE",
+        args: {},
+    });
+}
+
+export async function share_post(postId, caption = "") {
+    return Request({
+        param: `/posts/${postId}/share`,
+        method: "POST",
+        args: { caption },
+    });
+}

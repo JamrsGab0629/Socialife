@@ -2,7 +2,7 @@ import { createShareRecord } from "../../services/sharedPost.service.js";
 
 export const sharePost = async (req, res, next) => {
     try {
-        const userId = req.user?.userId;
+        const userId = req.user?.userId || req.user?.user_id;
 
         if (!userId) {
             const error = new Error("Unauthorized: User ID missing from token payload");

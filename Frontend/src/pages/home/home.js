@@ -4,7 +4,7 @@ import Layout from '../../layouts/default/default';
 
 import style from './home.module.css';
 import style_topbar_search from "../../styles/app/topbar-search.module.css";
-import Helper, { FriendsTemplate, initComposerOverlay, initCommentInteractions } from './home.helper';
+import Helper, { FriendsTemplate, initComposerOverlay, initCommentInteractions, initSharePostDialog } from './home.helper';
 import Service, { fetchHomeFeedService } from './home.service';
 import Post from '../../components/post/post';
 import { InfiniteScroll } from '../../helpers/utils/InfiniteScroll'; 
@@ -47,6 +47,18 @@ export default async function Home() {
         <div id="composer-overlay-backdrop" class="${style['overlay-backdrop']}" hidden>
             <div id="composer-overlay-container" class="${style['overlay-modal']}"></div>
         </div>
+
+        <dialog id="share-post-dialog" class="${style['share-dialog']}">
+            <form method="dialog" data-share-post-form>
+                <h2>Share post</h2>
+                <textarea data-share-caption maxlength="500" placeholder="Add a caption (optional)"></textarea>
+                <p data-share-error hidden></p>
+                <div class="${style['share-dialog-actions']}">
+                    <button type="button" data-action="close-share-dialog">Cancel</button>
+                    <button type="submit" data-share-submit>Share</button>
+                </div>
+            </form>
+        </dialog>
     `;
 
     Helper();
@@ -57,6 +69,7 @@ export default async function Home() {
 
     // Initialize comment interactions using event delegation on the feed container
     initCommentInteractions(feedContainer);
+    initSharePostDialog();
 
     new InfiniteScroll({
         container: feedContainer,
@@ -67,7 +80,7 @@ export default async function Home() {
         },
         renderItems: (posts, container) => {
             posts.forEach((postData) => {
-                const postMarkup = Post(postData);
+                const postMarkup = Post(postData, { showSave: true });
                 container.insertAdjacentHTML('beforeend', postMarkup);
             });
         }
@@ -78,7 +91,7 @@ export default async function Home() {
         const newPost = event.detail;
         if (!newPost) return;
 
-        const postMarkup = Post(newPost);
+        const postMarkup = Post(newPost, { showSave: true });
         const composerTrigger = document.getElementById('composer-trigger');
         if (composerTrigger) {
             composerTrigger.insertAdjacentHTML('afterend', postMarkup); // Places it right at the top of the feed

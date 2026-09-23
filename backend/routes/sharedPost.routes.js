@@ -10,7 +10,7 @@ const router = express.Router();
 router.post(
     "/:postId/share", 
     isAuthenticated, 
-    rateLimiter(5, 60000), 
+    rateLimiter(30, 60000), 
     validate(sharePostSchema), 
     sharedPostController.sharePost
 );

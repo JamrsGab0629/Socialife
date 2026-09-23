@@ -37,13 +37,14 @@ const formatPostTime = (timestamp) => {
     }
 };
 
-export default function Post(data) {
+export default function Post(data, { showSave = false } = {}) {
     if (!data || Object.keys(data).length <= 0) return "";
 
     const postId = data.post_id || data.id || "";
+    const cardId = data.feed_id || postId;
     const authorName = data.user_name || data.author?.username || "Anonymous";
     const avatarUrl = data.avatar_url || data.author?.profile_url || "../../icons/user-avatar.svg";
-    const postTime = formatPostTime(data.post_time || data.created_at);
+    const postTime = formatPostTime(data.shared_at || data.post_time || data.created_at);
     
     const textContent = data.caption || (typeof data.content === "string" ? data.content : "");
 
@@ -60,17 +61,39 @@ export default function Post(data) {
     const commentData = data.comment_data || data.comments || [];
     const likesCount = data.like_count ?? data.likes_count ?? 0;
     const isLiked = Boolean(data.is_liked || data.liked);
+    const isSaved = Boolean(data.is_saved);
+    const sharedBy = data.shared_by?.username || "Someone";
+    const shareContext = data.is_shared ? `
+        <div class="${style["share-context"]}">
+            <span>${sharedBy} shared a post</span>
+            ${data.share_caption ? `<div class="${style["share-caption"]}">${data.share_caption}</div>` : ""}
+        </div>
+    ` : "";
 
     return `
-        <div class="${style["post-card"]}" id="${postId}">
+        <div class="${style["post-card"]}" id="${cardId}">
             <div class="${style["post-header"]}">
                 <img src="${avatarUrl}" alt="${authorName}" onerror="this.src='../../icons/user-avatar.svg'">
                 <h2>
                     <span class="${style["post-author"]}">${authorName}</span>
                     <span class="${style["post-time"]}">${postTime}</span>
                 </h2>
-                <a class="${style["action-more"]}" href="#"><img src="../../icons/more.svg" alt="more"></a>
+                <div class="${style["post-menu"]}">
+                    <button type="button" class="${style["action-more"]}" data-action="toggle-post-menu" aria-label="Post options" aria-expanded="false">
+                        <img src="../../icons/more.svg" alt="">
+                    </button>
+                    ${showSave ? `
+                        <div class="${style["post-menu-popover"]}" data-post-menu hidden>
+                            <button type="button" data-action="toggle-save" data-post-id="${postId}" aria-pressed="${isSaved}">
+                                <img src="../../icons/save.svg" alt="">
+                                <span data-save-label>${isSaved ? "Saved" : "Save post"}</span>
+                            </button>
+                        </div>
+                    ` : ""}
+                </div>
             </div>
+
+            ${shareContext}
 
             ${textContent ? `<div class="${style["post-text"]}">${textContent}</div>` : ""}
 
@@ -91,7 +114,7 @@ export default function Post(data) {
                     <img src="../../icons/chat.svg" alt="comment">
                     Comment
                 </button>
-                <button type="button" class="${style["action-btn"]}">
+                <button type="button" class="${style["action-btn"]}" data-action="share" data-post-id="${postId}">
                     <img src="../../icons/export.svg" alt="share">
                     Share
                 </button>

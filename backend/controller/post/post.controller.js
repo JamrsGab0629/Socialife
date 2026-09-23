@@ -22,7 +22,9 @@ export const createPost = async (req, res, next) => {
 
 export const getHomeFeed = async (req, res, next) => {
     try {
+        const userId = req.user.userId || req.user.user_id;
         const result = await postService.getHomeFeedService(
+            userId,
             req.validated.query
         );
 

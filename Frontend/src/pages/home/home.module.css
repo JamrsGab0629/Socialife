@@ -150,6 +150,77 @@
     overflow: hidden;
 }
 
+.share-dialog {
+    width: min(440px, calc(100vw - 32px));
+    padding: 0;
+    border: 0;
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+.share-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.share-dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 22px;
+}
+
+.share-dialog h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.share-dialog textarea {
+    min-height: 112px;
+    padding: 12px;
+    border: 1px solid #d9dde3;
+    border-radius: 8px;
+    resize: vertical;
+    font: inherit;
+}
+
+.share-dialog textarea:focus {
+    outline: 2px solid #1877f2;
+    outline-offset: -1px;
+}
+
+.share-dialog p {
+    margin: -8px 0 0;
+    color: #c62828;
+    font-size: 14px;
+}
+
+.share-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.share-dialog-actions button {
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 7px;
+    background: #edf0f3;
+    color: #2a3441;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.share-dialog-actions button[type="submit"] {
+    background: #1877f2;
+    color: #fff;
+}
+
+.share-dialog-actions button:disabled {
+    cursor: default;
+    opacity: 0.7;
+}
+
 @media (max-width: 1021px) and (min-width: 769px){
     .right-col {
         display: none;

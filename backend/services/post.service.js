@@ -1,5 +1,4 @@
-import { Post, User, PhotoData } from "../model/association.model.js";
-import { hybridLoad } from "../utils/loaders/hybrid.loader.js";
+import { Post, SharedPost, User, PhotoData, SavedPost } from "../model/association.model.js";
 export { getUnifiedProfileFeedService as getProfileFeedService } from "./profileFeed.service.js";
 
 const createNotFoundError = (message) => {
@@ -72,29 +71,84 @@ export const createPostService = async (userId, body, file) => {
   }
 };
 
-export const getHomeFeedService = async (query = {}) => {
-  return hybridLoad(Post, {
-    page: query.page,
-    limit: query.limit,
-
-    where: {
-      is_active: true,
+export const getHomeFeedService = async (userId, query = {}) => {
+  const page = Math.max(1, Number(query.page) || 1);
+  const limit = Math.max(1, Number(query.limit) || 10);
+  const postIncludes = [
+    {
+      model: User,
+      as: "author",
+      attributes: ["user_id", "username", "profile_url"],
     },
+    {
+      model: PhotoData,
+      as: "photo",
+    },
+    {
+      model: SavedPost,
+      as: "saves",
+      attributes: ["post_id"],
+      where: { user_id: userId },
+      required: false,
+    },
+  ];
 
-    include: [
-      {
-        model: User,
-        as: "author",
-        attributes: ["user_id", "username", "profile_url"],
-      },
-      {
-        model: PhotoData,
-        as: "photo",
-      },
-    ],
+  const [posts, shares] = await Promise.all([
+    Post.findAll({
+      where: { is_active: true },
+      include: postIncludes,
+    }),
+    SharedPost.findAll({
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ["user_id", "username", "profile_url"],
+        },
+        {
+          model: Post,
+          as: "post",
+          where: { is_active: true },
+          include: postIncludes,
+        },
+      ],
+    }),
+  ]);
 
-    order: [["created_at", "DESC"]],
+  const originalPosts = posts.map((post) => {
+    const { saves = [], ...postData } = post.toJSON();
+    return { ...postData, is_saved: saves.length > 0 };
   });
+
+  const sharedPosts = shares.map((share) => {
+    const shareData = share.toJSON();
+    const { saves = [], ...postData } = shareData.post;
+    return {
+      ...postData,
+      is_saved: saves.length > 0,
+      is_shared: true,
+      shared_by: shareData.user,
+      share_caption: shareData.caption,
+      shared_at: shareData.created_at,
+      feed_id: shareData.share_id,
+    };
+  });
+
+  const feed = [...originalPosts, ...sharedPosts]
+    .sort((a, b) => new Date(b.shared_at || b.created_at) - new Date(a.shared_at || a.created_at));
+  const offset = (page - 1) * limit;
+  const data = feed.slice(offset, offset + limit);
+
+  return {
+    data,
+    pagination: {
+      page,
+      limit,
+      totalItems: feed.length,
+      totalPages: Math.ceil(feed.length / limit),
+      hasMore: offset + data.length < feed.length,
+    },
+  };
 };
 
 

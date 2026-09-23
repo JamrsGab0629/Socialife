@@ -1,6 +1,5 @@
 import SavedPost from "../model/savedPost.model.js";
-import Post from "../model/post.model.js";
-import PhotoData from "../model/photo_data.model.js";
+import { Post, PhotoData, User } from "../model/association.model.js";
 import { hybridLoad } from "../utils/loaders/hybrid.loader.js";
 
 
@@ -59,6 +58,11 @@ export const getSavedPostsService = async (userId, query = {}) => {
                 as: "post",
                 where: { is_active: true }, 
                 include: [
+                    {
+                        model: User,
+                        as: "author",
+                        attributes: ["user_id", "username", "profile_url"]
+                    },
                     {
                         model: PhotoData,
                         as: "photo"
