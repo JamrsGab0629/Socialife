@@ -1,0 +1,27 @@
+<div class="card card--pad">
+  <div class="toolbar">
+    <div class="search-input">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="text-input" id="users-search" placeholder="Search users by name or email" />
+    </div>
+    <div class="select">
+      <select id="users-status-filter" class="select-input">
+        <option value="all">All statuses</option>
+        <option value="active">Active</option>
+        <option value="banned">Banned</option>
+      </select>
+    </div>
+    <div class="toolbar__spacer"></div>
+  </div>
+
+  <div class="data-table-wrap" id="users-table-wrap">
+    <table class="data-table" id="users-table">
+      <thead>
+        <tr><th>User</th><th>Email</th><th>Joined</th><th>Status</th><th></th></tr>
+      </thead>
+      <tbody id="users-table-body"></tbody>
+    </table>
+  </div>
+
+  <div id="users-pagination"></div>
+</div>
