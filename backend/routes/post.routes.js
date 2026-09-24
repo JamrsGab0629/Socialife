@@ -105,5 +105,10 @@ router.get(
     validate(getRepliesSchema),
     commentController.getReplies
 );
-
+router.get(
+    "/user/:userId/photos",
+    isAuthenticated,
+    validate(getProfileFeedSchema),
+    postController.getUserPhotos
+);
 export default router;

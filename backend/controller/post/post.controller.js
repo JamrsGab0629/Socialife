@@ -100,3 +100,17 @@ export const getPostById = async (req, res, next) => {
         next(error);
     }
 };
+export const getUserPhotos = async (req, res, next) => {
+    try {
+        const { userId } = req.validated.params;
+        const photos = await postService.getUserPhotosService(userId);
+
+        return res.status(200).json({
+            success: true,
+            message: "User photos fetched successfully",
+            data: photos
+        });
+    } catch (error) {
+        next(error);
+    }
+};

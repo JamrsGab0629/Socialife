@@ -1,12 +1,13 @@
 import Navigation from "../../components/navigation/navigation";
 import Layout from "../../layouts/default/default";
+import * as verifyHelper from "../../helpers/auth/verify.request";
 
 import PicturesHelper from "./profile.pictures.helper";
 import MainHelper from "./profile.main.helper";
 
 import style from "./profile.module.css";
 
-export default function Profile(){
+export default async function Profile(){
     const { navigation, main } = Layout(this.root);
 
     Navigation(navigation);
@@ -56,6 +57,26 @@ export default function Profile(){
         </div>
     `;
 
-    PicturesHelper();
-    MainHelper();
+    const seeAllPhotosLink = document.getElementById('see-all-photos-lnk');
+const photosTabButton = main.querySelector('[data-tab="photos"]');
+if (seeAllPhotosLink && photosTabButton) {
+    seeAllPhotosLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        photosTabButton.click();
+    });
 }
+   
+try {
+    const { user } = await verifyHelper.checkAuth();
+    const userId = user?.user_id;
+
+    if (!userId) {
+        console.error("No user_id found on checkAuth() response:", user);
+        return;
+    }
+
+    PicturesHelper(userId);
+    MainHelper(userId);
+} catch (error) {
+    console.error("Failed to resolve current user for profile feed:", error);
+}}

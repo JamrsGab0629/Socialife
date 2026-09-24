@@ -196,3 +196,20 @@ export const getPostByIdService = async (postId, userId) => {
     ],
   });
 };
+export const getUserPhotosService = async (userId) => {
+  const photos = await PhotoData.findAll({
+    where: { user_id: userId },
+    include: [
+      {
+        model: Post,
+        as: "post",
+        attributes: ["post_id", "is_active"],
+        where: { is_active: true },
+        required: true,
+      },
+    ],
+    order: [["created_at", "DESC"]],
+  });
+
+  return photos.map((p) => p.toJSON());
+};

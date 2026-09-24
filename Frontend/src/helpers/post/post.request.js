@@ -113,3 +113,22 @@ export async function share_post(postId, caption = "") {
         args: { caption },
     });
 }
+/**
+ * Fetches a user's profile feed (posts + shares, paginated).
+ * @param {string|number} userId - The ID of the profile owner.
+ * @param {number} page - Page number.
+ * @param {number} limit - Limit per page.
+ * @returns {Promise<Object>} API response payload.
+ */
+export async function get_profile_feed(userId, page = 1, limit = 10) {
+    try {
+        return await Request({
+            param: `/posts/user/${userId}`,
+            method: "GET",
+            args: { page, limit },
+        });
+    } catch (error) {
+        console.error("Failed inside get_profile_feed request helper:", error);
+        throw error;
+    }
+}

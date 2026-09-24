@@ -90,39 +90,38 @@ class SPA {
 
   handleRouteChanges() {
     window.addEventListener("popstate", () => {
-      this.execute(window.location.pathname);
+        this.execute(window.location.pathname);
     });
 
-    const observer = new MutationObserver((mutationList) => {
-      mutationList.forEach((mutation) => {
-        mutation?.addedNodes?.forEach((e) => {
-          if (e.nodeName.toLowerCase() === "a") {
-            e.addEventListener("click", this.handleClick.bind(this));
-          } else {
-            // find any links in the container
-            if (
-              typeof e === "object" &&
-              typeof e.getElementsByTagName !== "undefined"
-            ) {
-              const as = e.getElementsByTagName("a");
+    const bindLink = (link) => {
+        if (link.dataset.spaBound) return;
+        link.dataset.spaBound = "true";
+        link.addEventListener("click", this.handleClick.bind(this));
+    };
 
-              for (let i = 0; i < as.length; i++) {
-                as[i].addEventListener("click", this.handleClick.bind(this));
-              }
-            }
-          }
+    const observer = new MutationObserver((mutationList) => {
+        mutationList.forEach((mutation) => {
+            mutation?.addedNodes?.forEach((e) => {
+                if (e.nodeName?.toLowerCase() === "a") {
+                    bindLink(e);
+                } else if (typeof e === "object" && typeof e.getElementsByTagName !== "undefined") {
+                    const as = e.getElementsByTagName("a");
+                    for (let i = 0; i < as.length; i++) {
+                        bindLink(as[i]);
+                    }
+                }
+            });
         });
-      });
     });
 
     observer.observe(document, {
-      attributes: true,
-      childList: true,
-      subtree: true,
+        attributes: true,
+        childList: true,
+        subtree: true,
     });
 
     this.execute(window.location.pathname);
-  }
+}
 }
 
 export default SPA;
