@@ -81,6 +81,10 @@ User.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
       allowNull: false,
+    },  
+      cover_url: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
 
     is_completed: {

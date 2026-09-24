@@ -1,5 +1,6 @@
 import { profileService } from '../../services/profile.service.js';
-import * as profileFeedService from '../../services/profileFeed.service.js'; 
+import * as profileFeedService from '../../services/profileFeed.service.js';
+import * as postService from '../../services/post.service.js';
 
 export const profileController = {
   // GET /api/profiles/me
@@ -29,12 +30,86 @@ export const profileController = {
         return res.status(400).json({ success: false, message: 'No image file provided' });
       }
 
-      // req.file.path contains the secure Cloudinary URL from Multer
       const updatedProfile = await profileService.updateProfilePicture(userId, req.file.path);
+
+      const userCaption = req.body?.caption?.trim();
+      const caption = userCaption
+        ? `updated their profile picture — ${userCaption}`
+        : "updated their profile picture";
+
+      await postService.createPostService(
+        userId,
+        { caption },
+        req.file
+      );
 
       return res.status(200).json({
         success: true,
         message: 'Profile picture updated successfully',
+        data: updatedProfile,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // DELETE /api/profiles/picture
+  async removePicture(req, res, next) {
+    try {
+      const userId = req.user.user_id || req.user.userId;
+      const updatedProfile = await profileService.removeProfilePicture(userId);
+
+      return res.status(200).json({
+        success: true,
+        message: 'Profile picture removed successfully',
+        data: updatedProfile,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // PUT /api/profiles/cover
+  async updateCover(req, res, next) {
+    try {
+      const userId = req.user.user_id || req.user.userId;
+
+      if (!req.file) {
+        return res.status(400).json({ success: false, message: 'No image file provided' });
+      }
+
+      const updatedProfile = await profileService.updateCoverPhoto(userId, req.file.path);
+
+      const userCaption = req.body?.caption?.trim();
+      const caption = userCaption
+        ? `updated their cover photo — ${userCaption}`
+        : "updated their cover photo";
+
+      await postService.createPostService(
+        userId,
+        { caption },
+        req.file
+      );
+
+      return res.status(200).json({
+        success: true,
+        message: 'Cover photo updated successfully',
+        data: updatedProfile,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // DELETE /api/profiles/cover
+  async removeCover(req, res, next) {
+    try {
+      const userId = req.user.user_id || req.user.userId;
+      const updatedProfile = await profileService.removeCoverPhoto(userId);
+
+      return res.status(200).json({
+        success: true,
+        message: 'Cover photo removed successfully',
         data: updatedProfile,
       });
     } catch (error) {

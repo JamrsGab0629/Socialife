@@ -29,22 +29,22 @@
     align-items: flex-end;
     gap: 18px 24px;
     padding: 0 24px 16px 24px;
-    margin-top: -52px;
+    margin-top: -68px;
     position: relative;
     z-index: 10;
     width: 100%;
-    max-height: 100px;
+    max-height: 140px;
 }
 
 .profile-avatar {
+    position: relative;
     font-size: 72px;
     color: #8a8d94;
 }
 
-
-.profile-avatar img{
-    width: 72px;
-    height: 72px;
+.profile-avatar img {
+    width: 128px;
+    height: 128px;
     border-radius: 50%;
     background: linear-gradient(135deg, #e4e6eb, #d0d3d9);
     border: 4px solid #ffffff;
@@ -53,11 +53,77 @@
     justify-content: center;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
     transition: transform 0.2s;
+    object-fit: cover;
 }
 
-.profile-avatar:hover {
+.profile-avatar:hover img {
     transform: scale(1.02);
 }
+
+.avatar-edit-btn {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    z-index: 5;
+}
+
+.avatar-edit-btn img {
+    width: 16px;
+    height: 16px;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+}
+
+.avatar-edit-btn:hover {
+    background: #f0f2f5;
+}
+
+.avatar-menu-popover {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    border: 1px solid #d0d3d9;
+    min-width: 160px;
+    z-index: 20;
+    overflow: hidden;
+}
+
+.avatar-menu-popover button {
+    display: block;
+    width: 100%;
+    padding: 10px 14px;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    color: #1c1e21;
+}
+
+.avatar-menu-popover button:hover {
+    background: #f0f2f5;
+}
+
+#avatar-remove-option {
+    color: #e0245e;
+}
+
 .profile-info {
     flex: 1;
     min-width: 200px;
@@ -170,7 +236,7 @@
 
 /* TAB CONTENT */
 .tab-content {
-    padding: 20px 24px 0 24px;
+    padding: 20px 24px 0 12px;
     display: none;
     flex-direction: column;
     gap: 16px;
@@ -182,16 +248,16 @@
 
 /* ALL TAB: 2-COLUMN LAYOUT */
 .all-tab-grid {
-    margin: 0 auto;
+    margin: 0;
+    max-width: 100%;
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 20px;
+    grid-template-columns: 320px 1fr;
+    gap: 16px;
     align-items: start;
 }
 
 /* PHOTOS BOX */
 .photos-section {
-    max-width: 700px;
     background: #ffffff;
     border-radius: 16px;
     padding: 16px 16px 18px 16px;
@@ -260,4 +326,95 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    max-width: 100%;
+}
+
+.cover-edit-btn {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    color: #1c1e21;
+    z-index: 15;
+}
+
+.cover-edit-btn img {
+    width: 14px;
+    height: 14px;
+}
+
+.cover-edit-btn:hover {
+    background: #ffffff;
+}
+
+.cover-menu-popover {
+    position: absolute;
+    bottom: 54px;
+    right: 14px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    border: 1px solid #d0d3d9;
+    min-width: 160px;
+    z-index: 25;
+    overflow: hidden;
+}
+
+.cover-menu-popover button {
+    display: block;
+    width: 100%;
+    padding: 10px 14px;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    color: #1c1e21;
+}
+
+.cover-menu-popover button:hover {
+    background: #f0f2f5;
+}
+
+#cover-remove-option {
+    color: #e0245e;
+}
+
+@media (max-width: 768px) {
+    .all-tab-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .photos-section {
+        width: 100%;
+    }
+
+    .posts-column {
+        max-width: 100%;
+    }
+
+    .profile-header {
+        flex-wrap: wrap;
+    }
+
+    .profile-avatar img {
+        width: 96px;
+        height: 96px;
+    }
+
+    .profile-info h1 {
+        font-size: 22px;
+    }
 }

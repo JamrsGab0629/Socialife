@@ -1,8 +1,8 @@
 .notif-group-label {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 700;
     color: var(--text-dark);
-    margin: 18px 0 10px;
+    margin: 22px 0 12px;
 }
 
 .notif-group-label:first-child {
@@ -13,9 +13,9 @@
     display: flex;
     width: 100%;
     align-items: flex-start;
-    gap: 14px;
-    padding: 12px 14px;
-    border-radius: 12px;
+    gap: 18px;
+    padding: 18px 20px;
+    border-radius: 14px;
     border: 0;
     background: transparent;
     text-align: left;
@@ -41,17 +41,17 @@
 }
 
 .notif-avatar-wrap img {
-    height: 50px;
-    width: 50px;
+    height: 64px;
+    width: 64px;
     border-radius: 50%;
 }
 
 .notif-badge-icon {
     position: absolute;
-    bottom: -3px;
-    right: -3px;
-    width: 21px;
-    height: 21px;
+    bottom: -4px;
+    right: -4px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     border: 2px solid var(--card-bg);
     display: flex;
@@ -61,16 +61,16 @@
 
 .notif-badge-icon.like {
     background-image: url("../../icons/liked.svg");
-    background-size: contain;     /* Forces the image to fit inside the 21x21 box */
-    background-repeat: no-repeat; /* Prevents the image from tiling */
-    background-position: center;  /* Centers it nicely */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .notif-badge-icon.comment {
     background-image: url("../../icons/commented.svg");
-    background-size: contain;     /* Forces the image to fit inside the 21x21 box */
-    background-repeat: no-repeat; /* Prevents the image from tiling */
-    background-position: center;  /* Centers it nicely */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .notif-body {
@@ -79,8 +79,8 @@
 }
 
 .notif-text {
-    font-size: 14.5px;
-    line-height: 1.4;
+    font-size: 16px;
+    line-height: 1.45;
     color: var(--text-dark);
 }
 
@@ -89,33 +89,33 @@
 }
 
 .notif-quote {
-    margin-top: 6px;
-    padding: 8px 12px;
+    margin-top: 8px;
+    padding: 10px 14px;
     background: #F0F1F3;
-    border-radius: 10px;
-    font-size: 13.5px;
+    border-radius: 12px;
+    font-size: 14.5px;
     color: #4A545F;
     font-style: italic;
 }
 
 .notif-time {
-    font-size: 12.5px;
+    font-size: 13.5px;
     color: var(--text-muted);
-    margin-top: 4px;
+    margin-top: 5px;
 }
 
 .notif-dot {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: var(--link-blue);
     flex-shrink: 0;
-    margin-top: 6px;
+    margin-top: 8px;
 }
 
 .notif-badge-icon.share {
     background-image: url("../../icons/export.svg");
-    background-size: 12px;
+    background-size: 14px;
     background-repeat: no-repeat;
     background-position: center;
     background-color: #f0f2f5;
