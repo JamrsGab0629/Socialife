@@ -10,7 +10,10 @@ import { DateTime } from "luxon";
 const signup = async ({ username, email, password }) => {
     // 1. Check if username or email already exists
     const existingUsername = await User.findOne({ where: { username } });
-    if (existingUsername && existingUsername?.is_verified) {
+ 
+    // check to see if the username is already existing and not with the same email
+    // console.log(existingUsername);
+    if (existingUsername && existingUsername?.email !== email) {
         throw new Error("Username already exists");
     }
 
@@ -67,7 +70,7 @@ const verify_OTP = async ({ email, otp }) => {
 
     // generate otp and compares them
     const otp_now = generate_OTP(existingEmail.user_id, email, existingEmail.created_at);
-    // const is_same = ( otp_now === otp )
+    const is_same = ( otp_now === otp )
     // console.log("verify_OTP", otp_now, otp)
 
     if (!is_same) {
@@ -100,7 +103,7 @@ const resend_OTP = async ({ email }) => {
         await existingEmail.save();
     }
 
-    console.log(now.valueOf() - createdAt.valueOf());
+    // console.log(now.valueOf() - createdAt.valueOf());
 
     const otp = generate_OTP(existingEmail.user_id, email, existingEmail.created_at);
     // console.log("debug.resendotp [for testing purposes]", otp)
