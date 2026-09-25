@@ -124,13 +124,14 @@ export default async function Profile(params){
         </div>
     `;
 
-    try {
-        const isOwnProfile = !routeUserId;
-        const { data: profile } = isOwnProfile
-            ? await get_my_profile()
-            : await get_user_profile_stats(routeUserId);
+       try {
+        const { data: myProfile } = await get_my_profile();
+        const myUserId = myProfile?.user_id;
 
-        const userId = isOwnProfile ? profile?.user_id : routeUserId;
+        const isOwnProfile = !routeUserId || routeUserId === myUserId;
+        const profile = isOwnProfile ? myProfile : (await get_user_profile_stats(routeUserId))?.data;
+
+        const userId = isOwnProfile ? myUserId : routeUserId;
 
         if (!userId) {
             console.error("No user_id resolved for profile view:", profile);
