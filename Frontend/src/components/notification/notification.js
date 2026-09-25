@@ -20,7 +20,7 @@ export default async function Notification(root) {
             const isRead = Boolean(notification.is_read);
 
             return `
-                <button type="button" class="${style["notif-item"]} ${isRead ? "" : style.unread}" data-notification-id="${notification.notification_id}" data-post-id="${notification.post_id || ""}">
+                <button type="button" class="${style["notif-item"]} ${isRead ? "" : style.unread}" data-notification-id="${notification.notification_id}" data-post-id="${notification.post_id || ""}" data-type="${notification.type || ""}">
                     <div class="${style["notif-avatar-wrap"]}">
                         <img src="${author.profile_url || "../../icons/user-avatar.svg"}" alt="${author.username || "User"}" onerror="this.src='../../icons/user-avatar.svg'">
                         <span class="${style["notif-badge-icon"]} ${style[notification.type] || ""}"></span>
@@ -46,6 +46,12 @@ export default async function Notification(root) {
                 } catch (error) {
                     console.error("Failed to mark notification as read:", error);
                 }
+            }
+
+            const type = item.dataset.type;
+            if (type === "friend_request" || type === "friend_accept") {
+                window.location.href = "/app/friends";
+                return;
             }
 
             const postId = item.dataset.postId;
