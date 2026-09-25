@@ -23,7 +23,7 @@ app.use(cors({
 }))
 
 app.use(express.json());
-app.use(rateLimiter(100, 60000));
+app.use(rateLimiter(200, 60000));
 app.use(cookieParser());
 
 app.use("/api/admin", adminRoutes);

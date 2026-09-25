@@ -18,15 +18,15 @@ const router = express.Router();
 router.use(isAuthenticated); 
 
 
-router.post("/request/:userId", rateLimiter(10, 60000), sendFriendRequest);     
-router.patch("/accept/:userId", rateLimiter(20, 60000), acceptFriendRequest);   
-router.patch("/decline/:userId", rateLimiter(20, 60000), declineFriendRequest); 
+router.post("/request/:userId", rateLimiter(40, 60000), sendFriendRequest);     
+router.patch("/accept/:userId", rateLimiter(50, 60000), acceptFriendRequest);   
+router.patch("/decline/:userId", rateLimiter(50, 60000), declineFriendRequest); 
 
 router.get("/", getFriendsList);
 router.get("/requests/pending", getPendingRequestsList);
 router.get("/suggestions", getSuggestions);
 router.get("/status/:userId", getRelationshipStatus);
 
-router.delete("/:userId", rateLimiter(10, 60000), removeFriend);                
+router.delete("/:userId", rateLimiter(50, 60000), removeFriend);                
 
 export default router;

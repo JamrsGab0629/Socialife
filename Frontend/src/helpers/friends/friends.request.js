@@ -27,6 +27,15 @@ export async function get_friend_suggestions() {
     }
 }
 
+export async function get_friend_status(userId) {
+    try {
+        return await Request({ param: `/friends/status/${userId}`, method: "GET", args: {} });
+    } catch (error) {
+        console.error("Failed inside get_friend_status request helper:", error);
+        throw error;
+    }
+}
+
 export async function send_friend_request(userId) {
     try {
         return await Request({ param: `/friends/request/${userId}`, method: "POST", args: {} });

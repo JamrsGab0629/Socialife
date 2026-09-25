@@ -8,11 +8,56 @@ import {
     update_cover_photo,
     remove_cover_photo
 } from "../../helpers/profile/profile.request";
+import { get_friend_status, send_friend_request, accept_friend_request, decline_friend_request, remove_friend } from "../../helpers/friends/friends.request";
 
 import PicturesHelper from "./profile.pictures.helper";
 import MainHelper from "./profile.main.helper";
 
 import style from "./profile.module.css";
+
+function renderFriendButton(status, userId) {
+    const actionsEl = document.getElementById('profile-actions');
+    if (!actionsEl) return;
+
+    if (status === 'friends') {
+        actionsEl.innerHTML = `<button class="${style["btn-primary"]}" data-friend-action="remove">Friends ✓</button>`;
+    } else if (status === 'pending_sent') {
+        actionsEl.innerHTML = `<button class="${style["btn-primary"]}" disabled>Requested</button>`;
+    } else if (status === 'pending_received') {
+        actionsEl.innerHTML = `
+            <button class="${style["btn-primary"]}" data-friend-action="accept">Accept</button>
+            <button class="${style["btn-primary"]}" data-friend-action="decline">Decline</button>
+        `;
+    } else {
+        actionsEl.innerHTML = `<button class="${style["btn-primary"]}" data-friend-action="add">Add Friend</button>`;
+    }
+
+    actionsEl.querySelectorAll('[data-friend-action]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+            const action = btn.dataset.friendAction;
+            btn.disabled = true;
+
+            try {
+                if (action === 'add') {
+                    await send_friend_request(userId);
+                    renderFriendButton('pending_sent', userId);
+                } else if (action === 'accept') {
+                    await accept_friend_request(userId);
+                    renderFriendButton('friends', userId);
+                } else if (action === 'decline') {
+                    await decline_friend_request(userId);
+                    renderFriendButton('none', userId);
+                } else if (action === 'remove') {
+                    await remove_friend(userId);
+                    renderFriendButton('none', userId);
+                }
+            } catch (error) {
+                console.error(`Failed friend action "${action}":`, error);
+                btn.disabled = false;
+            }
+        });
+    });
+}
 
 export default async function Profile(params){
     const { navigation, main } = Layout(this.root);
@@ -49,6 +94,7 @@ export default async function Profile(params){
                     <h1 id="profile-name">Loading...</h1>
                     <div class="${style["friends-count"]}" id="profile-friends-count"></div>
                 </div>
+                <div class="${style["profile-actions"]}" id="profile-actions"></div>
             </section>
 
             <nav class="${style["profile-tabs"]}" id="desktop-tabs">
@@ -225,6 +271,13 @@ export default async function Profile(params){
                 if (avatarMenu) avatarMenu.hidden = true;
                 if (coverMenu) coverMenu.hidden = true;
             });
+        } else {
+            try {
+                const { data } = await get_friend_status(userId);
+                renderFriendButton(data?.status || 'none', userId);
+            } catch (error) {
+                console.error("Failed to load friend status:", error);
+            }
         }
 
         PicturesHelper(userId);
