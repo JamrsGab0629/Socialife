@@ -49,11 +49,11 @@ export default function Post(data, { showSave = false } = {}) {
     
     const textContent = data.caption || (typeof data.content === "string" ? data.content : "");
 
-    let photoHtml = "";
+       let photoHtml = "";
     if (data.photo && data.photo.href) {
-        photoHtml = `<img src="${data.photo.href}" alt="post photo">`;
+        photoHtml = `<img src="${data.photo.href}" alt="post photo" data-action="zoom-photo" data-post-id="${postId}" style="cursor: pointer;">`;
     } else if (data.photo_url) {
-        photoHtml = `<img src="${data.photo_url}" alt="post photo">`;
+        photoHtml = `<img src="${data.photo_url}" alt="post photo" data-action="zoom-photo" data-post-id="${postId}" style="cursor: pointer;">`;
     } else if (Array.isArray(data.content)) {
         photoHtml = renderContent(data.content);
     }

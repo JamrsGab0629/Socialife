@@ -1,4 +1,3 @@
-// home.js
 import Navigation from '../../components/navigation/navigation';
 import Layout from '../../layouts/default/default';
 
@@ -7,8 +6,11 @@ import style_topbar_search from "../../styles/app/topbar-search.module.css";
 import Helper, { FriendsTemplate, initComposerOverlay, initCommentInteractions, initSharePostDialog } from './home.helper';
 import Service, { fetchHomeFeedService } from './home.service';
 import Post from '../../components/post/post';
+import { openPostViewer } from '../../components/post-viewer/post-viewer';
 import { InfiniteScroll } from '../../helpers/utils/InfiniteScroll'; 
 import { getNotifications } from '../../components/notification/notification.service';
+
+const postDataStore = new Map();
 
 export default async function Home() {
     const { navigation, main } = Layout(this.root);
@@ -72,6 +74,43 @@ export default async function Home() {
     initCommentInteractions(feedContainer);
     initSharePostDialog();
 
+    postDataStore.clear();
+
+    // Open the zoomed post viewer when a post photo is clicked
+    feedContainer.addEventListener('click', (event) => {
+        const target = event.target.closest('[data-action="zoom-photo"]');
+        if (!target) return;
+
+        const postId = target.dataset.postId;
+        const postData = postDataStore.get(postId);
+        if (postData) openPostViewer(postData);
+    });
+
+    // Keep feed cards' like/comment counts in sync with the zoomed viewer
+    window.addEventListener('post:liked', (event) => {
+        const { postId, likeCount, isLiked } = event.detail || {};
+        const card = document.getElementById(postId);
+        if (!card) return;
+
+        const likeCountEl = card.querySelector('.like-count');
+        if (likeCountEl) likeCountEl.textContent = likeCount;
+
+        const likeBtn = card.querySelector('[data-action="like"]');
+        if (likeBtn) {
+            likeBtn.setAttribute('aria-pressed', String(isLiked));
+            likeBtn.classList.toggle('liked', isLiked);
+        }
+    });
+
+    window.addEventListener('post:commented', (event) => {
+        const { postId, commentCount } = event.detail || {};
+        const card = document.getElementById(postId);
+        if (!card) return;
+
+        const commentCountEl = card.querySelector('.comment-count');
+        if (commentCountEl) commentCountEl.textContent = commentCount;
+    });
+
     new InfiniteScroll({
         container: feedContainer,
         sentinel: sentinel,
@@ -81,6 +120,9 @@ export default async function Home() {
         },
         renderItems: (posts, container) => {
             posts.forEach((postData) => {
+                const postId = postData.post_id || postData.id || postData.feed_id;
+                if (postId) postDataStore.set(String(postId), postData);
+
                 const postMarkup = Post(postData, { showSave: true });
                 container.insertAdjacentHTML('beforeend', postMarkup);
             });
@@ -91,6 +133,9 @@ export default async function Home() {
     window.addEventListener('post:created', (event) => {
         const newPost = event.detail;
         if (!newPost) return;
+
+        const postId = newPost.post_id || newPost.id || newPost.feed_id;
+        if (postId) postDataStore.set(String(postId), newPost);
 
         const postMarkup = Post(newPost, { showSave: true });
         const composerTrigger = document.getElementById('composer-trigger');

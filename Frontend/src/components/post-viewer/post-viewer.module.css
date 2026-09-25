@@ -231,6 +231,9 @@
     cursor: pointer;
     flex-shrink: 0;
 }
+.pv-overlay[hidden] {
+    display: none !important;
+}
 
 .pv-comment-send:hover {
     background: #166fe5;
