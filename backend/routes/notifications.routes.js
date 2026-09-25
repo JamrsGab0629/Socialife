@@ -2,7 +2,6 @@ import express from "express";
 import * as notificationController from "../controller/user/notifications.controller.js";
 import { isAuthenticated } from "../middleware/auth.middleware.js";
 import { rateLimiter } from "../middleware/ratelimiter.middleware.js";
-
 import validate from "../validators/main.validator.js";
 import { 
     notificationParamSchema, 

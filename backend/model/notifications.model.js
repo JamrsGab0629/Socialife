@@ -2,6 +2,10 @@ import { DataTypes } from "sequelize";
 import sequelize from "../config/database.config.js"; // Adjust to your db config path
 
 const Notification = sequelize.define("Notification", {
+        post_id: {
+      type: DataTypes.UUID,
+      allowNull: true,
+    },
     notification_id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,

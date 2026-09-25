@@ -43,7 +43,7 @@
 
         await t.commit();
 
-        safeNotify(post.user_id, userId, "comment", "commented on your post.");
+               safeNotify(post.user_id, userId, "comment", "commented on your post.", postId);
 
         return newComment;
     } catch (error) {

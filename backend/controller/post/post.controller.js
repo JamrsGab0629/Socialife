@@ -76,13 +76,9 @@ export const deactivatePost = async (req, res, next) => {
 
 export const getPostById = async (req, res, next) => {
     try {
-        const { postId } = req.validated.params;
-        const userId = req.user.userId || req.user.user_id;
+        const { postId } = req.params;
 
-        const result = await postService.getPostByIdService(
-            postId,
-            userId
-        );
+        const result = await postService.getPostByIdService(postId);
 
         if (!result) {
             return res.status(404).json({
@@ -100,6 +96,7 @@ export const getPostById = async (req, res, next) => {
         next(error);
     }
 };
+
 export const getUserPhotos = async (req, res, next) => {
     try {
         const { userId } = req.validated.params;

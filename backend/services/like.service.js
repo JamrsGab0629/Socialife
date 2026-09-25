@@ -78,11 +78,12 @@ export const toggleLikeService = async (postId, userId) => {
 
         await transaction.commit();
 
-        safeNotify(
+               safeNotify(
             post.user_id,
             userId,
             "like",
-            "liked your post."
+            "liked your post.",
+            postId
         );
 
         return {

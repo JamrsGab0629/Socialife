@@ -1,4 +1,6 @@
 import { getNotifications, markNotificationAsRead } from "./notification.service";
+import { get_post_by_id } from "../../helpers/post/post.request";
+import { openPostViewer } from "../post-viewer/post-viewer";
 import style from "./notification.module.css";
 
 export default async function Notification(root) {
@@ -18,7 +20,7 @@ export default async function Notification(root) {
             const isRead = Boolean(notification.is_read);
 
             return `
-                <button type="button" class="${style["notif-item"]} ${isRead ? "" : style.unread}" data-notification-id="${notification.notification_id}">
+                <button type="button" class="${style["notif-item"]} ${isRead ? "" : style.unread}" data-notification-id="${notification.notification_id}" data-post-id="${notification.post_id || ""}">
                     <div class="${style["notif-avatar-wrap"]}">
                         <img src="${author.profile_url || "../../icons/user-avatar.svg"}" alt="${author.username || "User"}" onerror="this.src='../../icons/user-avatar.svg'">
                         <span class="${style["notif-badge-icon"]} ${style[notification.type] || ""}"></span>
@@ -34,14 +36,26 @@ export default async function Notification(root) {
 
         root.addEventListener("click", async (event) => {
             const item = event.target.closest("[data-notification-id]");
-            if (!item || !item.classList.contains(style.unread)) return;
+            if (!item) return;
 
-            try {
-                await markNotificationAsRead(item.dataset.notificationId);
-                item.classList.remove(style.unread);
-                item.querySelector(`.${style["notif-dot"]}`)?.remove();
-            } catch (error) {
-                console.error("Failed to mark notification as read:", error);
+            if (item.classList.contains(style.unread)) {
+                try {
+                    await markNotificationAsRead(item.dataset.notificationId);
+                    item.classList.remove(style.unread);
+                    item.querySelector(`.${style["notif-dot"]}`)?.remove();
+                } catch (error) {
+                    console.error("Failed to mark notification as read:", error);
+                }
+            }
+
+            const postId = item.dataset.postId;
+            if (postId) {
+                try {
+                    const { data: post } = await get_post_by_id(postId);
+                    if (post) openPostViewer(post);
+                } catch (error) {
+                    console.error("Failed to open post from notification:", error);
+                }
             }
         });
     } catch (error) {

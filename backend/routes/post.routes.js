@@ -55,6 +55,19 @@ router.get(
     postController.getProfileFeed
 );
 
+router.get(
+    "/user/:userId/photos",
+    isAuthenticated,
+    validate(getProfileFeedSchema),
+    postController.getUserPhotos
+);
+
+router.get(
+    "/:postId",
+    isAuthenticated,
+    postController.getPostById
+);
+
 router.patch(
     "/:postId/deactivate",
     isAuthenticated,
@@ -105,10 +118,5 @@ router.get(
     validate(getRepliesSchema),
     commentController.getReplies
 );
-router.get(
-    "/user/:userId/photos",
-    isAuthenticated,
-    validate(getProfileFeedSchema),
-    postController.getUserPhotos
-);
+
 export default router;

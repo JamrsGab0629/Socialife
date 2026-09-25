@@ -132,3 +132,21 @@ export async function get_profile_feed(userId, page = 1, limit = 10) {
         throw error;
     }
 }
+
+/**
+ * Fetches a single post by its ID.
+ * @param {string|number} postId
+ * @returns {Promise<Object>} API response payload.
+ */
+export async function get_post_by_id(postId) {
+    try {
+        return await Request({
+            param: `/posts/${postId}`,
+            method: "GET",
+            args: {},
+        });
+    } catch (error) {
+        console.error("Failed inside get_post_by_id request helper:", error);
+        throw error;
+    }
+}

@@ -171,11 +171,10 @@ export const deactivatePostService = async (postId, userId) => {
   return post;
 };
 
-export const getPostByIdService = async (postId, userId) => {
+export const getPostByIdService = async (postId) => {
   return Post.findOne({
     where: {
       post_id: postId,
-      user_id: userId,
       is_active: true,
     },
 
@@ -184,10 +183,6 @@ export const getPostByIdService = async (postId, userId) => {
         model: User,
         as: "author",
         attributes: ["user_id", "username", "profile_url"],
-
-        where: {
-          is_active: true,
-        },
       },
       {
         model: PhotoData,
@@ -196,6 +191,7 @@ export const getPostByIdService = async (postId, userId) => {
     ],
   });
 };
+
 export const getUserPhotosService = async (userId) => {
   const photos = await PhotoData.findAll({
     where: { user_id: userId },

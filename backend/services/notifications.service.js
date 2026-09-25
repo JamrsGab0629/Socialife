@@ -13,10 +13,10 @@ export const createNotificationService = async (data) => {
         author_id: data.authorId,
         type: data.type,
         content: data.content,
+        post_id: data.postId || null,
         is_read: false
     });
 };
-
 export const getNotificationsService = async (userId, query) => {
     return await hybridLoad(Notification, {
         page: query.page,
