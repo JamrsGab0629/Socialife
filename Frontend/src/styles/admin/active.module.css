@@ -1,0 +1,7 @@
+/* Shared "active state" module — imported anywhere a nav-style item needs
+   an active/selected look (sidebar links today, tabs/filters later). */
+.is-active {
+  background: rgba(255, 255, 255, 0.18) !important;
+  opacity: 1 !important;
+  font-weight: 600;
+}

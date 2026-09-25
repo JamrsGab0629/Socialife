@@ -1,0 +1,12 @@
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.badge-purple { background: var(--color-info-bg); color: var(--color-info-text); }
+.badge-green { background: var(--color-success-bg); color: var(--color-success-text); }
+.badge-orange { background: var(--color-warning-bg); color: var(--color-warning-text); }
+.badge-red { background: var(--color-danger-bg); color: var(--color-danger-text); }
+.badge-gray { background: var(--color-neutral-bg); color: var(--color-neutral-text); }
