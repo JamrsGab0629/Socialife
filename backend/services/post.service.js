@@ -115,9 +115,9 @@ export const getHomeFeedService = async (userId, query = {}) => {
     }),
   ]);
 
-  const originalPosts = posts.map((post) => {
+    const originalPosts = posts.map((post) => {
     const { saves = [], ...postData } = post.toJSON();
-    return { ...postData, is_saved: saves.length > 0 };
+    return { ...postData, is_saved: saves.length > 0, is_own_post: postData.user_id === userId };
   });
 
   const sharedPosts = shares.map((share) => {
@@ -126,6 +126,7 @@ export const getHomeFeedService = async (userId, query = {}) => {
     return {
       ...postData,
       is_saved: saves.length > 0,
+      is_own_post: postData.user_id === userId,
       is_shared: true,
       shared_by: shareData.user,
       share_caption: shareData.caption,
@@ -133,7 +134,7 @@ export const getHomeFeedService = async (userId, query = {}) => {
       feed_id: shareData.share_id,
     };
   });
-
+  
   const feed = [...originalPosts, ...sharedPosts]
     .sort((a, b) => new Date(b.shared_at || b.created_at) - new Date(a.shared_at || a.created_at));
   const offset = (page - 1) * limit;

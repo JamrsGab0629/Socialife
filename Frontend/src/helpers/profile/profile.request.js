@@ -102,3 +102,16 @@ export async function get_user_profile_stats(userId) {
         throw error;
     }
 }
+
+export async function search_users(query) {
+    try {
+        return await Request({
+            param: `/profiles/search`,
+            method: "GET",
+            args: { q: query },
+        });
+    } catch (error) {
+        console.error("Failed inside search_users request helper:", error);
+        throw error;
+    }
+}

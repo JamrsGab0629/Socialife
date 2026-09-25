@@ -62,6 +62,21 @@ export const profileService = {
     };
   },
 
+      async searchUsers(query, excludeUserId) {
+    if (!query || !query.trim()) return [];
+
+    const { Op } = await import('sequelize');
+
+    return await User.findAll({
+      where: {
+        username: { [Op.iLike]: `%${query.trim()}%` },
+        is_actived: true
+      },
+      attributes: ['user_id', 'username', 'profile_url'],
+      limit: 15
+    });
+  },
+
   // Reset cover photo back to default (null)
   async removeCoverPhoto(userId) {
     const user = await User.findByPk(userId);

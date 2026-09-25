@@ -15,6 +15,7 @@ function mapFeedItemToPostData(item) {
             shared_by: share.user,
             share_caption: share.caption,
             shared_at: share.created_at,
+            is_own_post: item.is_own_post,
         };
     }
 
@@ -26,6 +27,7 @@ function mapFeedItemToPostData(item) {
         caption: post.caption,
         content: post.content,
         created_at: post.created_at,
+        is_own_post: item.is_own_post,
     };
 }
 

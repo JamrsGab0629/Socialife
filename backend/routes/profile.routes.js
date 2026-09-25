@@ -9,6 +9,9 @@ const router = Router();
 // GET /api/profiles/me
 router.get('/me', isAuthenticated, profileController.getMyProfile);
 
+// GET /api/profiles/search?q=...
+router.get('/search', isAuthenticated, rateLimiter(30, 60000), profileController.searchUsers);
+
 // PUT /api/profiles/picture
 router.put('/picture', isAuthenticated, rateLimiter(20, 60000), upload.single('image'), profileController.updatePicture);
 
@@ -26,4 +29,5 @@ router.delete('/picture', isAuthenticated, rateLimiter(20, 60000), profileContro
 
 router.put('/cover', isAuthenticated, rateLimiter(20, 60000), upload.single('image'), profileController.updateCover);
 router.delete('/cover', isAuthenticated, rateLimiter(20, 60000), profileController.removeCover);
+
 export default router;

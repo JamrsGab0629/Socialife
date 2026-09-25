@@ -150,3 +150,20 @@ export async function get_post_by_id(postId) {
         throw error;
     }
 }
+/**
+ * Deactivates (soft-deletes) a post.
+ * @param {string|number} postId
+ * @returns {Promise<Object>} API response payload.
+ */
+export async function deactivate_post(postId) {
+    try {
+        return await Request({
+            param: `/posts/${postId}/deactivate`,
+            method: "PATCH",
+            args: {},
+        });
+    } catch (error) {
+        console.error("Failed inside deactivate_post request helper:", error);
+        throw error;
+    }
+}

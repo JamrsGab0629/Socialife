@@ -1,6 +1,6 @@
 import { Post, SharedPost, User, PhotoData } from "../model/association.model.js";
 
-export const getUnifiedProfileFeedService = async (targetUserId, query) => {
+export const getUnifiedProfileFeedService = async (targetUserId, viewerId, query) => {
     const page = Math.max(1, parseInt(query.page, 10) || 1);
     const limit = Math.max(1, parseInt(query.limit, 10) || 10);
     const offset = (page - 1) * limit;
@@ -33,8 +33,8 @@ export const getUnifiedProfileFeedService = async (targetUserId, query) => {
 
     // Format and combine both arrays chronologically
     const combinedFeed = [
-        ...userPosts.map(post => ({ feedItemType: "original", created_at: post.created_at, data: post })),
-        ...userShares.map(share => ({ feedItemType: "shared", created_at: share.created_at, data: share }))
+        ...userPosts.map(post => ({ feedItemType: "original", created_at: post.created_at, data: post, is_own_post: post.user_id === viewerId })),
+        ...userShares.map(share => ({ feedItemType: "shared", created_at: share.created_at, data: share, is_own_post: share.post?.user_id === viewerId }))
     ].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
     // Pagination calculations

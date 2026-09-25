@@ -1,4 +1,7 @@
 import * as postService from "../../services/post.service.js";
+export {
+    getUnifiedProfileFeedService as getProfileFeedService
+} from "../../services/profileFeed.service.js";
 
 export const createPost = async (req, res, next) => {
     try {
@@ -23,6 +26,7 @@ export const createPost = async (req, res, next) => {
 export const getHomeFeed = async (req, res, next) => {
     try {
         const userId = req.user.userId || req.user.user_id;
+
         const result = await postService.getHomeFeedService(
             userId,
             req.validated.query
@@ -41,10 +45,12 @@ export const getHomeFeed = async (req, res, next) => {
 export const getProfileFeed = async (req, res, next) => {
     try {
         const { userId } = req.validated.params;
+        const viewerId = req.user.userId || req.user.user_id;
         const query = req.validated.query;
 
         const result = await postService.getProfileFeedService(
             userId,
+            viewerId,
             query
         );
 
@@ -100,6 +106,7 @@ export const getPostById = async (req, res, next) => {
 export const getUserPhotos = async (req, res, next) => {
     try {
         const { userId } = req.validated.params;
+
         const photos = await postService.getUserPhotosService(userId);
 
         return res.status(200).json({

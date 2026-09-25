@@ -4,7 +4,7 @@ import Create_Post from '../../components/create_post/create_post';
 import postStyle from '../../components/post/post.module.css';
 import { comment_content, get_comments, get_replies, like_content, reply_content, save_post, share_post, unsave_post } from '../../helpers/post/post.request';
 import { get_my_profile } from '../../helpers/post/post.helpers';
-
+import { send_friend_request } from "../../helpers/friends/friends.request";
 const avatar_colors = ["#E8A5A0", "#A5C7E8", "#C7A5E8", "#A5E8C0", "#E8D5A5"];
 
 let currentUser = { userName: "User", avatarUrl: "../../icons/user-avatar.svg" };
@@ -26,22 +26,23 @@ export const FriendsTemplate = (friends_data) => {
 
     data.forEach((friend) => {
         const color = getAvatarColor(friend["user_id"]);
-        const initial = getInitial(friend["user_name"]);
+        const name = friend["username"] || friend["user_name"] || "Someone";
+        const initial = getInitial(name);
+        const avatarUrl = friend["profile_url"];
 
         template += `
-            <div class="${style["friend-row"]}">
+            <div class="${style["friend-row"]}" data-user-id="${friend["user_id"]}">
                 <div class="${style["friend-avatar"]}" style="background:${color};">
-                    <div class="${style["avatar-fallback"]}">${initial}</div>
+                    ${avatarUrl ? `<img src="${avatarUrl}" alt="${name}">` : `<div class="${style["avatar-fallback"]}">${initial}</div>`}
                 </div>
-                <div class="${style["friend-name"]}">${friend["user_name"]}</div>
-                <button class="${style["add-friend-btn"]}" data-user-id="${friend["user_id"]}">Add Friend</button>
+                <div class="${style["friend-name"]}">${name}</div>
+                <button class="${style["add-friend-btn"]}" data-action="add-friend" data-user-id="${friend["user_id"]}">Add Friend</button>
             </div>
         `;
     });
 
     return template;
 };
-
 export function initComposerOverlay() {
     const trigger = document.getElementById('composer-trigger');
     const backdrop = document.getElementById('composer-overlay-backdrop');
@@ -64,7 +65,24 @@ export function initComposerOverlay() {
         }
     });
 }
+export function initFriendRecommendations(container) {
+    if (!container) return;
 
+    container.addEventListener('click', async (e) => {
+        const btn = e.target.closest('[data-action="add-friend"]');
+        if (!btn || btn.disabled) return;
+
+        const userId = btn.dataset.userId;
+        try {
+            btn.disabled = true;
+            await send_friend_request(userId);
+            btn.textContent = 'Requested';
+        } catch (error) {
+            console.error('Failed to send friend request:', error);
+            btn.disabled = false;
+        }
+    });
+}
 export function initSharePostDialog() {
     const dialog = document.getElementById('share-post-dialog');
     const form = dialog?.querySelector('[data-share-post-form]');

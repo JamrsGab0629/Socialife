@@ -1,5 +1,5 @@
 import Post from "../../components/post/post";
-import { get_profile_feed } from "../../helpers/post/post.request";
+import { get_profile_feed, deactivate_post } from "../../helpers/post/post.request";
 import mapFeedItemToPostData from "./profile.main.mapper";
 import { openPostViewer } from "../../components/post-viewer/post-viewer";
 
@@ -9,13 +9,29 @@ export const Helper = async (userId) => {
     const root = document.getElementById('posts-column');
     if (!root) return;
 
-    root.addEventListener('click', (event) => {
-        const target = event.target.closest('[data-action="zoom-photo"]');
-        if (!target) return;
+    root.addEventListener('click', async (event) => {
+        const zoomTarget = event.target.closest('[data-action="zoom-photo"]');
+        if (zoomTarget) {
+            const postId = zoomTarget.dataset.postId;
+            const postData = postDataStore.get(postId);
+            if (postData) openPostViewer(postData);
+            return;
+        }
 
-        const postId = target.dataset.postId;
-        const postData = postDataStore.get(postId);
-        if (postData) openPostViewer(postData);
+        const deleteTarget = event.target.closest('[data-action="delete-post"]');
+        if (deleteTarget) {
+            const postId = deleteTarget.dataset.postId;
+            if (!window.confirm("Delete this post?")) return;
+
+            try {
+                await deactivate_post(postId);
+                const card = document.getElementById(postId);
+                if (card) card.remove();
+                postDataStore.delete(postId);
+            } catch (error) {
+                console.error("Failed to delete post:", error);
+            }
+        }
     });
 
     window.addEventListener('post:liked', (event) => {

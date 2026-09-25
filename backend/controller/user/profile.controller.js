@@ -160,6 +160,44 @@ export const profileController = {
     }
   },
 
+    // for the profile the post is random eg post and shared post
+  async getProfileFeed(req, res, next) {
+    try {
+      const { userId } = req.params;
+      const viewerId = req.user.userId || req.user.user_id;
+
+      if (!userId) {
+        return res.status(400).json({ success: false, message: 'User ID parameter is required' });
+      }
+
+      const feedResult = await profileFeedService.getUnifiedProfileFeedService(userId, viewerId, req.query);
+
+      return res.status(200).json({
+        success: true,
+        ...feedResult,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+    // GET /api/profiles/search?q=...
+  async searchUsers(req, res, next) {
+    try {
+      const userId = req.user.user_id || req.user.userId;
+      const { q } = req.query;
+
+      const results = await profileService.searchUsers(q, userId);
+
+      return res.status(200).json({
+        success: true,
+        data: results,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
   async getFriendCountAndName(req, res, next) {
     try {
       const { userId } = req.params;

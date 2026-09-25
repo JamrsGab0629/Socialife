@@ -79,18 +79,24 @@ export default function Post(data, { showSave = false } = {}) {
                   <a href="${authorId ? `/app/profile/${authorId}` : '#'}" class="${style["post-author"]}">${authorName}</a>
                     <span class="${style["post-time"]}">${postTime}</span>
                 </h2>
-                <div class="${style["post-menu"]}">
+                                           <div class="${style["post-menu"]}">
                     <button type="button" class="${style["action-more"]}" data-action="toggle-post-menu" aria-label="Post options" aria-expanded="false">
                         <img src="../../icons/more.svg" alt="">
                     </button>
-                    ${showSave ? `
-                        <div class="${style["post-menu-popover"]}" data-post-menu hidden>
+                    <div class="${style["post-menu-popover"]}" data-post-menu hidden>
+                        ${showSave ? `
                             <button type="button" data-action="toggle-save" data-post-id="${postId}" aria-pressed="${isSaved}">
                                 <img src="../../icons/save.svg" alt="">
                                 <span data-save-label>${isSaved ? "Saved" : "Save post"}</span>
                             </button>
-                        </div>
-                    ` : ""}
+                        ` : ""}
+                        ${data.is_own_post ? `
+                            <button type="button" data-action="delete-post" data-post-id="${postId}">
+                                <img src="../../icons/trash.svg" alt="">
+                                <span>Delete post</span>
+                            </button>
+                        ` : ""}
+                    </div>
                 </div>
             </div>
 

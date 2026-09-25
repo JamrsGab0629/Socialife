@@ -3,12 +3,14 @@ import Layout from '../../layouts/default/default';
 
 import style from './home.module.css';
 import style_topbar_search from "../../styles/app/topbar-search.module.css";
-import Helper, { FriendsTemplate, initComposerOverlay, initCommentInteractions, initSharePostDialog } from './home.helper';
+import Helper, { FriendsTemplate, initComposerOverlay, initCommentInteractions, initSharePostDialog, initFriendRecommendations } from './home.helper';
 import Service, { fetchHomeFeedService } from './home.service';
 import Post from '../../components/post/post';
 import { openPostViewer } from '../../components/post-viewer/post-viewer';
+import { deactivate_post } from '../../helpers/post/post.request';
 import { InfiniteScroll } from '../../helpers/utils/InfiniteScroll'; 
 import { getNotifications } from '../../components/notification/notification.service';
+import { search_users } from '../../helpers/profile/profile.request';
 
 const postDataStore = new Map();
 
@@ -67,6 +69,63 @@ export default async function Home() {
     Helper();
     initComposerOverlay(); // Bind overlay event listener
 
+    // --- Search bar wiring (must run AFTER main.innerHTML so the elements exist) ---
+    const searchInput = main.querySelector(`.${style_topbar_search["search-input"]}`);
+    const searchBox = main.querySelector(`.${style_topbar_search["search-box"]}`);
+    let searchResultsEl = null;
+    let searchDebounceTimer = null;
+
+    function renderSearchResults(users) {
+        if (!searchResultsEl) return;
+
+        if (users.length === 0) {
+            searchResultsEl.innerHTML = `<div class="${style_topbar_search["search-empty"]}">No users found.</div>`;
+            searchResultsEl.hidden = false;
+            return;
+        }
+
+        searchResultsEl.innerHTML = users.map(user => `
+            <a href="/app/profile/${user.user_id}" class="${style_topbar_search["search-result-item"]}">
+                <img src="${user.profile_url || '../../icons/user-avatar.svg'}" alt="${user.username}" onerror="this.src='../../icons/user-avatar.svg'">
+                <span>${user.username}</span>
+            </a>
+        `).join("");
+        searchResultsEl.hidden = false;
+    }
+
+    if (searchInput && searchBox) {
+        searchResultsEl = document.createElement('div');
+        searchResultsEl.className = style_topbar_search["search-results"];
+        searchResultsEl.hidden = true;
+        searchBox.appendChild(searchResultsEl);
+
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchDebounceTimer);
+            const query = searchInput.value.trim();
+
+            if (!query) {
+                searchResultsEl.hidden = true;
+                searchResultsEl.innerHTML = "";
+                return;
+            }
+
+            searchDebounceTimer = setTimeout(async () => {
+                try {
+                    const { data } = await search_users(query);
+                    renderSearchResults(data || []);
+                } catch (error) {
+                    console.error("Search failed:", error);
+                }
+            }, 300);
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!searchBox.contains(e.target)) {
+                searchResultsEl.hidden = true;
+            }
+        });
+    }
+
     const feedContainer = document.getElementById('feed-container');
     const sentinel = document.getElementById('feed-sentinel');
 
@@ -76,14 +135,30 @@ export default async function Home() {
 
     postDataStore.clear();
 
-    // Open the zoomed post viewer when a post photo is clicked
-    feedContainer.addEventListener('click', (event) => {
-        const target = event.target.closest('[data-action="zoom-photo"]');
-        if (!target) return;
+    // Open the zoomed post viewer when a post photo is clicked, and handle post deletion
+    feedContainer.addEventListener('click', async (event) => {
+        const zoomTarget = event.target.closest('[data-action="zoom-photo"]');
+        if (zoomTarget) {
+            const postId = zoomTarget.dataset.postId;
+            const postData = postDataStore.get(postId);
+            if (postData) openPostViewer(postData);
+            return;
+        }
 
-        const postId = target.dataset.postId;
-        const postData = postDataStore.get(postId);
-        if (postData) openPostViewer(postData);
+        const deleteTarget = event.target.closest('[data-action="delete-post"]');
+        if (deleteTarget) {
+            const postId = deleteTarget.dataset.postId;
+            if (!window.confirm("Delete this post?")) return;
+
+            try {
+                await deactivate_post(postId);
+                const card = document.getElementById(postId);
+                if (card) card.remove();
+                postDataStore.delete(postId);
+            } catch (error) {
+                console.error("Failed to delete post:", error);
+            }
+        }
     });
 
     // Keep feed cards' like/comment counts in sync with the zoomed viewer
@@ -148,7 +223,9 @@ export default async function Home() {
         Service(),
         getNotifications().catch(() => null),
     ]);
-    document.getElementById('friend-list').innerHTML = FriendsTemplate(friends_data);
+    const friendListEl = document.getElementById('friend-list');
+    friendListEl.innerHTML = FriendsTemplate(friends_data);
+    initFriendRecommendations(friendListEl);
 
     const unreadCount = (notificationResult?.data || []).filter((notification) => !notification.is_read).length;
     const notificationBadge = document.querySelector('[data-notification-count]');
