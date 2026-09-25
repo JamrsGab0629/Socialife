@@ -5,6 +5,7 @@ import {
     declineFriendRequest, 
     getFriendsList, 
     getPendingRequestsList, 
+    getSuggestions,
     removeFriend 
 } from "../controller/user/friend.controller.js";
 import { isAuthenticated } from "../middleware/auth.middleware.js";
@@ -22,7 +23,8 @@ router.patch("/decline/:userId", rateLimiter(20, 60000), declineFriendRequest);
 
 router.get("/", getFriendsList);
 router.get("/requests/pending", getPendingRequestsList);
+router.get("/suggestions", getSuggestions);
 
 router.delete("/:userId", rateLimiter(10, 60000), removeFriend);                
-router.get("/suggestions", getSuggestions);
+
 export default router;
