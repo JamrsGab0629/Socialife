@@ -39,9 +39,10 @@ export default function Navigation(root, current_route) {
     <p class="${style["nav-label"]}">Main</p>
     <nav class="${style["nav-list"]}" id="mainNav">${render_links(NAV_ITEMS.main, style)}</nav>
 
+    <!--
     <p class="${style["nav-label"]}">System</p>
     <nav class="${style["nav-list"]}" id="systemNav">${render_links(NAV_ITEMS.system, style)}</nav>
-
+    --->
     <button class="${style["logout"]}" id="logoutBtn">
       <span class="${style["nav-icon"]}">${LOGOUT_ICON}</span>
       <span class="${style["nav-text"]}">Log out</span>
