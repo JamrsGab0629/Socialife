@@ -77,3 +77,14 @@ export const removeFriend = async (req, res) => {
         return res.status(400).json({ success: false, message: error.message });
     }
 };
+export const getRelationshipStatus = async (req, res) => {
+    try {
+        const currentUserId = req.user.userId || req.user.user_id;
+        const { userId: targetUserId } = req.params;
+
+        const result = await FriendService.getRelationshipStatus(currentUserId, targetUserId);
+        return res.status(200).json({ success: true, data: result });
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};

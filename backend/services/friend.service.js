@@ -63,7 +63,7 @@ export class FriendService {
         return friendship;
     }
 
-      static async getFriends(userId) {
+    static async getFriends(userId) {
         const friendships = await Friendship.findAll({
             where: {
                 [Op.or]: [
@@ -119,6 +119,39 @@ export class FriendService {
             attributes: ['user_id', 'username', 'email', 'profile_url'],
             limit: 20
         });
+    }
+
+    static async getRelationshipStatus(currentUserId, targetUserId) {
+        if (currentUserId === targetUserId) {
+            return { status: 'self' };
+        }
+
+        const friendship = await Friendship.findOne({
+            where: {
+                [Op.or]: [
+                    { requester_id: currentUserId, addressee_id: targetUserId },
+                    { requester_id: targetUserId, addressee_id: currentUserId }
+                ]
+            }
+        });
+
+        if (!friendship) {
+            return { status: 'none' };
+        }
+
+        if (friendship.status === 'accepted') {
+            return { status: 'friends' };
+        }
+
+        if (friendship.status === 'pending') {
+            if (friendship.requester_id === currentUserId) {
+                return { status: 'pending_sent' };
+            }
+            return { status: 'pending_received', requesterId: friendship.requester_id };
+        }
+
+        // declined or any other state — treat as no relationship
+        return { status: 'none' };
     }
 
     static async removeFriendship(userId, targetUserId) {
