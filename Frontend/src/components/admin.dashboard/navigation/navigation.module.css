@@ -1,48 +1,113 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 8px;
   font-size: 20px;
   font-weight: 700;
-  padding: 8px 8px 20px;
+  padding: 4px 0 20px;
+  white-space: nowrap;
 }
-.brand-icon { font-size: 18px; }
+
+.brand-icon {
+  width: 64px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  overflow: hidden;
+  transition: opacity 0.25s ease, max-width 0.25s ease;
+  max-width: 180px;
+  opacity: 1;
+}
 
 .profile {
   display: flex;
-  gap: 10px;
   align-items: center;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-  padding: 12px;
+  padding: 8px 0;
   margin-bottom: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: background 0.25s ease;
 }
-.avatar { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.35); flex-shrink: 0; }
+
+.avatar-wrapper {
+  width: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.profile-info {
+  overflow: hidden;
+  transition: opacity 0.25s ease, max-width 0.25s ease;
+  max-width: 180px;
+  opacity: 1;
+}
+
 .profile-name { font-weight: 600; margin: 0; font-size: 14px; }
 .profile-role { margin: 2px 0 0; font-size: 12px; opacity: 0.75; }
 .profile-status { margin: 4px 0 0; font-size: 12px; display: flex; align-items: center; gap: 5px; opacity: 0.9; }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; display: inline-block; }
 
+/* Section Header Labels */
 .nav-label {
-  font-size: 11px;
-  letter-spacing: 0.05em;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   opacity: 0.6;
-  margin: 16px 8px 6px;
+  margin: 16px 0 6px;
   text-transform: uppercase;
+  white-space: nowrap;
+  width: 64px;
+  text-align: center;
+  transition: width 0.25s ease, text-align 0.25s ease, padding 0.25s ease;
 }
-.nav-list { display: flex; flex-direction: column; gap: 2px; }
+
+.nav-list { display: flex; flex-direction: column; gap: 4px; }
+
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
+  padding: 10px 0;
   border-radius: 8px;
   font-size: 14px;
   color: #fff;
   opacity: 0.85;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 0.2s ease, opacity 0.2s ease;
 }
-.nav-item:hover { background: rgba(255, 255, 255, 0.08); }
-.nav-icon { width: 18px; text-align: center; }
+
+.nav-item:hover { background: rgba(255, 255, 255, 0.12); opacity: 1; }
+
+.nav-icon {
+  width: 64px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav-text {
+  overflow: hidden;
+  transition: opacity 0.25s ease, max-width 0.25s ease;
+  max-width: 180px;
+  opacity: 1;
+}
 
 .logout {
   margin-top: auto;
@@ -51,10 +116,39 @@
   color: #fff;
   opacity: 0.85;
   text-align: left;
-  padding: 10px 12px;
+  padding: 10px 0;
   font-size: 14px;
   display: flex;
-  gap: 8px;
   align-items: center;
+  white-space: nowrap;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s ease, opacity 0.2s ease;
 }
-.logout:hover { opacity: 1; }
+
+.logout:hover {
+  background: rgba(255, 255, 255, 0.12);
+  opacity: 1;
+}
+
+/* Collapsed State Tweaks */
+@media screen and (max-width: 1024px) {
+  :global(#sidebar:not(:hover)) .profile {
+    background: transparent;
+  }
+
+  :global(#sidebar:not(:hover)) .profile-info,
+  :global(#sidebar:not(:hover)) .nav-text,
+  :global(#sidebar:not(:hover)) .brand-text {
+    max-width: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Expanded State Label Alignment */
+  :global(#sidebar:hover) .nav-label {
+    width: 100%;
+    text-align: left;
+    padding-left: 16px;
+  }
+}
