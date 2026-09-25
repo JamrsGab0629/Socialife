@@ -63,7 +63,7 @@ export class FriendService {
         return friendship;
     }
 
-    static async getFriends(userId) {
+      static async getFriends(userId) {
         const friendships = await Friendship.findAll({
             where: {
                 [Op.or]: [
@@ -72,8 +72,8 @@ export class FriendService {
                 ]
             },
             include: [
-                { model: User, as: 'requester', attributes: ['user_id', 'username', 'email'] },
-                { model: User, as: 'addressee', attributes: ['user_id', 'username', 'email'] }
+                { model: User, as: 'requester', attributes: ['user_id', 'username', 'email', 'profile_url'] },
+                { model: User, as: 'addressee', attributes: ['user_id', 'username', 'email', 'profile_url'] }
             ]
         });
 
@@ -89,8 +89,35 @@ export class FriendService {
                 status: 'pending'
             },
             include: [
-                { model: User, as: 'requester', attributes: ['user_id', 'username', 'email'] }
+                { model: User, as: 'requester', attributes: ['user_id', 'username', 'email', 'profile_url'] }
             ]
+        });
+    }
+
+    static async getSuggestions(userId) {
+        const existing = await Friendship.findAll({
+            where: {
+                [Op.or]: [
+                    { requester_id: userId },
+                    { addressee_id: userId }
+                ]
+            },
+            attributes: ['requester_id', 'addressee_id']
+        });
+
+        const excludedIds = new Set([userId]);
+        existing.forEach(f => {
+            excludedIds.add(f.requester_id);
+            excludedIds.add(f.addressee_id);
+        });
+
+        return await User.findAll({
+            where: {
+                user_id: { [Op.notIn]: Array.from(excludedIds) },
+                is_actived: true
+            },
+            attributes: ['user_id', 'username', 'email', 'profile_url'],
+            limit: 20
         });
     }
 

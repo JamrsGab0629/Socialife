@@ -24,5 +24,5 @@ router.get("/", getFriendsList);
 router.get("/requests/pending", getPendingRequestsList);
 
 router.delete("/:userId", rateLimiter(10, 60000), removeFriend);                
-
+router.get("/suggestions", getSuggestions);
 export default router;
