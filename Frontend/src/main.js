@@ -26,7 +26,7 @@ app.add(/^\/signup\/(?:(?<id>\d+))?$/i, isAuth(SignupStage(Signup)));
 
 // backend-dependent routes (typo fixed: isLoggedInRequired -> isLoginRequired) check nyo nalang
 app.add(/^\/app(?:\/home)?$/i, checkAuth(Home));
-app.add('/app/profile', checkAuth(Profile));
+app.add(/^\/app\/profile(?:\/(?<userId>[^/]+))?$/i, checkAuth(Profile));
 app.add('/app/settings', checkAuth(Settings));
 app.add('/app/saved', checkAuth(Saved));
 app.add('/app/friends', checkAuth(Friends));

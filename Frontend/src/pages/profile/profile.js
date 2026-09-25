@@ -2,6 +2,7 @@ import Navigation from "../../components/navigation/navigation";
 import Layout from "../../layouts/default/default";
 import {
     get_my_profile,
+    get_user_profile_stats,
     update_profile_picture,
     remove_profile_picture,
     update_cover_photo,
@@ -13,14 +14,15 @@ import MainHelper from "./profile.main.helper";
 
 import style from "./profile.module.css";
 
-export default async function Profile(){
+export default async function Profile(params){
     const { navigation, main } = Layout(this.root);
+    const routeUserId = params?.userId;
 
     Navigation(navigation);
     main.innerHTML = `
         <div id="profile" class="${style['profile']}">
             <section class="${style["banner"]}" id="profile-banner">
-                <button type="button" class="${style["cover-edit-btn"]}" id="cover-edit-btn" aria-label="Change cover photo">
+                <button type="button" class="${style["cover-edit-btn"]}" id="cover-edit-btn" aria-label="Change cover photo" hidden>
                     <img src="../../icons/camera.svg" alt="">
                     <span>Edit cover photo</span>
                 </button>
@@ -34,7 +36,7 @@ export default async function Profile(){
             <section class="${style["profile-header"]}">
                 <div class="${style["profile-avatar"]}">
                     <img id="profile-avatar-img" src="../../icons/user-avatar.svg" alt="Profile picture">
-                    <button type="button" class="${style["avatar-edit-btn"]}" id="avatar-edit-btn" aria-label="Change profile photo">
+                    <button type="button" class="${style["avatar-edit-btn"]}" id="avatar-edit-btn" aria-label="Change profile photo" hidden>
                         <img src="../../icons/camera.svg" alt="">
                     </button>
                     <div class="${style["avatar-menu-popover"]}" id="avatar-menu" hidden>
@@ -77,11 +79,15 @@ export default async function Profile(){
     `;
 
     try {
-        const { data: profile } = await get_my_profile();
-        const userId = profile?.user_id;
+        const isOwnProfile = !routeUserId;
+        const { data: profile } = isOwnProfile
+            ? await get_my_profile()
+            : await get_user_profile_stats(routeUserId);
+
+        const userId = isOwnProfile ? profile?.user_id : routeUserId;
 
         if (!userId) {
-            console.error("No user_id found on getMyProfile() response:", profile);
+            console.error("No user_id resolved for profile view:", profile);
             return;
         }
 
@@ -101,121 +107,125 @@ export default async function Profile(){
             bannerEl.style.backgroundPosition = "center";
         }
 
-        // --- Avatar menu ---
+        // --- Avatar / cover editing only shown on your own profile ---
         const avatarEditBtn = document.getElementById('avatar-edit-btn');
-        const avatarMenu = document.getElementById('avatar-menu');
-        const avatarInput = document.getElementById('profile-avatar-input');
-        const uploadOption = document.getElementById('avatar-upload-option');
-        const removeOption = document.getElementById('avatar-remove-option');
-
-        if (avatarEditBtn && avatarMenu) {
-            avatarEditBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                avatarMenu.hidden = !avatarMenu.hidden;
-            });
-        }
-
-        if (uploadOption && avatarInput) {
-            uploadOption.addEventListener('click', () => {
-                avatarMenu.hidden = true;
-                avatarInput.click();
-            });
-        }
-
-        if (avatarInput) {
-            avatarInput.addEventListener('change', async () => {
-                const file = avatarInput.files[0];
-                if (!file) return;
-
-                const caption = window.prompt("Add a caption (optional):", "") || "";
-
-                const formData = new FormData();
-                formData.append('image', file);
-                formData.append('caption', caption);
-
-                try {
-                    const { data } = await update_profile_picture(formData);
-                    if (data?.profile_url) avatarEl.src = data.profile_url;
-                } catch (error) {
-                    console.error("Failed to update profile picture:", error);
-                }
-            });
-        }
-
-        if (removeOption) {
-            removeOption.addEventListener('click', async () => {
-                avatarMenu.hidden = true;
-                try {
-                    await remove_profile_picture();
-                    avatarEl.src = "../../icons/user-avatar.svg";
-                } catch (error) {
-                    console.error("Failed to remove profile picture:", error);
-                }
-            });
-        }
-
-        // --- Cover photo menu ---
         const coverEditBtn = document.getElementById('cover-edit-btn');
-        const coverMenu = document.getElementById('cover-menu');
-        const coverInput = document.getElementById('cover-input');
-        const coverUploadOption = document.getElementById('cover-upload-option');
-        const coverRemoveOption = document.getElementById('cover-remove-option');
 
-        if (coverEditBtn && coverMenu) {
-            coverEditBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                coverMenu.hidden = !coverMenu.hidden;
-            });
-        }
+        if (isOwnProfile) {
+            if (avatarEditBtn) avatarEditBtn.hidden = false;
+            if (coverEditBtn) coverEditBtn.hidden = false;
 
-        if (coverUploadOption && coverInput) {
-            coverUploadOption.addEventListener('click', () => {
-                coverMenu.hidden = true;
-                coverInput.click();
-            });
-        }
+            const avatarMenu = document.getElementById('avatar-menu');
+            const avatarInput = document.getElementById('profile-avatar-input');
+            const uploadOption = document.getElementById('avatar-upload-option');
+            const removeOption = document.getElementById('avatar-remove-option');
 
-        if (coverInput) {
-            coverInput.addEventListener('change', async () => {
-                const file = coverInput.files[0];
-                if (!file) return;
+            if (avatarEditBtn && avatarMenu) {
+                avatarEditBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    avatarMenu.hidden = !avatarMenu.hidden;
+                });
+            }
 
-                const caption = window.prompt("Add a caption (optional):", "") || "";
+            if (uploadOption && avatarInput) {
+                uploadOption.addEventListener('click', () => {
+                    avatarMenu.hidden = true;
+                    avatarInput.click();
+                });
+            }
 
-                const formData = new FormData();
-                formData.append('image', file);
-                formData.append('caption', caption);
+            if (avatarInput) {
+                avatarInput.addEventListener('change', async () => {
+                    const file = avatarInput.files[0];
+                    if (!file) return;
 
-                try {
-                    const { data } = await update_cover_photo(formData);
-                    if (data?.cover_url && bannerEl) {
-                        bannerEl.style.backgroundImage = `url("${data.cover_url}")`;
-                        bannerEl.style.backgroundSize = "cover";
-                        bannerEl.style.backgroundPosition = "center";
+                    const caption = window.prompt("Add a caption (optional):", "") || "";
+
+                    const formData = new FormData();
+                    formData.append('image', file);
+                    formData.append('caption', caption);
+
+                    try {
+                        const { data } = await update_profile_picture(formData);
+                        if (data?.profile_url) avatarEl.src = data.profile_url;
+                    } catch (error) {
+                        console.error("Failed to update profile picture:", error);
                     }
-                } catch (error) {
-                    console.error("Failed to update cover photo:", error);
-                }
+                });
+            }
+
+            if (removeOption) {
+                removeOption.addEventListener('click', async () => {
+                    avatarMenu.hidden = true;
+                    try {
+                        await remove_profile_picture();
+                        avatarEl.src = "../../icons/user-avatar.svg";
+                    } catch (error) {
+                        console.error("Failed to remove profile picture:", error);
+                    }
+                });
+            }
+
+            const coverMenu = document.getElementById('cover-menu');
+            const coverInput = document.getElementById('cover-input');
+            const coverUploadOption = document.getElementById('cover-upload-option');
+            const coverRemoveOption = document.getElementById('cover-remove-option');
+
+            if (coverEditBtn && coverMenu) {
+                coverEditBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    coverMenu.hidden = !coverMenu.hidden;
+                });
+            }
+
+            if (coverUploadOption && coverInput) {
+                coverUploadOption.addEventListener('click', () => {
+                    coverMenu.hidden = true;
+                    coverInput.click();
+                });
+            }
+
+            if (coverInput) {
+                coverInput.addEventListener('change', async () => {
+                    const file = coverInput.files[0];
+                    if (!file) return;
+
+                    const caption = window.prompt("Add a caption (optional):", "") || "";
+
+                    const formData = new FormData();
+                    formData.append('image', file);
+                    formData.append('caption', caption);
+
+                    try {
+                        const { data } = await update_cover_photo(formData);
+                        if (data?.cover_url && bannerEl) {
+                            bannerEl.style.backgroundImage = `url("${data.cover_url}")`;
+                            bannerEl.style.backgroundSize = "cover";
+                            bannerEl.style.backgroundPosition = "center";
+                        }
+                    } catch (error) {
+                        console.error("Failed to update cover photo:", error);
+                    }
+                });
+            }
+
+            if (coverRemoveOption) {
+                coverRemoveOption.addEventListener('click', async () => {
+                    coverMenu.hidden = true;
+                    try {
+                        await remove_cover_photo();
+                        if (bannerEl) bannerEl.style.backgroundImage = "";
+                    } catch (error) {
+                        console.error("Failed to remove cover photo:", error);
+                    }
+                });
+            }
+
+            document.addEventListener('click', () => {
+                if (avatarMenu) avatarMenu.hidden = true;
+                if (coverMenu) coverMenu.hidden = true;
             });
         }
-
-        if (coverRemoveOption) {
-            coverRemoveOption.addEventListener('click', async () => {
-                coverMenu.hidden = true;
-                try {
-                    await remove_cover_photo();
-                    if (bannerEl) bannerEl.style.backgroundImage = "";
-                } catch (error) {
-                    console.error("Failed to remove cover photo:", error);
-                }
-            });
-        }
-
-        // --- Close any open popover on outside click ---
-        document.addEventListener('click', () => {
-            if (avatarMenu) avatarMenu.hidden = true;
-            if (coverMenu) coverMenu.hidden = true;
-        });
 
         PicturesHelper(userId);
         MainHelper(userId);

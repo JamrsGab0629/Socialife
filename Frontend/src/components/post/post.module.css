@@ -107,8 +107,13 @@
     font-size: 18px;
     font-weight: 700;
     color: #1c1e21;
+    text-decoration: none;
+    cursor: pointer;
 }
 
+.post-author:hover {
+    text-decoration: underline;
+}
 .post-time {
     font-size: 13px;
     color: var(--text-muted);

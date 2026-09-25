@@ -84,3 +84,21 @@ export async function remove_cover_photo() {
         throw error;
     }
 }
+
+/**
+ * Fetches another user's profile header info (name, friend count, avatar, cover).
+ * @param {string|number} userId
+ * @returns {Promise<Object>} API response payload.
+ */
+export async function get_user_profile_stats(userId) {
+    try {
+        return await Request({
+            param: `/profiles/${userId}/friend-stats`,
+            method: "GET",
+            args: {},
+        });
+    } catch (error) {
+        console.error("Failed inside get_user_profile_stats request helper:", error);
+        throw error;
+    }
+}

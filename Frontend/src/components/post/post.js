@@ -44,6 +44,7 @@ export default function Post(data, { showSave = false } = {}) {
     const cardId = data.feed_id || postId;
     const authorName = data.user_name || data.author?.username || "Anonymous";
     const avatarUrl = data.avatar_url || data.author?.profile_url || "../../icons/user-avatar.svg";
+    const authorId = data.author?.user_id || data.user_id || "";
     const postTime = formatPostTime(data.shared_at || data.post_time || data.created_at);
     
     const textContent = data.caption || (typeof data.content === "string" ? data.content : "");
@@ -75,7 +76,7 @@ export default function Post(data, { showSave = false } = {}) {
             <div class="${style["post-header"]}">
                 <img src="${avatarUrl}" alt="${authorName}" onerror="this.src='../../icons/user-avatar.svg'">
                 <h2>
-                    <span class="${style["post-author"]}">${authorName}</span>
+                  <a href="${authorId ? `/app/profile/${authorId}` : '#'}" class="${style["post-author"]}">${authorName}</a>
                     <span class="${style["post-time"]}">${postTime}</span>
                 </h2>
                 <div class="${style["post-menu"]}">

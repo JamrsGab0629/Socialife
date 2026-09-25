@@ -1,5 +1,6 @@
 class SPA {
   routes = [];
+  #executionToken = 0;
 
   constructor(config = {}) {
     this.context = {
@@ -27,7 +28,8 @@ class SPA {
     return route || this.defaultRoute;
   }
 
-  execute(path) {
+  async execute(path) {
+    const myToken = ++this.#executionToken;
     const route = this.get(path);
     let params;
 
@@ -44,7 +46,18 @@ class SPA {
 
     // console.log("debug.SPA", params);
 
-    route?.callback(params);
+    const result = route?.callback(params);
+
+    if (result instanceof Promise) {
+      await result;
+    }
+
+    // If a newer navigation started while this one was still running,
+    // this render is stale — do nothing further so it can't stomp on
+    // the newer page's DOM/listeners.
+    if (myToken !== this.#executionToken) {
+      return;
+    }
   }
 
   setDefault(cb) {
