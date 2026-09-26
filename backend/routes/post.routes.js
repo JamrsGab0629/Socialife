@@ -90,7 +90,7 @@ router.post(
 router.post(
     "/:postId/comments",
     isAuthenticated,
-    rateLimiter(30, 60000),
+    rateLimiter(50, 60000),
     validate(addCommentSchema),
     commentController.addComment
 );
@@ -107,7 +107,7 @@ router.get(
 router.post(
     "/:postId/:parentId/replies",
     isAuthenticated,
-    rateLimiter(10, 60000),
+    rateLimiter(50, 60000),
     validate(addReplySchema),
     commentController.addReply
 );
