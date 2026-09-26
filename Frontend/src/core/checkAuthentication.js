@@ -11,7 +11,7 @@ export const checkAuth = (component) => {
 
         return authHelper.checkAuth()
             .then((isAuth) => {
-                const authenticated = Boolean(isAuth?.success ?? isAuth);
+                const authenticated = Boolean(isAuth?.success ?? false);
 
                 // 1. If authenticated, allow access directly to the protected component
                 if (authenticated) {
