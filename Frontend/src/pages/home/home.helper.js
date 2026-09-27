@@ -5,9 +5,14 @@ import postStyle from '../../components/post/post.module.css';
 import { comment_content, get_comments, get_replies, like_content, reply_content, save_post, share_post, unsave_post } from '../../helpers/post/post.request';
 import { get_my_profile } from '../../helpers/post/post.helpers';
 import { send_friend_request } from "../../helpers/friends/friends.request";
+import { initMentionPicker } from '../../components/mention/mention-picker';
+import { commentMention } from '../../helpers/mention/mention.helper';
+
+
 const avatar_colors = ["#E8A5A0", "#A5C7E8", "#C7A5E8", "#A5E8C0", "#E8D5A5"];
 
 let currentUser = { userName: "User", avatarUrl: "../../icons/user-avatar.svg" };
+let mentionPicker = null;
 
 const getAvatarColor = (user_id) => {
     const index = Number(user_id) % avatar_colors.length;
@@ -156,7 +161,7 @@ const renderCommentItem = (comment, postId, isReply = false) => {
 
 export function initCommentInteractions(container) {
     if (!container) return;
-
+    mentionPicker = initMentionPicker(container);
     get_my_profile()
         .then(response => {
             const profile = response?.data || response;
@@ -353,6 +358,8 @@ async function handleReplySubmission(replyForm) {
     const commentText = input?.value.trim();
     if (!postId || !parentId || !commentText) return;
 
+    const mentionIds = mentionPicker?.getMentionIds(input) || [];
+
     try {
         submitBtn.disabled = true;
         const response = await reply_content(postId, parentId, commentText);
@@ -367,6 +374,14 @@ async function handleReplySubmission(replyForm) {
         repliesList.dataset.loaded = "true";
         input.value = '';
 
+        mentionPicker?.clearMentions(input);
+
+        if (mentionIds.length > 0) {
+            commentMention({ mentions: mentionIds, entityId: postId }).catch(err =>
+                console.error("Failed to send mentions:", err)
+            );
+        }
+
         const postCard = replyForm.closest(`.${postStyle["post-card"]}`);
         const commentCount = postCard?.querySelector('.comment-count');
         if (commentCount) commentCount.textContent = String(Number(commentCount.textContent) + 1);
@@ -376,7 +391,6 @@ async function handleReplySubmission(replyForm) {
         submitBtn.disabled = false;
     }
 }
-
 async function handleLike(likeBtn) {
     const postId = likeBtn.dataset.postId;
     const postCard = likeBtn.closest(`.${postStyle["post-card"]}`);
