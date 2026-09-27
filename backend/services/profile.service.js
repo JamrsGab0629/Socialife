@@ -93,11 +93,11 @@ export const profileService = {
     };
   },
 
-  async getProfileByUsername(username) {
+    async getProfileByUsername(username) {
     const user = await User.findOne({
       where: {
         username,
-        is_active: true
+        is_actived: true
       },
       attributes: { exclude: ['password'] },
     });
@@ -108,7 +108,6 @@ export const profileService = {
 
     return user;
   },
-
   // Fetch only the name and friend count fields for a user
     // Fetch name, friend count, and photo fields for a user's profile header
     async getFriendCountAndName(userId) {

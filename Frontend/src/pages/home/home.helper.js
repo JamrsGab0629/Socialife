@@ -7,7 +7,7 @@ import { get_my_profile } from '../../helpers/post/post.helpers';
 import { send_friend_request } from "../../helpers/friends/friends.request";
 import { initMentionPicker } from '../../components/mention/mention-picker';
 import { commentMention } from '../../helpers/mention/mention.helper';
-
+import { get_user_profile_by_username } from '../../helpers/profile/profile.request';
 
 const avatar_colors = ["#E8A5A0", "#A5C7E8", "#C7A5E8", "#A5E8C0", "#E8D5A5"];
 
@@ -137,6 +137,8 @@ const renderCommentItem = (comment, postId, isReply = false) => {
     const userName = comment.user_name || comment.author?.username || currentUser.userName;
     const avatarUrl = comment.avatar_url || comment.author?.profile_url || currentUser.avatarUrl;
     const commentText = linkifyMentions(comment.comment || comment.content || "");
+    const commentId = comment.comment_data_id || comment.id || "";
+    const replies = comment.replies || [];
 
     return `
         <div class="${postStyle.comment}" ${isReply ? "" : `data-comment-id="${commentId}" data-post-id="${postId}"`}>
@@ -162,6 +164,7 @@ const renderCommentItem = (comment, postId, isReply = false) => {
         `}
     `;
 };
+
 
 export function initCommentInteractions(container) {
     if (!container) return;
@@ -191,6 +194,20 @@ export function initCommentInteractions(container) {
                 const isOpen = !menu.hidden;
                 menu.hidden = isOpen;
                 menuButton.setAttribute('aria-expanded', String(!isOpen));
+            }
+            return;
+        }
+                const mentionLink = target.closest('[data-mention-username]');
+        if (mentionLink) {
+            e.preventDefault();
+            const username = mentionLink.dataset.mentionUsername;
+            try {
+                const { data: profile } = await get_user_profile_by_username(username);
+                if (profile?.user_id) {
+                    window.location.href = `/app/profile/${profile.user_id}`;
+                }
+            } catch (error) {
+                console.error("Failed to resolve mentioned user:", error);
             }
             return;
         }

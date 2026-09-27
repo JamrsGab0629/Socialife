@@ -349,3 +349,13 @@
     gap: 8px;
     margin: 8px 0 0 44px;
 }
+
+.mention-link {
+    color: #1877f2;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.mention-link:hover {
+    text-decoration: underline;
+}

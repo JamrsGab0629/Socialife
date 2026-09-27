@@ -115,3 +115,15 @@ export async function search_users(query) {
         throw error;
     }
 }
+export async function get_user_profile_by_username(username) {
+    try {
+        return await Request({
+            param: `/profiles/user/${username}`,
+            method: "GET",
+            args: {},
+        });
+    } catch (error) {
+        console.error("Failed inside get_user_profile_by_username request helper:", error);
+        throw error;
+    }
+}
