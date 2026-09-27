@@ -12,7 +12,7 @@ export default function Navigation(root) {
 
             <a nav-action="profile" id="profile-nav" href="/app/profile">
                 <div class="${style['profile-block']}">
-                    <div class="${style['avatar-ring']}"><img src="/profile/James.jpg" alt="User Avatar"></div>
+                    <div class="${style['avatar-ring']}"><img src="/icon/profile.svg" alt="User Avatar"></div>
                     <div class="${style['profile-name']}">Loading...</div>
                 </div>
             </a>
