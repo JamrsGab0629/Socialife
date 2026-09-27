@@ -146,7 +146,7 @@ function bind_events(styles) {
     if (action === "view") {
       try {
         const details = await view_user_details(id);
-        console.log("User Details:", details);
+        // console.log("User Details:", details);
         window.alert(`User Details fetched for ID: ${id}`);
       } catch (err) {
         console.error("Error viewing user:", err);

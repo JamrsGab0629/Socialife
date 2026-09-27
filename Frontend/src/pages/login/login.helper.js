@@ -111,7 +111,7 @@ const setup_form = (style = {}, redirect ) => {
                 return;
             }
 
-            console.log("debug.setup_form", validation.data);
+            // console.log("debug.setup_form", validation.data);
 
             const response = await login(validation.data);
             if(response?.error) throw new Error(response.error);
@@ -120,10 +120,16 @@ const setup_form = (style = {}, redirect ) => {
             if (validation.data?.email) {
                 setEmail(validation.data.email);
             }
-            
-            redirect("/app");
 
-            console.log('Login successful:', response);
+            const user = response?.user;
+
+            if(user?.role === "admin") {
+                redirect("/admin");
+            } else {
+                redirect("/app");
+            }
+
+            // console.log('Login successful:', response);
         } catch (error) {
             console.error('Network or application runtime error:', error);
 

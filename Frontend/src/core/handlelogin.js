@@ -3,7 +3,7 @@ import Fetch from "./fetch";
 const PARAM = "/auth/login";
 
 export default async function HandleLogin(form) {
-    console.log("debug.handlelogin", form);
+    // console.log("debug.handlelogin", form);
     try {
         const format = {
             email: form.email,

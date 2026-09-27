@@ -18,3 +18,11 @@ export async function checkAuth(args = {}) {
         args: args,
     })
 }
+
+export async function checkAdmin(args = {}){
+    return await Request({
+        param: "/auth/checkAdmin",
+        method: "POST",
+        args: args,
+    })
+}

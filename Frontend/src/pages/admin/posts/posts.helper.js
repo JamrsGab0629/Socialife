@@ -153,7 +153,7 @@ function bind_events(styles) {
     if (action === "view") {
       try {
         const postData = await view_post_details(id);
-        console.log("Fetched post details:", postData);
+        // console.log("Fetched post details:", postData);
         window.alert(`Post content: "${postData?.content || postData?.caption || "N/A"}"`);
       } catch (err) {
         console.error("Failed to view post details:", err);
