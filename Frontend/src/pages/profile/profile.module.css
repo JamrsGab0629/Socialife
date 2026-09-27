@@ -285,7 +285,7 @@
     color: #1c1e21;
 }
 
-.photos-header a {
+.photos-header button {
     font-size: 14px;
     color: #1877f2;
     text-decoration: none;
@@ -293,12 +293,16 @@
     display: flex;
     align-items: center;
     gap: 4px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
 }
 
-.photos-header a:hover {
+.photos-header button:hover {
     text-decoration: underline;
 }
-
 .photos-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -503,6 +507,55 @@ html, body {
     height: auto !important;
 }
 
+.about-section {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #e4e6eb;
+}
+
+.about-section h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1c1e21;
+    margin: 0 0 14px 0;
+}
+
+.about-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: #1c1e21;
+}
+
+.about-row img {
+    width: 22px;
+    height: 22px;
+    opacity: 0.6;
+}
+.master-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+}
+
+.master-grid .photo-thumb {
+    aspect-ratio: 1 / 1;
+}
+
+@media (max-width: 900px) {
+    .master-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .master-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
 @media (max-width: 768px) {
     .profile {
         height: auto;         /* Remove the 100vh lock on mobile */

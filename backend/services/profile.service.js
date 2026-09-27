@@ -111,9 +111,9 @@ export const profileService = {
 
   // Fetch only the name and friend count fields for a user
     // Fetch name, friend count, and photo fields for a user's profile header
-  async getFriendCountAndName(userId) {
+    async getFriendCountAndName(userId) {
     const user = await User.findByPk(userId, {
-      attributes: ["user_id", "username", "first_name", "last_name", "friend_count", "profile_url", "cover_url"]
+      attributes: ["user_id", "username", "first_name", "last_name", "friend_count", "profile_url", "cover_url", "birth_date", "created_at"]
     });
 
     if (!user) {
@@ -121,4 +121,5 @@ export const profileService = {
     }
 
     return user;
-  }};
+  }
+};

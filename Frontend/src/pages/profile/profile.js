@@ -105,20 +105,31 @@ export default async function Profile(params){
             <div class="${style["tab-content"]} ${style["active"]}" id="tab-all">
                 <div class="${style["all-tab-grid"]}">
 
-                    <div class="${style["photos-section"]}">
+                                                           <div class="${style["photos-section"]}">
                         <div class="${style["photos-header"]}">
                             <h3>Photos</h3>
-                            <a href="#" id="see-all-photos-lnk">See all photos ></a>
+                            <button type="button" id="see-all-photos-lnk">See all photos ></button>
                         </div>
                         <div class="${style["photos-grid"]}" id="all-photos-preview"></div>
+
+                        <div class="${style["about-section"]}" id="about-section">
+                            <h3>About</h3>
+                            <div class="${style["about-row"]}">
+                                <img src="../../icons/cake.svg" alt="">
+                                <span id="about-birthdate"></span>
+                            </div>
+                            <div class="${style["about-row"]}">
+                                <img src="../../icons/calendar.svg" alt="">
+                                <span id="about-joined"></span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="${style["posts-column"]}" id="posts-column"></div>
                 </div>
             </div>
-            <div class="${style["tab-content"]}" id="tab-photos">
-                <div class="${style["photos-grid"]}" id="master-photos-grid"
-                    style="grid-template-columns: repeat(3, 1fr); gap: 8px;"></div>
+                        <div class="${style["tab-content"]}" id="tab-photos">
+                <div class="${style["photos-grid"]} ${style["master-grid"]}" id="master-photos-grid"></div>
             </div>
         </div>
 
@@ -136,7 +147,38 @@ export default async function Profile(params){
     
     `;
 
-       try {
+    // --- Tab switching (All / Photos) ---
+    const tabButtons = main.querySelectorAll(`.${style["tab"]}`);
+    const tabContents = {
+        all: document.getElementById('tab-all'),
+        photos: document.getElementById('tab-photos'),
+    };
+
+    function switchTab(tabName) {
+        tabButtons.forEach((btn) => {
+            const isActive = btn.dataset.tab === tabName;
+            btn.classList.toggle(style.active, isActive);
+            btn.setAttribute('aria-selected', String(isActive));
+        });
+
+        Object.entries(tabContents).forEach(([name, el]) => {
+            if (el) el.classList.toggle(style.active, name === tabName);
+        });
+    }
+
+    tabButtons.forEach((btn) => {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    const seeAllPhotosLink = document.getElementById('see-all-photos-lnk');
+    if (seeAllPhotosLink) {
+        seeAllPhotosLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchTab('photos');
+        });
+    }
+
+    try {
         const { data: myProfile } = await get_my_profile();
         const myUserId = myProfile?.user_id;
 
@@ -155,6 +197,22 @@ export default async function Profile(params){
 
         const friendsEl = document.getElementById('profile-friends-count');
         if (friendsEl) friendsEl.textContent = `${profile.friend_count ?? 0} friends`;
+
+                const birthdateEl = document.getElementById('about-birthdate');
+        if (birthdateEl) {
+            if (profile.birth_date) {
+                const date = new Date(profile.birth_date);
+                birthdateEl.textContent = `Born ${date.toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}`;
+            } else {
+                birthdateEl.textContent = 'Birthday not set';
+            }
+        }
+
+        const joinedEl = document.getElementById('about-joined');
+        if (joinedEl && profile.created_at) {
+            const joinedDate = new Date(profile.created_at);
+            joinedEl.textContent = `Joined ${joinedDate.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}`;
+        }
 
         const avatarEl = document.getElementById('profile-avatar-img');
         if (avatarEl && profile.profile_url) avatarEl.src = profile.profile_url;
