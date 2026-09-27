@@ -17,7 +17,7 @@ export const getTeamMembers = async (role = "all", query = {}) => {
 
     const { count, rows: members } = await User.findAndCountAll({
         where: whereCondition,
-        attributes: ["user_id", "username", "email", "role", "created_at"],
+        attributes: ["user_id", "username", "email", "role", "created_at", "profile_url"],
         distinct: true,
         col: "user_id",
         limit,
@@ -61,6 +61,7 @@ export const addAdminMember = async (userId, role = "admin") => {
         username: user.username,
         email: user.email,
         role: user.role,
+        profile_url: user.previousrofile_url
     };
 };
 
@@ -91,5 +92,6 @@ export const updateMemberRole = async (memberId, role) => {
         username: member.username,
         email: member.email,
         role: member.role,
+        profile_url: user.previousrofile_url
     };
 };
