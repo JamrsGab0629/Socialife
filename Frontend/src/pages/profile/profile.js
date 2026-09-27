@@ -68,7 +68,7 @@ export default async function Profile(params){
         <div id="profile" class="${style['profile']}">
             <section class="${style["banner"]}" id="profile-banner">
                 <button type="button" class="${style["cover-edit-btn"]}" id="cover-edit-btn" aria-label="Change cover photo" hidden>
-                    <img src="/icon/camera.svg" alt="">
+                    <img src="/icon/edit_profile.svg" alt="">
                     <span>Edit cover photo</span>
                 </button>
                 <div class="${style["cover-menu-popover"]}" id="cover-menu" hidden>
@@ -82,7 +82,7 @@ export default async function Profile(params){
                 <div class="${style["profile-avatar"]}">
                     <img id="profile-avatar-img" src="/icon/user-avatar.svg" alt="Profile picture">
                     <button type="button" class="${style["avatar-edit-btn"]}" id="avatar-edit-btn" aria-label="Change profile photo" hidden>
-                        <img src="/icon/camera.svg" alt="">
+                        <img src="/icon/edit_profile.svg" alt="">
                     </button>
                     <div class="${style["avatar-menu-popover"]}" id="avatar-menu" hidden>
                         <button type="button" id="avatar-upload-option">Upload new photo</button>
