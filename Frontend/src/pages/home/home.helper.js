@@ -127,12 +127,16 @@ export function initSharePostDialog() {
     });
 }
 
+const linkifyMentions = (text) => {
+    return text.replace(/@(\w+)/g, (match, username) => {
+        return `<a href="#" class="${postStyle["mention-link"]}" data-mention-username="${username}">@${username}</a>`;
+    });
+};
+
 const renderCommentItem = (comment, postId, isReply = false) => {
     const userName = comment.user_name || comment.author?.username || currentUser.userName;
     const avatarUrl = comment.avatar_url || comment.author?.profile_url || currentUser.avatarUrl;
-    const commentText = comment.comment || comment.content || "";
-    const commentId = comment.comment_data_id || comment.id || "";
-    const replies = comment.replies || [];
+    const commentText = linkifyMentions(comment.comment || comment.content || "");
 
     return `
         <div class="${postStyle.comment}" ${isReply ? "" : `data-comment-id="${commentId}" data-post-id="${postId}"`}>
