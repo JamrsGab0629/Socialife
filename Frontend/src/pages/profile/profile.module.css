@@ -504,17 +504,25 @@ html, body {
 }
 
 @media (max-width: 768px) {
+    .profile {
+        height: auto;         /* Remove the 100vh lock on mobile */
+        overflow-y: visible;  /* Let the browser window handle the scroll */
+    }
+
     .all-tab-grid {
         grid-template-columns: 1fr;
     }
 
     .photos-section {
+        position: static;     /* Disable sticky positioning on mobile */
+        top: auto;
         width: 100%;
     }
 
     .posts-column {
         max-width: 100%;
     }
+
 
     .profile-header {
         flex-wrap: wrap;
