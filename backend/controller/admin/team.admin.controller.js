@@ -1,4 +1,4 @@
-import * as teamService from "../../service/admin/team.admin.service.js";
+import * as teamService from "../../services/team.admin.service.js";
 
 /**
  * Get team members filtered by role with pagination

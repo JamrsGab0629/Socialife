@@ -1,4 +1,4 @@
-import { User } from "../../model/association.model.js";
+import { User } from "../model/association.model.js";
 
 /**
  * Get team members filtered by role with pagination
