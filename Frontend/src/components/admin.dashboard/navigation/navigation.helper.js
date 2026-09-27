@@ -1,3 +1,6 @@
+import { checkAdmin } from "../../../helpers/auth/verify.request";
+import { logout } from "../../../helpers/auth/users.request";
+
 export const NAV_ITEMS = {
   main: [
     {
@@ -20,25 +23,58 @@ export const NAV_ITEMS = {
       label: "Reports",
       icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>`
     },
-    // {
-    //   route: "analytics",
-    //   label: "Analytics",
-    //   icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>`
-    // },
     {
       route: "team-roles",
       label: "Team Roles",
       icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="19" y2="14"></line><line x1="22" y1="11" x2="16" y2="11"></line></svg>`
     }
   ],
-  system: [
-    {
-      route: "settings",
-      label: "Settings",
-      icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>`
-    }
-  ]
+  // system: [
+  //   {
+  //     route: "settings",
+  //     label: "Settings",
+  //     icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>`
+  //   }
+  // ]
 };
+
+export async function setupAdminInformation(root) {
+  try {
+    const response = await checkAdmin();
+    // console.log(response);
+
+    // Verify admin privileges
+    if (!response || !response.user) {
+      alert("You are not an admin");
+      window.location.href = "/app";
+      return;
+    }
+
+    const { first_name, last_name, profile_url, role } = response.user;
+
+    // Update Profile Name
+    const nameEl = root.querySelector('[data-admin="profile-name"]');
+    if (nameEl && first_name && last_name) {
+      nameEl.textContent = `${first_name} ${last_name}`;
+    }
+
+    // Update Profile Role
+    const roleEl = root.querySelector('[data-admin="profile-role"]');
+    if (roleEl && role) {
+      roleEl.textContent = role;
+    }
+
+    // Update Avatar Image
+    const avatarWrapperEl = root.querySelector('[data-admin="avatar-wrapper"]');
+    if (avatarWrapperEl && profile_url) {
+      avatarWrapperEl.innerHTML = `<img src="${profile_url}" alt="${first_name || 'Admin'} ${last_name || ''}" class="${avatarWrapperEl.dataset.imgClass}">`;
+    }
+  } catch (error) {
+    console.error("Admin verification failed:", error);
+    alert("You are not an admin");
+    window.location.href = "/app";
+  }
+}
 
 export function highlight_active_route(root, style, style_active, current_route) {
   const links = root.querySelectorAll(`.${style["nav-item"]}`);
@@ -50,7 +86,15 @@ export function highlight_active_route(root, style, style_active, current_route)
 
 export function bind_logout(button) {
   if (!button) return;
-  button.addEventListener("click", () => {
-    window.alert("You have been logged out (mocked).");
+  button.addEventListener("click", async (event) => {
+    event.preventDefault();
+    try {
+      const response = await logout();
+      if (response) {
+        window.location.href = "/login";
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   });
 }
