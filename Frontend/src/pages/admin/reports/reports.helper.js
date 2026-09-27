@@ -1,13 +1,15 @@
-// reports.helper.js
-// Fetching, status filtering and review/resolve/dismiss actions.
 import { fetch_reports, set_report_status } from "../api/reports.service";
 
-const state = { all_reports: [], status_filter: "all" };
+const PAGE_SIZE = 10;
 
-function get_filtered_reports() {
-  if (state.status_filter === "all") return state.all_reports;
-  return state.all_reports.filter((r) => r.status === state.status_filter);
-}
+const state = {
+  reports: [],
+  total_items: 0,
+  total_pages: 1,
+  status_filter: "all",
+  page: 1,
+  loading: false
+};
 
 function status_badge(style_badge, status) {
   const map = {
@@ -22,13 +24,18 @@ function status_badge(style_badge, status) {
 
 function render_rows(styles) {
   const { style, style_btn, style_badge } = styles;
-  const filtered = get_filtered_reports();
   const body = document.getElementById("reportsTableBody");
+  if (!body) return;
 
-  if (filtered.length === 0) {
-    body.innerHTML = `<tr><td colspan="5" class="${style["empty"]}">No reports match this filter.</td></tr>`;
+  if (state.loading) {
+    body.innerHTML = `<tr><td colspan="6" class="${style["empty"]}">Loading reports...</td></tr>`;
+    return;
+  }
+
+  if (state.reports.length === 0) {
+    body.innerHTML = `<tr><td colspan="6" class="${style["empty"]}">No reports match this filter.</td></tr>`;
   } else {
-    body.innerHTML = filtered
+    body.innerHTML = state.reports
       .map(
         (r) => `
         <tr>
@@ -49,31 +56,86 @@ function render_rows(styles) {
       .join("");
   }
 
-  document.getElementById("reportsCount").textContent = `Showing 1-${filtered.length} of ${filtered.length}`;
+  const start = state.total_items === 0 ? 0 : (state.page - 1) * PAGE_SIZE + 1;
+  const end = Math.min(state.page * PAGE_SIZE, state.total_items);
+
+  const countEl = document.getElementById("reportsCount");
+  if (countEl) {
+    countEl.textContent = `Showing ${start}-${end} of ${state.total_items}`;
+  }
+
+  const pager = document.getElementById("reportsPager");
+  if (pager) {
+    pager.innerHTML = Array.from({ length: state.total_pages }, (_, i) => i + 1)
+      .map(
+        (n) =>
+          `<button class="${style["page-btn"]} ${n === state.page ? style["is-current"] : ""}" data-page="${n}">${n}</button>`
+      )
+      .join("");
+  }
+}
+
+async function load_data(styles) {
+  state.loading = true;
+  render_rows(styles);
+
+  try {
+    const data = await fetch_reports({
+      page: state.page,
+      limit: PAGE_SIZE,
+      status: state.status_filter
+    });
+
+    state.reports = data.reports;
+    state.total_items = data.pagination.totalItems;
+    state.total_pages = data.pagination.totalPages || 1;
+  } catch (err) {
+    console.error("Failed to load reports:", err);
+    state.reports = [];
+    state.total_items = 0;
+    state.total_pages = 1;
+  } finally {
+    state.loading = false;
+    render_rows(styles);
+  }
 }
 
 function bind_events(styles) {
-  document.getElementById("reportStatusFilter").addEventListener("change", (e) => {
+  document.getElementById("reportStatusFilter")?.addEventListener("change", (e) => {
     state.status_filter = e.target.value;
-    render_rows(styles);
+    state.page = 1;
+    load_data(styles);
   });
 
-  document.getElementById("reportsTableBody").addEventListener("click", async (e) => {
+  document.getElementById("reportsPager")?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-page]");
+    if (!btn) return;
+    const selectedPage = Number(btn.dataset.page);
+    if (selectedPage !== state.page) {
+      state.page = selectedPage;
+      load_data(styles);
+    }
+  });
+
+  document.getElementById("reportsTableBody")?.addEventListener("click", async (e) => {
     const btn = e.target.closest("button[data-action]");
     if (!btn) return;
+
     const id = Number(btn.dataset.id);
     const next_status = btn.dataset.action;
 
     btn.disabled = true;
-    await set_report_status(id, next_status);
-    const report = state.all_reports.find((r) => r.id === id);
-    if (report) report.status = next_status;
-    render_rows(styles);
+    try {
+      await set_report_status(id, next_status);
+      await load_data(styles);
+    } catch (err) {
+      console.error("Failed to update report status:", err);
+      btn.disabled = false;
+    }
   });
 }
 
 export async function init_reports_view(styles) {
-  state.all_reports = await fetch_reports();
-  render_rows(styles);
   bind_events(styles);
+  await load_data(styles);
 }
