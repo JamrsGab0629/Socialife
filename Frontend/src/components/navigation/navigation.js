@@ -19,23 +19,23 @@ export default function Navigation(root) {
 
             <nav class="${style['nav']}">
                 <a nav-action="home" class="${style['nav-item']}" href="/app/home">
-                    <img class="${style['simple-icon']}" src="../../icons/home.svg" alt="Home">
+                    <img class="${style['nav-icon']}" src="/icon/home.svg" alt="Home">
                     Home
                 </a>
                 <a nav-action="saved" class="${style['nav-item']}" href="/app/saved">
-                    <img class="${style['simple-icon']}" src="../../icons/save.svg" alt="Saved">
+                    <img class="${style['nav-icon']}" src="/icon/save.svg" alt="Saved">
                     Saved
                 </a>
                 <a nav-action="friends" class="${style['nav-item']}" href="/app/friends">
-                    <img class="${style['simple-icon']}" src="../../icons/group.svg" alt="Friends">
+                    <img class="${style['nav-icon']}" src="/icon/group.svg" alt="Friends">
                     Friends
                 </a>
                 <a nav-action="settings" class="${style['nav-item']}" href="/app/settings">
-                    <img class="${style['simple-icon']}" src="../../icons/settings.svg" alt="Settings">
+                    <img class="${style['nav-icon']}" src="/icon/settings.svg" alt="Settings">
                     Settings
                 </a>
                 <a nav-action="log-out" class="${style['nav-item']}" href="#">
-                    <img class="${style['simple-icon']}" src="../../icons/logout.svg" alt="Log Out">
+                    <img class="${style['nav-icon']}" src="/icon/logout.svg" alt="Log Out">
                     Log Out
                 </a>
             </nav>
@@ -44,23 +44,23 @@ export default function Navigation(root) {
         <!-- MOBILE BOTTOM NAV -->
         <nav class="${style['mobile-bottom-nav']}">
             <a nav-action="home" class="${style['mobile-nav-item']}" href="/app/home">
-                <img class="${style['simple-icon']}" src="../../icons/home.svg" alt="Home">
+                <img class="${style['nav-icon']}" src="/icon/home.svg" alt="Home">
                 Home
             </a>
             <a nav-action="saved" class="${style['mobile-nav-item']}" href="/app/saved">
-                <img class="${style['simple-icon']}" src="../../icons/save.svg" alt="Saved">
+                <img class="${style['nav-icon']}" src="/icon/save.svg" alt="Saved">
                 Saved
             </a>
             <a nav-action="friends" class="${style['mobile-nav-item']}" href="/app/friends">
-                <img class="${style['simple-icon']}" src="../../icons/group.svg" alt="Friends">
+                <img class="${style['nav-icon']}" src="/icon/group.svg" alt="Friends">
                 Friends
             </a>
             <a nav-action="settings" class="${style['mobile-nav-item']}" href="/app/settings">
-                <img class="${style['simple-icon']}" src="../../icons/settings.svg" alt="Settings">
+                <img class="${style['nav-icon']}" src="/icon/settings.svg" alt="Settings">
                 Settings
             </a>
             <a nav-action="log-out" class="${style['mobile-nav-item']}" href="#">
-                <img class="${style['simple-icon']}" src="../../icons/logout.svg" alt="Log Out">
+                <img class="${style['nav-icon']}" src="/icon/logout.svg" alt="Log Out">
                 Log Out
             </a>
         </nav>

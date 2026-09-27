@@ -44,7 +44,7 @@ function buildOverlay() {
 
                 <div class="${style["pv-reaction-bar"]}">
                     <button type="button" class="${style["pv-like-btn"]}" data-pv-like>
-                        <img src="../../icons/like.svg" alt="like">
+                        <img src="/icon/like.svg" alt="like">
                         <span data-pv-like-count>0</span>
                     </button>
                     <div><span data-pv-comment-count>0</span> comments</div>
@@ -84,11 +84,11 @@ function renderComment(comment) {
     item.className = style["pv-comment-item"];
 
     const authorName = comment.author?.username || comment.author_name || "You";
-    const avatarUrl = comment.author?.profile_url || "/icons/user-avatar.svg";
+    const avatarUrl = comment.author?.profile_url || "/icon/user-avatar.svg";
     const text = comment.comment || "";
 
     item.innerHTML = `
-        <img class="${style["pv-comment-avatar"]}" src="${avatarUrl}" alt="" onerror="this.src='/icons/user-avatar.svg'">
+        <img class="${style["pv-comment-avatar"]}" src="${avatarUrl}" alt="" onerror="this.src='/icon/user-avatar.svg'">
         <div>
             <div class="${style["pv-comment-bubble"]}">
                 <span class="${style["pv-comment-name"]}">${authorName}</span>
@@ -166,14 +166,14 @@ export function openPostViewer(postData) {
     baseLikes = postData.like_count ?? postData.likes_count ?? 0;
 
     const authorName = postData.user_name || postData.author?.username || "Anonymous";
-    const avatarUrl = postData.avatar_url || postData.author?.profile_url || "/icons/user-avatar.svg";
+    const avatarUrl = postData.avatar_url || postData.author?.profile_url || "/icon/user-avatar.svg";
     const photoUrl = postData.photo?.href || postData.photo_url || "";
     const caption = postData.caption || (typeof postData.content === "string" ? postData.content : "");
 
     overlayEl.querySelector("[data-pv-photo]").src = photoUrl;
     const avatarImg = overlayEl.querySelector("[data-pv-avatar]");
     avatarImg.src = avatarUrl;
-    avatarImg.onerror = function () { this.src = "/icons/user-avatar.svg"; };
+    avatarImg.onerror = function () { this.src = "/icon/user-avatar.svg"; };
     overlayEl.querySelector("[data-pv-author]").textContent = authorName;
     overlayEl.querySelector("[data-pv-time]").textContent = formatTimeAgo(postData.shared_at || postData.post_time || postData.created_at);
     overlayEl.querySelector("[data-pv-caption]").textContent = caption;
