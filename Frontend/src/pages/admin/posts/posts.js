@@ -1,4 +1,3 @@
-// posts.js
 import style from "./posts.module.css";
 import style_btn from "../../../styles/admin/btn.module.css";
 import style_badge from "../../../styles/admin/badge.module.css";
@@ -6,9 +5,11 @@ import { init_posts_view } from "./posts.helper";
 import MainLayout from "../../../layouts/admin/main";
 import Navigation from "../../../components/admin.dashboard/navigation/navigation";
 
-export default function Posts() {
-  const { navigation, main } = MainLayout(this.root);
-  Navigation(navigation, 'posts');
+export default function Posts(rootElement) {
+  const root = rootElement || this?.root || document.getElementById("app");
+  const { navigation, main } = MainLayout(root);
+  
+  Navigation(navigation, "posts");
 
   main.innerHTML = `
     <div class="${style["page-header"]}">
@@ -17,7 +18,13 @@ export default function Posts() {
     </div>
     <div class="${style["card"]}">
       <div class="${style["toolbar"]}">
-        <input type="text" id="postSearch" class="${style["search-input"]}" placeholder="Search posts by author or content" />
+        <input 
+          type="search" 
+          id="postSearch" 
+          class="${style["search-input"]}" 
+          placeholder="Search by username or @handle..." 
+          autocomplete="off"
+        />
         <select id="postStatusFilter" class="${style["filter-select"]}">
           <option value="all">All posts</option>
           <option value="active">Active</option>
@@ -26,12 +33,19 @@ export default function Posts() {
       </div>
       <table class="${style["table"]}">
         <thead>
-          <tr><th>Author</th><th>Content</th><th>Created</th><th>Status</th><th></th></tr>
+          <tr>
+            <th>Author</th>
+            <th>Content</th>
+            <th>Created</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
         </thead>
         <tbody id="postsTableBody"></tbody>
       </table>
       <div class="${style["pagination"]}">
         <span id="postsCount"></span>
+        <div id="postsPager" class="${style["pager"]}"></div>
       </div>
     </div>
   `;

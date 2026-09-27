@@ -1,6 +1,6 @@
 import Request from "/core/request";
 
-export async function getTeam( status = ALL, {page = 0, limit = 0} ){
+export async function getTeam( status = "ALL", {page = 0, limit = 0} ){
     return Request({
         param: `/admin/team/get/${status}`,
         method: "GET",
@@ -11,10 +11,10 @@ export async function getTeam( status = ALL, {page = 0, limit = 0} ){
     })
 }
 
-export async function addMember( { userId, role = ADMIN } ){
+export async function addMember( { userId, role = "ADMIN" } ){
     return Request({
         param: `/admin/team/add`,
-        methot: "POST",
+        method: "POST",
         args: {
             userId,
             role
@@ -22,10 +22,10 @@ export async function addMember( { userId, role = ADMIN } ){
     })
 }
 
-export async function updateTeam( userId, { role = user } ){
+export async function updateTeam( userId, { role = "user" } ){
     return Request({
         param: `/admin/team/${userId}/role`,
-        methot: "POST",
+        method: "PUT",
         args: {
             role
         }

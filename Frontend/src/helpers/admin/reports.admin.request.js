@@ -8,7 +8,7 @@ export async function getRecentReports(args = {}){
     })
 }
 
-export async function getReports( method = ALL, { page = 1, limit = 10 } ){
+export async function getReports( method = "ALL", { page = 1, limit = 10 } = {}){
     return Request({
         param: `/admin/report/get/${method}`,
         method: "GET",
@@ -19,10 +19,14 @@ export async function getReports( method = ALL, { page = 1, limit = 10 } ){
     })
 }
 
-export async function updateReport( reportId, args = { status, severity, resolution } ){
+export async function updateReport(reportId, { status, severity, resolution } = {}) {
     return Request({
         param: `/admin/${reportId}/update`,
-        methot: "PUT",
-        args
-    })
+        method: "PUT",
+        args: {
+            status,
+            severity,
+            resolution
+        }
+    });
 }

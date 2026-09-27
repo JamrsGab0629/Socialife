@@ -1,4 +1,3 @@
-// users.js
 import style from "./users.module.css";
 import style_btn from "../../../styles/admin/btn.module.css";
 import style_badge from "../../../styles/admin/badge.module.css";
@@ -18,7 +17,13 @@ export default function Users() {
     </div>
     <div class="${style["card"]}">
       <div class="${style["toolbar"]}">
-        <input type="text" id="userSearch" class="${style["search-input"]}" placeholder="Search users by name or email" />
+        <input 
+          type="search" 
+          id="userSearch" 
+          class="${style["search-input"]}" 
+          placeholder="Search by username..." 
+          autocomplete="off"
+        />
         <select id="statusFilter" class="${style["filter-select"]}">
           <option value="all">All statuses</option>
           <option value="active">Active</option>
@@ -27,7 +32,13 @@ export default function Users() {
       </div>
       <table class="${style["table"]}">
         <thead>
-          <tr><th>User</th><th>Email</th><th>Joined</th><th>Status</th><th></th></tr>
+          <tr>
+            <th>User</th>
+            <th>Email</th>
+            <th>Joined</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
         </thead>
         <tbody id="usersTableBody"></tbody>
       </table>

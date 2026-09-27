@@ -1,23 +1,16 @@
-// posts.helper.js
-// Fetching, filtering and remove/restore actions for the Posts view.
-import { fetch_posts, set_post_status } from "../api/posts.service";
+import { fetch_posts, set_post_status, view_post_details } from "../api/posts.service";
+
+const PAGE_SIZE = 10;
 
 const state = {
-  all_posts: [],
+  posts: [],
+  total_items: 0,
+  total_pages: 1,
   search: "",
   status_filter: "all",
+  page: 1,
+  loading: false
 };
-
-function get_filtered_posts() {
-  return state.all_posts.filter((p) => {
-    const matches_search =
-      !state.search ||
-      p.author.toLowerCase().includes(state.search) ||
-      p.content.toLowerCase().includes(state.search);
-    const matches_status = state.status_filter === "all" || p.status === state.status_filter;
-    return matches_search && matches_status;
-  });
-}
 
 function status_badge(style_badge, status) {
   const map = {
@@ -30,19 +23,29 @@ function status_badge(style_badge, status) {
 
 function render_rows(styles) {
   const { style, style_btn, style_badge } = styles;
-  const filtered = get_filtered_posts();
   const body = document.getElementById("postsTableBody");
 
-  if (filtered.length === 0) {
-    body.innerHTML = `<tr><td colspan="4" class="${style["empty"]}">No posts match your filters.</td></tr>`;
+  if (state.loading) {
+    body.innerHTML = `<tr><td colspan="5" class="${style["empty"]}">Loading posts...</td></tr>`;
+    return;
+  }
+
+  if (state.posts.length === 0) {
+    body.innerHTML = `<tr><td colspan="5" class="${style["empty"]}">No posts found.</td></tr>`;
   } else {
-    body.innerHTML = filtered
+    body.innerHTML = state.posts
       .map(
         (p) => `
         <tr>
           <td>
             <div class="${style["author-cell"]}">
-              <div class="${style["avatar"]}"></div>
+              <div class="${style["avatar"]}">
+                ${
+                  p.avatar
+                    ? `<img src="${p.avatar}" alt="${p.author}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />`
+                    : `<span>${p.author.charAt(0).toUpperCase()}</span>`
+                }
+              </div>
               <div>
                 <p class="${style["name"]}">${p.author}</p>
                 <p class="${style["handle"]}">${p.handle}</p>
@@ -67,42 +70,111 @@ function render_rows(styles) {
       .join("");
   }
 
-  document.getElementById("postsCount").textContent = `Showing 1-${filtered.length} of ${filtered.length}`;
+  const start = state.total_items === 0 ? 0 : (state.page - 1) * PAGE_SIZE + 1;
+  const end = Math.min(state.page * PAGE_SIZE, state.total_items);
+
+  document.getElementById("postsCount").textContent = `Showing ${start}-${end} of ${state.total_items}`;
+
+  const pager = document.getElementById("postsPager");
+  if (pager) {
+    pager.innerHTML = Array.from({ length: state.total_pages }, (_, i) => i + 1)
+      .map(
+        (n) =>
+          `<button class="${style["page-btn"]} ${n === state.page ? style["is-current"] : ""}" data-page="${n}">${n}</button>`
+      )
+      .join("");
+  }
+}
+
+async function load_data(styles) {
+  state.loading = true;
+  render_rows(styles);
+
+  try {
+    const data = await fetch_posts({
+      page: state.page,
+      limit: PAGE_SIZE,
+      status: state.status_filter,
+      search: state.search
+    });
+
+    state.posts = data.posts;
+    state.total_items = data.pagination.totalItems;
+    state.total_pages = data.pagination.totalPages;
+  } catch (err) {
+    console.error("Failed to load posts:", err);
+    state.posts = [];
+    state.total_items = 0;
+    state.total_pages = 1;
+  } finally {
+    state.loading = false;
+    render_rows(styles);
+  }
 }
 
 function bind_events(styles) {
+  let debounceTimer = null;
+
   document.getElementById("postSearch").addEventListener("input", (e) => {
-    state.search = e.target.value.trim().toLowerCase();
-    render_rows(styles);
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      state.search = e.target.value;
+      state.page = 1;
+      load_data(styles);
+    }, 400);
   });
 
   document.getElementById("postStatusFilter").addEventListener("change", (e) => {
     state.status_filter = e.target.value;
-    render_rows(styles);
+    state.page = 1;
+    load_data(styles);
   });
+
+  const pager = document.getElementById("postsPager");
+  if (pager) {
+    pager.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-page]");
+      if (!btn) return;
+      const selectedPage = Number(btn.dataset.page);
+      if (selectedPage !== state.page) {
+        state.page = selectedPage;
+        load_data(styles);
+      }
+    });
+  }
 
   document.getElementById("postsTableBody").addEventListener("click", async (e) => {
     const btn = e.target.closest("button[data-action]");
     if (!btn) return;
-    const id = Number(btn.dataset.id);
+
+    const id = btn.dataset.id; // UUID String
     const { action } = btn.dataset;
 
     if (action === "view") {
-      window.alert(`Viewing post #${id} (mocked).`);
+      try {
+        const postData = await view_post_details(id);
+        console.log("Fetched post details:", postData);
+        window.alert(`Post content: "${postData?.content || postData?.caption || "N/A"}"`);
+      } catch (err) {
+        console.error("Failed to view post details:", err);
+      }
       return;
     }
 
-    btn.disabled = true;
-    const next_status = action === "remove" ? "removed" : "active";
-    await set_post_status(id, next_status);
-    const post = state.all_posts.find((p) => p.id === id);
-    if (post) post.status = next_status;
-    render_rows(styles);
+    if (action === "remove" || action === "restore") {
+      btn.disabled = true;
+      try {
+        await set_post_status(id); // Calls backend removePost (toggles is_active)
+        await load_data(styles);
+      } catch (err) {
+        console.error("Failed to update post status:", err);
+        btn.disabled = false;
+      }
+    }
   });
 }
 
 export async function init_posts_view(styles) {
-  state.all_posts = await fetch_posts();
-  render_rows(styles);
   bind_events(styles);
+  await load_data(styles);
 }

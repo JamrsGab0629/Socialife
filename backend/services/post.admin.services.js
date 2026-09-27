@@ -15,7 +15,7 @@ export const getPosts = async (status, query = {}) => {
 
     const { count, rows: posts } = await Post.findAndCountAll({
         where: whereCondition,
-        include: [{ model: User, as: "author", attributes: ["user_id", "username"] }],
+        include: [{ model: User, as: "author", attributes: ["user_id", "username", "profile_url"] }],
         limit,
         offset,
         order: [["created_at", "DESC"]],
@@ -46,7 +46,7 @@ export const getByUsername = async (username, query = {}) => {
                 model: User,
                 as: "author",
                 where: { username },
-                attributes: ["user_id", "username"],
+                attributes: ["user_id", "username", "profile_url"],
             },
         ],
         limit,
@@ -70,7 +70,7 @@ export const getByUsername = async (username, query = {}) => {
  */
 export const viewPost = async (postId) => {
     const post = await Post.findByPk(postId, {
-        include: [{ model: User, as: "author", attributes: ["user_id", "username"] }],
+        include: [{ model: User, as: "author", attributes: ["user_id", "username", "profile_url"] }],
     });
 
     if (!post) {

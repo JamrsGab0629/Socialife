@@ -1,6 +1,6 @@
 import Request from "/core/request";
 
-export async function getUsers( status = ALL, {page = 1, limit = 10} ){
+export async function getUsers( status = "ALL", { page = 1, limit = 10 } = {}){
     return Request({
         param: `/admin/user/get/${status}`,
         method: "GET",
@@ -14,7 +14,7 @@ export async function getUsers( status = ALL, {page = 1, limit = 10} ){
 export async function findUserByUsername( username ){
     return Request({
         param: `/admin/user/find/${username}`,
-        methot: "GET",
+        method: "GET",
         args: {}
     })
 }
@@ -22,15 +22,15 @@ export async function findUserByUsername( username ){
 export async function viewUser( userId ){
     return Request({
         param: `/admin/user/view/${userId}`,
-        methot: "GET",
+        method: "GET",
         args: {}
     })
 }
 
 export async function toggleStatus( userId ){
     return Request({
-        param: `/admin/user/${userId}`,
-        methot: "PUT",
+        param: `/admin/user/${userId}/block`,
+        method: "PUT",
         args: {}
     })
 }

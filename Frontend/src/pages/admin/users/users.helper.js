@@ -1,26 +1,16 @@
-// users.helper.js
-// Fetching, filtering, pagination and ban/unban actions for the Users view.
-import { fetch_users, set_user_status } from "../api/users.service";
+import { fetch_users, set_user_status, view_user_details } from "../api/users.service";
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 10;
 
 const state = {
-  all_users: [],
+  users: [],
+  total_items: 0,
+  total_pages: 1,
   search: "",
   status_filter: "all",
   page: 1,
+  loading: false
 };
-
-function get_filtered_users() {
-  return state.all_users.filter((u) => {
-    const matches_search =
-      !state.search ||
-      u.name.toLowerCase().includes(state.search) ||
-      u.email.toLowerCase().includes(state.search);
-    const matches_status = state.status_filter === "all" || u.status === state.status_filter;
-    return matches_search && matches_status;
-  });
-}
 
 function status_badge(style_badge, status) {
   const map = {
@@ -33,23 +23,28 @@ function status_badge(style_badge, status) {
 
 function render_rows(styles) {
   const { style, style_btn, style_badge } = styles;
-  const filtered = get_filtered_users();
-  const total_pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  state.page = Math.min(state.page, total_pages);
-  const start = (state.page - 1) * PAGE_SIZE;
-  const page_items = filtered.slice(start, start + PAGE_SIZE);
-
   const body = document.getElementById("usersTableBody");
-  if (page_items.length === 0) {
-    body.innerHTML = `<tr><td colspan="5" class="${style["empty"]}">No users match your filters.</td></tr>`;
+
+  if (state.loading) {
+    body.innerHTML = `<tr><td colspan="5" class="${style["empty"]}">Loading users...</td></tr>`;
+    return;
+  }
+
+  if (state.users.length === 0) {
+    body.innerHTML = `<tr><td colspan="5" class="${style["empty"]}">No users found.</td></tr>`;
   } else {
-    body.innerHTML = page_items
+    body.innerHTML = state.users
       .map(
         (u) => `
         <tr>
           <td>
             <div class="${style["user-cell"]}">
-              <div class="${style["avatar"]}"></div>
+              <div class="${style["avatar"]}">
+                ${u.avatar
+            ? `<img src="${u.avatar}" alt="${u.name}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />`
+            : `<span>${u.name.charAt(0).toUpperCase()}</span>`
+          }
+              </div>
               <div>
                 <p class="${style["name"]}">${u.name}</p>
                 <p class="${style["handle"]}">${u.handle}</p>
@@ -62,11 +57,10 @@ function render_rows(styles) {
           <td>
             <div class="${style["actions"]}">
               <button class="${style_btn["btn"]} ${style_btn["btn-outline"]}" data-action="view" data-id="${u.id}">View</button>
-              ${
-                u.status === "banned"
-                  ? `<button class="${style_btn["btn"]} ${style_btn["btn-success"]}" data-action="unban" data-id="${u.id}">Unban</button>`
-                  : `<button class="${style_btn["btn"]} ${style_btn["btn-danger"]}" data-action="ban" data-id="${u.id}">Ban</button>`
-              }
+              ${u.status === "banned"
+            ? `<button class="${style_btn["btn"]} ${style_btn["btn-success"]}" data-action="unban" data-id="${u.id}">Unban</button>`
+            : `<button class="${style_btn["btn"]} ${style_btn["btn-danger"]}" data-action="ban" data-id="${u.id}">Ban</button>`
+          }
             </div>
           </td>
         </tr>`
@@ -74,12 +68,13 @@ function render_rows(styles) {
       .join("");
   }
 
-  document.getElementById("usersCount").textContent = `Showing ${
-    filtered.length === 0 ? 0 : start + 1
-  }-${Math.min(start + PAGE_SIZE, filtered.length)} of ${filtered.length}`;
+  const start = state.total_items === 0 ? 0 : (state.page - 1) * PAGE_SIZE + 1;
+  const end = Math.min(state.page * PAGE_SIZE, state.total_items);
+
+  document.getElementById("usersCount").textContent = `Showing ${start}-${end} of ${state.total_items}`;
 
   const pager = document.getElementById("usersPager");
-  pager.innerHTML = Array.from({ length: total_pages }, (_, i) => i + 1)
+  pager.innerHTML = Array.from({ length: state.total_pages }, (_, i) => i + 1)
     .map(
       (n) =>
         `<button class="${style["page-btn"]} ${n === state.page ? style["is-current"] : ""}" data-page="${n}">${n}</button>`
@@ -87,50 +82,92 @@ function render_rows(styles) {
     .join("");
 }
 
+async function load_data(styles) {
+  state.loading = true;
+  render_rows(styles);
+
+  try {
+    const data = await fetch_users({
+      page: state.page,
+      limit: PAGE_SIZE,
+      status: state.status_filter,
+      search: state.search
+    });
+
+    state.users = data.users;
+    state.total_items = data.pagination.totalItems;
+    state.total_pages = data.pagination.totalPages;
+  } catch (err) {
+    console.error("Failed to load users:", err);
+    state.users = [];
+    state.total_items = 0;
+    state.total_pages = 1;
+  } finally {
+    state.loading = false;
+    render_rows(styles);
+  }
+}
+
 function bind_events(styles) {
-  const { style, style_btn, style_badge } = styles;
+  let debounceTimer = null;
 
   document.getElementById("userSearch").addEventListener("input", (e) => {
-    state.search = e.target.value.trim().toLowerCase();
-    state.page = 1;
-    render_rows(styles);
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      state.search = e.target.value;
+      state.page = 1;
+      load_data(styles);
+    }, 400);
   });
 
   document.getElementById("statusFilter").addEventListener("change", (e) => {
     state.status_filter = e.target.value;
     state.page = 1;
-    render_rows(styles);
+    load_data(styles);
   });
 
   document.getElementById("usersPager").addEventListener("click", (e) => {
     const btn = e.target.closest("[data-page]");
     if (!btn) return;
-    state.page = Number(btn.dataset.page);
-    render_rows(styles);
+    const selectedPage = Number(btn.dataset.page);
+    if (selectedPage !== state.page) {
+      state.page = selectedPage;
+      load_data(styles);
+    }
   });
 
   document.getElementById("usersTableBody").addEventListener("click", async (e) => {
     const btn = e.target.closest("button[data-action]");
     if (!btn) return;
-    const id = Number(btn.dataset.id);
+
+    const id = btn.dataset.id; // UUID String
     const { action } = btn.dataset;
 
     if (action === "view") {
-      window.alert(`Viewing user #${id} (mocked).`);
+      try {
+        const details = await view_user_details(id);
+        console.log("User Details:", details);
+        window.alert(`User Details fetched for ID: ${id}`);
+      } catch (err) {
+        console.error("Error viewing user:", err);
+      }
       return;
     }
 
-    btn.disabled = true;
-    const next_status = action === "ban" ? "banned" : "active";
-    await set_user_status(id, next_status);
-    const user = state.all_users.find((u) => u.id === id);
-    if (user) user.status = next_status;
-    render_rows(styles);
+    if (action === "ban" || action === "unban") {
+      btn.disabled = true;
+      try {
+        await set_user_status(id);
+        await load_data(styles); // Refresh list from backend
+      } catch (err) {
+        console.error("Failed to toggle status:", err);
+        btn.disabled = false;
+      }
+    }
   });
 }
 
 export async function init_users_view(styles) {
-  state.all_users = await fetch_users();
-  render_rows(styles);
   bind_events(styles);
+  await load_data(styles);
 }
