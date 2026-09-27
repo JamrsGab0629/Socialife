@@ -1,5 +1,6 @@
 import SPA from "./core/spa";
 import checkAuth from "./core/checkAuthentication";
+import checkAdmin from "./core/checkAdministration";
 import isAuth from "./core/isAuthenticated";
 import SignupStage from "./core/signupStage";
 
@@ -35,13 +36,13 @@ app.add('/app/saved', checkAuth(Saved));
 app.add('/app/friends', checkAuth(Friends));
 app.add('/app/timeline', checkAuth(Timeline));
 
-// admin dashboard
-app.add(/^\/admin(?:\/dashboard)?$/i, lazyRoute(() => import('./pages/admin/dashboard/dashboard')));
-// app.add('/admin/analytics', lazyRoute(() => import('./pages/admin/analytics/analytics')));
-app.add('/admin/posts', lazyRoute(() => import('./pages/admin/posts/posts')));
-app.add('/admin/users', lazyRoute(() => import('./pages/admin/users/users')));
-app.add('/admin/reports', lazyRoute(() => import('./pages/admin/reports/reports')));
-app.add('/admin/team-roles', lazyRoute(() => import('./pages/admin/team_roles/team_roles')));
-// app.add('/admin/settings', checkAuth(lazyRoute(() => import('./pages/admin/settings/settings'))));
+// admin dashboard & routes
+app.add(/^\/admin(?:\/dashboard)?$/i, checkAdmin(lazyRoute(() => import('./pages/admin/dashboard/dashboard'))));
+// app.add('/admin/analytics', checkAdmin(lazyRoute(() => import('./pages/admin/analytics/analytics'))));
+app.add('/admin/posts', checkAdmin(lazyRoute(() => import('./pages/admin/posts/posts'))));
+app.add('/admin/users', checkAdmin(lazyRoute(() => import('./pages/admin/users/users'))));
+app.add('/admin/reports', checkAdmin(lazyRoute(() => import('./pages/admin/reports/reports'))));
+app.add('/admin/team-roles', checkAdmin(lazyRoute(() => import('./pages/admin/team_roles/team_roles'))));
+// app.add('/admin/settings', checkAdmin(lazyRoute(() => import('./pages/admin/settings/settings'))));
 
 app.handleRouteChanges();
