@@ -1,9 +1,4 @@
-// dashboard.helper.js
-// Pulls a lightweight summary across the other mocked services so the
-// dashboard reflects the same data users see on their own pages.
-import { fetch_users } from "../api/users.service";
-import { fetch_posts } from "../api/posts.service";
-import { fetch_reports } from "../api/reports.service";
+import { getDashboardData } from "../api/dashboard.service";
 
 function status_pill(style_badge, status) {
   const map = {
@@ -18,18 +13,21 @@ function status_pill(style_badge, status) {
 
 export async function init_dashboard_view(styles) {
   const { style, style_badge } = styles;
-  const [users, posts, reports] = await Promise.all([fetch_users(), fetch_posts(), fetch_reports()]);
+  const { stats, reports } = await getDashboardData();
 
-  const banned_count = users.filter((u) => u.status === "banned").length;
-  const pending_reports = reports.filter((r) => r.status === "pending").length;
+  document.getElementById("statTotalUsers").textContent = stats.totalUsers;
+  document.getElementById("statTotalPosts").textContent = stats.totalPosts;
+  document.getElementById("statPendingReports").textContent = stats.totalPendingReports;
+  document.getElementById("statBannedUsers").textContent = stats.totalBannedUsers;
 
-  document.getElementById("statTotalUsers").textContent = users.length;
-  document.getElementById("statTotalPosts").textContent = posts.length;
-  document.getElementById("statPendingReports").textContent = pending_reports;
-  document.getElementById("statBannedUsers").textContent = banned_count;
+  const recentReportsContainer = document.getElementById("recentReports");
 
-  document.getElementById("recentReports").innerHTML = reports
-    .slice(0, 4)
+  if (!reports || reports.length === 0) {
+    recentReportsContainer.innerHTML = `<p style="padding: 1rem; color: #888;">No recent reports found.</p>`;
+    return;
+  }
+
+  recentReportsContainer.innerHTML = reports
     .map(
       (r) => `
       <div class="${style["report-row"]}">

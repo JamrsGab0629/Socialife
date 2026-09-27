@@ -1,4 +1,3 @@
-// dashboard.js
 import Navigation from "../../../components/admin.dashboard/navigation/navigation";
 import style from "./dashboard.module.css";
 import style_badge from "../../../styles/admin/badge.module.css";
@@ -45,5 +44,8 @@ export default function Dashboard() {
     </div>
   `;
 
-  init_dashboard_view({ style, style_badge });
+  // Initialize view data asynchronously
+  init_dashboard_view({ style, style_badge }).catch((err) => {
+    console.error("Failed to initialize dashboard view:", err);
+  });
 }
