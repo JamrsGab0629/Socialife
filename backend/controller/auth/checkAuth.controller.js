@@ -6,10 +6,10 @@ export const checkAuth = async (req, res) => {
         if (!userId) {
             return res.status(401).json({ success: false, message: "Unauthorized: User ID not found in token" });
         }
-const user = await User.findOne({
-    where: { user_id: userId, is_actived: true },
-    attributes: ["user_id", "first_name", "last_name", "username", "email"]
-});
+        const user = await User.findOne({
+            where: { user_id: userId, is_actived: true },
+            attributes: ["user_id", "first_name", "last_name", "username", "email", "profile_url"]
+        });
 
         return res.status(200).json({
             message: "Authentication succesful",
@@ -17,7 +17,7 @@ const user = await User.findOne({
             user,
         })
     } catch (error) {
-        const error_status = (error.message === "User not found or is deactivated") ? 404 : 500 ;
+        const error_status = (error.message === "User not found or is deactivated") ? 404 : 500;
         return res.status(error_status).json({
             message: error.message,
             success: false,
