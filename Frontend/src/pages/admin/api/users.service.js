@@ -1,30 +1,60 @@
-// users.service.js — mocked network layer for the Users view.
-const MOCK_USERS = [
-  { id: 1, name: "Maria Santos", handle: "@mariasantos", email: "maria.santos@gmail.com", joined: "May 29, 2025", status: "active" },
-  { id: 2, name: "John Dela Cruz", handle: "@johndelacruz", email: "john.d@gmail.com", joined: "May 29, 2025", status: "active" },
-  { id: 3, name: "Alexa Rivera", handle: "@alexarivera", email: "alexa.rivera@gmail.com", joined: "May 29, 2025", status: "active" },
-  { id: 4, name: "Mark Reyes", handle: "@markreyes", email: "mark.reyes@gmail.com", joined: "May 28, 2025", status: "banned" },
-  { id: 5, name: "Diane Lopez", handle: "@dianelopez", email: "diane.lopez@gmail.com", joined: "May 27, 2025", status: "active" },
-  { id: 6, name: "Carlo Villanueva", handle: "@carlov", email: "carlo.v@gmail.com", joined: "May 26, 2025", status: "active" },
-  { id: 7, name: "Bea Fernandez", handle: "@beaf", email: "bea.fernandez@gmail.com", joined: "May 25, 2025", status: "banned" },
-  { id: 8, name: "Kevin Ramos", handle: "@kevinr", email: "kevin.ramos@gmail.com", joined: "May 24, 2025", status: "active" },
-  { id: 9, name: "Nicole Cruz", handle: "@nicolecruz", email: "nicole.cruz@gmail.com", joined: "May 23, 2025", status: "active" },
-  { id: 10, name: "Paolo Gutierrez", handle: "@paologutierrez", email: "paolo.gutierrez@gmail.com", joined: "May 22, 2025", status: "active" },
-];
+import * as userAPIHelper from "../../../helpers/admin/user.admin.request";
 
-export function fetch_users() {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(structuredClone(MOCK_USERS)), 400);
-  });
+function transformUser(u) {
+  const name = [u.first_name, u.last_name].filter(Boolean).join(" ") || u.username;
+  const joined = u.created_at ? new Date(u.created_at).toLocaleDateString() : "N/A";
+  
+  // Determine status based on API flags
+  const status = u.is_actived ? "active" : "banned";
+
+  return {
+    id: u.user_id,
+    name,
+    handle: `@${u.username}`,
+    username: u.username,
+    email: u.email,
+    joined,
+    status,
+    avatar: u.profile_url
+  };
 }
 
-export function set_user_status(id, status) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const user = MOCK_USERS.find((u) => u.id === id);
-      if (!user) return reject(new Error("User not found"));
-      user.status = status;
-      resolve(structuredClone(user));
-    }, 300);
-  });
+export async function fetch_users({ page = 1, limit = 10, status = "all", search = "" } = {}) {
+  let apiStatus = "ALL";
+  if (status === "active") apiStatus = "ACTIVE";
+  if (status === "banned") apiStatus = "BANNED";
+
+  let response;
+
+  // If a search query is provided, use findUserByUsername endpoint
+  if (search.trim()) {
+    response = await userAPIHelper.findUserByUsername(search.trim());
+  } else {
+    // Call getUsers(status, { page, limit }) matching your function parameters
+    response = await userAPIHelper.getUsers(apiStatus, { page, limit });
+  }
+
+  const rawUsers = response?.result?.users 
+    ? response.result.users 
+    : (response?.result ? [response.result] : []);
+
+  const pagination = response?.result?.pagination || {
+    totalItems: rawUsers.length,
+    totalPages: 1,
+    currentPage: page,
+    limit
+  };
+
+  return {
+    users: rawUsers.map(transformUser),
+    pagination
+  };
+}
+
+export async function view_user_details(userId) {
+  return await userAPIHelper.viewUser(userId);
+}
+
+export async function set_user_status(userId) {
+  return await userAPIHelper.toggleStatus(userId);
 }
