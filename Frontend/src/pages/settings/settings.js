@@ -13,7 +13,7 @@ export default function Settings() {
             <!-- ─── SEARCH ─── -->
             <div class="${style_topbar_search["topbar"]}">
                 <div class="${style_topbar_search["search-box"]}">
-                    <img width="18px" height="18px" src="../../icons/search.svg" alt="search">
+                    <img width="18px" height="18px" src="/icon/search.svg" alt="search">
                     <input type="text" class="${style_topbar_search["search-input"]}" placeholder="Hinted search text">
                 </div>
             </div>
@@ -25,7 +25,7 @@ export default function Settings() {
                 <div class="${style["section-heading"]}">Your account</div>
                 <div class="${style["settings-card"]}">
                     <a class="${style["settings-item"]}" href="#">
-                        <img class="${style["settings-icon"]}" src="../../icons/user-avatar.svg" alt="Users avatar">
+                        <img class="${style["settings-icon"]}" src="/icon/user-avatar.svg" alt="Users avatar">
                         <div class="${style["item-content"]}">
                             <div class="${style["item-title"]}">
                                 Accounts Center
@@ -44,14 +44,14 @@ export default function Settings() {
                 <div class="${style["section-sub"]}">Customize your experience on Socialife.</div>
                 <div class="${style["settings-card"]}">
                     <a class="${style["settings-item"]}" href="#">
-                        <img class="${style["settings-icon"]}" src="../../icons/bell.svg" alt="Notifications">
+                        <img class="${style["settings-icon"]}" src="/icon/bell.svg" alt="Notifications">
                         <div class="${style["item-content"]}">
                             <div class="${style["item-title"]}">Notifications</div>
                         </div>
                         <span class="${style["item-chevron"]}">›</span>
                     </a>
                     <a class="${style["settings-item"]} ${style["dark-mode-row"]}" href="#">
-                        <img class="${style["settings-icon"]}" src="../../icons/contrast.svg" alt="Light-Dark mode">
+                        <img class="${style["settings-icon"]}" src="/icon/contrast.svg" alt="Light-Dark mode">
                         <div class="${style["item-content"]}">
                             <div class="${style["item-title"]}">Dark mode</div>
                             <div class="${style["item-desc"]}">Switch to a darker theme</div>
@@ -70,7 +70,7 @@ export default function Settings() {
                 <div class="${style["section-sub"]}">Control who can see what you share on Socialife.</div>
                 <div class="${style["settings-card"]}">
                     <a class="${style["settings-item"]}" href="#">
-                        <img class="${style["settings-icon"]}" src="../../icons/chat-bubble.svg" alt="Contacts">
+                        <img class="${style["settings-icon"]}" src="/icon/chat-bubble.svg" alt="Contacts">
                         <div class="${style["item-content"]}">
                             <div class="${style["item-title"]}">How people find and contact you</div>
                         </div>
@@ -82,7 +82,7 @@ export default function Settings() {
                 <div class="${style["section-heading"]}">Privacy &amp; controls</div>
                 <div class="${style["settings-card"]}">
                     <a class="${style["settings-item"]}" href="#">
-                        <img class="${style["settings-icon"]}" src="../../icons/block-user.svg" alt="Blocks">
+                        <img class="${style["settings-icon"]}" src="/icon/block-user.svg" alt="Blocks">
                         <div class="${style["item-content"]}">
                             <div class="${style["item-title"]}">Blocking</div>
                             <div class="${style["item-desc"]}">Manage blocked users and pages</div>
@@ -90,7 +90,7 @@ export default function Settings() {
                         <span class="${style["item-chevron"]}">›</span>
                     </a>
                     <a class="${style["settings-item"]}" href="#">
-                        <img class="${style["settings-icon"]}" src="../../icons/activity.svg" alt="Activity">
+                        <img class="${style["settings-icon"]}" src="/icon/activity.svg" alt="Activity">
                         <div class="${style["item-content"]}">
                             <div class="${style["item-title"]}">Your activity</div>
                             <div class="${style["item-desc"]}">Review your activity and content you're tagged in</div>

@@ -22,13 +22,13 @@ export default async function Home() {
         <div id="main-feed" class="${style['main-feed']}">
             <div class="${style_topbar_search["topbar"]}">
                 <div class="${style_topbar_search["search-box"]}">
-                    <img width="18px" height="18px" src="../../icons/search.svg" alt="search">
+                    <img width="18px" height="18px" src="/icon/search.svg" alt="search">
                     <input type="text" class="${style_topbar_search["search-input"]}" placeholder="Hinted search text">
                 </div>
 
                 <a action-button="timeline" class="${style_topbar_search["icon-btn"]}" href="/app/timeline">
                     <span class="${style_topbar_search["icon-dot"]}" data-notification-count hidden></span>
-                    <img width="30px" src="../../icons/bell.svg" style="filter: invert(20%);" alt="bell">
+                    <img width="30px" src="/icon/bell.svg" style="filter: invert(20%);" alt="bell">
                 </a>
             </div>
             
@@ -86,7 +86,7 @@ export default async function Home() {
 
         searchResultsEl.innerHTML = users.map(user => `
             <a href="/app/profile/${user.user_id}" class="${style_topbar_search["search-result-item"]}">
-                <img src="${user.profile_url || '../../icons/user-avatar.svg'}" alt="${user.username}" onerror="this.src='../../icons/user-avatar.svg'">
+                <img src="${user.profile_url || '/icon/user-avatar.svg'}" alt="${user.username}" onerror="this.src='/icon/user-avatar.svg'">
                 <span>${user.username}</span>
             </a>
         `).join("");

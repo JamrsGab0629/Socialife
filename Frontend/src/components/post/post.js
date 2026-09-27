@@ -43,7 +43,7 @@ export default function Post(data, { showSave = false } = {}) {
     const postId = data.post_id || data.id || "";
     const cardId = data.feed_id || postId;
     const authorName = data.user_name || data.author?.username || "Anonymous";
-    const avatarUrl = data.avatar_url || data.author?.profile_url || "/icons/user-avatar.svg";
+    const avatarUrl = data.avatar_url || data.author?.profile_url || "/icon/user-avatar.svg";
     const authorId = data.author?.user_id || data.user_id || "";
     const postTime = formatPostTime(data.shared_at || data.post_time || data.created_at);
     
@@ -74,25 +74,25 @@ export default function Post(data, { showSave = false } = {}) {
     return `
         <div class="${style["post-card"]}" id="${cardId}">
             <div class="${style["post-header"]}">
-                <img src="${avatarUrl}" alt="${authorName}" onerror="this.src='/icons/user-avatar.svg'">
+                <img src="${avatarUrl}" alt="${authorName}" onerror="this.src='/icon/user-avatar.svg'">
                 <h2>
                   <a href="${authorId ? `/app/profile/${authorId}` : '#'}" class="${style["post-author"]}">${authorName}</a>
                     <span class="${style["post-time"]}">${postTime}</span>
                 </h2>
                                            <div class="${style["post-menu"]}">
                     <button type="button" class="${style["action-more"]}" data-action="toggle-post-menu" aria-label="Post options" aria-expanded="false">
-                        <img src="/icons/more.svg" alt="">
+                        <img src="/icon/more.svg" alt="">
                     </button>
                     <div class="${style["post-menu-popover"]}" data-post-menu hidden>
                         ${showSave ? `
                             <button type="button" data-action="toggle-save" data-post-id="${postId}" aria-pressed="${isSaved}">
-                                <img src="/icons/save.svg" alt="">
+                                <img src="/icon/save.svg" alt="">
                                 <span data-save-label>${isSaved ? "Saved" : "Save post"}</span>
                             </button>
                         ` : ""}
                         ${data.is_own_post ? `
                             <button type="button" data-action="delete-post" data-post-id="${postId}">
-                                <img src="/icons/trash.svg" alt="">
+                                <img src="/icon/trash.svg" alt="">
                                 <span>Delete post</span>
                             </button>
                         ` : ""}
@@ -114,22 +114,22 @@ export default function Post(data, { showSave = false } = {}) {
 
             <div class="${style["post-actions"]}">
                 <button type="button" class="${style["action-btn"]} ${isLiked ? style.liked : ""}" data-action="like" data-post-id="${postId}" aria-pressed="${isLiked}">
-                    <img src="/icons/like.svg" alt="like">
+                    <img src="/icon/like.svg" alt="like">
                     Like
                 </button>
                 <button type="button" class="${style["action-btn"]}" data-action="toggle-comments" data-post-id="${postId}">
-                    <img src="/icons/chat.svg" alt="comment">
+                    <img src="/icon/chat.svg" alt="comment">
                     Comment
                 </button>
                 <button type="button" class="${style["action-btn"]}" data-action="share" data-post-id="${postId}">
-                    <img src="/icons/export.svg" alt="share">
+                    <img src="/icon/export.svg" alt="share">
                     Share
                 </button>
             </div>
 <!-- COMMENTS INTERACTIVE SECTION (Hidden by default) -->
             <div class="${style["comments-section"]}" data-comments-section style="display: none;">
                 <div class="${style["comment-box-row"]}">
-                    <img src="${avatarUrl}" alt="avatar" class="${style["comment-user-avatar"]}" data-comment-avatar onerror="this.src='../../icons/user-avatar.svg'">
+                    <img src="${avatarUrl}" alt="avatar" class="${style["comment-user-avatar"]}" data-comment-avatar onerror="this.src='icon/user-avatar.svg'">
                     <div class="${style["comment-input-wrapper"]}">
                         <input type="text" class="comment-input" data-comment-input placeholder="Write a public comment...">
                         <button type="button" class="${style["comment-submit-btn"]}" data-action="submit-comment" data-post-id="${postId}">Post</button>

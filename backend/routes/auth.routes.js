@@ -6,7 +6,7 @@ import { logout } from "../controller/auth/logout.controller.js";
 import { state } from "../controller/state.controller.js";
 import { checkAuth } from "../controller/auth/checkAuth.controller.js";
 import { refresh } from "../controller/auth/refresh.controller.js";
-import { isAuthenticated } from "../middleware/auth.middleware.js";
+import { isAdmin, isAuthenticated } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
@@ -15,6 +15,9 @@ router.post("/signup", signingup);
 router.post("/login", login);
 router.post("/logout", logout);
 router.post("/checkAuth", isAuthenticated, checkAuth);
+
+//auth-role
+router.post("/ckeckAdmin", isAuthenticated, isAdmin, checkAuth);
 
 router.get("/state", state);
 
