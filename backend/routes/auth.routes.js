@@ -17,7 +17,7 @@ router.post("/logout", logout);
 router.post("/checkAuth", isAuthenticated, checkAuth);
 
 //auth-role
-router.post("/ckeckAdmin", isAuthenticated, isAdmin, checkAuth);
+router.post("/checkAdmin", isAuthenticated, isAdmin, checkAuth);
 
 router.get("/state", state);
 
