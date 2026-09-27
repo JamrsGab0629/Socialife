@@ -16,6 +16,10 @@ export const loginService = async ({ email, password }) => {
         throw new Error("Invalid email or password.");
     }
 
+    if(!user.is_actived){
+        throw new Error("Your account has been banned or suspended.");
+    }
+
     //  BLOCK UNVERIFIED USERS HERE
     if (!user.is_verified) {
         throw new Error("Please verify your account with the OTP sent to your email before logging in.");
