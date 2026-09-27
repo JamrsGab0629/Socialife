@@ -1,8 +1,8 @@
 // team-roles.js
-import style from "./team-roles.module.css";
+import style from "./team_roles.module.css";
 import style_btn from "../../../styles/admin/btn.module.css";
 import style_badge from "../../../styles/admin/badge.module.css";
-import { init_team_roles_view } from "./team-roles.helper";
+import { init_team_roles_view } from "./team_roles.helper";
 import MainLayout from "../../../layouts/admin/main";
 import Navigation from "../../../components/admin.dashboard/navigation/navigation";
 
