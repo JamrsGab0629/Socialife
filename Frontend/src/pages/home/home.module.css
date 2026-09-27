@@ -151,75 +151,109 @@
 }
 
 .share-dialog {
-    width: min(440px, calc(100vw - 32px));
+    width: min(480px, calc(100vw - 32px));
     padding: 0;
-    border: 0;
-    border-radius: 12px;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
 }
 
 .share-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(2px);
 }
 
 .share-dialog form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 22px;
+    gap: 18px;
+    padding: 28px;
 }
 
 .share-dialog h2 {
     margin: 0;
-    font-size: 20px;
+    font-size: 22px;
+    font-weight: 800;
+    color: #1c1e21;
 }
 
 .share-dialog textarea {
-    min-height: 112px;
-    padding: 12px;
-    border: 1px solid #d9dde3;
-    border-radius: 8px;
+    min-height: 120px;
+    padding: 14px 16px;
+    border: 1px solid #e4e6eb;
+    border-radius: 12px;
     resize: vertical;
     font: inherit;
+    font-size: 15px;
+    background: #f7f8fa;
+    transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .share-dialog textarea:focus {
-    outline: 2px solid #1877f2;
-    outline-offset: -1px;
+    outline: none;
+    border-color: #1877f2;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.12);
+}
+
+.share-dialog textarea::placeholder {
+    color: #8a8d94;
 }
 
 .share-dialog p {
-    margin: -8px 0 0;
-    color: #c62828;
-    font-size: 14px;
+    margin: -6px 0 0;
+    color: #e0245e;
+    font-size: 13.5px;
+    font-weight: 600;
 }
 
 .share-dialog-actions {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+    padding-top: 4px;
+    border-top: 1px solid #f0f1f3;
+    margin-top: 4px;
+    padding-top: 16px;
 }
 
 .share-dialog-actions button {
-    padding: 8px 16px;
-    border: 0;
-    border-radius: 7px;
-    background: #edf0f3;
-    color: #2a3441;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 22px;
+    background: #f0f2f5;
+    color: #1c1e21;
     font: inherit;
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 14px;
     cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.share-dialog-actions button:hover {
+    background: #e4e6eb;
+}
+
+.share-dialog-actions button:active {
+    transform: scale(0.97);
 }
 
 .share-dialog-actions button[type="submit"] {
     background: #1877f2;
-    color: #fff;
+    color: #ffffff;
+}
+
+.share-dialog-actions button[type="submit"]:hover {
+    background: #166fe5;
 }
 
 .share-dialog-actions button:disabled {
     cursor: default;
-    opacity: 0.7;
+    opacity: 0.6;
+    transform: none;
 }
+
 
 @media (max-width: 1021px) and (min-width: 769px){
     .right-col {

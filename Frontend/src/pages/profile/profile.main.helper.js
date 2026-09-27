@@ -1,17 +1,9 @@
-
 import Post from "../../components/post/post";
-import {
-    get_profile_feed,
-    deactivate_post
-} from "../../helpers/post/post.request";
-
+import { get_profile_feed, deactivate_post } from "../../helpers/post/post.request";
 import mapFeedItemToPostData from "./profile.main.mapper";
 import { openPostViewer } from "../../components/post-viewer/post-viewer";
-
-import {
-    initCommentInteractions,
-    initSharePostDialog
-} from "../home/home.helper";
+import { initCommentInteractions, initSharePostDialog } from "../home/home.helper";
+import { InfiniteScroll } from "../../helpers/utils/InfiniteScroll";
 
 const postDataStore = new Map();
 
@@ -19,44 +11,27 @@ export const Helper = async (userId) => {
     const root = document.getElementById("posts-column");
     if (!root) return;
 
-    // Reuse Home's post interaction system
     initCommentInteractions(root);
     initSharePostDialog();
 
     root.addEventListener("click", async (event) => {
-        const zoomTarget = event.target.closest(
-            '[data-action="zoom-photo"]'
-        );
-
+        const zoomTarget = event.target.closest('[data-action="zoom-photo"]');
         if (zoomTarget) {
             const postId = zoomTarget.dataset.postId;
             const postData = postDataStore.get(String(postId));
-
-            if (postData) {
-                openPostViewer(postData);
-            }
-
+            if (postData) openPostViewer(postData);
             return;
         }
 
-        const deleteTarget = event.target.closest(
-            '[data-action="delete-post"]'
-        );
-
+        const deleteTarget = event.target.closest('[data-action="delete-post"]');
         if (deleteTarget) {
             const postId = deleteTarget.dataset.postId;
-
             if (!window.confirm("Delete this post?")) return;
 
             try {
                 await deactivate_post(postId);
-
                 const card = document.getElementById(postId);
-
-                if (card) {
-                    card.remove();
-                }
-
+                if (card) card.remove();
                 postDataStore.delete(String(postId));
             } catch (error) {
                 console.error("Failed to delete post:", error);
@@ -64,82 +39,59 @@ export const Helper = async (userId) => {
         }
     });
 
-    // Keep profile post like count synchronized
     window.addEventListener("post:liked", (event) => {
         const { postId, likeCount, isLiked } = event.detail || {};
-
         const card = document.getElementById(postId);
         if (!card) return;
 
         const likeCountEl = card.querySelector(".like-count");
+        if (likeCountEl) likeCountEl.textContent = likeCount;
 
-        if (likeCountEl) {
-            likeCountEl.textContent = likeCount;
-        }
-
-        const likeBtn = card.querySelector(
-            '[data-action="like"]'
-        );
-
+        const likeBtn = card.querySelector('[data-action="like"]');
         if (likeBtn) {
-            likeBtn.setAttribute(
-                "aria-pressed",
-                String(isLiked)
-            );
-
+            likeBtn.setAttribute("aria-pressed", String(isLiked));
             likeBtn.classList.toggle("liked", isLiked);
         }
     });
 
-    // Keep profile post comment count synchronized
     window.addEventListener("post:commented", (event) => {
         const { postId, commentCount } = event.detail || {};
-
         const card = document.getElementById(postId);
         if (!card) return;
 
-        const commentCountEl = card.querySelector(
-            ".comment-count"
-        );
-
-        if (commentCountEl) {
-            commentCountEl.textContent = commentCount;
-        }
+        const commentCountEl = card.querySelector(".comment-count");
+        if (commentCountEl) commentCountEl.textContent = commentCount;
     });
 
-    try {
-        const { data } = await get_profile_feed(userId);
+    postDataStore.clear();
+    root.innerHTML = "";
 
-        if (!data || data.length === 0) {
-            return;
-        }
-
-        postDataStore.clear();
-
-        const mappedPosts = data.map((item) => {
-            const mapped = mapFeedItemToPostData(item);
-
-            const postId = mapped.post_id || mapped.id;
-
-            if (postId) {
-                postDataStore.set(String(postId), mapped);
-            }
-
-            return mapped;
-        });
-
-        root.innerHTML = mappedPosts
-            .map((postData) =>
-                Post(postData, { showSave: true })
-            )
-            .join("");
-
-    } catch (error) {
-        console.error(
-            "Failed to load profile feed:",
-            error
-        );
+    let sentinel = document.getElementById('profile-feed-sentinel');
+    if (!sentinel) {
+        sentinel = document.createElement('div');
+        sentinel.id = 'profile-feed-sentinel';
+        sentinel.style.height = '20px';
+        root.insertAdjacentElement('afterend', sentinel);
     }
+
+    new InfiniteScroll({
+        container: root,
+        sentinel,
+        limit: 10,
+        loadMore: async ({ page, limit }) => {
+            return await get_profile_feed(userId, page, limit);
+        },
+        renderItems: (items, container) => {
+            items.forEach((item) => {
+                const mapped = mapFeedItemToPostData(item);
+                const postId = mapped.post_id || mapped.id;
+                if (postId) postDataStore.set(String(postId), mapped);
+
+                const postMarkup = Post(mapped, { showSave: true });
+                container.insertAdjacentHTML("beforeend", postMarkup);
+            });
+        }
+    });
 };
 
 export default Helper;

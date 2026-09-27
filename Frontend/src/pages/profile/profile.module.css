@@ -251,7 +251,7 @@
     margin: 0;
     max-width: 100%;
     display: grid;
-    grid-template-columns: 320px 1fr;
+    grid-template-columns: 500px 1fr;
     gap: 16px;
     align-items: start;
 }
@@ -263,8 +263,10 @@
     padding: 16px 16px 18px 16px;
     border: 1px solid #d0d3d9;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    position: sticky;
+    top: 20px;
+    align-self: start;
 }
-
 .photos-section:hover {
     border-color: #b0b3b8;
 }
@@ -299,9 +301,8 @@
 .photos-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
+    gap: 8px;
 }
-
 .photos-grid .photo-thumb {
     aspect-ratio: 1 / 1;
     background: #e4e6eb;
@@ -390,6 +391,110 @@
 
 #cover-remove-option {
     color: #e0245e;
+}
+
+
+.share-dialog {
+    width: min(480px, calc(100vw - 32px));
+    padding: 0;
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.share-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(2px);
+}
+
+.share-dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 28px;
+}
+
+.share-dialog h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 800;
+    color: #1c1e21;
+}
+
+.share-dialog textarea {
+    min-height: 120px;
+    padding: 14px 16px;
+    border: 1px solid #e4e6eb;
+    border-radius: 12px;
+    resize: vertical;
+    font: inherit;
+    font-size: 15px;
+    background: #f7f8fa;
+    transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.share-dialog textarea:focus {
+    outline: none;
+    border-color: #1877f2;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.12);
+}
+
+.share-dialog textarea::placeholder {
+    color: #8a8d94;
+}
+
+.share-dialog p {
+    margin: -6px 0 0;
+    color: #e0245e;
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+.share-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 16px;
+    border-top: 1px solid #f0f1f3;
+    margin-top: 4px;
+}
+
+.share-dialog-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 22px;
+    background: #f0f2f5;
+    color: #1c1e21;
+    font: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.share-dialog-actions button:hover {
+    background: #e4e6eb;
+}
+
+.share-dialog-actions button:active {
+    transform: scale(0.97);
+}
+
+.share-dialog-actions button[type="submit"] {
+    background: #1877f2;
+    color: #ffffff;
+}
+
+.share-dialog-actions button[type="submit"]:hover {
+    background: #166fe5;
+}
+
+.share-dialog-actions button:disabled {
+    cursor: default;
+    opacity: 0.6;
+    transform: none;
 }
 
 @media (max-width: 768px) {

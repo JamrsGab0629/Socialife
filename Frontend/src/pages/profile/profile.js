@@ -116,12 +116,24 @@ export default async function Profile(params){
                     <div class="${style["posts-column"]}" id="posts-column"></div>
                 </div>
             </div>
-
             <div class="${style["tab-content"]}" id="tab-photos">
                 <div class="${style["photos-grid"]}" id="master-photos-grid"
                     style="grid-template-columns: repeat(3, 1fr); gap: 8px;"></div>
             </div>
         </div>
+
+        <dialog id="share-post-dialog" class="${style['share-dialog']}">
+            <form method="dialog" data-share-post-form>
+                <h2>Share post</h2>
+                <textarea data-share-caption maxlength="500" placeholder="Add a caption (optional)"></textarea>
+                <p data-share-error hidden></p>
+                <div class="${style['share-dialog-actions']}">
+                    <button type="button" data-action="close-share-dialog">Cancel</button>
+                    <button type="submit" data-share-submit>Share</button>
+                </div>
+            </form>
+        </dialog>
+    
     `;
 
        try {

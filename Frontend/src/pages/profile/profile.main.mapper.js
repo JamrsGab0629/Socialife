@@ -11,6 +11,8 @@ function mapFeedItemToPostData(item) {
             caption: original.caption,
             content: original.content,
             created_at: original.created_at,
+            like_count: original.like_count,
+            comment_count: original.comment_count,
             is_shared: true,
             shared_by: share.user,
             share_caption: share.caption,
@@ -27,6 +29,8 @@ function mapFeedItemToPostData(item) {
         caption: post.caption,
         content: post.content,
         created_at: post.created_at,
+        like_count: post.like_count,
+        comment_count: post.comment_count,
         is_own_post: item.is_own_post,
     };
 }
