@@ -1,73 +1,85 @@
 import { getNotifications, markNotificationAsRead } from "./notification.service";
 import { get_post_by_id } from "../../helpers/post/post.request";
 import { openPostViewer } from "../post-viewer/post-viewer";
+import { InfiniteScroll } from "../../helpers/utils/InfiniteScroll";
 import style from "./notification.module.css";
 
+function renderNotification(notification) {
+    const author = notification.author || {};
+    const isRead = Boolean(notification.is_read);
+
+    return `
+        <button type="button" class="${style["notif-item"]} ${isRead ? "" : style.unread}" data-notification-id="${notification.notification_id}" data-post-id="${notification.post_id || ""}" data-type="${notification.type || ""}">
+            <div class="${style["notif-avatar-wrap"]}">
+                <img src="${author.profile_url || "../../icons/user-avatar.svg"}" alt="${author.username || "User"}" onerror="this.src='../../icons/user-avatar.svg'">
+                <span class="${style["notif-badge-icon"]} ${style[notification.type] || ""}"></span>
+            </div>
+            <div class="${style["notif-body"]}">
+                <div class="${style["notif-text"]}"><b>${author.username || "Someone"}</b> ${notification.content}</div>
+                <div class="${style["notif-time"]}">${formatTime(notification.created_at)}</div>
+            </div>
+            ${!isRead ? `<span class="${style["notif-dot"]}"></span>` : ""}
+        </button>
+    `;
+}
+
 export default async function Notification(root) {
-    root.textContent = "Loading notifications...";
+    root.innerHTML = `
+        <div data-notif-list></div>
+        <div data-notif-sentinel style="height: 20px;"></div>
+        <div data-notif-empty hidden>You have no notifications yet.</div>
+    `;
 
-    try {
-        const result = await getNotifications();
-        const notifications = Array.isArray(result?.data) ? result.data : [];
+    const list = root.querySelector("[data-notif-list]");
+    const sentinel = root.querySelector("[data-notif-sentinel]");
+    const empty = root.querySelector("[data-notif-empty]");
 
-        if (!notifications.length) {
-            root.textContent = "You have no notifications yet.";
+    // One click handler on the list covers every page that gets loaded later
+    list.addEventListener("click", async (event) => {
+        const item = event.target.closest("[data-notification-id]");
+        if (!item) return;
+
+        if (item.classList.contains(style.unread)) {
+            try {
+                await markNotificationAsRead(item.dataset.notificationId);
+                item.classList.remove(style.unread);
+                item.querySelector(`.${style["notif-dot"]}`)?.remove();
+            } catch (error) {
+                console.error("Failed to mark notification as read:", error);
+            }
+        }
+
+        const type = item.dataset.type;
+        if (type === "friend_request" || type === "friend_accept") {
+            window.location.href = "/app/friends";
             return;
         }
 
-        root.innerHTML = notifications.map((notification) => {
-            const author = notification.author || {};
-            const isRead = Boolean(notification.is_read);
-
-            return `
-                <button type="button" class="${style["notif-item"]} ${isRead ? "" : style.unread}" data-notification-id="${notification.notification_id}" data-post-id="${notification.post_id || ""}" data-type="${notification.type || ""}">
-                    <div class="${style["notif-avatar-wrap"]}">
-                        <img src="${author.profile_url || "../../icons/user-avatar.svg"}" alt="${author.username || "User"}" onerror="this.src='../../icons/user-avatar.svg'">
-                        <span class="${style["notif-badge-icon"]} ${style[notification.type] || ""}"></span>
-                    </div>
-                    <div class="${style["notif-body"]}">
-                        <div class="${style["notif-text"]}"><b>${author.username || "Someone"}</b> ${notification.content}</div>
-                        <div class="${style["notif-time"]}">${formatTime(notification.created_at)}</div>
-                    </div>
-                    ${!isRead ? `<span class="${style["notif-dot"]}"></span>` : ""}
-                </button>
-            `;
-        }).join("");
-
-        root.addEventListener("click", async (event) => {
-            const item = event.target.closest("[data-notification-id]");
-            if (!item) return;
-
-            if (item.classList.contains(style.unread)) {
-                try {
-                    await markNotificationAsRead(item.dataset.notificationId);
-                    item.classList.remove(style.unread);
-                    item.querySelector(`.${style["notif-dot"]}`)?.remove();
-                } catch (error) {
-                    console.error("Failed to mark notification as read:", error);
-                }
+        const postId = item.dataset.postId;
+        if (postId) {
+            try {
+                const { data: post } = await get_post_by_id(postId);
+                if (post) openPostViewer(post);
+            } catch (error) {
+                console.error("Failed to open post from notification:", error);
             }
+        }
+    });
 
-            const type = item.dataset.type;
-            if (type === "friend_request" || type === "friend_accept") {
-                window.location.href = "/app/friends";
-                return;
-            }
-
-            const postId = item.dataset.postId;
-            if (postId) {
-                try {
-                    const { data: post } = await get_post_by_id(postId);
-                    if (post) openPostViewer(post);
-                } catch (error) {
-                    console.error("Failed to open post from notification:", error);
-                }
-            }
-        });
-    } catch (error) {
-        console.error("Failed to load notifications:", error);
-        root.textContent = "Unable to load notifications. Please try again.";
-    }
+    new InfiniteScroll({
+        container: list,
+        sentinel,
+        limit: 20,
+        loadMore: async ({ page, limit }) => {
+            const result = await getNotifications(page, limit);
+            const items = Array.isArray(result?.data) ? result.data : [];
+            if (page === 1 && items.length === 0) empty.hidden = false;
+            return result;
+        },
+        renderItems: (items, container) => {
+            container.insertAdjacentHTML("beforeend", items.map(renderNotification).join(""));
+        },
+    });
 }
 
 function formatTime(timestamp) {

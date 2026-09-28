@@ -18,7 +18,7 @@ router.use(isAuthenticated);
  * */
 
 router.post('/',
-    rateLimiter(5, 60000),
+    rateLimiter(50, 60000),
     mentionController
 )
 

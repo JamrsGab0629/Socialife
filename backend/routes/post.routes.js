@@ -107,7 +107,7 @@ router.get(
 router.post(
     "/:postId/:parentId/replies",
     isAuthenticated,
-    rateLimiter(50, 60000),
+    rateLimiter(70, 60000),
     validate(addReplySchema),
     commentController.addReply
 );
