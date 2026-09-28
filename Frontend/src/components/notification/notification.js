@@ -1,5 +1,6 @@
 import { getNotifications, markNotificationAsRead } from "./notification.service";
 import { get_post_by_id } from "../../helpers/post/post.request";
+import { get_share_by_id } from "../../helpers/share/share.request";
 import { openPostViewer } from "../post-viewer/post-viewer";
 import { InfiniteScroll } from "../../helpers/utils/InfiniteScroll";
 import style from "./notification.module.css";
@@ -9,7 +10,7 @@ function renderNotification(notification) {
     const isRead = Boolean(notification.is_read);
 
     return `
-        <button type="button" class="${style["notif-item"]} ${isRead ? "" : style.unread}" data-notification-id="${notification.notification_id}" data-post-id="${notification.post_id || ""}" data-type="${notification.type || ""}">
+        <button type="button" class="${style["notif-item"]} ${isRead ? "" : style.unread}" data-notification-id="${notification.notification_id}" data-post-id="${notification.post_id || ""}" data-share-id="${notification.share_id || ""}" data-type="${notification.type || ""}">
             <div class="${style["notif-avatar-wrap"]}">
                 <img src="${author.profile_url || "../../icons/user-avatar.svg"}" alt="${author.username || "User"}" onerror="this.src='../../icons/user-avatar.svg'">
                 <span class="${style["notif-badge-icon"]} ${style[notification.type] || ""}"></span>
@@ -55,14 +56,33 @@ export default async function Notification(root) {
             return;
         }
 
+        const shareId = item.dataset.shareId;
         const postId = item.dataset.postId;
-        if (postId) {
-            try {
+
+        try {
+            if (type === "share" && shareId) {
+                const { data: share } = await get_share_by_id(shareId);
+                if (share) {
+                    openPostViewer({
+                        post_id: share.post_id,
+                        user_name: share.user?.username,
+                        avatar_url: share.user?.profile_url,
+                        caption: share.caption,
+                        photo_url: share.post?.photo_url, // adjust to how your Post stores the photo
+                        like_count: share.post?.like_count,
+                        comment_count: share.post?.comment_count,
+                        created_at: share.created_at,
+                    });
+                    return;
+                }
+            }
+
+            if (postId) {
                 const { data: post } = await get_post_by_id(postId);
                 if (post) openPostViewer(post);
-            } catch (error) {
-                console.error("Failed to open post from notification:", error);
             }
+        } catch (error) {
+            console.error("Failed to open post from notification:", error);
         }
     });
 

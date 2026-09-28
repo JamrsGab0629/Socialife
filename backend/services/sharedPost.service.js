@@ -23,14 +23,16 @@ export const createShareRecord = async (userId, postId, caption) => {
         caption: caption || null,
     });
 
-  safeNotify(post.user_id, userId, "share", "shared your post.", postId);
+  safeNotify(post.user_id, userId, "share", "shared your post.", postId, share.share_id);
 
     return share;
 };
 
-export const getPostShares = async (postId) => {
-    return await SharedPost.findAll({
-        where: { post_id: postId },
-        include: [{ model: User, as: "user", attributes: ["user_id", "username", "profile_url"] }],
+export const getShareById = async (shareId) => {
+    return await SharedPost.findByPk(shareId, {
+        include: [
+            { model: User, as: "user", attributes: ["user_id", "username", "profile_url"] },
+            { model: Post, as: "post" }, 
+        ],
     });
 };
