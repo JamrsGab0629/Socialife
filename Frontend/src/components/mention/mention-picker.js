@@ -42,32 +42,47 @@ export function initMentionPicker(container) {
         input.focus();
     }
 
-    function showDropdown(input, users) {
-        closeDropdown();
-        if (!users.length) return;
+   function showDropdown(input, users) {
+    closeDropdown();
+    if (!users.length) return;
 
-        dropdownEl = document.createElement('div');
-        dropdownEl.className = style["mention-dropdown"];
-        dropdownEl.innerHTML = users.map(u => `
-            <div class="${style["mention-item"]}" data-user-id="${u.user_id}" data-username="${u.username}">
-                ${u.username}
-            </div>
-        `).join('');
+    dropdownEl = document.createElement('div');
+    dropdownEl.className = style["mention-dropdown"];
+    dropdownEl.innerHTML = users.map(u => `
+        <div class="${style["mention-item"]}" data-user-id="${u.user_id || u.id}" data-username="${u.username}">
+            ${u.username}
+        </div>
+    `).join('');
 
-        const wrapper = input.parentElement;
-        if (wrapper) {
-            const computedPosition = getComputedStyle(wrapper).position;
-            if (computedPosition === 'static') wrapper.style.position = 'relative';
-            wrapper.appendChild(dropdownEl);
+    // Find the modal card container safely without relying on the wrong CSS module
+    const card = input.closest('section') || container.querySelector('section') || container;
+
+    if (card) {
+        const computedPosition = getComputedStyle(card).position;
+        if (computedPosition === 'static') {
+            card.style.position = 'relative';
         }
+        
+        // Calculate exact position relative to the modal card
+        const cardRect = card.getBoundingClientRect();
+        const inputRect = input.getBoundingClientRect();
 
-        dropdownEl.addEventListener('mousedown', (e) => {
-            e.preventDefault(); // keep focus on input instead of blurring it
-            const item = e.target.closest('[data-user-id]');
-            if (!item) return;
-            selectMention(input, item.dataset.userId, item.dataset.username);
-        });
+        dropdownEl.style.position = 'absolute';
+        dropdownEl.style.top = `${inputRect.bottom - cardRect.top + card.scrollTop + 4}px`;
+        dropdownEl.style.left = `${inputRect.left - cardRect.left}px`;
+        dropdownEl.style.width = `${inputRect.width}px`;
+        dropdownEl.style.zIndex = '9999';
+
+        card.appendChild(dropdownEl);
     }
+
+    dropdownEl.addEventListener('mousedown', (e) => {
+        e.preventDefault(); // keep focus on input instead of blurring it
+        const item = e.target.closest('[data-user-id]');
+        if (!item) return;
+        selectMention(input, item.dataset.userId, item.dataset.username);
+    });
+}
     container.addEventListener('input', (e) => {
         const input = e.target;
         if (!input.matches('[data-comment-input], [data-reply-input], #captionInput')) return;
