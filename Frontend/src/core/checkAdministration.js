@@ -19,7 +19,7 @@ export const checkAdmin = (component) => {
                 }
 
                 // 2. If success is false -> Alert and redirect to /app
-                alert("You are not an admin");
+                // alert("You are not an admin");
                 
                 if (hasRedirect) {
                     this.redirect("/app");
@@ -32,7 +32,7 @@ export const checkAdmin = (component) => {
             .catch((err) => {
                 console.error("Admin verification check failed:", err);
                 
-                alert("You are not an admin");
+                // alert("You are not an admin");
                 
                 if (hasRedirect) {
                     this.redirect("/app");
