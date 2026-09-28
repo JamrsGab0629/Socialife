@@ -1,57 +1,32 @@
-// account-modal.js
-// Content for the "Accounts Center" overlay: change-password form + a
-// read-only list of previous password changes (metadata only — never
-// render actual past passwords, even mocked ones).
-import { fetch_password_history, change_password } from "../api/account.service";
+import { change_password } from "../api/account.service";
+import { changePassword$ } from "../../../validators/user.validators";
 
 export function render_account_modal(body, style) {
     body.innerHTML = `
-        <form id="changePasswordForm">
-            <div class="${style["field"]}">
-                <label>Current password</label>
-                <input type="password" name="current_password" class="${style["input"]}" required />
-            </div>
-            <div class="${style["field"]}">
-                <label>New password</label>
-                <input type="password" name="new_password" class="${style["input"]}" required minlength="8" />
-            </div>
-            <div class="${style["field"]}">
-                <label>Confirm new password</label>
-                <input type="password" name="confirm_password" class="${style["input"]}" required minlength="8" />
-            </div>
-            <p class="${style["form-error"]}" id="passwordError"></p>
-            <button type="submit" class="${style["btn"]} ${style["btn-primary"]}" id="passwordSubmit">
-                Update password
-            </button>
-        </form>
-
-        <div class="${style["divider"]}"></div>
-
-        <p class="${style["section-label"]}">Previous passwords</p>
-        <div id="passwordHistory">
-            <div class="${style["skeleton-line"]}" style="width:100%"></div>
-            <div class="${style["skeleton-line"]}" style="width:75%"></div>
+    <form id="changePasswordForm">
+        <div class="${style["field"]}">
+            <label>Current password</label>
+            <input type="password" name="current_password" class="${style["input"]}" required />
         </div>
-    `;
+        <div class="${style["field"]}">
+            <label>New password</label>
+            <input type="password" name="new_password" class="${style["input"]}" required minlength="8" />
+        </div>
+        <div class="${style["field"]}">
+            <label>Confirm new password</label>
+            <input type="password" name="confirm_password" class="${style["input"]}" required minlength="8" />
+        </div>
+        <p class="${style["form-error"]}" id="passwordError"></p>
+        <button type="submit" class="${style["btn"]} ${style["btn-primary"]}" id="passwordSubmit">
+            Update password
+        </button>
+    </form>
+  `;
 
-    let has_submit = false; // submission guard
+    let has_submit = false;
     const form = body.querySelector("#changePasswordForm");
     const error_el = body.querySelector("#passwordError");
     const submit_btn = body.querySelector("#passwordSubmit");
-
-    async function load_history() {
-        const history_el = body.querySelector("#passwordHistory");
-        const history = await fetch_password_history();
-        history_el.innerHTML = history
-            .map(
-                (h) => `
-                <div class="${style["list-row"]}">
-                    <span>Changed ${h.changed_at}</span>
-                    <span class="${style["muted-text"]}">${h.hint}</span>
-                </div>`
-            )
-            .join("");
-    }
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -68,15 +43,30 @@ export function render_account_modal(body, style) {
             return;
         }
 
+        if (current_password === new_password) {
+            error_el.textContent = "New password must not be the same with the current password";
+            return;
+        }
+
+        const validation = changePassword$.safeParse({
+            password: current_password,
+            new_password: new_password,
+        });
+
+        if (!validation.success) {
+            error_el.textContent = validation.error.issues[0]?.message || "Invalid input format.";
+            return;
+        }
+
+        // 3. Submit validated data
         has_submit = true;
         submit_btn.disabled = true;
         submit_btn.textContent = "Updating...";
 
         try {
-            await change_password({ current_password, new_password });
+            await change_password(validation.data);
             form.reset();
             submit_btn.textContent = "Updated ✓";
-            await load_history();
             setTimeout(() => (submit_btn.textContent = "Update password"), 1500);
         } catch (err) {
             error_el.textContent = err.message;
@@ -86,6 +76,4 @@ export function render_account_modal(body, style) {
             submit_btn.disabled = false;
         }
     });
-
-    load_history();
 }
