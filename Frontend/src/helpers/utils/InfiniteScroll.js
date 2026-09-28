@@ -4,13 +4,15 @@ export class InfiniteScroll {
         sentinel,
         loadMore,
         renderItems,
-        limit = 10
+        limit = 10,
+        loaderHTML = ""
     }) {
         this.container = container;
         this.sentinel = sentinel;
         this.loadMore = loadMore;
         this.renderItems = renderItems;
         this.limit = limit;
+        this.loaderHTML = loaderHTML;
 
         this.page = 1;
         this.loading = false;
@@ -35,16 +37,27 @@ export class InfiniteScroll {
         this.loadNext();
     }
 
+    showLoader() {
+        if (!this.loaderHTML) return null;
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = this.loaderHTML;
+        this.container.appendChild(wrapper);
+        return wrapper;
+    }
+
     async loadNext() {
         if (this.loading || !this.hasMore) return;
 
         this.loading = true;
+        const loader = this.showLoader();
 
         try {
             const result = await this.loadMore({
                 page: this.page,
                 limit: this.limit
             });
+
+            loader?.remove();
 
             const items = Array.isArray(result?.data) 
                 ? result.data 
@@ -68,6 +81,7 @@ export class InfiniteScroll {
         } catch (error) {
             console.error("Failed to load more items:", error);
         } finally {
+            loader?.remove();
             this.loading = false;
         }
     }
