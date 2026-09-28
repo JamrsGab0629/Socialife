@@ -31,6 +31,10 @@ const Notification = sequelize.define("Notification", {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
     },
+    share_id: {
+    type: DataTypes.UUID,
+    allowNull: true,
+},
 }, {
     tableName: "notifications",
     timestamps: true,

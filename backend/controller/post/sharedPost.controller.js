@@ -1,4 +1,4 @@
-import { createShareRecord } from "../../services/sharedPost.service.js";
+import { createShareRecord, getShareById } from "../../services/sharedPost.service.js";
 
 export const sharePost = async (req, res, next) => {
     try {
@@ -22,5 +22,19 @@ export const sharePost = async (req, res, next) => {
         });
     } catch (error) {
         next(error); 
+    }
+};
+
+export const getShare = async (req, res, next) => {
+    try {
+        const { shareId } = req.params;
+        const data = await getShareById(shareId);
+        return res.status(200).json({
+            success: true,
+            message: "Share fetched successfully",
+            data,
+        });
+    } catch (error) {
+        next(error);
     }
 };

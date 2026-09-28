@@ -1,6 +1,5 @@
-import { SharedPost, Post, User } from "../model/association.model.js";
-import { safeNotify } from "../utils/notify.utils.js"; 
-
+import { SharedPost, Post, User, PhotoData } from "../model/association.model.js";
+import { safeNotify } from "../utils/notify.utils.js";
 // Custom error helper with status code
 const createNotFoundError = (message) => {
     const error = new Error(message);
@@ -28,11 +27,19 @@ export const createShareRecord = async (userId, postId, caption) => {
     return share;
 };
 
+
+
 export const getShareById = async (shareId) => {
-    return await SharedPost.findByPk(shareId, {
+    const share = await SharedPost.findByPk(shareId, {
         include: [
             { model: User, as: "user", attributes: ["user_id", "username", "profile_url"] },
-            { model: Post, as: "post" }, 
+            {
+                model: Post,
+                as: "post",
+                include: [{ model: PhotoData, as: "photo" }],
+            },
         ],
     });
+    if (!share) throw createNotFoundError("Share not found");
+    return share;
 };

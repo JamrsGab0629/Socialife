@@ -14,5 +14,10 @@ router.post(
     validate(sharePostSchema), 
     sharedPostController.sharePost
 );
+router.get(
+    "/shares/:shareId",
+    isAuthenticated,
+    sharedPostController.getShare
+);
 
 export default router;

@@ -14,6 +14,7 @@ export const createNotificationService = async (data) => {
         type: data.type,
         content: data.content,
         post_id: data.postId || null,
+        share_id: data.shareId || null,
         is_read: false
     });
 };

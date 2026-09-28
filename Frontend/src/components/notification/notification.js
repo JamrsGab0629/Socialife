@@ -62,13 +62,14 @@ export default async function Notification(root) {
         try {
             if (type === "share" && shareId) {
                 const { data: share } = await get_share_by_id(shareId);
+                console.log("share data:", share); 
                 if (share) {
                     openPostViewer({
                         post_id: share.post_id,
                         user_name: share.user?.username,
                         avatar_url: share.user?.profile_url,
                         caption: share.caption,
-                        photo_url: share.post?.photo_url, // adjust to how your Post stores the photo
+                         photo: share.post?.photo,     // adjust to how your Post stores the photo
                         like_count: share.post?.like_count,
                         comment_count: share.post?.comment_count,
                         created_at: share.created_at,
