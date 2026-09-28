@@ -19,6 +19,10 @@ import Timeline from "./pages/timeline/timeline";
 
 import lazyRoute from "./core/lazyloading";
 
+// theme
+import { initTheme } from "./core/theme";
+initTheme();
+
 const app = new SPA({
     root: document.getElementById('app'),
     defaultRoute: PageNotFound,
