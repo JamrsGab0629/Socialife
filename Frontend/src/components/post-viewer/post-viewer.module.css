@@ -302,3 +302,75 @@
 .pv-no-photo .pv-panel-close {
     display: flex;
 }
+
+.pv-comment-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 4px 12px 0;
+    font-size: 12.5px;
+}
+
+.pv-comment-actions button {
+    border: none;
+    background: none;
+    padding: 0;
+    font-weight: 600;
+    color: #65676b;
+    cursor: pointer;
+}
+
+.pv-comment-actions button:hover {
+    text-decoration: underline;
+    color: #1c1e21;
+}
+
+.pv-replies-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0 0 24px;
+    border-left: 2px solid #e4e6eb;
+    margin-left: 6px;
+    margin-top: 8px;
+}
+
+.pv-replies-list:empty {
+    display: none;
+}
+
+.pv-reply-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0 0 24px;
+    margin-left: 6px;
+}
+
+.pv-reply-form input {
+    flex: 1;
+    border: 1px solid #e4e6eb;
+    border-radius: 16px;
+    padding: 6px 12px;
+    font-size: 13px;
+    outline: none;
+}
+
+.pv-reply-form input:focus {
+    border-color: #1877f2;
+}
+
+.pv-reply-form button {
+    border: none;
+    background: none;
+    color: #1877f2;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 4px 8px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.pv-reply-form button:hover {
+    text-decoration: underline;
+}

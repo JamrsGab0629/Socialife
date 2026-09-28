@@ -69,7 +69,7 @@ export default async function Notification(root) {
                         user_name: share.user?.username,
                         avatar_url: share.user?.profile_url,
                         caption: share.caption,
-                         photo: share.post?.photo,     // adjust to how your Post stores the photo
+                         photo: share.post?.photo,    
                         like_count: share.post?.like_count,
                         comment_count: share.post?.comment_count,
                         created_at: share.created_at,
