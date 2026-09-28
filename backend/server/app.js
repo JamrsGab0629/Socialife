@@ -11,7 +11,8 @@ import sharedPostRoutes from "../routes/sharedPost.routes.js";
 import friendRoutes from "../routes/friend.routes.js";
 import notificationRoutes from "../routes/notifications.routes.js";
 import mentionRoutes from "../routes/mention.routes.js";
-import reportRoutes from "../routes/report.routes.js"
+import reportRoutes from "../routes/report.routes.js";
+import settingsRoutes from "../routes/settings.route.js";
 import cors from "cors";
 
 const app = express();
@@ -37,5 +38,6 @@ app.use("/api/friends", friendRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/mention", mentionRoutes);
 app.use("/api/report", reportRoutes);
+app.use("/api/settings", settingsRoutes);
 
 export default app;
