@@ -47,3 +47,8 @@ export const register$ = z.object({
     birthday: birthday_format,
     // address: z.string().trim().min(10, "Address must be at least 10 characters").max(100, "Address must be at most 100 characters"),
 }).strict();
+
+export const changePassword$ = z.object({
+    password: password,
+    new_password: password
+}).strict();
