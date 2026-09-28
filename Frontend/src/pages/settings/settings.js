@@ -3,6 +3,7 @@ import Layout from "../../layouts/default/default";
 
 import style from "./settings.module.css";
 import style_topbar_search from "../../styles/app/topbar-search.module.css";
+import { init_settings } from "./settings.helper";
 
 export default function Settings() {
     const { navigation, main } = Layout(this.root);
@@ -24,7 +25,7 @@ export default function Settings() {
                 <!-- ═══ YOUR ACCOUNT ═══ -->
                 <div class="${style["section-heading"]}">Your account</div>
                 <div class="${style["settings-card"]}">
-                    <a class="${style["settings-item"]}" href="#">
+                    <a class="${style["settings-item"]}" href="#" data-modal="account">
                         <img class="${style["settings-icon"]}" src="/icon/user-avatar.svg" alt="Users avatar">
                         <div class="${style["item-content"]}">
                             <div class="${style["item-title"]}">
@@ -43,7 +44,7 @@ export default function Settings() {
                 <div class="${style["section-heading"]}">Preferences</div>
                 <div class="${style["section-sub"]}">Customize your experience on Socialife.</div>
                 <div class="${style["settings-card"]}">
-                    <a class="${style["settings-item"]}" href="#">
+                    <a class="${style["settings-item"]}" href="#" data-modal="notifications">
                         <img class="${style["settings-icon"]}" src="/icon/bell.svg" alt="Notifications">
                         <div class="${style["item-content"]}">
                             <div class="${style["item-title"]}">Notifications</div>
@@ -69,7 +70,7 @@ export default function Settings() {
                 <div class="${style["section-heading"]}">Audience and visibility</div>
                 <div class="${style["section-sub"]}">Control who can see what you share on Socialife.</div>
                 <div class="${style["settings-card"]}">
-                    <a class="${style["settings-item"]}" href="#">
+                    <a class="${style["settings-item"]}" href="#" data-modal="contact">
                         <img class="${style["settings-icon"]}" src="/icon/chat-bubble.svg" alt="Contacts">
                         <div class="${style["item-content"]}">
                             <div class="${style["item-title"]}">How people find and contact you</div>
@@ -81,7 +82,7 @@ export default function Settings() {
                 <!-- ═══ BLOCKING, PAYMENTS, ACTIVITY ═══ -->
                 <div class="${style["section-heading"]}">Privacy &amp; controls</div>
                 <div class="${style["settings-card"]}">
-                    <a class="${style["settings-item"]}" href="#">
+                    <a class="${style["settings-item"]}" href="#" data-modal="blocking">
                         <img class="${style["settings-icon"]}" src="/icon/block-user.svg" alt="Blocks">
                         <div class="${style["item-content"]}">
                             <div class="${style["item-title"]}">Blocking</div>
@@ -89,7 +90,7 @@ export default function Settings() {
                         </div>
                         <span class="${style["item-chevron"]}">›</span>
                     </a>
-                    <a class="${style["settings-item"]}" href="#">
+                    <a class="${style["settings-item"]}" href="#" data-modal="activity">
                         <img class="${style["settings-icon"]}" src="/icon/activity.svg" alt="Activity">
                         <div class="${style["item-content"]}">
                             <div class="${style["item-title"]}">Your activity</div>
@@ -122,4 +123,6 @@ export default function Settings() {
             </div>
         </div>
     `;
+
+    init_settings(document.getElementById("settings"), style);
 }
