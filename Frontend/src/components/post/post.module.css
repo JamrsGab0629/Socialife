@@ -353,7 +353,7 @@
 .mention-link {
     color: #1877f2;
     font-weight: 600;
-    text-decoration: none;
+    cursor: pointer;
 }
 
 .mention-link:hover {

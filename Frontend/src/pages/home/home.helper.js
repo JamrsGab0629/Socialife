@@ -129,7 +129,7 @@ export function initSharePostDialog() {
 
 const linkifyMentions = (text) => {
     return text.replace(/@(\w+)/g, (match, username) => {
-        return `<a href="#" class="${postStyle["mention-link"]}" data-mention-username="${username}">@${username}</a>`;
+               return `<span role="link" tabindex="0" class="${postStyle["mention-link"]}" data-mention-username="${username}">@${username}</span>`;
     });
 };
 

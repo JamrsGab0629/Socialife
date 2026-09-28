@@ -1,6 +1,6 @@
 import { createPostService } from './create_post.service.js';
 import { initMentionPicker } from '../mention/mention-picker.js';
-import { commentMention } from '../../helpers/mention/mention.helper.js';
+import { postMention } from '../../helpers/mention/mention.helper.js';
 
 /**
  * Attaches event listeners and handles state management for the Create Post component.
@@ -142,7 +142,7 @@ export function initCreatePost(root = document, style = {}, userId = 'CURRENT_US
         const postId = createdPost?.post_id || createdPost?.id;
 
         if (mentionIds.length > 0 && postId) {
-          commentMention({ mentions: mentionIds, entityId: postId }).catch((err) =>
+                  postMention({ mentions: mentionIds, entityId: postId }).catch((err) =>
             console.error('Failed to send post mentions:', err)
           );
         }

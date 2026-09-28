@@ -37,6 +37,14 @@ const formatPostTime = (timestamp) => {
     }
 };
 
+const escapeHtml = (str) =>
+    String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+const linkifyMentions = (text) =>
+    escapeHtml(text).replace(/@(\w+)/g, (match, username) =>
+        `<span role="link" tabindex="0" class="${style["mention-link"]}" data-mention-username="${username}">@${username}</span>`
+    );
+
 export default function Post(data, { showSave = false } = {}) {
     if (!data || Object.keys(data).length <= 0) return "";
 
@@ -47,7 +55,7 @@ export default function Post(data, { showSave = false } = {}) {
     const authorId = data.author?.user_id || data.user_id || "";
     const postTime = formatPostTime(data.shared_at || data.post_time || data.created_at);
     
-    const textContent = data.caption || (typeof data.content === "string" ? data.content : "");
+      const textContent = linkifyMentions(data.caption || (typeof data.content === "string" ? data.content : ""));
 
        let photoHtml = "";
     if (data.photo && data.photo.href) {
