@@ -107,12 +107,13 @@
 
         await t.commit();
 
-        safeNotify(
-        parentComment.author_id,
-        userId,
-        "reply",
-        "replied to your comment.",
-        );
+       safeNotify(
+    parentComment.author_id,
+    userId,
+    "reply",
+    "replied to your comment.",
+    postId,
+);
 
         return newComment;
     } catch (error) {

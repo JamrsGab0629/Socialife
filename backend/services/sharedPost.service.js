@@ -23,7 +23,7 @@ export const createShareRecord = async (userId, postId, caption) => {
         caption: caption || null,
     });
 
-    safeNotify(post.user_id, userId, "share", "shared your post.");
+  safeNotify(post.user_id, userId, "share", "shared your post.", postId);
 
     return share;
 };
