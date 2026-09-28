@@ -32,6 +32,7 @@ function buildOverlay() {
             </section>
 
             <section class="${style["pv-post-panel"]}">
+                            <button type="button" class="${style["pv-panel-close"]}" data-pv-close>&times;</button>
                 <div class="${style["pv-post-header"]}">
                     <img class="${style["pv-author-avatar"]}" data-pv-avatar alt="">
                     <div class="${style["pv-author-meta"]}">
@@ -64,7 +65,9 @@ function buildOverlay() {
 
     document.body.appendChild(el);
 
-    el.querySelector("[data-pv-close]").addEventListener("click", closePostViewer);
+       el.querySelectorAll("[data-pv-close]").forEach((btn) =>
+        btn.addEventListener("click", closePostViewer)
+    );
     el.addEventListener("click", (e) => {
         if (e.target === el) closePostViewer();
     });
@@ -169,6 +172,8 @@ export function openPostViewer(postData) {
     const avatarUrl = postData.avatar_url || postData.author?.profile_url || "/icon/user-avatar.svg";
     const photoUrl = postData.photo?.href || postData.photo_url || "";
     const caption = postData.caption || (typeof postData.content === "string" ? postData.content : "");
+    overlayEl.querySelector(`.${style["pv-viewer"]}`).classList.toggle(style["pv-no-photo"], !photoUrl);
+
 
     overlayEl.querySelector("[data-pv-photo]").src = photoUrl;
     const avatarImg = overlayEl.querySelector("[data-pv-avatar]");

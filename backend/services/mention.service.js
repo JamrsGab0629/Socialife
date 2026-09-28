@@ -1,40 +1,29 @@
 import User from "../model/user.model.js";
 
 export class MentionService {
-    static async mention(recipientId, authorId, classifier) {
-        const user = await User.findByPk(recipientId, {
-            attributes: [
-                "first_name",
-                "last_name",
-                "username"
-            ]
+    static async mention(recipientId, authorId, classifier, postId) {
+        const recipient = await User.findByPk(recipientId, {
+            attributes: ["user_id"]
         });
 
-        if (!user) {
+        if (!recipient) {
             throw new Error("User not found");
         }
 
         return {
             userId: recipientId,
-            authorId: authorId,
-            type: "Mention",
-            content: `${user.first_name} ${user.last_name} mentioned you on their ${classifier}`,
+            authorId,
+            type: "mention",
+            content: `mentioned you in a ${classifier}.`,
+            postId,
         };
     }
 
-    static async commentMention(recipientId, authorId) {
-        return MentionService.mention(
-            recipientId,
-            authorId,
-            "comment"
-        );
+    static commentMention(recipientId, authorId, postId) {
+        return MentionService.mention(recipientId, authorId, "comment", postId);
     }
 
-    static async postMention(recipientId, authorId) {
-        return MentionService.mention(
-            recipientId,
-            authorId,
-            "post"
-        );
+    static postMention(recipientId, authorId, postId) {
+        return MentionService.mention(recipientId, authorId, "post", postId);
     }
 }

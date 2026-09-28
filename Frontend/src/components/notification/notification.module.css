@@ -120,3 +120,24 @@
     background-position: center;
     background-color: #f0f2f5;
 }
+
+
+
+.notif-badge-icon.reply {
+    background-image: url("../../icons/commented.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.notif-badge-icon.mention {
+    background-color: #7c4dff;
+}
+
+.notif-badge-icon.mention::after {
+    content: "@";
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+}

@@ -13,9 +13,6 @@ export const mentionController = async (req, res, next) => {
             type = "comment",
         } = req.body;
 
-        // console.log(mentions);
-
-        // Validate mentions
         if (!Array.isArray(mentions) || mentions.length === 0) {
             return res.status(400).json({
                 success: false,
@@ -23,7 +20,6 @@ export const mentionController = async (req, res, next) => {
             });
         }
 
-        // Validate entity ID
         if (!entityId) {
             return res.status(400).json({
                 success: false,
@@ -31,7 +27,6 @@ export const mentionController = async (req, res, next) => {
             });
         }
 
-        // Validate mention type
         if (!["comment", "post"].includes(type)) {
             return res.status(400).json({
                 success: false,
@@ -39,7 +34,9 @@ export const mentionController = async (req, res, next) => {
             });
         }
 
-        // Verify the comment or post exists
+        // Resolve which post this mention belongs to, so the notification can link to it
+        let postId = null;
+
         if (type === "comment") {
             const comment = await findCommentById(entityId);
 
@@ -49,10 +46,10 @@ export const mentionController = async (req, res, next) => {
                     message: "Comment not found",
                 });
             }
-        }
 
-        if (type === "post") {
-            const post = await getPostByIdService(entityId, authorId);
+            postId = comment.post_id;
+        } else {
+            const post = await getPostByIdService(entityId);
 
             if (!post) {
                 return res.status(404).json({
@@ -60,11 +57,14 @@ export const mentionController = async (req, res, next) => {
                     message: "Post not found",
                 });
             }
+
+            postId = post.post_id;
         }
 
-        // Create mentions and notifications concurrently
+        const recipients = [...new Set(mentions)];
+
         const results = await Promise.all(
-            mentions.map(async (recipientId) => {
+            recipients.map(async (recipientId) => {
                 try {
                     if (recipientId === authorId) {
                         return {
@@ -76,27 +76,13 @@ export const mentionController = async (req, res, next) => {
 
                     const mentionData =
                         type === "comment"
-                            ? await MentionService.commentMention(
-                                  recipientId,
-                                  authorId,
-                                  entityId
-                              )
-                            : await MentionService.postMention(
-                                  recipientId,
-                                  authorId,
-                                  entityId
-                              );
+                            ? await MentionService.commentMention(recipientId, authorId, postId)
+                            : await MentionService.postMention(recipientId, authorId, postId);
 
-                    // Updated to use the correct namespace function import
                     const notification =
-                        await notificationService.createNotificationService(
-                            mentionData
-                        );
+                        await notificationService.createNotificationService(mentionData);
 
-                    return {
-                        success: true,
-                        data: notification,
-                    };
+                    return { success: true, data: notification };
                 } catch (error) {
                     return {
                         success: false,
@@ -111,15 +97,9 @@ export const mentionController = async (req, res, next) => {
             .filter((result) => result.success)
             .map((result) => result.data);
 
-        const errors = results.filter(
-            (result) => !result.success
-        );
+        const errors = results.filter((result) => !result.success);
 
-        // Every mention failed
-        if (
-            successfulNotifications.length === 0 &&
-            errors.length > 0
-        ) {
+        if (successfulNotifications.length === 0 && errors.length > 0) {
             return res.status(400).json({
                 success: false,
                 data: [],
@@ -127,7 +107,6 @@ export const mentionController = async (req, res, next) => {
             });
         }
 
-        // At least one mention succeeded
         return res.status(200).json({
             success: true,
             message: "Mentions processed successfully",

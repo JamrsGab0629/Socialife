@@ -114,8 +114,10 @@ export function initMentionPicker(container) {
     });
 
     return {
-        getMentionIds(input) {
-            return Array.from(getMentionMap(input).values());
+               getMentionIds(input) {
+            return Array.from(getMentionMap(input).entries())
+                .filter(([username]) => input.value.includes(`@${username}`))
+                .map(([, userId]) => userId);
         },
         clearMentions(input) {
             getMentionMap(input).clear();

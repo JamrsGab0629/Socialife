@@ -317,21 +317,31 @@ async function handleCommentSubmission(submitBtn) {
     const commentText = inputField.value.trim();
     if (!commentText) return;
 
+    const mentionIds = mentionPicker?.getMentionIds(inputField) || [];
+
     try {
         submitBtn.disabled = true;
         const response = await comment_content(postId, commentText);
         const newComment = response?.data || response;
+        const commentId = newComment.comment_data_id || newComment.id;
 
         inputField.value = '';
+        mentionPicker?.clearMentions(inputField);
+
+        if (mentionIds.length > 0 && commentId) {
+            commentMention({ mentions: mentionIds, entityId: commentId }).catch((err) =>
+                console.error("Failed to send mentions:", err)
+            );
+        }
 
         const commentsList = postCard.querySelector('[data-comments-list]');
         if (commentsList) {
             const commentPayload = {
+                comment_data_id: commentId,
                 user_name: newComment.user_name || currentUser.userName,
                 comment: newComment.comment || commentText
             };
-            const commentHtml = renderCommentItem(commentPayload, postId);
-            commentsList.insertAdjacentHTML('beforeend', commentHtml);
+            commentsList.insertAdjacentHTML('beforeend', renderCommentItem(commentPayload, postId));
         }
 
         const commentCount = postCard.querySelector('.comment-count');
@@ -344,7 +354,6 @@ async function handleCommentSubmission(submitBtn) {
         submitBtn.disabled = false;
     }
 }
-
 async function toggleReplies(button) {
     const comment = button.closest('[data-comment-id]');
     const repliesList = comment?.nextElementSibling;
@@ -396,13 +405,12 @@ async function handleReplySubmission(replyForm) {
         input.value = '';
 
         mentionPicker?.clearMentions(input);
-
-        if (mentionIds.length > 0) {
-            commentMention({ mentions: mentionIds, entityId: postId }).catch(err =>
+        const replyId = reply.comment_data_id || reply.id;
+        if (mentionIds.length > 0 && replyId) {
+            commentMention({ mentions: mentionIds, entityId: replyId }).catch((err) =>
                 console.error("Failed to send mentions:", err)
             );
         }
-
         const postCard = replyForm.closest(`.${postStyle["post-card"]}`);
         const commentCount = postCard?.querySelector('.comment-count');
         if (commentCount) commentCount.textContent = String(Number(commentCount.textContent) + 1);

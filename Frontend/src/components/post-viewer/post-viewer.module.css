@@ -10,6 +10,10 @@
     padding: 24px;
 }
 
+.pv-overlay[hidden] {
+    display: none !important;
+}
+
 .pv-viewer {
     display: flex;
     width: 100%;
@@ -69,12 +73,35 @@
 }
 
 .pv-post-panel {
+    position: relative;
     width: 420px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
     padding: 20px 20px 0;
     overflow: hidden;
+}
+
+.pv-panel-close {
+    display: none;
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background: #f0f2f5;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.pv-panel-close:hover {
+    background: #e4e6eb;
 }
 
 .pv-post-header {
@@ -231,9 +258,6 @@
     cursor: pointer;
     flex-shrink: 0;
 }
-.pv-overlay[hidden] {
-    display: none !important;
-}
 
 .pv-comment-send:hover {
     background: #166fe5;
@@ -257,4 +281,24 @@
         width: 100%;
         flex: 1;
     }
+}
+
+/* Text-only posts (no photo): hide the photo pane and show a single centered card.
+   Kept after the media query so it applies on mobile too. */
+.pv-no-photo {
+    max-width: 560px;
+    height: auto;
+    max-height: 88vh;
+}
+
+.pv-no-photo .pv-photo-stage {
+    display: none;
+}
+
+.pv-no-photo .pv-post-panel {
+    width: 100%;
+}
+
+.pv-no-photo .pv-panel-close {
+    display: flex;
 }
