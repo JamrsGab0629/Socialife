@@ -608,4 +608,14 @@ html, body {
         justify-content: center;
         width: 100%;
     }
+        .cover-edit-btn {
+        top: 12px;
+        bottom: auto;
+        right: 12px;
+    }
+
+    .cover-menu-popover {
+        top: 52px;
+        bottom: auto;
+    }
 }

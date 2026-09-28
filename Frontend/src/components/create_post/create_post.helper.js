@@ -1,4 +1,6 @@
 import { createPostService } from './create_post.service.js';
+import { initMentionPicker } from '../mention/mention-picker.js';
+import { commentMention } from '../../helpers/mention/mention.helper.js';
 
 /**
  * Attaches event listeners and handles state management for the Create Post component.
@@ -17,10 +19,12 @@ export function initCreatePost(root = document, style = {}, userId = 'CURRENT_US
   // Photo Elements
   const photoInput = root.querySelector('#photoInput');
   const addPhotoBtn = root.querySelector('#addPhotoBtn');
-  const addPhotoBtnBottom = root.querySelector('#addPhotoBtnBottom');
   const photoPreview = root.querySelector('#photoPreview');
   const photoPreviewImage = root.querySelector('#photoPreviewImage');
   const removePhotoBtn = root.querySelector('#removePhotoBtn');
+
+  // @mention support in the caption
+  const mentionPicker = initMentionPicker(root);
 
   // State
   let selectedPhoto = null;
@@ -58,6 +62,7 @@ export function initCreatePost(root = document, style = {}, userId = 'CURRENT_US
     if (captionInput) {
       captionInput.value = '';
       captionInput.style.height = 'auto';
+      mentionPicker.clearMentions(captionInput);
     }
     removePhoto();
     updatePostState();
@@ -97,9 +102,7 @@ export function initCreatePost(root = document, style = {}, userId = 'CURRENT_US
     });
   }
 
-  const handlePhotoBtnClick = () => photoInput && photoInput.click();
-  if (addPhotoBtn) addPhotoBtn.addEventListener('click', handlePhotoBtnClick);
-  if (addPhotoBtnBottom) addPhotoBtnBottom.addEventListener('click', handlePhotoBtnClick);
+  if (addPhotoBtn) addPhotoBtn.addEventListener('click', () => photoInput && photoInput.click());
 
   if (photoInput) {
     photoInput.addEventListener('change', () => {
@@ -120,6 +123,7 @@ export function initCreatePost(root = document, style = {}, userId = 'CURRENT_US
       if (postBtn.disabled) return;
 
       const captionText = captionInput.value.trim();
+      const mentionIds = mentionPicker.getMentionIds(captionInput);
       const originalText = postBtn.textContent;
 
       try {
@@ -134,12 +138,20 @@ export function initCreatePost(root = document, style = {}, userId = 'CURRENT_US
           selectedPhoto
         );
 
+        const createdPost = response?.data || response;
+        const postId = createdPost?.post_id || createdPost?.id;
+
+        if (mentionIds.length > 0 && postId) {
+          commentMention({ mentions: mentionIds, entityId: postId }).catch((err) =>
+            console.error('Failed to send post mentions:', err)
+          );
+        }
+
         resetComposer();
         closeComposer();
         showToast('Post created!');
 
         // Dispatch event so Home feed can instantly prepend the new post
-        const createdPost = response?.data || response;
         if (createdPost) {
           window.dispatchEvent(new CustomEvent('post:created', { detail: createdPost }));
         }
