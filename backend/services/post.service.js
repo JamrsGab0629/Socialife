@@ -1,4 +1,4 @@
-import { Post, SharedPost, User, PhotoData, SavedPost } from "../model/association.model.js";
+import { Post, SharedPost, User, PhotoData, SavedPost, LikeData } from "../model/association.model.js";
 export { getUnifiedProfileFeedService as getProfileFeedService } from "./profileFeed.service.js";
 
 const createNotFoundError = (message) => {
@@ -74,7 +74,7 @@ export const createPostService = async (userId, body, file) => {
 export const getHomeFeedService = async (userId, query = {}) => {
   const page = Math.max(1, Number(query.page) || 1);
   const limit = Math.max(1, Number(query.limit) || 10);
-  const postIncludes = [
+    const postIncludes = [
     {
       model: User,
       as: "author",
@@ -87,6 +87,13 @@ export const getHomeFeedService = async (userId, query = {}) => {
     {
       model: SavedPost,
       as: "saves",
+      attributes: ["post_id"],
+      where: { user_id: userId },
+      required: false,
+    },
+    {
+      model: LikeData,
+      as: "likes",
       attributes: ["post_id"],
       where: { user_id: userId },
       required: false,
@@ -115,17 +122,18 @@ export const getHomeFeedService = async (userId, query = {}) => {
     }),
   ]);
 
-    const originalPosts = posts.map((post) => {
-    const { saves = [], ...postData } = post.toJSON();
-    return { ...postData, is_saved: saves.length > 0, is_own_post: postData.user_id === userId };
+      const originalPosts = posts.map((post) => {
+    const { saves = [], likes = [], ...postData } = post.toJSON();
+    return { ...postData, is_saved: saves.length > 0, is_liked: likes.length > 0, is_own_post: postData.user_id === userId };
   });
 
   const sharedPosts = shares.map((share) => {
     const shareData = share.toJSON();
-    const { saves = [], ...postData } = shareData.post;
+    const { saves = [], likes = [], ...postData } = shareData.post;
     return {
       ...postData,
       is_saved: saves.length > 0,
+      is_liked: likes.length > 0,
       is_own_post: postData.user_id === userId,
       is_shared: true,
       shared_by: shareData.user,

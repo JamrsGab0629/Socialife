@@ -1,9 +1,17 @@
-import { Post, SharedPost, User, PhotoData } from "../model/association.model.js";
+import { Post, SharedPost, User, PhotoData, LikeData } from "../model/association.model.js";
 
 export const getUnifiedProfileFeedService = async (targetUserId, viewerId, query) => {
     const page = Math.max(1, parseInt(query.page, 10) || 1);
     const limit = Math.max(1, parseInt(query.limit, 10) || 10);
     const offset = (page - 1) * limit;
+
+    const likeInclude = {
+        model: LikeData,
+        as: "likes",
+        attributes: ["post_id"],
+        where: { user_id: viewerId },
+        required: false,
+    };
 
     // Fetch original posts and shared posts concurrently
     const [userPosts, userShares] = await Promise.all([
@@ -11,7 +19,8 @@ export const getUnifiedProfileFeedService = async (targetUserId, viewerId, query
             where: { user_id: targetUserId, is_active: true },
             include: [
                 { model: User, as: "author", attributes: ["user_id", "username", "profile_url"] },
-                { model: PhotoData, as: "photo" }
+                { model: PhotoData, as: "photo" },
+                likeInclude
             ]
         }),
         SharedPost.findAll({
@@ -24,7 +33,8 @@ export const getUnifiedProfileFeedService = async (targetUserId, viewerId, query
                     where: { is_active: true }, 
                     include: [
                         { model: User, as: "author", attributes: ["user_id", "username", "profile_url"] },
-                        { model: PhotoData, as: "photo" }
+                        { model: PhotoData, as: "photo" },
+                        likeInclude
                     ] 
                 }
             ]

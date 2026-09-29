@@ -1,6 +1,6 @@
 .mention-dropdown {
   position: absolute;
-  background: #ffffff;
+  background: var(--card-bg);
   border: 1px solid rgba(36, 62, 204, 0.15);
   border-radius: 12px;
   box-shadow: 0 12px 35px rgba(36, 62, 204, 0.18);
@@ -17,11 +17,11 @@
   font-family: "Inter", sans-serif;
   font-size: 14.5px;
   font-weight: 600;
-  color: #0d1230;
+  color: var(--text-dark);
   transition: background 0.15s ease, color 0.15s ease;
 }
 
 .mention-item:hover {
-  background: #f4f6ff;
+  background: var(--bg-tint);
   color: #243ecc;
 }

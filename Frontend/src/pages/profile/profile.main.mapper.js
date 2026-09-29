@@ -13,6 +13,7 @@ function mapFeedItemToPostData(item) {
             created_at: original.created_at,
             like_count: original.like_count,
             comment_count: original.comment_count,
+            is_liked: Array.isArray(original.likes) && original.likes.length > 0,
             is_shared: true,
             shared_by: share.user,
             share_caption: share.caption,
@@ -31,6 +32,7 @@ function mapFeedItemToPostData(item) {
         created_at: post.created_at,
         like_count: post.like_count,
         comment_count: post.comment_count,
+        is_liked: Array.isArray(post.likes) && post.likes.length > 0,
         is_own_post: item.is_own_post,
     };
 }
