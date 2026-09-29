@@ -3,6 +3,7 @@ import { get_post_by_id } from "../../helpers/post/post.request";
 import { get_share_by_id } from "../../helpers/share/share.request";
 import { openPostViewer } from "../post-viewer/post-viewer";
 import { InfiniteScroll } from "../../helpers/utils/InfiniteScroll";
+import { skeleton } from "../skeleton/skeleton";
 import style from "./notification.module.css";
 
 function renderNotification(notification) {
@@ -62,14 +63,13 @@ export default async function Notification(root) {
         try {
             if (type === "share" && shareId) {
                 const { data: share } = await get_share_by_id(shareId);
-                console.log("share data:", share); 
                 if (share) {
                     openPostViewer({
                         post_id: share.post_id,
                         user_name: share.user?.username,
                         avatar_url: share.user?.profile_url,
                         caption: share.caption,
-                         photo: share.post?.photo,    
+                        photo: share.post?.photo,
                         like_count: share.post?.like_count,
                         comment_count: share.post?.comment_count,
                         created_at: share.created_at,
@@ -91,6 +91,7 @@ export default async function Notification(root) {
         container: list,
         sentinel,
         limit: 20,
+        loaderHTML: skeleton("notification", 5),
         loadMore: async ({ page, limit }) => {
             const result = await getNotifications(page, limit);
             const items = Array.isArray(result?.data) ? result.data : [];
