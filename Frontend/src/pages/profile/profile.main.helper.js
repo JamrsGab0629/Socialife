@@ -2,7 +2,7 @@ import Post from "../../components/post/post";
 import { get_profile_feed, deactivate_post } from "../../helpers/post/post.request";
 import mapFeedItemToPostData from "./profile.main.mapper";
 import { openPostViewer } from "../../components/post-viewer/post-viewer";
-import { initCommentInteractions, initSharePostDialog } from "../home/home.helper";
+import { initCommentInteractions, initSharePostDialog, applyCurrentUserAvatar } from "../home/home.helper";
 import { InfiniteScroll } from "../../helpers/utils/InfiniteScroll";
 
 const postDataStore = new Map();
@@ -82,15 +82,16 @@ export const Helper = async (userId) => {
             return await get_profile_feed(userId, page, limit);
         },
         renderItems: (items, container) => {
-            items.forEach((item) => {
-                const mapped = mapFeedItemToPostData(item);
-                const postId = mapped.post_id || mapped.id;
-                if (postId) postDataStore.set(String(postId), mapped);
+    items.forEach((item) => {
+        const mapped = mapFeedItemToPostData(item);
+        const postId = mapped.post_id || mapped.id;
+        if (postId) postDataStore.set(String(postId), mapped);
 
-                const postMarkup = Post(mapped, { showSave: true });
-                container.insertAdjacentHTML("beforeend", postMarkup);
-            });
-        }
+        const postMarkup = Post(mapped, { showSave: true });
+        container.insertAdjacentHTML("beforeend", postMarkup);
+    });
+    applyCurrentUserAvatar(root); // add this line
+}
     });
 };
 
