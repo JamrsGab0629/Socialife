@@ -23,35 +23,40 @@ export const profileController = {
 
   // PUT /api/profiles/picture
   async updatePicture(req, res, next) {
-    try {
-      const userId = req.user.user_id || req.user.userId;
+  try {
+    const userId = req.user.user_id || req.user.userId;
 
-      if (!req.file) {
-        return res.status(400).json({ success: false, message: 'No image file provided' });
-      }
-
-      const updatedProfile = await profileService.updateProfilePicture(userId, req.file.path);
-
-      const userCaption = req.body?.caption?.trim();
-      const caption = userCaption
-        ? `updated their profile picture — ${userCaption}`
-        : "updated their profile picture";
-
-      await postService.createPostService(
-        userId,
-        { caption },
-        req.file
-      );
-
-      return res.status(200).json({
-        success: true,
-        message: 'Profile picture updated successfully',
-        data: updatedProfile,
-      });
-    } catch (error) {
-      next(error);
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: 'No image file provided' });
     }
-  },
+
+    const updatedProfile = await profileService.updateProfilePicture(userId, req.file.path);
+
+    const userCaption = req.body?.caption?.trim();
+    const caption = userCaption
+      ? `updated their profile picture — ${userCaption}`
+      : "updated their profile picture";
+
+    const createdPost = await postService.createPostService(
+      userId,
+      { caption },
+      req.file
+    );
+
+    const postId = createdPost?.post_id || createdPost?.id;
+    if (postId) {
+      await profileService.setProfilePicturePost(userId, postId);
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Profile picture updated successfully',
+      data: { ...updatedProfile, profile_picture_post_id: postId || null },
+    });
+  } catch (error) {
+    next(error);
+  }
+},
 
   // DELETE /api/profiles/picture
   async removePicture(req, res, next) {
@@ -70,36 +75,41 @@ export const profileController = {
   },
 
   // PUT /api/profiles/cover
-  async updateCover(req, res, next) {
-    try {
-      const userId = req.user.user_id || req.user.userId;
+ async updateCover(req, res, next) {
+  try {
+    const userId = req.user.user_id || req.user.userId;
 
-      if (!req.file) {
-        return res.status(400).json({ success: false, message: 'No image file provided' });
-      }
-
-      const updatedProfile = await profileService.updateCoverPhoto(userId, req.file.path);
-
-      const userCaption = req.body?.caption?.trim();
-      const caption = userCaption
-        ? `updated their cover photo — ${userCaption}`
-        : "updated their cover photo";
-
-      await postService.createPostService(
-        userId,
-        { caption },
-        req.file
-      );
-
-      return res.status(200).json({
-        success: true,
-        message: 'Cover photo updated successfully',
-        data: updatedProfile,
-      });
-    } catch (error) {
-      next(error);
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: 'No image file provided' });
     }
-  },
+
+    const updatedProfile = await profileService.updateCoverPhoto(userId, req.file.path);
+
+    const userCaption = req.body?.caption?.trim();
+    const caption = userCaption
+      ? `updated their cover photo — ${userCaption}`
+      : "updated their cover photo";
+
+    const createdPost = await postService.createPostService(
+      userId,
+      { caption },
+      req.file
+    );
+
+    const postId = createdPost?.post_id || createdPost?.id;
+    if (postId) {
+      await profileService.setCoverPhotoPost(userId, postId);
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Cover photo updated successfully',
+      data: { ...updatedProfile, cover_photo_post_id: postId || null },
+    });
+  } catch (error) {
+    next(error);
+  }
+},
 
   // DELETE /api/profiles/cover
   async removeCover(req, res, next) {

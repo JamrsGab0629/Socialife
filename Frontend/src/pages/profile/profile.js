@@ -14,7 +14,8 @@ import PicturesHelper from "./profile.pictures.helper";
 import MainHelper from "./profile.main.helper";
 
 import style from "./profile.module.css";
-
+import { openPostViewer } from "../../components/post-viewer/post-viewer";
+import { get_post_by_id } from "../../helpers/post/post.request";
 function renderFriendButton(status, userId) {
     const actionsEl = document.getElementById('profile-actions');
     if (!actionsEl) return;
@@ -44,12 +45,14 @@ function renderFriendButton(status, userId) {
                 } else if (action === 'accept') {
                     await accept_friend_request(userId);
                     renderFriendButton('friends', userId);
+                    bumpFriendCount(1); // <-- viewed profile (this userId) just gained a friend
                 } else if (action === 'decline') {
                     await decline_friend_request(userId);
                     renderFriendButton('none', userId);
                 } else if (action === 'remove') {
                     await remove_friend(userId);
                     renderFriendButton('none', userId);
+                    bumpFriendCount(-1); // <-- viewed profile just lost a friend
                 }
             } catch (error) {
                 console.error(`Failed friend action "${action}":`, error);
@@ -59,6 +62,14 @@ function renderFriendButton(status, userId) {
     });
 }
 
+function bumpFriendCount(delta) {
+    const friendsEl = document.getElementById('profile-friends-count');
+    if (!friendsEl) return;
+
+    const current = parseInt(friendsEl.textContent, 10) || 0;
+    const next = Math.max(0, current + delta);
+    friendsEl.textContent = `${next} friend${next === 1 ? '' : 's'}`;
+}
 export default async function Profile(params){
     const { navigation, main } = Layout(this.root);
     const routeUserId = params?.userId;
@@ -223,6 +234,34 @@ export default async function Profile(params){
             bannerEl.style.backgroundSize = "cover";
             bannerEl.style.backgroundPosition = "center";
         }
+        // Clicking the avatar photo (not the edit pencil) opens the post it came from
+if (avatarEl && profile.profile_picture_post_id) {
+    avatarEl.style.cursor = "pointer";
+    avatarEl.addEventListener('click', async () => {
+        try {
+            const { data: post } = await get_post_by_id(profile.profile_picture_post_id);
+            if (post) openPostViewer(post);
+        } catch (error) {
+            console.error("Failed to open profile picture post:", error);
+        }
+    });
+}
+
+// Clicking the cover banner (not the edit button) opens the post it came from
+if (bannerEl && profile.cover_photo_post_id) {
+    bannerEl.style.cursor = "pointer";
+    bannerEl.addEventListener('click', (e) => {
+        if (e.target.closest('#cover-edit-btn') || e.target.closest('#cover-menu')) return;
+        (async () => {
+            try {
+                const { data: post } = await get_post_by_id(profile.cover_photo_post_id);
+                if (post) openPostViewer(post);
+            } catch (error) {
+                console.error("Failed to open cover photo post:", error);
+            }
+        })();
+    });
+}
 
         // --- Avatar / cover editing only shown on your own profile ---
         const avatarEditBtn = document.getElementById('avatar-edit-btn');

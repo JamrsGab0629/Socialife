@@ -91,7 +91,16 @@ User.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
       allowNull: false,
-    }
+    },
+    profile_picture_post_id: {
+  type: DataTypes.UUID,
+  allowNull: true,
+},
+
+cover_photo_post_id: {
+  type: DataTypes.UUID,
+  allowNull: true,
+},
   },
   {
     sequelize,

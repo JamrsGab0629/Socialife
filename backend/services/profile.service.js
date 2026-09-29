@@ -108,17 +108,33 @@ export const profileService = {
 
     return user;
   },
-  // Fetch only the name and friend count fields for a user
-    // Fetch name, friend count, and photo fields for a user's profile header
+
+  async setProfilePicturePost(userId, postId) {
+  await User.update(
+    { profile_picture_post_id: postId },
+    { where: { user_id: userId } }
+  );
+},
+
+async setCoverPhotoPost(userId, postId) {
+  await User.update(
+    { cover_photo_post_id: postId },
+    { where: { user_id: userId } }
+  );
+},
+  
     async getFriendCountAndName(userId) {
-    const user = await User.findByPk(userId, {
-      attributes: ["user_id", "username", "first_name", "last_name", "friend_count", "profile_url", "cover_url", "birth_date", "created_at"]
-    });
+  const user = await User.findByPk(userId, {
+    attributes: [
+      "user_id", "username", "first_name", "last_name", "friend_count",
+      "profile_url", "cover_url", "birth_date", "created_at",
+      "profile_picture_post_id", "cover_photo_post_id"
+    ]
+  });
 
-    if (!user) {
-      throw new Error('User not found');
-    }
-
-    return user;
+  if (!user) {
+    throw new Error('User not found');
   }
-};
+
+  return user;
+}};

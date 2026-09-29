@@ -57,6 +57,10 @@ export class FriendService {
         await friendship.save();
 
         if (status === 'accepted') {
+            // Both sides gained a friend
+            await User.increment('friend_count', { where: { user_id: currentUserId } });
+            await User.increment('friend_count', { where: { user_id: requesterId } });
+
             safeNotify(requesterId, currentUserId, "friend_accept", "accepted your friend request.");
         }
 
@@ -167,6 +171,11 @@ export class FriendService {
         if (!deleted) {
             throw new Error("Not friendss");
         }
+
+        // Both sides lost a friend
+        await User.decrement('friend_count', { where: { user_id: userId } });
+        await User.decrement('friend_count', { where: { user_id: targetUserId } });
+
         return true;
     }
 }
