@@ -355,6 +355,12 @@
     color: #1c1e21;
     z-index: 15;
 }
+.cover-edit-btn[hidden] {
+    display: none !important;
+}
+.avatar-edit-btn[hidden] {
+    display: none !important;
+}
 
 .cover-edit-btn img {
     width: 14px;
