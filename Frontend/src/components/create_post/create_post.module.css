@@ -4,9 +4,9 @@
 
 .composer-card {
   position: relative;
-  width: 100%;          /* was 580px */
+  width: 100%;
   max-width: 95vw;
-  background: #ffffff;
+  background: var(--card-bg);
   border-radius: 24px;
   padding: 24px;
   box-sizing: border-box;
@@ -30,14 +30,14 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #5a628c;
+  color: var(--text-muted);
   transition: background-color 0.2s ease, color 0.2s ease;
   z-index: 5;
 }
 
 .close-btn:hover {
-  background-color: #f4f6ff;
-  color: #0d1230;
+  background-color: var(--bg-tint);
+  color: var(--text-dark);
 }
 
 /* =========================
@@ -92,7 +92,7 @@
 }
 
 .avatar-wrap.locked .aperture-fill {
-  stroke: #5a628c;
+  stroke: var(--text-muted);
   stroke-dasharray: 6 8;
   opacity: 0.7;
   filter: none;
@@ -133,6 +133,7 @@
   font-weight: 700;
   font-size: 16px;
   letter-spacing: -0.2px;
+  color: var(--text-dark);
 }
 
 /* =========================
@@ -193,7 +194,7 @@
 
   width: 260px;
 
-  background: #ffffff;
+  background: var(--card-bg);
 
   border-radius: 16px;
 
@@ -246,7 +247,7 @@
 }
 
 .privacy-option:hover {
-  background: #f4f6ff;
+  background: var(--bg-tint);
 }
 
 .privacy-option .icon {
@@ -269,12 +270,12 @@
 .option-text strong {
   font-size: 13.5px;
   font-weight: 600;
-  color: #0d1230;
+  color: var(--text-dark);
 }
 
 .option-text small {
   font-size: 11.5px;
-  color: #5a628c;
+  color: var(--text-muted);
 }
 
 /* =========================
@@ -290,13 +291,13 @@
   font-weight: 600;
   font-size: 18px;
   line-height: 1.4;
-  color: #0d1230;
-  min-height: 70px;     /* Made the starting text area taller */
+  color: var(--text-dark);
+  min-height: 70px;
   background: transparent;
 }
 
 .caption-input::placeholder {
-  color: #b4badd;
+  color: var(--text-muted);
   font-weight: 600;
 }
 
@@ -326,7 +327,7 @@
 
   overflow: hidden;
 
-  background: #f4f6ff;
+  background: var(--bg-tint);
 }
 
 .photo-preview img {
@@ -390,9 +391,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid rgba(36, 62, 204, 0.08);
+  border-top: 1px solid var(--card-border);
   padding-top: 14px;
-  margin-top: 4px; /* Keeps a nice gap above the toolbar */
+  margin-top: 4px;
 }
 .tool-btn {
   display: flex;
@@ -401,8 +402,8 @@
 
   border: none;
 
-  background: #f4f6ff;
-  color: #5a628c;
+  background: var(--bg-tint);
+  color: var(--text-muted);
 
   font-family: "Inter", sans-serif;
   font-weight: 600;
@@ -420,7 +421,7 @@
 }
 
 .tool-btn:hover {
-  background: rgba(36, 62, 204, 0.06);
+  background: rgba(36, 62, 204, 0.1);
   color: #243ecc;
 }
 

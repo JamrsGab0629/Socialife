@@ -17,7 +17,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    background: #EEF0F3;
+    background: var(--bg-tint);
     border-radius: 24px;
     padding: 12px 20px;
     color: var(--text-muted);
@@ -26,7 +26,7 @@
 }
 
 .search-box:focus-within {
-    background: #E4EAF3;
+    background: var(--bg-tint-strong);
     box-shadow: 0 0 0 2px rgba(59, 111, 176, 0.25);
 }
 
@@ -48,7 +48,7 @@
     position: relative;
     width: 30px;
     height: 30px;
-    color: #556173;
+    color: var(--text-muted);
     flex-shrink: 0;
     cursor: pointer;
     transition: color 0.15s ease;
@@ -62,7 +62,7 @@
     position: absolute;
     top: -6px;
     right: -8px;
-    background: #E8536B;
+    background: var(--danger);
     color: white;
     font-size: 10px;
     font-weight: 700;
@@ -79,7 +79,7 @@
     top: calc(100% + 8px);
     left: 0;
     right: 0;
-    background: #ffffff;
+    background: var(--card-bg);
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     border: 1px solid var(--card-border);
@@ -107,7 +107,7 @@
 }
 
 .search-result-item:hover {
-    background: #f0f2f5;
+    background: var(--bg-tint);
 }
 
 .search-empty {
@@ -115,4 +115,8 @@
     text-align: center;
     color: var(--text-muted);
     font-size: 14px;
+}
+/* topbar-search.module.css */
+.bell-icon {
+    filter: var(--icon-filter);
 }

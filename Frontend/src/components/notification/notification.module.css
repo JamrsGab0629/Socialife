@@ -24,15 +24,15 @@
 }
 
 .notif-item:hover {
-    background: #F6F7F8;
+    background: var(--bg-tint);
 }
 
 .notif-item.unread {
-    background: #EEF3FA;
+    background: var(--bg-tint);
 }
 
 .notif-item.unread:hover {
-    background: #E6EEF8;
+    background: var(--bg-tint-strong);
 }
 
 .notif-avatar-wrap {
@@ -91,10 +91,10 @@
 .notif-quote {
     margin-top: 8px;
     padding: 10px 14px;
-    background: #F0F1F3;
+    background: var(--bg-tint);
     border-radius: 12px;
     font-size: 14.5px;
-    color: #4A545F;
+    color: var(--text-muted);
     font-style: italic;
 }
 
@@ -118,7 +118,7 @@
     background-size: 14px;
     background-repeat: no-repeat;
     background-position: center;
-    background-color: #f0f2f5;
+    background-color: var(--bg-tint);
 }
 
 

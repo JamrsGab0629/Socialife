@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* Original Design Tokens */
+   --icon-filter: invert(30%);
   --bg-canvas: #F6F8FC;
   --bg-surface: #FFFFFF;
   --bg-tint: #EAF0FF;
@@ -26,7 +26,7 @@
   --card-border: #e1e4e8;
   --text-dark: #1c2733;
   --text-muted: #8a94a0;
-  --accent-beige: #f5efe4;
+ --accent-beige: var(--card-bg);
   --link-blue: #3b6fb0;
 
   /* New Functional Variables */
@@ -81,6 +81,56 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+[data-theme="dark"] {
+  --icon-filter: invert(85%);
+  --bg-canvas: #17181c;
+  --bg-surface: #1f2024;
+  --bg-tint: #23262e;
+  --bg-tint-strong: #2b2f3a;
+  --ink-900: #eef0f6;
+  --ink-700: #c7cbe0;
+  --ink-500: #9aa0c0;
+  --cobalt-900: #5b74ff;
+  --royal-500: #6b8aff;
+  --royal-600: #7d9aff;
+  --mist-300: #454b6b;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --success: #2fd6ab;
+  --warn: #f0b45a;
+  --danger: #ff6b60;
+
+  --sidebar-blue: hsl(0, 0%, 2%);
+  --sidebar-blue-dark: #22314a;
+  --bg-page: #101114;
+  --card-bg: #1f2024;
+  --card-border: #33353d;
+  --text-dark: #eef0f6;
+  --text-muted: #9199a8;
+  --accent-beige: #2a2620;
+  --link-blue: #7ea8e0;
+
+  /* New Functional Variables */
+  --color-primary: #6b78ff;
+  --color-primary-dark: #808bff;
+  --color-bg: #17181c;
+  --color-card: #1f2024;
+  --color-text: #eef0f6;
+  --color-text-muted: #9aa0b4;
+  --color-border: #33353f;
+
+  --color-success-bg: #113325;
+  --color-success-text: #4ade80;
+  --color-warning-bg: #3a2c0f;
+  --color-warning-text: #fbbf24;
+  --color-danger-bg: #3a1414;
+  --color-danger-text: #f87171;
+  --color-info-bg: #2a2140;
+  --color-info-text: #a78bfa;
+  --color-neutral-bg: #26272c;
+  --color-neutral-text: #9ca3af;
+}
+
 /* Base Resets */
 *,
 *::before,
@@ -119,6 +169,7 @@ body {
   font-size: var(--fs-base);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 /* Layout Utilities */

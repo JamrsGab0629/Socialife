@@ -4,13 +4,14 @@
     height: 100vh;    
     overflow-y: auto;  
     box-sizing: border-box;
+    background: var(--card-bg);
 }
 
 .banner {
     width: 100%;
     height: 200px;
     background: linear-gradient(145deg, #d4d9e0, #b8c0cc, #c0c8d6);
-    border-bottom: 1px solid #d0d3d9;
+    border-bottom: 1px solid var(--card-border);
     overflow: hidden;
     position: relative;
 }
@@ -40,7 +41,7 @@
 .profile-avatar {
     position: relative;
     font-size: 72px;
-    color: #8a8d94;
+    color: var(--text-muted);
 }
 
 .profile-avatar img {
@@ -48,7 +49,7 @@
     height: 128px;
     border-radius: 50%;
     background: linear-gradient(135deg, #e4e6eb, #d0d3d9);
-    border: 4px solid #ffffff;
+    border: 4px solid var(--card-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -68,8 +69,8 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: #ffffff;
-    border: 2px solid #ffffff;
+    background: var(--card-bg);
+    border: 2px solid var(--card-bg);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
@@ -88,17 +89,17 @@
 }
 
 .avatar-edit-btn:hover {
-    background: #f0f2f5;
+    background: var(--bg-tint);
 }
 
 .avatar-menu-popover {
     position: absolute;
     top: calc(100% + 8px);
     left: 0;
-    background: #ffffff;
+    background: var(--card-bg);
     border-radius: 8px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    border: 1px solid #d0d3d9;
+    border: 1px solid var(--card-border);
     min-width: 160px;
     z-index: 20;
     overflow: hidden;
@@ -114,11 +115,11 @@
     font-size: 14px;
     font-family: 'Inter', sans-serif;
     cursor: pointer;
-    color: #1c1e21;
+    color: var(--text-dark);
 }
 
 .avatar-menu-popover button:hover {
-    background: #f0f2f5;
+    background: var(--bg-tint);
 }
 
 #avatar-remove-option {
@@ -134,12 +135,12 @@
 .profile-info h1 {
     font-size: 26px;
     font-weight: 700;
-    color: #1c1e21;
+    color: var(--text-dark);
 }
 
 .profile-info .friends-count {
     font-size: 14px;
-    color: #6c6f76;
+    color: var(--text-muted);
     margin-top: 2px;
 }
 
@@ -188,7 +189,7 @@
     gap: 4px;
     padding: 0 24px;
     margin-top: 10px;
-    border-bottom: 1px solid #d0d3d9;
+    border-bottom: 1px solid var(--card-border);
     overflow-x: auto;
     scrollbar-width: none;
 }
@@ -201,7 +202,7 @@
     padding: 12px 20px;
     font-size: 14px;
     font-weight: 600;
-    color: #6c6f76;
+    color: var(--text-muted);
     cursor: pointer;
     border: none;
     background: transparent;
@@ -212,7 +213,7 @@
 }
 
 .profile-tabs .tab:hover {
-    color: #1c1e21;
+    color: var(--text-dark);
 }
 
 .profile-tabs .tab.active {
@@ -259,17 +260,17 @@
 
 /* PHOTOS BOX */
 .photos-section {
-    background: #ffffff;
+    background: var(--card-bg);
     border-radius: 16px;
     padding: 16px 16px 18px 16px;
-    border: 1px solid #d0d3d9;
+    border: 1px solid var(--card-border);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
     position: sticky;
     top: 20px;
     align-self: start;
 }
 .photos-section:hover {
-    border-color: #b0b3b8;
+    border-color: var(--line-strong);
 }
 
 .photos-header {
@@ -282,7 +283,7 @@
 .photos-header h3 {
     font-size: 18px;
     font-weight: 600;
-    color: #1c1e21;
+    color: var(--text-dark);
 }
 
 .photos-header button {
@@ -310,7 +311,7 @@
 }
 .photos-grid .photo-thumb {
     aspect-ratio: 1 / 1;
-    background: #e4e6eb;
+    background: var(--bg-tint);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -368,10 +369,10 @@
     position: absolute;
     bottom: 54px;
     right: 14px;
-    background: #ffffff;
+    background: var(--card-bg);
     border-radius: 8px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    border: 1px solid #d0d3d9;
+    border: 1px solid var(--card-border);
     min-width: 160px;
     z-index: 25;
     overflow: hidden;
@@ -387,11 +388,11 @@
     font-size: 14px;
     font-family: 'Inter', sans-serif;
     cursor: pointer;
-    color: #1c1e21;
+    color: var(--text-dark);
 }
 
 .cover-menu-popover button:hover {
-    background: #f0f2f5;
+    background: var(--bg-tint);
 }
 
 #cover-remove-option {
@@ -406,6 +407,7 @@
     border-radius: 18px;
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
     overflow: hidden;
+    background: var(--card-bg);
 }
 
 .share-dialog::backdrop {
@@ -424,30 +426,31 @@
     margin: 0;
     font-size: 22px;
     font-weight: 800;
-    color: #1c1e21;
+    color: var(--text-dark);
 }
 
 .share-dialog textarea {
     min-height: 120px;
     padding: 14px 16px;
-    border: 1px solid #e4e6eb;
+    border: 1px solid var(--card-border);
     border-radius: 12px;
     resize: vertical;
     font: inherit;
     font-size: 15px;
-    background: #f7f8fa;
+    background: var(--bg-tint);
+    color: var(--text-dark);
     transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .share-dialog textarea:focus {
     outline: none;
     border-color: #1877f2;
-    background: #ffffff;
+    background: var(--card-bg);
     box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.12);
 }
 
 .share-dialog textarea::placeholder {
-    color: #8a8d94;
+    color: var(--text-muted);
 }
 
 .share-dialog p {
@@ -462,7 +465,7 @@
     justify-content: flex-end;
     gap: 10px;
     padding-top: 16px;
-    border-top: 1px solid #f0f1f3;
+    border-top: 1px solid var(--card-border);
     margin-top: 4px;
 }
 
@@ -470,8 +473,8 @@
     padding: 10px 20px;
     border: none;
     border-radius: 22px;
-    background: #f0f2f5;
-    color: #1c1e21;
+    background: var(--bg-tint);
+    color: var(--text-dark);
     font: inherit;
     font-weight: 700;
     font-size: 14px;
@@ -480,7 +483,7 @@
 }
 
 .share-dialog-actions button:hover {
-    background: #e4e6eb;
+    background: var(--bg-tint-strong);
 }
 
 .share-dialog-actions button:active {
@@ -510,13 +513,13 @@ html, body {
 .about-section {
     margin-top: 18px;
     padding-top: 14px;
-    border-top: 1px solid #e4e6eb;
+    border-top: 1px solid var(--card-border);
 }
 
 .about-section h3 {
     font-size: 20px;
     font-weight: 700;
-    color: #1c1e21;
+    color: var(--text-dark);
     margin: 0 0 14px 0;
 }
 
@@ -527,7 +530,7 @@ html, body {
     padding: 8px 0;
     font-size: 15px;
     font-weight: 500;
-    color: #1c1e21;
+    color: var(--text-dark);
 }
 
 .about-row img {

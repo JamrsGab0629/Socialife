@@ -27,13 +27,7 @@ export const initTheme = () => {
         set(DEFAULT_THEME);
     }
 
-    if (theme === "LIGHT") {
-        console.log("THEME TO LIGHT")
-        // block of code to change the root value
-    } else if (theme === "DARK") {
-        console.log("THEME TO DARK")
-        // block of code to change the root value
-    }
+    document.documentElement.setAttribute("data-theme", theme.toLowerCase());
 };
 
 export const toggleTheme = () => {

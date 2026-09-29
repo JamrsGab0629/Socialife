@@ -28,7 +28,7 @@ export default async function Home() {
 
                 <a action-button="timeline" class="${style_topbar_search["icon-btn"]}" href="/app/timeline">
                     <span class="${style_topbar_search["icon-dot"]}" data-notification-count hidden></span>
-                    <img width="30px" src="/icon/bell.svg" style="filter: invert(20%);" alt="bell">
+                  <img width="30px" src="/icon/bell.svg" class="${style_topbar_search['bell-icon']}" alt="bell">
                 </a>
             </div>
             

@@ -14,12 +14,12 @@
 
 .composer-label {
     font-size: 20px;
-    color: #6B7684;
+    color: var(--text-muted);
     margin-bottom: 12px;
 }
 
 .composer-box {
-    background: #E7E9EC;
+    background: var(--bg-tint);
     border-radius: 14px;
     min-height: 96px;
     padding: 16px 20px;
@@ -31,7 +31,7 @@
 }
 
 .composer-box:focus {
-    background: #FFFFFF;
+    background: var(--card-bg);
     box-shadow: 0 0 0 2px rgba(59, 111, 176, 0.25);
 }
 
@@ -60,7 +60,7 @@
     font-size: 17px;
     font-weight: 700;
     margin-bottom: 16px;
-    color: #3a2e1f;
+    color: var(--text-dark);
 }
 
 .friend-row {
@@ -68,7 +68,7 @@
     align-items: center;
     gap: 12px;
     padding: 10px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid var(--card-border);
 }
 
 .friend-row:last-child {
@@ -95,7 +95,7 @@
     height: 100%;
     font-size: 16px;
     font-weight: 700;
-    color: #3a2e1f;
+    color: var(--text-dark);
 }
 
 .friend-name {
@@ -103,13 +103,13 @@
     font-size: 15px;
     font-weight: 600;
     line-height: 1.25;
-    color: #2a3441;
+    color: var(--text-dark);
 }
 
 .add-friend-btn {
-    border: 1px solid #c9bfa9;
-    background: white;
-    color: #3a2e1f;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-dark);
     font-size: 13px;
     font-weight: 600;
     padding: 7px 12px;
@@ -119,7 +119,7 @@
 }
 
 .add-friend-btn:hover {
-    background: #faf7f0;
+    background: var(--bg-tint);
 }
 
 /* home.module.css */
@@ -144,7 +144,7 @@
 .overlay-modal {
     width: 100%;
     max-width: 540px;
-    background: #ffffff;
+    background: var(--card-bg);
     border-radius: 12px;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
     overflow: hidden;
@@ -157,6 +157,8 @@
     border-radius: 18px;
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
     overflow: hidden;
+    background: var(--card-bg);
+    color: var(--text-dark);
 }
 
 .share-dialog::backdrop {
@@ -175,30 +177,31 @@
     margin: 0;
     font-size: 22px;
     font-weight: 800;
-    color: #1c1e21;
+    color: var(--text-dark);
 }
 
 .share-dialog textarea {
     min-height: 120px;
     padding: 14px 16px;
-    border: 1px solid #e4e6eb;
+    border: 1px solid var(--card-border);
     border-radius: 12px;
     resize: vertical;
     font: inherit;
     font-size: 15px;
-    background: #f7f8fa;
+    background: var(--bg-tint);
+    color: var(--text-dark);
     transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .share-dialog textarea:focus {
     outline: none;
     border-color: #1877f2;
-    background: #ffffff;
+    background: var(--card-bg);
     box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.12);
 }
 
 .share-dialog textarea::placeholder {
-    color: #8a8d94;
+    color: var(--text-muted);
 }
 
 .share-dialog p {
@@ -213,7 +216,7 @@
     justify-content: flex-end;
     gap: 10px;
     padding-top: 4px;
-    border-top: 1px solid #f0f1f3;
+    border-top: 1px solid var(--card-border);
     margin-top: 4px;
     padding-top: 16px;
 }
@@ -222,8 +225,8 @@
     padding: 10px 20px;
     border: none;
     border-radius: 22px;
-    background: #f0f2f5;
-    color: #1c1e21;
+    background: var(--bg-tint);
+    color: var(--text-dark);
     font: inherit;
     font-weight: 700;
     font-size: 14px;
@@ -232,7 +235,7 @@
 }
 
 .share-dialog-actions button:hover {
-    background: #e4e6eb;
+    background: var(--bg-tint-strong);
 }
 
 .share-dialog-actions button:active {
@@ -289,22 +292,20 @@
 #feed-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Horizontally centers all posts inside it */
+    align-items: center;
     width: 100%;
     padding: 20px 0;
 }
 
-/* Constrain the width of individual posts so they look like a clean social feed */
 #feed-container > * {
     width: 90%;
-    max-width: 600px; /* Standard comfortable reading width */
+    max-width: 600px;
     margin-bottom: 20px;
 }
 
-/* Constrain post images so they don't blow up to full height */
 #feed-container img {
     max-height: 480px;
     width: 100%;
-    object-fit: cover; /* Keeps image proportions clean without distortion */
+    object-fit: cover;
     border-radius: 8px;
 }

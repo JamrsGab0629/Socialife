@@ -4,13 +4,13 @@
     border: 1px solid var(--card-border);
     border-radius: 18px;
     overflow: hidden;
-    background: #ffffff;
+    background: var(--card-bg);
     box-shadow: 0 2px 10px rgba(20, 30, 50, 0.06);
     padding-top: 14px;
     width: 100%;
     max-width: 820px;
     margin: 0 auto 24px auto;
-    transition: box-shadow 0.2s ease;
+    transition: box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .post-card:hover {
@@ -31,7 +31,7 @@
     flex-shrink: 0;
     overflow: hidden;
     object-fit: cover;
-    box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px var(--card-border);
+    box-shadow: 0 0 0 2px var(--card-bg), 0 0 0 3px var(--card-border);
 }
 
 .post-header > h2 {
@@ -58,10 +58,10 @@
 
 .action-more > img {
     height: 16px;
+    filter: var(--icon-filter);
 }
-
 .action-more:hover {
-    background: #F0F2F5;
+    background: var(--bg-tint);
     cursor: pointer;
 }
 
@@ -74,7 +74,7 @@
     padding: 4px;
     border: 1px solid var(--card-border);
     border-radius: 10px;
-    background: #fff;
+    background: var(--card-bg);
     box-shadow: 0 8px 20px rgba(20, 30, 50, 0.16);
 }
 
@@ -86,7 +86,7 @@
     padding: 9px 10px;
     border: 0;
     border-radius: 6px;
-    color: #2A3441;
+    color: var(--text-dark);
     background: transparent;
     font: inherit;
     font-size: 14px;
@@ -95,18 +95,18 @@
 }
 
 .post-menu-popover button:hover {
-    background: #F0F2F5;
+    background: var(--bg-tint);
 }
 
 .post-menu-popover img {
     width: 14px;
     height: 14px;
+    filter: var(--icon-filter);
 }
-
 .post-author {
     font-size: 18px;
     font-weight: 700;
-    color: #1c1e21;
+    color: var(--text-dark);
     text-decoration: none;
     cursor: pointer;
 }
@@ -128,7 +128,7 @@
 
 .share-caption {
     margin-top: 6px;
-    color: #2A3441;
+    color: var(--text-dark);
     font-size: 15px;
     line-height: 1.4;
 }
@@ -137,7 +137,7 @@
     padding: 12px 22px;
     font-size: 17px;
     line-height: 1.55;
-    color: #1c1e21;
+    color: var(--text-dark);
 }
 
 .post-photo {
@@ -166,7 +166,7 @@
 }
 
 .comments {
-    background: #F6F7F8;
+    background: var(--bg-tint);
 }
 
 .comment {
@@ -175,6 +175,7 @@
     gap: 12px;
     padding: 10px 22px;
     font-size: 15px;
+    color: var(--text-dark);
 }
 
 .comment-avatar {
@@ -217,7 +218,7 @@
     margin: 4px;
     font-size: 15px;
     font-weight: 600;
-    color: #556173;
+    color: var(--text-muted);
     cursor: pointer;
     border: 0;
     border-radius: 8px;
@@ -227,15 +228,14 @@
 }
 
 .action-btn:hover {
-    background: #F0F2F5;
+    background: var(--bg-tint);
 }
 
 .action-btn img {
     height: 16px;
     width: 16px;
-    filter: invert(30%);
+    filter: var(--icon-filter);   /* was: filter: invert(30%); */
 }
-
 .action-btn.liked {
     color: var(--link-blue);
 }
@@ -249,8 +249,8 @@
 /* --- FACEBOOK-STYLE COMMENT INPUT SECTION --- */
 .comments-section {
     padding: 14px 20px;
-    background: #ffffff;
-    border-top: 1px solid var(--card-border, #e4e6eb);
+    background: var(--card-bg);
+    border-top: 1px solid var(--card-border);
 }
 
 .comment-box-row {
@@ -273,7 +273,7 @@
     flex: 1;
     display: flex;
     align-items: center;
-    background: #f0f2f5;
+    background: var(--bg-tint);
     border-radius: 22px;
     padding: 8px 14px;
     gap: 8px;
@@ -282,8 +282,8 @@
 }
 
 .comment-input-wrapper:focus-within {
-    border-color: #1877f2;
-    background: #ffffff;
+    border-color: var(--link-blue);
+    background: var(--card-bg);
 }
 
 .comment-input {
@@ -292,17 +292,17 @@
     background: transparent;
     outline: none;
     font-size: 14px;
-    color: #050505;
+    color: var(--text-dark);
     padding: 4px 0;
 }
 
 .comment-input::placeholder {
-    color: #65676b;
+    color: var(--text-muted);
 }
 
 .comment-submit-btn {
     border: none;
-    background: #1877f2;
+    background: var(--link-blue);
     color: white;
     font-weight: 600;
     font-size: 13px;
@@ -314,7 +314,7 @@
 }
 
 .comment-submit-btn:hover {
-    background: #166fe5;
+    opacity: 0.9;
 }
 
 .comments-list {
@@ -351,7 +351,7 @@
 }
 
 .mention-link {
-    color: #1877f2;
+    color: var(--link-blue);
     font-weight: 600;
     cursor: pointer;
 }
