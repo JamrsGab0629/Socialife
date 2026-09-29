@@ -124,12 +124,12 @@ export function initCreatePost(root = document, style = {}, userId = 'CURRENT_US
 
       const captionText = captionInput.value.trim();
       const mentionIds = mentionPicker.getMentionIds(captionInput);
-      const originalText = postBtn.textContent;
+      const originalHTML = postBtn.innerHTML;
 
       try {
         // Show loading state
         postBtn.disabled = true;
-        postBtn.textContent = 'Posting...';
+        postBtn.innerHTML = `<span class="${style.spinner}"></span>Posting...`;
 
         // Execute API call via service
         const response = await createPostService(
@@ -159,7 +159,7 @@ export function initCreatePost(root = document, style = {}, userId = 'CURRENT_US
         console.error('Failed to publish post:', error);
         showToast('Failed to create post. Try again.');
       } finally {
-        postBtn.textContent = originalText;
+        postBtn.innerHTML = originalHTML;
         updatePostState();
       }
     });
