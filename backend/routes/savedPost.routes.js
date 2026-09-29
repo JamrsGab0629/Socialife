@@ -18,7 +18,7 @@ router.post(
 router.delete(
     "/:postId", 
     isAuthenticated, 
-    rateLimiter(20, 60000), 
+    rateLimiter(40, 60000), 
     validate(postIdSchema), 
     savedPostController.unsavePost
 );

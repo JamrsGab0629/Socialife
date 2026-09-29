@@ -44,11 +44,13 @@ export default async function Helper(root) {
 
             return result;
         },
-        renderItems: (savedPosts, container) => {
-            container.insertAdjacentHTML(
-                'beforeend',
-                savedPosts.map((savedPost) => Post(savedPost.post)).join('')
-            );
-        },
+       renderItems: (savedPosts, container) => {
+    container.insertAdjacentHTML(
+        'beforeend',
+        savedPosts.map((savedPost) =>
+            Post({ ...savedPost.post, is_saved: true }, { showSave: true })
+        ).join('')
+    );
+},
     });
 }
