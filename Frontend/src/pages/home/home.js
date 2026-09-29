@@ -3,7 +3,7 @@ import Layout from '../../layouts/default/default';
 
 import style from './home.module.css';
 import style_topbar_search from "../../styles/app/topbar-search.module.css";
-import Helper, { FriendsTemplate, initComposerOverlay, initCommentInteractions, initSharePostDialog, initFriendRecommendations } from './home.helper';
+import Helper, { FriendsTemplate, initComposerOverlay, initCommentInteractions, initSharePostDialog, initFriendRecommendations, applyCurrentUserAvatar } from './home.helper';
 import Service, { fetchHomeFeedService } from './home.service';
 import Post from '../../components/post/post';
 import { openPostViewer } from '../../components/post-viewer/post-viewer';
@@ -193,31 +193,33 @@ export default async function Home() {
         loadMore: async ({ page, limit }) => {
             return await fetchHomeFeedService(page, limit);
         },
-        renderItems: (posts, container) => {
-            posts.forEach((postData) => {
-                const postId = postData.post_id || postData.id || postData.feed_id;
-                if (postId) postDataStore.set(String(postId), postData);
+       renderItems: (posts, container) => {
+    posts.forEach((postData) => {
+        const postId = postData.post_id || postData.id || postData.feed_id;
+        if (postId) postDataStore.set(String(postId), postData);
 
-                const postMarkup = Post(postData, { showSave: true });
-                container.insertAdjacentHTML('beforeend', postMarkup);
-            });
-        }
+        const postMarkup = Post(postData, { showSave: true });
+        container.insertAdjacentHTML('beforeend', postMarkup);
+    });
+    applyCurrentUserAvatar(container);
+}
     });
 
     // Prepend newly created post immediately at the top of the feed
     window.addEventListener('post:created', (event) => {
-        const newPost = event.detail;
-        if (!newPost) return;
+    const newPost = event.detail;
+    if (!newPost) return;
 
-        const postId = newPost.post_id || newPost.id || newPost.feed_id;
-        if (postId) postDataStore.set(String(postId), newPost);
+    const postId = newPost.post_id || newPost.id || newPost.feed_id;
+    if (postId) postDataStore.set(String(postId), newPost);
 
-        const postMarkup = Post(newPost, { showSave: true });
-        const composerTrigger = document.getElementById('composer-trigger');
-        if (composerTrigger) {
-            composerTrigger.insertAdjacentHTML('afterend', postMarkup); // Places it right at the top of the feed
-        }
-    });
+    const postMarkup = Post(newPost, { showSave: true });
+    const composerTrigger = document.getElementById('composer-trigger');
+    if (composerTrigger) {
+        composerTrigger.insertAdjacentHTML('afterend', postMarkup);
+        applyCurrentUserAvatar(feedContainer);
+    }
+});
 
     const [friends_data, notificationResult] = await Promise.all([
         Service(),

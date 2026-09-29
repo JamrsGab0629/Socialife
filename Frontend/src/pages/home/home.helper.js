@@ -14,6 +14,13 @@ const avatar_colors = ["#E8A5A0", "#A5C7E8", "#C7A5E8", "#A5E8C0", "#E8D5A5"];
 let currentUser = { userName: "User", avatarUrl: "../../icons/user-avatar.svg" };
 let mentionPicker = null;
 
+// add near the bottom, after currentUser/mentionPicker declarations
+export function applyCurrentUserAvatar(scope) {
+    if (!scope) return;
+    scope.querySelectorAll('[data-comment-avatar]').forEach((avatar) => {
+        avatar.src = currentUser.avatarUrl;
+    });
+}
 const getAvatarColor = (user_id) => {
     const index = Number(user_id) % avatar_colors.length;
     return avatar_colors[Math.abs(index) || 0];
@@ -170,19 +177,17 @@ export function initCommentInteractions(container) {
     if (!container) return;
     mentionPicker = initMentionPicker(container);
     get_my_profile()
-        .then(response => {
-            const profile = response?.data || response;
-            if (profile) {
-                currentUser = {
-                    userName: profile.username || profile.user_name || currentUser.userName,
-                    avatarUrl: profile.profile_url || currentUser.avatarUrl,
-                };
-                container.querySelectorAll('[data-comment-avatar]').forEach((avatar) => {
-                    avatar.src = currentUser.avatarUrl;
-                });
-            }
-        })
-        .catch(err => console.error("Failed to fetch profile name for comments:", err));
+    .then(response => {
+        const profile = response?.data || response;
+        if (profile) {
+            currentUser = {
+                userName: profile.username || profile.user_name || currentUser.userName,
+                avatarUrl: profile.profile_url || currentUser.avatarUrl,
+            };
+            applyCurrentUserAvatar(container);
+        }
+    })
+    .catch(err => console.error("Failed to fetch profile name for comments:", err));
 
     container.addEventListener('click', async (e) => {
         const target = e.target;
