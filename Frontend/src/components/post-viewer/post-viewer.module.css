@@ -238,18 +238,17 @@
 .pv-comment-input {
     flex: 1;
     border: 1px solid var(--card-border);
-    border-radius: 20px;
-    padding: 8px 14px;
+    border-radius: 24px;
+    padding: 10px 16px;
     font-size: 14px;
     outline: none;
-    background: var(--card-bg);
+    background: var(--bg-tint);
     color: var(--text-dark);
 }
-
 .pv-comment-input:focus {
-    border-color: #1877f2;
+    border-color: var(--link-blue);
+    background: var(--card-bg);
 }
-
 .pv-comment-send {
     border: none;
     background: #1877f2;

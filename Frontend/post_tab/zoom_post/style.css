@@ -406,20 +406,21 @@ body {
 }
 
 .comment-actions {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding-left: 6px;
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
 }
 
+
 .comment-actions button {
-  border: none;
-  background: none;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ink-soft);
-  cursor: pointer;
-  padding: 0;
+    border: 0;
+    padding: 0;
+    color: var(--link-blue);
+    background: transparent;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .comment-actions button:hover { color: var(--blue); }

@@ -157,6 +157,16 @@
     display: block;
     margin: 0 auto;
 }
+.comment-actions button {
+    border: 0;
+    padding: 0;
+    color: var(--link-blue);
+    background: transparent;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
 
 .post-meta {
     padding: 14px 22px;
@@ -273,17 +283,17 @@
     flex: 1;
     display: flex;
     align-items: center;
-    background: var(--bg-tint);
-    border-radius: 22px;
+    background: transparent;
+    border-radius: 20px;
     padding: 8px 14px;
     gap: 8px;
-    border: 1px solid transparent;
-    transition: border-color 0.15s ease, background 0.15s ease;
+    border: 1px solid var(--card-border);
+    transition: border-color 0.15s ease;
 }
+
 
 .comment-input-wrapper:focus-within {
     border-color: var(--link-blue);
-    background: var(--card-bg);
 }
 
 .comment-input {
@@ -302,19 +312,17 @@
 
 .comment-submit-btn {
     border: none;
-    background: var(--link-blue);
-    color: white;
+    background: none;
+    color: var(--link-blue);
     font-weight: 600;
     font-size: 13px;
-    padding: 7px 14px;
-    border-radius: 18px;
+    padding: 4px 8px;
     cursor: pointer;
     flex-shrink: 0;
-    transition: background 0.15s ease;
 }
 
 .comment-submit-btn:hover {
-    opacity: 0.9;
+    text-decoration: underline;
 }
 
 .comments-list {
@@ -330,20 +338,17 @@
     margin-top: 4px;
 }
 
-.comment-actions button {
-    border: 0;
-    padding: 0;
-    color: var(--link-blue);
-    background: transparent;
-    font: inherit;
-    font-size: 13px;
-    cursor: pointer;
-}
+
 
 .replies {
     margin-left: 28px;
+    padding-left: 16px;
+    border-left: 2px solid var(--card-border);
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
-
 .reply-form {
     display: flex;
     gap: 8px;
@@ -357,5 +362,46 @@
 }
 
 .mention-link:hover {
+    text-decoration: underline;
+}
+.reply-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0 0 44px;
+}
+.reply-form input {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 13px;
+    outline: none;
+    color: var(--text-dark);
+    font-family: inherit;
+    transition: border-color 0.15s ease;
+}
+
+.reply-form input:focus {
+    border-color: var(--link-blue);
+}
+
+.reply-form input::placeholder {
+    color: var(--text-muted);
+}
+
+.reply-form button[type="submit"] {
+    border: none;
+    background: none;
+    color: var(--link-blue);
+    font-weight: 600;
+    font-size: 13px;
+    padding: 4px 8px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.reply-form button[type="submit"]:hover {
     text-decoration: underline;
 }
