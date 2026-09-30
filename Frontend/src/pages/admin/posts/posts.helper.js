@@ -1,4 +1,7 @@
+
 import { fetch_posts, set_post_status, view_post_details } from "../api/posts.service";
+import { openPostViewer } from "../../../components/post-viewer/post-viewer";
+
 
 const PAGE_SIZE = 10;
 
@@ -149,18 +152,30 @@ function bind_events(styles) {
 
     const id = btn.dataset.id; // UUID String
     const { action } = btn.dataset;
-
     if (action === "view") {
       try {
-        const postData = await view_post_details(id);
-        // console.log("Fetched post details:", postData);
-        window.alert(`Post content: "${postData?.content || postData?.caption || "N/A"}"`);
+        const raw = await view_post_details(id);
+        console.log("RAW POST DATA:", raw); // ADD THIS TEMPORARILY
+        const post = raw?.data || raw;
+        console.log("UNWRAPPED POST:", post); // ADD THIS TEMPORARILY
+
+        openPostViewer({
+          post_id: post.post_id || post.id || id,
+          user_name: post.author?.username || post.username,
+          avatar_url: post.author?.profile_url || post.avatar,
+          caption: post.caption,
+          content: post.content,
+          photo: post.photo,
+          photo_url: post.photo_url,
+          like_count: post.like_count,
+          comment_count: post.comment_count,
+          created_at: post.created_at,
+        });
       } catch (err) {
         console.error("Failed to view post details:", err);
       }
       return;
     }
-
     if (action === "remove" || action === "restore") {
       btn.disabled = true;
       try {
