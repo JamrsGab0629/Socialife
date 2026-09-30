@@ -68,6 +68,8 @@
     right: 6px;
     width: 32px;
     height: 32px;
+    max-width: 32px;
+    max-height: 32px;
     border-radius: 50%;
     background: var(--card-bg);
     border: 2px solid var(--card-bg);
@@ -78,16 +80,19 @@
     cursor: pointer;
     padding: 0;
     z-index: 5;
+    overflow: hidden;
 }
 
 .avatar-edit-btn img {
-    width: 16px;
-    height: 16px;
+    width: 16px !important;
+    height: 16px !important;
+    max-width: 16px;
+    max-height: 16px;
     border-radius: 0;
     box-shadow: none;
     border: none;
+    object-fit: contain;
 }
-
 .avatar-edit-btn:hover {
     background: var(--bg-tint);
 }

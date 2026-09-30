@@ -140,7 +140,7 @@ export default function Post(data, { showSave = false } = {}) {
                     <img src="${avatarUrl}" alt="avatar" class="${style["comment-user-avatar"]}" data-comment-avatar onerror="this.src='icon/user-avatar.svg'">
                     <div class="${style["comment-input-wrapper"]}">
                         <input type="text" class="${style["comment-input"]}" data-comment-input placeholder="Write a public comment...">
-                        <button type="button" class="${style["comment-submit-btn"]}" data-action="submit-comment" data-post-id="${postId}">Post</button>
+                        <button type="button" class="${style["comment-submit-btn"]}" data-action="submit-comment" data-post-id="${postId}">Comment</button>
                     </div>
                 </div>
                 <div class="${style["comments-list"]}" data-comments-list></div>
