@@ -9,7 +9,9 @@
 }
 .btn-primary { background: var(--color-primary); color: #fff; }
 .btn-primary:hover { background: var(--color-primary-dark); }
-.btn-outline { background: #fff; border: 1px solid var(--color-border); color: var(--color-text); }
-.btn-dark { background: #f9fafb; border: 1px solid var(--color-border); color: var(--color-text); }
+.btn-outline { background: var(--color-card); border: 1px solid var(--color-border); color: var(--color-text); }
+.btn-outline:hover { background: var(--color-bg); }
+.btn-dark { background: var(--color-bg); border: 1px solid var(--color-border); color: var(--color-text); }
+.btn-dark:hover { background: var(--color-neutral-bg); }
 .btn-danger { background: var(--color-danger-bg); color: var(--color-danger-text); }
 .btn-success { background: var(--color-success-bg); color: var(--color-success-text); }

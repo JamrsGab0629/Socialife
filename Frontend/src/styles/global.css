@@ -18,7 +18,7 @@
   --success: #17B897;
   --warn: #E8A23D;
   --danger: #E0483F;
-
+ --sidebar-bg: var(--color-primary);
   --sidebar-blue: hsl(256, 100%, 45%);
   --sidebar-blue-dark: #3d65a0;
   --bg-page: #edeff2;
@@ -83,6 +83,7 @@
 
 [data-theme="dark"] {
   --icon-filter: invert(85%);
+  --sidebar-bg: #0d0e11;
   --bg-canvas: #17181c;
   --bg-surface: #1f2024;
   --bg-tint: #23262e;
