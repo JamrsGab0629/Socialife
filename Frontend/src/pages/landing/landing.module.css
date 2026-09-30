@@ -385,10 +385,18 @@
 }
 
 .stats-wrap {
-  background: var(--cobalt-900);
+  background: var(--sidebar-bg, var(--cobalt-900));
   color: #fff;
   padding-block: var(--sp-6);
   margin-top: var(--sp-4);
+}
+
+.stat-num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xl);
+  font-weight: 500;
+  color: #fff;
 }
 
 .stats-grid {
