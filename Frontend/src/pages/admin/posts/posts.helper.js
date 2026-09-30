@@ -154,9 +154,9 @@ function bind_events(styles) {
     const { action } = btn.dataset;
     if (action === "view") {
       try {
-        const raw = await view_post_details(id);
+       const raw = await view_post_details(id);
         console.log("RAW POST DATA:", raw); // ADD THIS TEMPORARILY
-        const post = raw?.data || raw;
+        const post = raw?.result || raw?.data || raw;
         console.log("UNWRAPPED POST:", post); // ADD THIS TEMPORARILY
 
         openPostViewer({
