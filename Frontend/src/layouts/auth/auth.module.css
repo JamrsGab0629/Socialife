@@ -6,7 +6,7 @@
 }
 
 .auth-brand {
-    background: var(--cobalt-900);
+    background: var(--sidebar-bg, var(--cobalt-900));
     color: #fff;
     padding: clamp(1.75rem, 4vw, 3.5rem);
     display: flex;
@@ -15,7 +15,6 @@
     position: relative;
     overflow: hidden;
 }
-
 
 .auth-panel {
     display: flex;
