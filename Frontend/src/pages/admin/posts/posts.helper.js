@@ -158,7 +158,7 @@ function bind_events(styles) {
         console.log("RAW POST DATA:", raw); // ADD THIS TEMPORARILY
         const post = raw?.result || raw?.data || raw;
         console.log("UNWRAPPED POST:", post); // ADD THIS TEMPORARILY
-
+console.log("RESULT FIELDS:", JSON.stringify(raw?.result, null, 2));
         openPostViewer({
           post_id: post.post_id || post.id || id,
           user_name: post.author?.username || post.username,
@@ -166,7 +166,7 @@ function bind_events(styles) {
           caption: post.caption,
           content: post.content,
           photo: post.photo,
-          photo_url: post.photo_url,
+         photo_url: post.photo?.href || post.photo?.url,
           like_count: post.like_count,
           comment_count: post.comment_count,
           created_at: post.created_at,

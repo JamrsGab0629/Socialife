@@ -29,6 +29,7 @@ User.belongsToMany(User, {
     otherKey: 'requester_id',
 });
 
+
 Friendship.belongsTo(User, { foreignKey: 'requester_id', as: 'requester' });
 Friendship.belongsTo(User, { foreignKey: 'addressee_id', as: 'addressee' });
 

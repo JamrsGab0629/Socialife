@@ -1,4 +1,5 @@
-import { User, Post } from "../model/association.model.js";
+import { User, Post, PhotoData } from "../model/association.model.js";
+
 
 /**
  * Get posts filtered by status with pagination
@@ -68,9 +69,14 @@ export const getByUsername = async (username, query = {}) => {
 /**
  * View a single post by ID
  */
+
+
 export const viewPost = async (postId) => {
     const post = await Post.findByPk(postId, {
-        include: [{ model: User, as: "author", attributes: ["user_id", "username", "profile_url"] }],
+        include: [
+            { model: User, as: "author", attributes: ["user_id", "username", "profile_url"] },
+            { model: PhotoData, as: "photo" },
+        ],
     });
 
     if (!post) {
