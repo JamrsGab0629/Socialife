@@ -1,10 +1,10 @@
 import * as reportAPIHelper from "../../../helpers/admin/reports.admin.request";
 
 function transformReport(r) {
-  const reporterObj = r.reporter || {};
-  const reporterHandle = reporterObj.username ? `@${reporterObj.username}` : (r.reporter_id ? `@user_${r.reporter_id}` : "@unknown");
-  
-  const targetObj = r.target || r.reported_user || {};
+  const reporterObj = r.author || r.reporter || {};
+  const reporterHandle = reporterObj.username ? `@${reporterObj.username}` : (r.author_id ? `@user_${r.author_id}` : "@unknown");
+
+  const targetObj = r.reported_user || r.target || {};
   const targetHandle = targetObj.username ? `@${targetObj.username}` : (r.user_id ? `@user_${r.user_id}` : "@unknown");
 
   const date = r.created_at ? new Date(r.created_at).toLocaleDateString() : "N/A";
@@ -16,7 +16,7 @@ function transformReport(r) {
     reporter: reporterHandle,
     target_type: targetType,
     target: targetHandle,
-    reason: r.reason || "No reason provided",
+    reason: r.message || r.reason || "No reason provided",
     status,
     date
   };
@@ -29,8 +29,11 @@ export async function fetch_reports({ page = 1, limit = 10, status = "all" } = {
   }
 
   const response = await reportAPIHelper.getReports(apiStatus, { page, limit });
-  const payload = response?.result || response?.data || response;
-  const rawReports = payload?.reports ? payload.reports : (Array.isArray(payload) ? payload : []);
+  // Backend shape: { success, data: { data: [...reports], pagination: {...} } }
+  const payload = response?.data || response;
+  const rawReports = Array.isArray(payload?.data)
+    ? payload.data
+    : (Array.isArray(payload) ? payload : []);
 
   const pagination = payload?.pagination || {
     totalItems: rawReports.length,

@@ -20,7 +20,7 @@ export const createReportService = async (authorId, body) => {
 
     // 3. Verify target user exists and is active
     const reportedUser = await User.findOne({ 
-        where: { user_id, is_active: true } 
+        where: { user_id, is_actived: true }   // matches the actual model column
     });
     if (!reportedUser) {
         throw new Error("Account not found");
@@ -134,7 +134,7 @@ export const updateReportStatusService = async (reportId, payload = {}) => {
         if (!validSeverities.includes(formattedSeverity)) {
             throw new Error(`Invalid severity. Must be one of: ${validSeverities.join(", ")}`);
         }
-        updates.severity = formattedSeverity;
+        updates.priority = formattedSeverity; // model column is "priority", not "severity"
     }
 
     if (resolution) {
@@ -151,7 +151,7 @@ export const updateReportStatusService = async (reportId, payload = {}) => {
     }
 
     // Execute atomic updates using a managed transaction
-    return await sequelize.transaction(async (t) => {
+    return await Report.sequelize.transaction(async (t) => {
         const report = await Report.findByPk(reportId, { transaction: t });
         if (!report) {
             throw new Error("Report not found");
@@ -160,8 +160,8 @@ export const updateReportStatusService = async (reportId, payload = {}) => {
         // If resolution action is DEACTIVATED, deactivate the reported target user
         if (updates.resolution === "DEACTIVATED") {
             const targetUser = await User.findByPk(report.user_id, { transaction: t });
-            if (targetUser && targetUser.is_active) {
-                await targetUser.update({ is_active: false }, { transaction: t });
+            if (targetUser && targetUser.is_actived) {
+                await targetUser.update({ is_actived: false }, { transaction: t });
             }
         }
 

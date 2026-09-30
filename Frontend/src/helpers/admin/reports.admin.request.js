@@ -21,7 +21,7 @@ export async function getReports( method = "ALL", { page = 1, limit = 10 } = {})
 
 export async function updateReport(reportId, { status, severity, resolution } = {}) {
     return Request({
-        param: `/admin/${reportId}/update`,
+        param: `/admin/report/${reportId}/update`,
         method: "PUT",
         args: {
             status,

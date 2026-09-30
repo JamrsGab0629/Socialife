@@ -46,7 +46,7 @@ function render_rows(styles) {
           <td>${r.date}</td>
           <td>
             <div class="${style["actions"]}">
-              <button class="${style_btn["btn"]} ${style_btn["btn-dark"]}" data-action="reviewed" data-id="${r.id}">Review</button>
+             <button class="${style_btn["btn"]} ${style_btn["btn-dark"]}" data-action="reviewed" data-id="${r.id}">Review</button>
               <button class="${style_btn["btn"]} ${style_btn["btn-success"]}" data-action="resolved" data-id="${r.id}">Resolve</button>
               <button class="${style_btn["btn"]} ${style_btn["btn-danger"]}" data-action="dismissed" data-id="${r.id}">Dismiss</button>
             </div>
@@ -116,12 +116,11 @@ function bind_events(styles) {
       load_data(styles);
     }
   });
-
-  document.getElementById("reportsTableBody")?.addEventListener("click", async (e) => {
+document.getElementById("reportsTableBody")?.addEventListener("click", async (e) => {
     const btn = e.target.closest("button[data-action]");
     if (!btn) return;
 
-    const id = Number(btn.dataset.id);
+    const id = btn.dataset.id; // <-- no Number() conversion, UUIDs stay as strings
     const next_status = btn.dataset.action;
 
     btn.disabled = true;
@@ -132,7 +131,7 @@ function bind_events(styles) {
       console.error("Failed to update report status:", err);
       btn.disabled = false;
     }
-  });
+});
 }
 
 export async function init_reports_view(styles) {

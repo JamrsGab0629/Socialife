@@ -92,19 +92,25 @@ export default function Post(data, { showSave = false } = {}) {
                         <img src="/icon/more.svg" alt="">
                     </button>
                     <div class="${style["post-menu-popover"]}" data-post-menu hidden>
-                        ${showSave ? `
-                            <button type="button" data-action="toggle-save" data-post-id="${postId}" aria-pressed="${isSaved}">
-                                <img src="/icon/save.svg" alt="">
-                                <span data-save-label>${isSaved ? "Saved" : "Save post"}</span>
-                            </button>
-                        ` : ""}
-                        ${data.is_own_post ? `
-                            <button type="button" data-action="delete-post" data-post-id="${postId}">
-                                <img src="/icon/trash.svg" alt="">
-                                <span>Delete post</span>
-                            </button>
-                        ` : ""}
-                    </div>
+    ${showSave ? `
+        <button type="button" data-action="toggle-save" data-post-id="${postId}" aria-pressed="${isSaved}">
+            <img src="/icon/save.svg" alt="">
+            <span data-save-label>${isSaved ? "Saved" : "Save post"}</span>
+        </button>
+    ` : ""}
+    ${!data.is_own_post ? `
+        <button type="button" data-action="open-report" data-author-id="${authorId}" data-author-name="${authorName}">
+            <img src="/icon/flag.svg" alt="">
+            <span>Report</span>
+        </button>
+    ` : ""}
+    ${data.is_own_post ? `
+        <button type="button" data-action="delete-post" data-post-id="${postId}">
+            <img src="/icon/trash.svg" alt="">
+            <span>Delete post</span>
+        </button>
+    ` : ""}
+</div>  
                 </div>
             </div>
 

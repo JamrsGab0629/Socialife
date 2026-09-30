@@ -8,7 +8,7 @@ import { send_friend_request } from "../../helpers/friends/friends.request";
 import { initMentionPicker } from '../../components/mention/mention-picker';
 import { commentMention } from '../../helpers/mention/mention.helper';
 import { get_user_profile_by_username } from '../../helpers/profile/profile.request';
-
+import { report_user } from '../../helpers/report/report.request';
 const avatar_colors = ["#E8A5A0", "#A5C7E8", "#C7A5E8", "#A5E8C0", "#E8D5A5"];
 
 let currentUser = { userName: "User", avatarUrl: "../../icons/user-avatar.svg" };
@@ -133,7 +133,61 @@ export function initSharePostDialog() {
         delete dialog.dataset.postId;
     });
 }
+export function initReportDialog() {
+    const dialog = document.getElementById('report-dialog');
+    const form = dialog?.querySelector('[data-report-form]');
+    const targetNameEl = dialog?.querySelector('[data-report-target-name]');
+    const details = dialog?.querySelector('[data-report-details]');
+    const submitButton = dialog?.querySelector('[data-report-submit]');
+    const errorMessage = dialog?.querySelector('[data-report-error]');
 
+    if (!dialog || !form || !submitButton) return;
+
+    dialog.querySelectorAll('[data-action="close-report-dialog"]').forEach((btn) =>
+        btn.addEventListener('click', () => dialog.close())
+    );
+
+    // Enable/disable on any change inside the options area, using delegation
+    // so it works even if radios render after this function runs
+    dialog.addEventListener('change', (e) => {
+        if (e.target.name === 'report-category') {
+            submitButton.disabled = false;
+        }
+    });
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const userId = dialog.dataset.authorId;
+        const category = dialog.querySelector('input[name="report-category"]:checked')?.value;
+        if (!userId || !category) return;
+
+        const detailText = details.value.trim();
+        const message = detailText ? `${category}: ${detailText}` : category;
+
+        try {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+            errorMessage.hidden = true;
+            await report_user(userId, message);
+            dialog.close();
+        } catch (error) {
+            console.error('Failed to submit report:', error);
+            errorMessage.textContent = error?.response?.data?.message || 'Unable to submit report. Please try again.';
+            errorMessage.hidden = false;
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Submit report';
+        }
+    });
+
+    dialog.addEventListener('close', () => {
+        form.reset();
+        details.value = '';
+        errorMessage.hidden = true;
+        submitButton.disabled = true;
+        delete dialog.dataset.authorId;
+    });
+}
 const linkifyMentions = (text) => {
     return text.replace(/@(\w+)/g, (match, username) => {
                return `<span role="link" tabindex="0" class="${postStyle["mention-link"]}" data-mention-username="${username}">@${username}</span>`;
@@ -227,7 +281,20 @@ export function initCommentInteractions(container) {
             }
             return;
         }
+       const reportButton = target.closest('[data-action="open-report"]');
+if (reportButton) {
+    // Close the post's 3-dot menu first, or it stays on top of the dialog
+    document.querySelectorAll('[data-post-menu]').forEach((menu) => { menu.hidden = true; });
 
+    const dialog = document.getElementById('report-dialog');
+    if (dialog) {
+        dialog.dataset.authorId = reportButton.dataset.authorId;
+        const nameEl = dialog.querySelector('[data-report-target-name]');
+        if (nameEl) nameEl.textContent = reportButton.dataset.authorName || '';
+        dialog.showModal();
+    }
+    return;
+}
         const toggleBtn = target.closest('[data-action="toggle-comments"]');
         if (toggleBtn) {
             const postId = toggleBtn.dataset.postId;

@@ -3,7 +3,7 @@ import Layout from '../../layouts/default/default';
 
 import style from './home.module.css';
 import style_topbar_search from "../../styles/app/topbar-search.module.css";
-import Helper, { FriendsTemplate, initComposerOverlay, initCommentInteractions, initSharePostDialog, initFriendRecommendations, applyCurrentUserAvatar } from './home.helper';
+import Helper, { FriendsTemplate, initComposerOverlay, initCommentInteractions, initSharePostDialog, initReportDialog, initFriendRecommendations, applyCurrentUserAvatar } from './home.helper';
 import Service, { fetchHomeFeedService } from './home.service';
 import Post from '../../components/post/post';
 import { openPostViewer } from '../../components/post-viewer/post-viewer';
@@ -64,9 +64,31 @@ export default async function Home() {
                 </div>
             </form>
         </dialog>
+
+        <dialog id="report-dialog" class="${style['report-dialog']}">
+    <form method="dialog" data-report-form>
+    <button type="button" class="${style['report-close-btn']}" data-action="close-report-dialog" aria-label="Close">&times;</button>
+        <h2>Report <span data-report-target-name></span></h2>
+        <div class="${style['report-options']}" data-report-options>
+            <label><input type="radio" name="report-category" value="Harassment or bullying"> Harassment or bullying</label>
+            <label><input type="radio" name="report-category" value="Spam"> Spam</label>
+            <label><input type="radio" name="report-category" value="Hate speech"> Hate speech</label>
+            <label><input type="radio" name="report-category" value="Nudity or sexual content"> Nudity or sexual content</label>
+            <label><input type="radio" name="report-category" value="Violence"> Violence</label>
+            <label><input type="radio" name="report-category" value="False information"> False information</label>
+            <label><input type="radio" name="report-category" value="Other"> Other</label>
+        </div>
+        <textarea data-report-details maxlength="500" placeholder="Add details (optional)"></textarea>
+        <p data-report-error hidden></p>
+        <div class="${style['report-dialog-actions']}">
+            <button type="button" data-action="close-report-dialog">Cancel</button>
+            <button type="submit" data-report-submit disabled>Submit report</button>
+        </div>
+    </form>
+</dialog>
     `;
 
-    Helper();
+        Helper();
     initComposerOverlay(); // Bind overlay event listener
 
     // --- Search bar wiring (must run AFTER main.innerHTML so the elements exist) ---
@@ -132,7 +154,7 @@ export default async function Home() {
     // Initialize comment interactions using event delegation on the feed container
     initCommentInteractions(feedContainer);
     initSharePostDialog();
-
+    initReportDialog();
     postDataStore.clear();
 
     // Open the zoomed post viewer when a post photo is clicked, and handle post deletion
