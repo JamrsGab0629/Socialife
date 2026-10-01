@@ -5,7 +5,7 @@ import { openPostViewer } from "../../components/post-viewer/post-viewer";
 import { initCommentInteractions, initSharePostDialog, applyCurrentUserAvatar } from "../home/home.helper";
 import { InfiniteScroll } from "../../helpers/utils/InfiniteScroll";
 import { confirmDialog } from "../../components/confirm-dialog/confirm-dialog";
-
+import { skeleton } from '../../components/skeleton/skeleton';
 
 const postDataStore = new Map();
 
@@ -82,25 +82,25 @@ export const Helper = async (userId) => {
         root.insertAdjacentElement('afterend', sentinel);
     }
 
-    new InfiniteScroll({
-        container: root,
-        sentinel,
-        limit: 10,
-        loadMore: async ({ page, limit }) => {
-            return await get_profile_feed(userId, page, limit);
-        },
-        renderItems: (items, container) => {
-    items.forEach((item) => {
-        const mapped = mapFeedItemToPostData(item);
-        const postId = mapped.post_id || mapped.id;
-        if (postId) postDataStore.set(String(postId), mapped);
+   new InfiniteScroll({
+    container: root,
+    sentinel,
+    limit: 10,
+    loaderHTML: skeleton("post", 2),
+    loadMore: async ({ page, limit }) => {
+        return await get_profile_feed(userId, page, limit);
+    },
+    renderItems: (items, container) => {
+        items.forEach((item) => {
+            const mapped = mapFeedItemToPostData(item);
+            const postId = mapped.post_id || mapped.id;
+            if (postId) postDataStore.set(String(postId), mapped);
 
-        const postMarkup = Post(mapped, { showSave: true });
-        container.insertAdjacentHTML("beforeend", postMarkup);
-    });
-    applyCurrentUserAvatar(root); // add this line
-}
-    });
+            const postMarkup = Post(mapped, { showSave: true });
+            container.insertAdjacentHTML("beforeend", postMarkup);
+        });
+    }
+});
 };
 
 export default Helper;

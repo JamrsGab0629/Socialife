@@ -13,6 +13,7 @@ import { getNotifications } from '../../components/notification/notification.ser
 import { search_users } from '../../helpers/profile/profile.request';
 import { confirmDialog } from '../../components/confirm-dialog/confirm-dialog';
 import { initMentionPicker } from '../../components/mention/mention-picker';
+import { skeleton } from '../../components/skeleton/skeleton';
 
 const postDataStore = new Map();
 
@@ -46,7 +47,7 @@ export default async function Home() {
         <div class="${style["right-col"]}">
             <div class="${style["recommend-box"]}">
                 <div class="${style["recommend-title"]}">Friend Recommendations</div>
-                <div id="friend-list"></div>
+               <div id="friend-list">${skeleton("friend", 3)}</div>
             </div>
         </div>
 
@@ -217,23 +218,23 @@ export default async function Home() {
     });
 
     new InfiniteScroll({
-        container: feedContainer,
-        sentinel: sentinel,
-        limit: 10,
-        loadMore: async ({ page, limit }) => {
-            return await fetchHomeFeedService(page, limit);
-        },
-       renderItems: (posts, container) => {
-    posts.forEach((postData) => {
-        const postId = postData.post_id || postData.id || postData.feed_id;
-        if (postId) postDataStore.set(String(postId), postData);
-
-        const postMarkup = Post(postData, { showSave: true });
-        container.insertAdjacentHTML('beforeend', postMarkup);
-    });
-    applyCurrentUserAvatar(container);
-}
-    });
+    container: feedContainer,
+    sentinel: sentinel,
+    limit: 10,
+    loaderHTML: skeleton("post", 2),
+    loadMore: async ({ page, limit }) => {
+        return await fetchHomeFeedService(page, limit);
+    },
+    renderItems: (posts, container) => {
+        posts.forEach((postData) => {
+            const postId = postData.post_id || postData.id || postData.feed_id;
+            if (postId) postDataStore.set(String(postId), postData);
+            const postMarkup = Post(postData, { showSave: true });
+            container.insertAdjacentHTML('beforeend', postMarkup);
+        });
+        applyCurrentUserAvatar(container);
+    }
+});
 
     // Prepend newly created post immediately at the top of the feed
     window.addEventListener('post:created', (event) => {

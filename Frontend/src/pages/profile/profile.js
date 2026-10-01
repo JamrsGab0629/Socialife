@@ -129,7 +129,7 @@ export default async function Profile(params){
                         <div class="${style["about-section"]}" id="about-section">
                             <h3>About</h3>
                             <div class="${style["about-row"]}">
-                                <img src="../icons/cake.svg" alt="">
+                                <img src="../../icons/cake.svg" alt="">
                                 <span id="about-birthdate"></span>
                             </div>
                             <div class="${style["about-row"]}">
