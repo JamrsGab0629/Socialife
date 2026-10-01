@@ -438,7 +438,9 @@ async function toggleReplies(button) {
     if (!repliesList || !postId || !parentId) return;
 
     if (repliesList.dataset.loaded) {
-        repliesList.hidden = !repliesList.hidden;
+        const isHidden = repliesList.style.display === 'none';
+        repliesList.style.display = isHidden ? '' : 'none';
+        button.textContent = isHidden ? "Hide replies" : "View replies";
         return;
     }
 

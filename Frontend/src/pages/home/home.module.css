@@ -440,3 +440,7 @@
 .report-close-btn:hover {
     background: var(--bg-tint-strong);
 }
+
+.replies[hidden] {
+    display: none !important;
+}
