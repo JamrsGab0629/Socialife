@@ -95,14 +95,12 @@ export function initFriendRecommendations(container) {
         }
     });
 }
-export function initSharePostDialog() {
+export function initSharePostDialog(picker) {
     const dialog = document.getElementById('share-post-dialog');
     const form = dialog?.querySelector('[data-share-post-form]');
     const caption = dialog?.querySelector('[data-share-caption]');
     const submitButton = dialog?.querySelector('[data-share-submit]');
     const errorMessage = dialog?.querySelector('[data-share-error]');
-    
-    
 
     if (!dialog || !form || !caption || !submitButton || !errorMessage) return;
 
@@ -113,14 +111,14 @@ export function initSharePostDialog() {
         const postId = dialog.dataset.postId;
         if (!postId) return;
 
-      const mentionIds = picker?.getMentionIds(caption) || [];
+        const mentionIds = picker?.getMentionIds(caption) || [];
 
         try {
             submitButton.disabled = true;
             submitButton.textContent = 'Sharing...';
             errorMessage.hidden = true;
             await share_post(postId, caption.value.trim(), mentionIds);
-           picker?.clearMentions(caption);
+            picker?.clearMentions(caption);
             dialog.close();
         } catch (error) {
             console.error('Failed to share post:', error);
@@ -138,6 +136,7 @@ export function initSharePostDialog() {
         delete dialog.dataset.postId;
     });
 }
+
 export function initReportDialog() {
     const dialog = document.getElementById('report-dialog');
     const form = dialog?.querySelector('[data-report-form]');

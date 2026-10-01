@@ -75,7 +75,7 @@ export default function Post(data, { showSave = false } = {}) {
     const shareContext = data.is_shared ? `
         <div class="${style["share-context"]}">
             <span>${sharedBy} shared a post</span>
-            ${data.share_caption ? `<div class="${style["share-caption"]}">${data.share_caption}</div>` : ""}
+            ${data.share_caption ? `<div class="${style["share-caption"]}">${linkifyMentions(data.share_caption)}</div>` : ""}
         </div>
     ` : "";
 
@@ -109,6 +109,7 @@ export default function Post(data, { showSave = false } = {}) {
             <img src="/icon/trash.svg" alt="">
             <span>Delete post</span>
         </button>
+       
     ` : ""}
 </div>  
                 </div>
