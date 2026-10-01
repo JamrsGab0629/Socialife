@@ -16,7 +16,7 @@
 
 .cd-card {
     width: min(380px, 100%);
-    background: #ffffff;
+    background: var(--card-bg);
     border-radius: 18px;
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
     padding: 24px;
@@ -46,13 +46,13 @@
 .cd-title {
     font-size: 18px;
     font-weight: 800;
-    color: #1c1e21;
+    color: var(--text-dark);
     margin: 0;
 }
 
 .cd-message {
     font-size: 14.5px;
-    color: #4a545f;
+    color: var(--text-muted);
     line-height: 1.5;
     margin: 4px 0 16px 0;
 }
@@ -79,12 +79,12 @@
 }
 
 .cd-cancel {
-    background: #f0f2f5;
-    color: #1c1e21;
+    background: var(--bg-tint);
+    color: var(--text-dark);
 }
 
 .cd-cancel:hover {
-    background: #e4e6eb;
+    background: var(--bg-tint-strong);
 }
 
 .cd-confirm {
