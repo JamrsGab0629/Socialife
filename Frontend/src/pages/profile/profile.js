@@ -158,6 +158,18 @@ export default async function Profile(params){
                 </div>
             </form>
         </dialog>
+        <dialog id="photo-caption-dialog" class="${style['share-dialog']}">
+    <form method="dialog" data-photo-caption-form>
+        <h2 data-photo-caption-title>Add a caption</h2>
+        <img data-photo-caption-preview alt="Preview" style="max-width:100%; max-height:300px; object-fit:contain; border-radius:8px; margin-bottom:12px;">
+        <textarea data-photo-caption-input maxlength="500" placeholder="Add a caption (optional)"></textarea>
+        <p data-photo-caption-error hidden></p>
+        <div class="${style['share-dialog-actions']}">
+            <button type="button" data-action="close-photo-caption-dialog">Cancel</button>
+            <button type="submit" data-photo-caption-submit>Post</button>
+        </div>
+    </form>
+</dialog>
     
         <dialog id="report-dialog" class="${style['report-dialog']}">
             <form method="dialog" data-report-form>
@@ -315,26 +327,36 @@ if (bannerEl && profile.cover_photo_post_id) {
                 });
             }
 
-            if (avatarInput) {
-                avatarInput.addEventListener('change', async () => {
-                    const file = avatarInput.files[0];
-                    if (!file) return;
+          if (avatarInput) {
+    avatarInput.addEventListener('change', async () => {
+        const file = avatarInput.files[0];
+        if (!file) return;
 
-                    const caption = window.prompt("Add a caption (optional):", "") || "";
+        const result = await openPhotoCaptionDialog(file, 'Update profile picture');
+        if (!result) {
+            avatarInput.value = '';
+            return;
+        }
 
-                    const formData = new FormData();
-                    formData.append('image', file);
-                    formData.append('caption', caption);
+        const { caption, close, setLoading, setError } = result;
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('caption', caption);
 
-                    try {
-                        const { data } = await update_profile_picture(formData);
-                        if (data?.profile_url) avatarEl.src = data.profile_url;
-                    } catch (error) {
-                        console.error("Failed to update profile picture:", error);
-                    }
-                });
-            }
-
+        setLoading(true);
+        try {
+            const { data } = await update_profile_picture(formData);
+            if (data?.profile_url) avatarEl.src = data.profile_url;
+            close();
+        } catch (error) {
+            console.error("Failed to update profile picture:", error);
+            setLoading(false);
+            setError('Unable to upload. Please try again.');
+        } finally {
+            avatarInput.value = '';
+        }
+    });
+}
                        if (removeOption) {
                 removeOption.addEventListener('click', async () => {
                     avatarMenu.hidden = true;
@@ -371,30 +393,40 @@ if (bannerEl && profile.cover_photo_post_id) {
                     coverInput.click();
                 });
             }
+if (coverInput) {
+    coverInput.addEventListener('change', async () => {
+        const file = coverInput.files[0];
+        if (!file) return;
 
-            if (coverInput) {
-                coverInput.addEventListener('change', async () => {
-                    const file = coverInput.files[0];
-                    if (!file) return;
+        const result = await openPhotoCaptionDialog(file, 'Update cover photo');
+        if (!result) {
+            coverInput.value = '';
+            return;
+        }
 
-                    const caption = window.prompt("Add a caption (optional):", "") || "";
+        const { caption, close, setLoading, setError } = result;
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('caption', caption);
 
-                    const formData = new FormData();
-                    formData.append('image', file);
-                    formData.append('caption', caption);
-
-                    try {
-                        const { data } = await update_cover_photo(formData);
-                        if (data?.cover_url && bannerEl) {
-                            bannerEl.style.backgroundImage = `url("${data.cover_url}")`;
-                            bannerEl.style.backgroundSize = "cover";
-                            bannerEl.style.backgroundPosition = "center";
-                        }
-                    } catch (error) {
-                        console.error("Failed to update cover photo:", error);
-                    }
-                });
+        setLoading(true);
+        try {
+            const { data } = await update_cover_photo(formData);
+            if (data?.cover_url && bannerEl) {
+                bannerEl.style.backgroundImage = `url("${data.cover_url}")`;
+                bannerEl.style.backgroundSize = "cover";
+                bannerEl.style.backgroundPosition = "center";
             }
+            close();
+        } catch (error) {
+            console.error("Failed to update cover photo:", error);
+            setLoading(false);
+            setError('Unable to upload. Please try again.');
+        } finally {
+            coverInput.value = '';
+        }
+    });
+}
             if (coverRemoveOption) {
                 coverRemoveOption.addEventListener('click', async () => {
                     coverMenu.hidden = true;
@@ -431,4 +463,70 @@ if (bannerEl && profile.cover_photo_post_id) {
     } catch (error) {
         console.error("Failed to load profile:", error);
     }
+}
+
+function openPhotoCaptionDialog(file, title) {
+    return new Promise((resolve) => {
+        const dialog = document.getElementById('photo-caption-dialog');
+        const form = dialog.querySelector('[data-photo-caption-form]');
+        const preview = dialog.querySelector('[data-photo-caption-preview]');
+        const input = dialog.querySelector('[data-photo-caption-input]');
+        const titleEl = dialog.querySelector('[data-photo-caption-title]');
+        const submitBtn = dialog.querySelector('[data-photo-caption-submit]');
+        const closeBtn = dialog.querySelector('[data-action="close-photo-caption-dialog"]');
+        const errorEl = dialog.querySelector('[data-photo-caption-error]');
+
+        titleEl.textContent = title;
+        input.value = '';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Post';
+        closeBtn.disabled = false;
+        errorEl.hidden = true;
+
+        const objectUrl = URL.createObjectURL(file);
+        preview.src = objectUrl;
+
+        let settled = false;
+
+        const cleanup = () => {
+            URL.revokeObjectURL(objectUrl);
+            form.removeEventListener('submit', onSubmit);
+            closeBtn.removeEventListener('click', onCancel);
+            dialog.removeEventListener('close', onCancel);
+        };
+
+        const onSubmit = (e) => {
+            e.preventDefault();
+            if (settled) return;
+            settled = true;
+            cleanup();
+            resolve({
+                caption: input.value.trim(),
+                close: () => dialog.close(),
+                setLoading: (isLoading) => {
+                    submitBtn.disabled = isLoading;
+                    submitBtn.textContent = isLoading ? 'Posting...' : 'Post';
+                    closeBtn.disabled = isLoading;
+                },
+                setError: (message) => {
+                    errorEl.textContent = message;
+                    errorEl.hidden = !message;
+                },
+            });
+        };
+
+        const onCancel = () => {
+            if (settled) return;
+            settled = true;
+            cleanup();
+            dialog.close();
+            resolve(null);
+        };
+
+        form.addEventListener('submit', onSubmit);
+        closeBtn.addEventListener('click', onCancel);
+        dialog.addEventListener('close', onCancel);
+
+        dialog.showModal();
+    });
 }
