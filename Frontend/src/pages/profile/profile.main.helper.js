@@ -4,6 +4,8 @@ import mapFeedItemToPostData from "./profile.main.mapper";
 import { openPostViewer } from "../../components/post-viewer/post-viewer";
 import { initCommentInteractions, initSharePostDialog, applyCurrentUserAvatar } from "../home/home.helper";
 import { InfiniteScroll } from "../../helpers/utils/InfiniteScroll";
+import { confirmDialog } from "../../components/confirm-dialog/confirm-dialog";
+
 
 const postDataStore = new Map();
 
@@ -23,10 +25,16 @@ export const Helper = async (userId) => {
             return;
         }
 
-        const deleteTarget = event.target.closest('[data-action="delete-post"]');
+               const deleteTarget = event.target.closest('[data-action="delete-post"]');
         if (deleteTarget) {
             const postId = deleteTarget.dataset.postId;
-            if (!window.confirm("Delete this post?")) return;
+            const ok = await confirmDialog({
+                title: "Delete this post?",
+                message: "This can't be undone.",
+                confirmText: "Delete",
+                danger: true,
+            });
+            if (!ok) return;
 
             try {
                 await deactivate_post(postId);

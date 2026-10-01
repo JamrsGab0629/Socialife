@@ -5,7 +5,7 @@ import {
     decline_friend_request,
     remove_friend
 } from "../../helpers/friends/friends.request";
-
+import { confirmDialog } from "../../components/confirm-dialog/confirm-dialog";
 const avatar_colors = ["#E8A5A0", "#A5C7E8", "#C7A5E8", "#A5E8C0", "#E8D5A5"];
 
 const getAvatarColor = (user_id) => {
@@ -119,7 +119,17 @@ export default function Helper(gridEl, { onChange } = {}) {
             } else if (action === 'decline-request') {
                 await decline_friend_request(userId);
                 onChange?.();
-            } else if (action === 'remove-friend') {
+                       } else if (action === 'remove-friend') {
+                const ok = await confirmDialog({
+                    title: "Remove this friend?",
+                    message: "You'll need to send a new request to reconnect.",
+                    confirmText: "Remove",
+                    danger: true,
+                });
+                if (!ok) {
+                    btn.disabled = false;
+                    return;
+                }
                 await remove_friend(userId);
                 onChange?.();
             }

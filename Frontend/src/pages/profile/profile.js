@@ -16,6 +16,7 @@ import MainHelper from "./profile.main.helper";
 import style from "./profile.module.css";
 import { openPostViewer } from "../../components/post-viewer/post-viewer";
 import { get_post_by_id } from "../../helpers/post/post.request";
+import { confirmDialog } from "../../components/confirm-dialog/confirm-dialog";
 function renderFriendButton(status, userId) {
     const actionsEl = document.getElementById('profile-actions');
     if (!actionsEl) return;
@@ -310,9 +311,15 @@ if (bannerEl && profile.cover_photo_post_id) {
                 });
             }
 
-            if (removeOption) {
+                       if (removeOption) {
                 removeOption.addEventListener('click', async () => {
                     avatarMenu.hidden = true;
+                    const ok = await confirmDialog({
+                        title: "Remove profile picture?",
+                        confirmText: "Remove",
+                        danger: true,
+                    });
+                    if (!ok) return;
                     try {
                         await remove_profile_picture();
                         avatarEl.src = "/icon/user-avatar.svg";
@@ -364,10 +371,15 @@ if (bannerEl && profile.cover_photo_post_id) {
                     }
                 });
             }
-
             if (coverRemoveOption) {
                 coverRemoveOption.addEventListener('click', async () => {
                     coverMenu.hidden = true;
+                    const ok = await confirmDialog({
+                        title: "Remove cover photo?",
+                        confirmText: "Remove",
+                        danger: true,
+                    });
+                    if (!ok) return;
                     try {
                         await remove_cover_photo();
                         if (bannerEl) bannerEl.style.backgroundImage = "";

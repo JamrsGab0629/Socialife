@@ -11,6 +11,8 @@ import { deactivate_post } from '../../helpers/post/post.request';
 import { InfiniteScroll } from '../../helpers/utils/InfiniteScroll'; 
 import { getNotifications } from '../../components/notification/notification.service';
 import { search_users } from '../../helpers/profile/profile.request';
+import { confirmDialog } from '../../components/confirm-dialog/confirm-dialog';
+
 
 const postDataStore = new Map();
 
@@ -167,11 +169,16 @@ export default async function Home() {
             return;
         }
 
-        const deleteTarget = event.target.closest('[data-action="delete-post"]');
+               const deleteTarget = event.target.closest('[data-action="delete-post"]');
         if (deleteTarget) {
             const postId = deleteTarget.dataset.postId;
-            if (!window.confirm("Delete this post?")) return;
-
+            const ok = await confirmDialog({
+                title: "Delete this post?",
+                message: "This can't be undone.",
+                confirmText: "Delete",
+                danger: true,
+            });
+            if (!ok) return;
             try {
                 await deactivate_post(postId);
                 const card = document.getElementById(postId);
