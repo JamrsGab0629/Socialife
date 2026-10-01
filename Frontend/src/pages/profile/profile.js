@@ -17,6 +17,8 @@ import style from "./profile.module.css";
 import { openPostViewer } from "../../components/post-viewer/post-viewer";
 import { get_post_by_id } from "../../helpers/post/post.request";
 import { confirmDialog } from "../../components/confirm-dialog/confirm-dialog";
+
+import { initReportDialog } from "../home/home.helper";
 function renderFriendButton(status, userId) {
     const actionsEl = document.getElementById('profile-actions');
     if (!actionsEl) return;
@@ -127,7 +129,7 @@ export default async function Profile(params){
                         <div class="${style["about-section"]}" id="about-section">
                             <h3>About</h3>
                             <div class="${style["about-row"]}">
-                                <img src="../../icons/cake.svg" alt="">
+                                <img src="../icons/cake.svg" alt="">
                                 <span id="about-birthdate"></span>
                             </div>
                             <div class="${style["about-row"]}">
@@ -157,8 +159,30 @@ export default async function Profile(params){
             </form>
         </dialog>
     
+        <dialog id="report-dialog" class="${style['report-dialog']}">
+            <form method="dialog" data-report-form>
+                <button type="button" class="${style['report-close-btn']}" data-action="close-report-dialog" aria-label="Close">&times;</button>
+                <h2>Report <span data-report-target-name></span></h2>
+                <div class="${style['report-options']}" data-report-options>
+                    <label><input type="radio" name="report-category" value="Harassment or bullying"> Harassment or bullying</label>
+                    <label><input type="radio" name="report-category" value="Spam"> Spam</label>
+                    <label><input type="radio" name="report-category" value="Hate speech"> Hate speech</label>
+                    <label><input type="radio" name="report-category" value="Nudity or sexual content"> Nudity or sexual content</label>
+                    <label><input type="radio" name="report-category" value="Violence"> Violence</label>
+                    <label><input type="radio" name="report-category" value="False information"> False information</label>
+                    <label><input type="radio" name="report-category" value="Other"> Other</label>
+                </div>
+                <textarea data-report-details maxlength="500" placeholder="Add details (optional)"></textarea>
+                <p data-report-error hidden></p>
+                <div class="${style['report-dialog-actions']}">
+                    <button type="button" data-action="close-report-dialog">Cancel</button>
+                    <button type="submit" data-report-submit disabled>Submit report</button>
+                </div>
+            </form>
+        </dialog>
     `;
-
+   
+    initReportDialog();
     // --- Tab switching (All / Photos) ---
     const tabButtons = main.querySelectorAll(`.${style["tab"]}`);
     const tabContents = {
