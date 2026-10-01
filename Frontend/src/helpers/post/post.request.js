@@ -106,11 +106,11 @@ export async function unsave_post(postId) {
     });
 }
 
-export async function share_post(postId, caption = "") {
+export async function share_post(postId, caption = "",mentions = []) {
     return Request({
         param: `/posts/${postId}/share`,
         method: "POST",
-        args: { caption },
+        args: { caption,mentions },
     });
 }
 /**
@@ -167,3 +167,4 @@ export async function deactivate_post(postId) {
         throw error;
     }
 }
+

@@ -101,6 +101,8 @@ export function initSharePostDialog() {
     const caption = dialog?.querySelector('[data-share-caption]');
     const submitButton = dialog?.querySelector('[data-share-submit]');
     const errorMessage = dialog?.querySelector('[data-share-error]');
+    
+    
 
     if (!dialog || !form || !caption || !submitButton || !errorMessage) return;
 
@@ -111,11 +113,14 @@ export function initSharePostDialog() {
         const postId = dialog.dataset.postId;
         if (!postId) return;
 
+      const mentionIds = picker?.getMentionIds(caption) || [];
+
         try {
             submitButton.disabled = true;
             submitButton.textContent = 'Sharing...';
             errorMessage.hidden = true;
-            await share_post(postId, caption.value.trim());
+            await share_post(postId, caption.value.trim(), mentionIds);
+           picker?.clearMentions(caption);
             dialog.close();
         } catch (error) {
             console.error('Failed to share post:', error);

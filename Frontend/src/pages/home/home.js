@@ -12,7 +12,7 @@ import { InfiniteScroll } from '../../helpers/utils/InfiniteScroll';
 import { getNotifications } from '../../components/notification/notification.service';
 import { search_users } from '../../helpers/profile/profile.request';
 import { confirmDialog } from '../../components/confirm-dialog/confirm-dialog';
-
+import { initMentionPicker } from '../../components/mention/mention-picker';
 
 const postDataStore = new Map();
 
@@ -155,7 +155,8 @@ export default async function Home() {
 
     // Initialize comment interactions using event delegation on the feed container
     initCommentInteractions(feedContainer);
-    initSharePostDialog();
+    const shareCaptionPicker = initMentionPicker(document.getElementById('share-post-dialog'));
+    initSharePostDialog(shareCaptionPicker);
     initReportDialog();
     postDataStore.clear();
 

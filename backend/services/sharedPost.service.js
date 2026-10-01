@@ -1,5 +1,7 @@
 import { SharedPost, Post, User, PhotoData } from "../model/association.model.js";
 import { safeNotify } from "../utils/notify.utils.js";
+import { MentionService } from "./mention.service.js";
+
 // Custom error helper with status code
 const createNotFoundError = (message) => {
     const error = new Error(message);
@@ -7,7 +9,7 @@ const createNotFoundError = (message) => {
     return error;
 };
 
-export const createShareRecord = async (userId, postId, caption) => {
+export const createShareRecord = async (userId, postId, caption, mentions = []) => {
     const post = await Post.findOne({
         where: { post_id: postId, is_active: true }
     });
@@ -22,12 +24,18 @@ export const createShareRecord = async (userId, postId, caption) => {
         caption: caption || null,
     });
 
-  safeNotify(post.user_id, userId, "share", "shared your post.", postId, share.share_id);
+    safeNotify(post.user_id, userId, "share", "shared your post.", postId, share.share_id);
+
+    MentionService.notifyMentions({
+        mentionedIds: mentions,
+        authorId: userId,
+        type: "share",
+        postId,
+        excludeUserIds: [post.user_id], // already notified about the share itself
+    }).catch((err) => console.error("Mention notify error:", err.message));
 
     return share;
 };
-
-
 
 export const getShareById = async (shareId) => {
     const share = await SharedPost.findByPk(shareId, {

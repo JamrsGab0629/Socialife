@@ -11,9 +11,9 @@ export const sharePost = async (req, res, next) => {
         }
 
         const { postId } = req.validated.params; 
-        const { caption } = req.validated.body; 
+        const { caption, mentions = [] } = req.validated.body; 
 
-        const newShare = await createShareRecord(userId, postId, caption);
+        const newShare = await createShareRecord(userId, postId, caption, mentions);
 
         return res.status(201).json({
             success: true,

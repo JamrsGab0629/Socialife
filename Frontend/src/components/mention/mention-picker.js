@@ -85,7 +85,7 @@ export function initMentionPicker(container) {
 }
     container.addEventListener('input', (e) => {
         const input = e.target;
-      if (!input.matches('[data-comment-input], [data-reply-input], #captionInput, [data-pv-comment-input], [data-pv-reply-input]')) return;
+    if (!input.matches('[data-comment-input], [data-reply-input], #captionInput, [data-pv-comment-input], [data-pv-reply-input], [data-share-caption]')) return;
         const cursorPos = input.selectionStart;
         const textBeforeCursor = input.value.slice(0, cursorPos);
         const match = textBeforeCursor.match(/@(\w*)$/);
