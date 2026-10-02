@@ -10,7 +10,17 @@
   z-index: 9999;
 }
 
+
+.mention-item:hover {
+  background: var(--bg-tint);
+  color: #243ecc;
+}
+
+
 .mention-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 10px 14px;
   border-radius: 8px;
   cursor: pointer;
@@ -21,7 +31,11 @@
   transition: background 0.15s ease, color 0.15s ease;
 }
 
-.mention-item:hover {
-  background: var(--bg-tint);
-  color: #243ecc;
+.mention-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
 }
+

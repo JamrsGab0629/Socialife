@@ -50,7 +50,8 @@ export function initMentionPicker(container) {
     dropdownEl.className = style["mention-dropdown"];
     dropdownEl.innerHTML = users.map(u => `
         <div class="${style["mention-item"]}" data-user-id="${u.user_id || u.id}" data-username="${u.username}">
-            ${u.username}
+            <img class="${style["mention-avatar"]}" src="${u.profile_url || '/icon/user-avatar.svg'}" alt="" onerror="this.src='/icon/user-avatar.svg'">
+            <span>${u.username}</span>
         </div>
     `).join('');
 

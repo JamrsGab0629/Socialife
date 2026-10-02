@@ -13,7 +13,7 @@ const router = express.Router();
 router.get(
     "/", 
     isAuthenticated, 
-    rateLimiter(60, 60000),
+    rateLimiter(100, 60000),
     validate(notificationQuerySchema), 
     notificationController.getNotifications
 );

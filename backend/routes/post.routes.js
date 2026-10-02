@@ -35,7 +35,7 @@ const router = express.Router();
 router.post(
     "/",
     isAuthenticated,
-    rateLimiter(20, 60000),
+    rateLimiter(40, 60000),
     uploadPostImage,
     validate(createPostSchema),
     postController.createPost
